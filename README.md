@@ -1,4 +1,4 @@
-# OASES 3.1 - Installation Guide (Cheat Sheet)
+# OASES 3.1 - Installation Guide
 
 [OASES](https://tlo.mit.edu/technologies/oases-software-modeling-seismo-acoustic-propagation-horizontally-stratified-waveguides) is a general purpose computer code made by the [Massachusetts Institute of Technology](http://www.mit.edu/) for modeling seismo-acoustic propagation in horizontally stratified waveguides using wavenumber integration in combination with the Direct Global Matrix solution technique.
 
