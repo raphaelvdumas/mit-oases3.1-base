@@ -4,7 +4,7 @@
 
 As I found myself in many difficulties during the installation of this software, this repo contains a full friendly installation guide to install OASES 3.1 on Windows 10.
 
-**Third party sofwares installed:**
+**Sofwares installed:**
 * [Ubuntu application](https://www.microsoft.com/en-us/p/ubuntu/9nblggh4msv6?activetab=pivot:overviewtab) from the Microsoft Store made by [Canonical](https://canonical.com/) Group Limited.
 
 * [VcXsrv](https://sourceforge.net/projects/vcxsrv/) to handle the graphical interface between the Ubuntu application and Windows 10.
