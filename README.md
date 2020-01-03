@@ -9,9 +9,6 @@ As I found myself in many difficulties during the installation of this software,
 
 * [VcXsrv](https://sourceforge.net/projects/vcxsrv/) to handle the graphical interface between the Ubuntu application and Windows 10.
 
-**Dependencies of OASES 3.1:**
-* cmake, gcc, gfortran, csh, libx11-dev, python3-pip
-
-* numpy, matplotlib, scipy, tqdm
+**Dependencies of OASES 3.1:** cmake, gcc, gfortran, csh, libx11-dev
 
 _Last successful installation: december 14, 2019_
