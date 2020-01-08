@@ -15,7 +15,7 @@ Simply download this repository and follow the instructions of the ```OASES 2.1 
 
 ### Dependencies
 ```
-cmake, gcc, g++, gfortran, csh, libx11-dev
+cmake, gcc, g++, gfortran, csh, libx11-dev, plotmtv
 ```
 
 ## Running OASES 2.1
