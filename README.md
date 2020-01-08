@@ -27,6 +27,6 @@ cmake, gcc, g++, gfortran, csh, libx11-dev
 
 The following modifications of ```oases-public``` have been made: 
 * removed the ```paroases-src``` folder and changed ```CMakeLists.txt``` accordingly because I couldn't get it to work yet and it avoids installing more dependencies,
-* changed ```CMakeLists.txt``` of ```bin ``` folder as range dependent modules ```rdoasp``` and ```rdoast``` aren't in this free version of OASES.
+* changed ```CMakeLists.txt``` of ```bin``` folder as range dependent modules ```rdoasp``` and ```rdoast``` aren't in this free version of OASES.
 
 _Last successful installation: december 14, 2019_
