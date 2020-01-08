@@ -7,7 +7,7 @@ As I found myself in many difficulties during the installation of this software,
 ## Getting Started
  Even though the official User's Guide found in this repository is intended for the version 3.1 of OASES, it can still be used here.
 
-The following modifications of oases-public have been made: 
+The following modifications of ```oases-public``` have been made: 
 * removed the ```paroases-src``` folder and changed ```CMakeLists.txt``` accordingly because I couldn't get it to work yet and it avoids installing more dependencies,
 * changed ```CMakeLists.txt``` of ```bin ``` folder as range dependent modules ```rdoasp``` and ```rdoast``` aren't in this free version of OASES.
 
