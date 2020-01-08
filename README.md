@@ -20,10 +20,19 @@ cmake, gcc, g++, gfortran, csh, libx11-dev, plotmtv
 
 ## Running OASES 2.1
 
+After completing the installation, run an example from the ```tloss``` folder with the ```oast``` module, for example
+```
+  oast ~/oases-public/tloss/pekeris 
+```
+and then plot the transmission loss with the ```cplot``` module
+```
+  cplot ~/oases-public/tloss/pekeris 
+```
+
+Further information on how this software works with its numerous modules can be found in the OASES 3.1 User Guide given in this repository. Even though it is intended for the version 3.1 of OASES, it can still be used here.
 
 ## Notes
-* Even though the official User's Guide found in this repository is intended for the version 3.1 of OASES, it can still be used here.
-* Even though the installation works, it is possible to install it in a simpler manner using MinGW directly on Windows 10. But this doesn't work for me yet !
+Even though the installation works, it is possible to install it in a simpler manner using MinGW directly on Windows 10. But this doesn't work for me yet !
 
 The following modifications of ```oases-public``` have been made: 
 * removed the ```paroases-src``` folder and changed ```CMakeLists.txt``` accordingly because I couldn't get it to work yet and it avoids installing more dependencies,
