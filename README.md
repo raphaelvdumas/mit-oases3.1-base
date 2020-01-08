@@ -1,10 +1,10 @@
-# OASES 2.1 Base Package - Installation Guide
+# OASES 3.1 Base Package - Installation Guide
 
 [OASES](https://tlo.mit.edu/technologies/oases-software-modeling-seismo-acoustic-propagation-horizontally-stratified-waveguides) is a general purpose computer code made by the [Massachusetts Institute of Technology](http://www.mit.edu/) for modeling seismo-acoustic propagation in horizontally stratified waveguides using wavenumber integration in combination with the Direct Global Matrix solution technique.
 
 As I found myself in many difficulties during the installation of this software, this repository contains a full friendly installation guide to install the [OASES 2.1 Base Package](http://lamss.mit.edu/lamss/tars/oases-public.tgz) on Windows 10.
 
-## Installation of OASES 2.1
+## Installation of OASES 3.1
 
 Simply download this repository and follow the instructions of the ```OASES 2.1 - Installation Guide.pdf```.
 
@@ -18,7 +18,7 @@ Simply download this repository and follow the instructions of the ```OASES 2.1 
 cmake, gcc, g++, gfortran, csh, libx11-dev, plotmtv
 ```
 
-## Running OASES 2.1
+## Running OASES 3.1
 
 After completing the installation, run an example from the ```tloss``` folder with the ```oast``` module, for example
 ```
