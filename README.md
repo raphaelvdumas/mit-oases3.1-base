@@ -8,12 +8,14 @@ The following modifications of oases-public have been made:
 * removed the paroases-src folder and changed CMakeLists accordingly,
 * changed CMakeLists of bin folder as range dependent modules rdoasp and rdoast aren't in this free version of OASES. 
 
-**Sofwares installed:**
+### Sofwares installed
 * [Ubuntu application](https://www.microsoft.com/en-us/p/ubuntu/9nblggh4msv6?activetab=pivot:overviewtab) from the Microsoft Store made by [Canonical](https://canonical.com/) Group Limited.
 
 * [VcXsrv](https://sourceforge.net/projects/vcxsrv/) to handle the graphical interface between the Ubuntu application and Windows 10.
 
-**Dependencies of OASES 2.1:** 
+### Dependencies of OASES 2.1
+```
 cmake, gcc, g++, gfortran, csh, libx11-dev
+```
 
 _Last successful installation: december 14, 2019_
