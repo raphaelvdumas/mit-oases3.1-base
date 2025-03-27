@@ -1,0 +1,22 @@
+    These programs are using a DISSPLA compatible plotting 
+    package developed at SACLANTCEN. In order for the programs 
+    to be linked with the full DISSPLA package, a few
+    modifications have to be made, however. 
+
+    File CONTUR_M.CLK contains the commands used on
+    a VAX installation to make an executable program using
+    DISSPLA compatible code.
+
+    It is also possible to get contour plots through UNIRAS
+    software. If a UNIRAS library is available, then the commands
+    for producing an executable program can be found in file
+    CONTUR_U.CLK.
+
+    This contour program accepts as input the output files
+    produced by the propagation loss models PE, SAFARI, SNAP,
+    and COUPLE.
+
+    The commands used on a VAX installation to initiate a contour
+    plot can be found in file CONTUR.COM
+
+

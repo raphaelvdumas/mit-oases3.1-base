@@ -1,0 +1,35 @@
+#!/bin/bash
+#
+#  Give the job a name
+#PBS -N "test_simple"
+#
+#  Specify the project the job belongs to
+#PBS -A XYZ 
+#
+#  We want 60 hours on 512 cpu's (cores):
+#PBS -l walltime=00:04:00,mppwidth=128
+#
+#  Send me an email on  a=abort, b=begin, e=end
+#PBS -m ae
+#
+#  Use this email address (check that it is correct):
+#PBS -M XYZ@asdf.com 
+#
+#  Write the standard output of the job to file 'mpijob.out' (optional)
+#PBS -o mpijob.out
+#
+#  Write the standard error of the job to file 'mpijob.err' (optional)
+#PBS -e mpijob.err
+
+source /work/$USER/profile.sh
+
+#  Make sure I am in the correct directory
+cd "/work/$USER/paroasp/oasp/test_paroasp/test_simple/"
+
+module load python/3.4.3-dso
+
+mpioasp=$(which mpioasp)
+mpioast=$(which mpioast)
+
+aprun -B python3 $mpioasp *.dat
+

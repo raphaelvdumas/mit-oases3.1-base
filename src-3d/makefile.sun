@@ -1,0 +1,74 @@
+#fortran compiler
+# Alliant
+#FC= fortran
+# Convex
+#FC =fc
+# Portable
+FC =f77
+FCO = $(FC) -O
+FCB = $(FC) -O
+RANLIB = ranlib
+#Options for optimized code
+# Alliant
+#FCO= $(FC) -OM -O -DAS -alt
+#FCB= $(FC) -Og -recursive
+#Stellar
+#FC =f77
+#FCO = $(FC) -O3
+#FCB = $(FC) -O3
+#RANLIB = ls -l
+# Convex
+#FCO = $(FC) O2
+# No optimization
+#FCO = $(FC)
+#BINectory for executeable files
+#BIN= /mnt/schmidt/bin/
+#BIN= /safari/schmidt/bin/
+BIN = /home/chrome6/seismic/oases/bin
+LIB = /home/chrome6/seismic/oases/lib
+#Subprograms
+SUB = oasaun35.o oasbun10.o oascun13.o oasdun13.o oaseun34.o oasgun11.o oashun11.o oasiun35.o   
+
+all: 	oasp3d
+
+oasp3d:	unoasp35.o $(LIB)/oas3dlib.a $(LIB)/apmath.a
+	$(FC)  -o $(BIN)/oasp3d unoasp35.o $(LIB)/oas3dlib.a \
+                  $(LIB)/apmath.a 
+
+unoasp35.o:	 unoasp35.f comnla.f comnp.f comnrd.f compar.f
+	$(FC) -c unoasp35.f
+ 
+$(LIB)/oas3dlib.a:	 $(SUB)
+	ar rvu $(LIB)/oas3dlib.a $(SUB)
+	$(RANLIB) $(LIB)/oas3dlib.a
+
+
+oasaun35.o:	oasaun35.f comnla.f comnp.f comnrd.f compar.f 
+	$(FCO) -c oasaun35.f 
+
+oasbun10.o:    oasbun10.f
+	$(FCB)   -c oasbun10.f
+
+oascun13.o:    oascun13.f compar.f combes.f
+	$(FCO) -c oascun13.f
+
+oasdun13.o:	oasdun13.f comnla.f comnp.f comti.f compar.f complo.f 
+	$(FC) -c oasdun13.f
+
+oaseun34.o:	oaseun34.f comnla.f comnp.f comnrd.f compar.f 
+	$(FC) -c oaseun34.f
+
+oasgun11.o:	oasgun11.f comnla.f comnp.f comnrd.f compar.f complo.f
+	$(FC) -c oasgun11.f
+
+oashun11.o:    oashun11.f
+	$(FC) -c oashun11.f
+
+oasiun35.o:	oasiun35.f comnla.f comnp.f compar.f combes.f complo.f
+	$(FCO) -c oasiun35.f
+
+
+
+
+
+

@@ -1,0 +1,60 @@
+#!/usr/bin/csh
+#
+# These runs are typically the shorter ones - Max. of 3 sectors 
+#
+echo ">>>>> RSWT2a <<<<<"
+mplot tloss/RSWT2a
+echo ">>>>> RSWT3a <<<<<"
+mplot tloss/RSWT3a
+echo ">>>>> 30degLBeam <<<<<"
+mplot tloss/30degLBeam 
+echo ">>>>> 45degLBeam <<<<<"
+mplot tloss/45degLBeam 
+echo ">>>>> HorizForce <<<<<"
+mplot tloss/HorizForce 
+echo ">>>>> PntSrc <<<<<"
+mplot tloss/PntSrc 
+echo ">>>>> SACL_step_F <<<<<"
+mplot tloss/SACL_step_F 
+echo ">>>>> SleeHC <<<<<"
+mplot tloss/SLeeHC 
+echo ">>>>> SLeed <<<<<"
+mplot tloss/SLeed 
+echo ">>>>> SLeet <<<<<"
+mplot tloss/SLeet 
+echo ">>>>> SLef <<<<<"
+mplot tloss/SLef 
+echo ">>>>> SLfe <<<<<"
+mplot tloss/SLfe 
+echo ">>>>> TranspVF <<<<<"
+mplot tloss/TranspVF 
+echo ">>>>> TranspHF <<<<<"
+mplot tloss/TranspHF 
+echo ">>>>> VertForce <<<<<"
+mplot tloss/VertForce 
+echo ">>>>> fnuw <<<<<"
+mplot tloss/fnuw 
+echo ">>>>> gilbert <<<<<"
+mplot tloss/gilbert 
+echo ">>>>> gilbertE <<<<<"
+mplot tloss/gilbertE 
+echo ">>>>> mikeExD <<<<<"
+mplot tloss/mikeExD 
+echo ">>>>> mikeExE <<<<<"
+mplot tloss/mikeExE 
+echo ">>>>> norda3a <<<<<"
+mplot tloss/norda3a 
+echo ">>>>> norda3ac2 <<<<<"
+mplot tloss/norda3ac2 
+echo ">>>>> RSWT2b <<<<<"
+mplot tloss/RSWT2b
+echo ">>>>> RSWT3b <<<<<"
+mplot tloss/RSWT3b
+echo ">>>>> ASAwedgeE <<<<<"
+mplot tloss/ASAwedgeE 
+echo ">>>>> SACL_circle_F <<<<<"
+mplot tloss/SACL_circle_F 
+date
+echo '-------------------------------------------'
+echo 'All done'
+echo '-------------------------------------------'

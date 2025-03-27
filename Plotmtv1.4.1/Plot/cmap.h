@@ -1,0 +1,12 @@
+void colorscale_hsv    (int , int * , int * , int * );
+void colorscale_gray   (int , int * , int * , int * );
+void colorscale_hot    (int , int * , int * , int * );
+void colorscale_cool   (int , int * , int * , int * );
+void colorscale_bone   (int , int * , int * , int * );
+void colorscale_copper (int , int * , int * , int * );
+void colorscale_pink   (int , int * , int * , int * );
+void colorscale_jet    (int , int * , int * , int * );
+void colorscale_astro  (int , int * , int * , int * );
+void colorscale_heat   (int , int * , int * , int * );
+void colorscale_srb    (int , int * , int * , int * );
+void colorscale_lrb    (int , int * , int * , int * );

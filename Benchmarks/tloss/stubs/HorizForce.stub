@@ -1,0 +1,208 @@
+      128                                              MODU
+ OASTL STLRAN NWR COL
+                                                                
+ (a)                                       
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     50.0 m$ 
+ RD:     70.0 m$ 
+     15.0000                                           XLEN
+     9.00000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    1.500000E+00                                      XLEFT
+     4.00000                                         XRIGHT
+     .500000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     80.000                                          YDOWN
+     40.0000                                            YUP
+     10.00000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB)$                                                        
+ LIN
+        3                                                NC
+       999                                                N
+    1.99800E+00                                       XOFF
+    0.199994E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+>>>
+        500                                                   N
+    0.00000                                           RMIN
+    0.8E-02                                      RSTEP
+    0.000000E+00                                       YMIN
+    0.000000E+00                                         DY
+ OASTL WTLRAN NWR COL
+                                                                
+ (b)                                       
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     50.0 m$ 
+ RD:     70.0 m$ 
+     15.0000                                           XLEN
+     9.00000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    1.500000E+00                                      XLEFT
+     4.00000                                         XRIGHT
+     .500000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     90.000                                          YDOWN
+     50.0000                                            YUP
+     10.00000                                           YINC
+     1.00000                                           YDIV
+ Velocity w (dB re 1um/s)$                                             
+ LIN
+        3                                                NC
+     999                                                 N
+    1.998000E+00                                       XOFF
+    0.199994E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+>>>
+        500                                                  N
+    0.00000                                           RMIN
+    0.8E-02                                      RSTEP
+    0.000000E+00                                       YMIN
+    0.000000E+00                                         DY
+ OASTL UTLRAN NWR COL
+                                                                
+ (c)                                       
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     50.0 m$ 
+ RD:     70.0 m$ 
+     15.0000                                           XLEN
+     9.00000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    1.500000E+00                                      XLEFT
+     4.00000                                         XRIGHT
+     0.500000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     80.000                                          YDOWN
+     50.0000                                            YUP
+     10.00000                                           YINC
+     1.00000                                           YDIV
+ Velocity u (dB re 1um/s)$                                              
+ LIN
+        3                                                NC
+     999                                                 N
+    1.998000E+00                                       XOFF
+    0.199994E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+>>>
+        500                                                  N
+    0.00000                                           RMIN
+    0.8E-02                                      RSTEP
+    0.000000E+00                                       YMIN
+    0.000000E+00                                         DY
+ OASTL STLRAN NWR COL
+                                                                
+ (a)                                       
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     50.0 m$ 
+ RD:     70.0 m$ 
+     15.0000                                           XLEN
+     9.00000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    0.000000E+00                                      XLEFT
+     2.50000                                         XRIGHT
+     0.50000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     80.000                                          YDOWN
+     50.0000                                            YUP
+     5.00000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB)$                                                        
+ LIN
+        3                                                NC
+     1001                                                 N
+    0.000000E+00                                       XOFF
+    0.199994E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+>>>
+        500                                                  N
+    0.00000                                           RMIN
+    0.8E-02                                      RSTEP
+    0.000000E+00                                       YMIN
+    0.000000E+00                                         DY
+ OASTL WTLRAN NWR COL
+                                                                
+ (b)                                       
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     50.0 m$ 
+ RD:     70.0 m$ 
+     15.0000                                           XLEN
+     9.00000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+     1.00000                                         XLEFT
+     2.50000                                         XRIGHT
+     0.500000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     90.000                                          YDOWN
+     50.0000                                            YUP
+     5.00000                                           YINC
+     1.00000                                           YDIV
+ Velocity w (dB re 1um/s)$                                             
+ LIN
+        3                                                NC
+     1001                                                 N
+    0.000000E+00                                       XOFF
+    0.199994E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+>>>
+        500                                                  N
+    0.00000                                           RMIN
+    0.8E-02                                      RSTEP
+    0.000000E+00                                       YMIN
+    0.000000E+00                                         DY
+ OASTL UTLRAN NWR COL
+                                                                
+ (c)                                       
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     50.0 m$ 
+ RD:     70.0 m$ 
+     15.0000                                           XLEN
+     9.00000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    0.000000E+00                                      XLEFT
+     2.50000                                         XRIGHT
+     0.50000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     90.000                                          YDOWN
+     50.0000                                            YUP
+     5.00000                                           YINC
+     1.00000                                           YDIV
+ Velocity u (dB re 1um/s)$                                              
+ LIN
+        3                                                NC
+     1001                                                 N
+    0.000000E+00                                       XOFF
+    0.199994E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+>>>
+        500                                                  N
+    0.00000                                           RMIN
+    0.8E-02                                      RSTEP
+    0.000000E+00                                       YMIN
+    0.000000E+00                                         DY
+ SAFTL PLTEND
+
+

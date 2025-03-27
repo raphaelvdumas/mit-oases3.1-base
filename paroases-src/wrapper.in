@@ -1,0 +1,6 @@
+#! @BASH@
+#
+# Wrapper for PAROASP scripts which set up the correct PYTHONPATH.
+
+PYTHONPATH=@CMAKE_INSTALL_PREFIX@/@PYTHON_SITE@:${PYTHONPATH} @PYTHON_EXECUTABLE@ @CMAKE_INSTALL_PREFIX@/@PYTHON_SITE@/paroases/@wrapper_target@ $@
+

@@ -1,0 +1,34 @@
+#!/usr/local/bin/tcsh
+mv ./tloss/HorizForce.plt ./tloss/HorizForce.plt.old
+#mv ./tloss/HorizForce.plp ./tloss/HorizForce.plp.old
+#./bin/make_plug ./run/HorizForce ./tloss/stubs/HorizForce ./tloss/HorizForce
+cat ./refs/BEM/bm-ideal3000H.bem.fns.dat  ./run/HorizForce.rdo.par1.for.rx1.dat > f1
+cat ./refs/BEM/bm-ideal3000H.bem.fvw.dat  ./run/HorizForce.rdo.par2.for.rx1.dat > f2
+cat ./refs/BEM/bm-ideal3000H.bem.fvu.dat  ./run/HorizForce.rdo.par3.for.rx1.dat > f3
+cat ./refs/BEM/bm-ideal3000H.bem.bns.dat  ./run/HorizForce.rdo.par1.bac.rx1.dat > f4
+cat ./refs/BEM/bm-ideal3000H.bem.bvw.dat  ./run/HorizForce.rdo.par2.bac.rx1.dat > f5
+cat ./refs/BEM/bm-ideal3000H.bem.bvu.dat  ./run/HorizForce.rdo.par3.bac.rx1.dat > f6
+cat f1  ./refs/CORE/HorizForce.gem.par1.for.rx1.dat > g1
+cat f2  ./refs/CORE/HorizForce.gem.par2.for.rx1.dat > g2
+cat f3  ./refs/CORE/HorizForce.gem.par3.for.rx1.dat > g3
+cat f4  ./refs/CORE/HorizForce.gem.par1.bac.rx1.dat > g4
+cat f5  ./refs/CORE/HorizForce.gem.par2.bac.rx1.dat > g5
+cat f6  ./refs/CORE/HorizForce.gem.par3.bac.rx1.dat > g6
+cat g1 g2 g3 g4 g5 g6 > ./tloss/HorizForce.plt
+rm -f f? g? 
+if ( $#argv == 1 ) then
+  if ($argv[1] == "S") then
+# Silent mode selected if argument is S
+  else
+# Plotting mode otherwise
+mplot ./tloss/HorizForce
+  endif 
+else
+# Plotting mode as default with no arguments
+mplot ./tloss/HorizForce
+endif
+
+
+## Par1 -> Normal stress
+## Par2 -> Displacement w
+## Par3 -> Displacement u

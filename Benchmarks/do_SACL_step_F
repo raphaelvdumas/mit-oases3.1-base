@@ -1,0 +1,8 @@
+echo '-------------------------------------------'
+date
+echo 'Start SACLANT step discontinuity (FLUID)'
+rdoast  ./input/SACL_step_F > ./logs/SACL_step_F.out
+mv ./input/SACL_step_F.pl? ./run
+pltsplit -f ./run/SACL_step_F -b 2 -p 1 -r 2 -d 3
+./bin/SACL_step_F S
+echo 'End SACLANT step discontinuity (FLUID)'

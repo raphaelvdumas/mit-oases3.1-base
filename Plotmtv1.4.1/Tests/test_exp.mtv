@@ -1,0 +1,20 @@
+$DATA=CURVE2D
+
+% xlog ylog
+
+% xmin=1 ymin=1e-10
+% xmax=1e6 ymax=1e5
+
+% linecolor=2
+% markertype=3
+  0.1   0.1
+  1.0   1.0
+ 10.0  10.0
+100.0 100.0
+
+% linecolor=3
+% markertype=5
+  0.1   0.2
+100.0 200.0
+
+@line x1=0.1 y1=0.15 x2=10.0 y2=15.0

@@ -1,0 +1,24 @@
+#!/usr/local/bin/tcsh
+mv ./tloss/RSWT2a.plt ./tloss/RSWT2a.plt.old
+mv ./tloss/RSWT2a.plp ./tloss/RSWT2a.plp.old
+./bin/make_plug ./run/RSWT2a ./tloss/stubs/RSWT2a ./tloss/RSWT2a
+cat ./refs/COUPLE/RSW2a.ps.for.r45.dat ./run/RSWT2a.rdo.par1.for.rx1.dat > f1
+cat ./refs/COUPLE/RSW2a.ps.bac.r45.dat ./run/RSWT2a.rdo.par1.bac.rx1.dat > f2
+cat ./refs/COUPLE/RSW2a.ps.tot.r45.dat ./run/RSWT2a.rdo.par1.tot.rx1.dat > f3
+cat f1 ./refs/CORE/RSWT2a.gem.par1.for.rx1.dat > ff1
+cat f2 ./refs/CORE/RSWT2a.gem.par1.bac.rx1.dat > ff2
+cat f3 ./refs/CORE/RSWT2a.gem.par1.tot.rx1.dat > ff3
+cat ff1 ff2 ff3 >  ./tloss/RSWT2a.plt
+rm -f f? ff? 
+if ( $#argv == 1 ) then
+  if ($argv[1] == "S") then
+# Silent mode selected if argument is S
+  else
+# Plotting mode otherwise
+mplot ./tloss/RSWT2a
+  endif 
+else
+# Plotting mode as default with no arguments
+mplot ./tloss/RSWT2a
+endif
+

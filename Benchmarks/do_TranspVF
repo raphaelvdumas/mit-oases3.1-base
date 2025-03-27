@@ -1,0 +1,8 @@
+echo '-------------------------------------------'
+date
+echo 'Start Transparent vertical Point Force test'
+rdoast ./input/TranspVF > ./logs/TranspVF.out
+mv ./input/TranspVF.pl? ./run
+pltsplit -f ./run/TranspVF -b 2 -p 3 -r 1 -d 1
+./bin/TranspVF S
+echo 'End Transparent vertical Point Force test'

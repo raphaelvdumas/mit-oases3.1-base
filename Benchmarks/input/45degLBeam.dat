@@ -1,0 +1,27 @@
+F-S CORNER - point source (1 beam at 45 deg)
+P N T C J B q 
+16.6777 16.6777 1 0.0			# FREQ_FIRST,FREQ_LAST,NFREQ,OFFDB
+2 1					# NCUT = No. of vertical cuts
+
+4 0.25					# NUML, RANGE(1)
+0   0 0 0 0 0 0                         # LAYER 1 ; SECTOR 1
+0   1500 0 0.0 0.0 1.0 0        	#       2 
+250 1500 0 0.0 0.0 1.0 0        	#       3
+500 1500 0 0.0 0.0 1.0 0        	#       4
+
+4 0.25					# NUML, RANGE(2)
+0   0 0 0 0 0 0                         # LAYER 1 ; SECTOR 1
+0   1500 0 0.0 0.0 1.0 0        	#       2 
+250 3000 900 0.2 0.5 1.5 0        	#       3
+500 3000 900 0.2 0.5 1.5 0        	#       4
+
+30.					# SOURCE DEPTH
+0.1 500. 101 1				# CONTOUR RECEIVER DEPTHS
+100. 300. 2
+500  -500        			# CMIN CMAX
+-1 1 1	 	      			# NWVNO ICUT1 ICUT2
+0.0 0.5 15. 0.1    			# XLEFT XRIGHT XAXIS XINC
+0 40 9. 10. 				# LOSS LEVELS IN DB
+0. 500.0 10 100				# DEPTH AXIS FOR CONTOUR PLOTS
+30 90 6
+

@@ -1,0 +1,23 @@
+
+This directory contains programs to convert from the Berkeley contour,
+pdraw and drawplot formats to the MTVDAT format used by plotmtv.
+
+Usage:
+
+   ctr2mtv [-b] [-o outfile] file1 file2 ...
+   pdraw2mtv [-b] [-o outfile] file1 file2 ...
+   drawplot2mtv [-b] [-o outfile] file1 file2 ...
+
+   where 
+     -b     forces output in a machine-dependent binary format.
+            The data file created in this fashion cannot be edited manually.
+            Also the data file cannot be read in on a different platform.
+            By default, the programs write in ASCII format.
+
+     -o outfile
+            Specifies the name of the MTVDAT output file
+
+     file1 file2...
+            The names of the original data files.  Each program expects 
+            data-files in specific formats, i.e. ctr2mtv expects contour
+            formatted files.  

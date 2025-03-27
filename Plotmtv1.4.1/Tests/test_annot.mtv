@@ -1,0 +1,185 @@
+$ DATA=CURVE2D  
+
+# This datafile illustrates the use of annotations
+
+% vymax=1.2
+
+# Define fake data
+% linetype=0 filltype=4
+0.0 0.0
+1.2 0.0
+1.2 0.7
+0.0 0.7
+0.0 0.0
+
+
+# define annotations
+#
+# By default, annotations are defined in data coordinates 
+#
+# Annotations can also be specified by their position on a page (plot)
+# in which case the coordinates are given such that 0<x<1 and 0<y<1;
+# the actual position of the annotation is obtained from x*width,y*height
+# This scheme however has the disadvantage that the position of an
+# annotation in an X plot is slightly different from that on a Postscript plot.
+#
+
+#
+# Rectangle annotations
+#
+# syntax:
+#   @ rectangle P1 P2 [properties]
+#
+#   P1=lower left corner
+#   P2=upper right corner
+#   The linelabel is placed at the center of the rectangle 
+#
+
+# rectangle with background color (white in Postscript) and solid fill
+@ rectangle x1=0.1 y1=0.2 z1=0.0 x2=0.3 y2=0.6 z2=0.0 \
+fillcolor=-1 filltype=1 linelabel="Solid Rect"
+
+# rectangle with no fill (outline) - this is the default
+@ rectangle x1=0.4 y1=0.2 z1=0.0 x2=0.6 y2=0.6 z2=0.0 \
+fillcolor=0 filltype=0 linelabel="Rect Outline"
+
+# rectangle with foreground color (black in Postscript) and solid fill 
+@ rectangle x1=0.7 y1=0.2 z1=0.0 x2=0.9 y2=0.6 z2=0.0 \
+fillcolor=0 filltype=1 linelabel="Solid Rect"
+
+# rectangle with striped fill, extends outside data-boundaries (default clip)
+@ rectangle x1=1.0 y1=0.2 z1=0.0 x2=1.5 y2=0.35 z2=0.0 \
+filltype=2 linelabel="Clipped Rect"
+
+# rectangle with striped fill, extends outside data-boundaries (no clip)
+@ rectangle x1=1.0 y1=0.45 z1=0.0 x2=1.5 y2=0.6 z2=0.0 \
+fillcolor=2 filltype=2 linelabel="UnClipped Rect" doclip=false
+
+# Plot this rectangle in absolute coordinates (x=0..1, y=0..1)
+@ rectangle x1=0.05 y1=0.05 x2=0.50 y2=0.1 linetype=2 absolute=true \
+linelabel="This rectangle doesn't scale with the plot"
+
+#
+# Line annotations
+#
+# syntax:
+#   @ line P1 P2 [properties]
+#
+#               P1----------------P2
+#             label
+#
+#   P1=starting point
+#   P2=ending point
+#   The linelabel is placed at the starting-point (P1)
+#   and left-justified if P1.x > P2.x, and right-justified if P1.x < P2.x,
+#   and center-justified if P1.x = P2.x
+#
+
+# default line
+@ line      x1=0.90 y1=0.75 z1=0.0 x2=0.62 y2=0.89 z2=0.0 \
+linelabel="Right Label"
+
+# Label centered at P2 
+@ line      x1=0.60 y1=0.75 z1=0.0 x2=0.60 y2=0.88 z2=0.0 \
+linelabel="Centered Label (1)"
+
+# Label centered at P2 
+@ line      x1=0.60 y1=1.10 z1=0.0 x2=0.60 y2=0.92 z2=0.0 \
+linelabel="Centered Label (2)"
+
+# Label to the left of the line
+@ line      x1=0.30 y1=0.75 z1=0.0 x2=0.58 y2=0.89 z2=0.0 \
+linelabel="Left Label"
+
+# Labels at right corner of plot
+@ line      x2=0.90 y2=0.60 x1=0.94 y1=0.60 \
+linetype=1 absolute=True linelabel="Ln 1"
+@ line      x2=0.90 y2=0.57 x1=0.94 y1=0.57 \
+linetype=2 absolute=True linelabel="Ln 2"
+
+#
+# Arrow annotations
+#
+# syntax:
+#   @ arrow P1 P2 [properties]
+#
+#               P1--------------->P2
+#             label
+#
+#   P1=starting point 
+#   P2=ending point 
+#   The linelabel is placed at the starting-point (P1)
+#   and left-justified if P1.x > P2.x, and right-justified if P1.x < P2.x,
+#   and center-justified if P1.x = P2.x
+#
+
+# default line
+@ arrow     x1=0.90 y1=1.10 z1=0.0 x2=0.62 y2=0.91 z2=0.0 \
+linelabel="Right Arrow"
+ 
+# Label to the left of the line
+@ arrow     x1=0.30 y1=1.10 z1=0.0 x2=0.58 y2=0.91 z2=0.0 \
+linelabel="Left Arrow"
+
+# Labels at right corner of plot
+@ arrow     x2=0.90 y2=0.75 x1=0.94 y1=0.75 \
+linetype=1 linecolor=1 absolute=True linelabel="Ar 1"
+@ arrow     x2=0.90 y2=0.72 x1=0.94 y1=0.72 \
+linetype=1 linecolor=2 absolute=True linelabel="Ar 2"
+
+
+#
+# Marker(point) annotations
+#
+# syntax:
+#   @ point P1 [properties]
+#
+#   P1=coordinates 
+#   The linelabel is left-justified and on the right of P1
+#
+
+# single point
+@ point     x1=0.1 y1=1.00 z1=0.0 linelabel="Default Point"
+
+# another point 
+@ point     x1=0.1 y1=0.95 z1=0.0 markertype=5 markersize=3 linelabel="Square Point"
+
+# another point 
+@ point     x1=0.1 y1=0.90 z1=0.0 markertype=7 markersize=3 linelabel="Diamonds are forever"
+
+# Set of points at the left side of the plot
+@ point     x1=0.90 y1=0.90 markertype=1 absolute=True
+@ point     x1=0.94 y1=0.90 markertype=1 absolute=True linelabel="Mk 1"
+@ point     x1=0.90 y1=0.87 markertype=2 absolute=True
+@ point     x1=0.94 y1=0.87 markertype=2 absolute=True linelabel="Mk 2"
+
+#
+# Text (label) annotations
+#
+# syntax:
+#   @ text P1 [properties]
+#
+#   P1=coordinates of center of label
+#   The linelabel is centered around P1
+#
+
+# label
+@ text      x1=0.1 y1=0.85 z1=0.0 linelabel="Hello, World"
+
+# label in absolute coordinates
+@ text      x1=0.5 y1=0.9 z1=0.0 linelabel="Centered Label" absolute=True
+
+$END
+
+# arrow
+@ arrow     x1=0.3 y1=0.3 z1=1.0 x2=0.7 y2=0.8 z2=1.0 \
+linewidth=3 linecolor=0
+
+# line
+@ line      x1=0.9 y1=0.3 z1=1.0 x2=2.0 y2=0.8 z2=1.0 \
+linewidth=3 linecolor=0 markertype=3
+
+
+# label
+@ text      x1=1.1 y1=0.9 z1=1.0 linelabel="(Hello, World)"
+$ QUIT 

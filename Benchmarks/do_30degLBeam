@@ -1,0 +1,9 @@
+echo '-------------------------------------------'
+date
+echo 'Start 30-deg Lloyd mirror beam'
+rdoast ./input/30degLBeam > ./logs/30degLBeam.out
+mv ./input/30degLBeam.pl? ./run
+mv ./input/30degLBeam.?dr ./run
+pltsplit -f ./run/30degLBeam -b 2 -p 1 -r 2 -d 3
+./bin/30degLBeam S
+echo 'End 30-deg Lloyd mirror beam'

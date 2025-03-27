@@ -1,0 +1,8 @@
+echo '-------------------------------------------'
+date
+echo 'Start Modified NORDA 3a'
+rdoast  ./input/norda3a > ./logs/norda3a.out            
+mv ./input/norda3a.pl? ./run
+pltsplit -f ./run/norda3a -b 2 -p 1 -r 2 -d 1
+./bin/norda3a S
+echo 'End Modified NORDA 3a'

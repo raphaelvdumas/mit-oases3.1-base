@@ -1,0 +1,21 @@
+$ DATA=CONTOUR 
+
+# This one is perfect 
+
+# Dataset/plotset options
+% toplabel   = "Default Contour Lines" 
+% subtitle   = "RGB colorscale, 32 colors"
+% contfill
+% nsteps=34
+% vxmin=0.5 vxmax=1.0
+
+# Define the headers
+% xmin = 0.1  xmax = 2.1
+% ymin = 0.0  ymax = 1.0
+% nx   = 5
+% ny   = 3
+0.0 0.0 0.0 0.0 0.0
+0.0 1.0 0.0 1.0 0.0
+0.0 0.0 1.0 0.0 0.0
+
+$ QUIT 

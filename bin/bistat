@@ -1,0 +1,199 @@
+#!/bin/sh
+#
+# Script for generating bistatic reverb with OASSP
+# 7/4/00
+# Henrik Schmidt
+#
+#------------------------------------------------------------------
+#
+#       CHECK COMMAND LINE INPUT 
+#
+#------------------------------------------------------------------
+program=`basename $0`
+requirement='oasp oassp oasp2 oassp2'
+set -- `getopt "cl:u:rsv:f:" "$@"` || { 
+   exit 1 
+}
+concat=0
+nfl=-999
+nfu=-999
+while :
+do
+  case "$1" in
+    -c) concat=1;;
+    -l) shift; nfl="$1";;
+    -u) shift; nfu="$1";;
+    --) break;;
+  esac
+  shift
+done
+shift
+
+NF=$1;shift
+PRO=`basename $1 .dat`;shift
+INC=`basename $1 .dat`;shift
+#
+echo ${program}
+echo
+echo " Check required executibles in path"
+echo
+for xxx in $requirement
+do 
+  xxx=`echo $xxx | sed -e 's/,//'`
+  yyy=`which $xxx | sed -e 's/ //g'`
+  if [ -x $yyy ]; then
+    echo $yyy
+  else
+    echo " ------------------------------------------------- "
+    echo " $xxx is not availible in path" 1>&2
+    echo ">>> TERMINATE <<<" 1>&2
+    exit 1
+  fi
+done
+echo
+unset xxx
+unset yyy
+
+#
+# check optional lower frequency number (nfl)
+#
+if [ $nfl -ne -999 ]; then
+  if [ $nfl -lt 1 ]; then
+    echo "nfl <1"; exit 1
+  elif [ $nfl -gt $NF ]; then
+    echo "nfl > ${NF}"; exit 1
+  fi
+else
+  nfl=1
+fi
+#
+# check optional upper frequency number (nfu)
+#
+if [ $nfu -ne -999 ]; then
+  if [ $nfu -lt 1 ]; then
+    echo "nfu <1"; exit 1
+  elif [ $nfu -gt $NF ]; then
+    echo "nfu > ${NF}"; exit 1
+  fi
+else
+  nfu=$NF
+fi
+#
+# check nfl and nfu
+#
+if [ $nfl -gt $nfu ]; then
+  echo "nfl > nfu : swap them"
+  ii=$nfl
+  nfl=$nfu
+  nfu=$ii
+fi
+
+#
+# master propagation input.
+#
+printf " Master reverb data file ="
+  if [ ! -r ${PRO}.dat ]; then
+    echo " ------------------------------------------------- "
+    echo " Master scattering input" ${PRO}.dat "unavailible" 1>&2
+    echo ">>> TERMINATED <<<" 1>&2
+    exit 1
+  fi
+
+
+#
+# master incident input.
+#
+echo " Master incident field data file    = ${INC}.dat"
+if [ ! -r ${INC}.dat ]; then
+ echo " ------------------------------------------------- "
+ echo " Master incident input unavailible" 1>&2
+ echo ">>> TERMINATED <<<" 1>&2
+ exit 1
+fi
+
+#
+# set up parameters.
+#
+printf " Lowest bin number        = %12d\n"    ${nfl}
+printf " Highest bin number       = %12d\n"    ${nfu}
+#------------------------------------------------------------------
+#
+#       WRITE RECORD FILE               
+#
+#------------------------------------------------------------------
+  RUN=Sc-${INC}
+  if [ ! -d ${RUN} ]; then
+    mkdir ${RUN}
+  fi
+  cp ${INC}.dat ${RUN}/.
+record=${RUN}.log
+if [ -e $record ]; then
+ rm -f $record
+fi
+
+printf "%20i\t! number of Fourier bins\n" ${NF} >> $record 
+#------------------------------------------------------------------
+#
+#       Fourier bin LOOP
+#
+#------------------------------------------------------------------
+  cp ${PRO}.dat ${RUN}/.
+
+i=`expr $nfl - 1`
+if [ $NF -lt 10 ]; then
+   digit=1
+elif [ $NF -lt 100 ]; then
+   digit=2
+elif [ $NF -lt 1000 ]; then
+   digit=3
+elif [ $NF -lt 10000 ]; then
+   digit=4
+elif [ $NF -lt 100000 ]; then
+   digit=5
+elif [ $NF -lt 1000000 ]; then
+   digit=6
+elif [ $NF -lt 10000000 ]; then
+   digit=7
+fi
+
+#  Incident field
+
+oasp ${INC}
+
+while [ $i -lt $nfu ]
+do 
+  i=`expr $i + 1`
+  ii=`printf "%${digit}.${digit}d\n" ${i}`
+  M=`echo "( ${i}/2 ) " | bc -l`
+  echo " ==================================================== "
+  echo "         Bin = ${i} -  Order = ${M}"
+  echo " ==================================================== "
+  
+  echo " >>> oast : incident field. <<<"
+  prodat=${PRO}-${ii}
+  sed -e "s/<order>/${i}/g" ${PRO}.dat > ${prodat}.dat
+  echo " >>> Reverberant field computation <<<"
+  oassp ${prodat} ${INC}
+  rm -f ${prodat}.dat 
+
+    echo " >>> move and compress outputs. <<<"
+    if [ -e ${prodat}.trf.gz ]; then
+      rm -f ${prodat}.trf.gz
+    fi
+    gzip ${prodat}.trf
+    mv ${prodat}.trf.gz ${RUN}/.
+    printf "%20i    %20i    %s\n" ${i} ${M} ${prodat} >> $record
+  echo " >>> ${i} th cylcle done. <<<"
+done
+printf "----------END OF RECORD----------\n" >> $record
+echo
+
+if [ $concat -eq 1 -a $nfl -eq 1 -a $nfu -eq $NF ]; then
+  echo " >>> Assemble trf files <<<"
+    BASE=${PAR}-${PRO}
+    cd ${RUN}
+    trford ${NF} ${BASE} ${BASE}_all
+    cd ..
+fi
+echo "${program} : done"
+

@@ -1,0 +1,138 @@
+#
+# Makefile for building plotting utility libraries and test program
+#
+
+# Your favorite compiler
+CC      = cc
+
+# For installation
+INSTALL = install
+BINDIR  = ../Bin
+
+# Includes
+# LIBDIR points to the location of the contouring library header files.
+# INCDIR is the location of the X11 header files (typ /usr/include/X11)
+# If your X11 includes are not in the usual location, e.g. if they
+# are in /usr/include/X11R4 then use
+# INCDIR  = /usr/include/X11R4
+LIBDIR  = ../Lib
+INCDIR  = /usr/X11R4/include
+INCLUDE = -I$(INCDIR) -I$(LIBDIR) 
+
+# Your favorite printer and the printer command
+DEFINES = -DPRINTER_NAME=\"hpps\" -DPRINTER_CMD=\"lpr\ -h\"
+# For HP machines
+#DEFINES = -DPRINTER_NAME=\"hpps\" -DPRINTER_CMD=\"lp\"
+
+# If you want to optimize, then use -O
+CFLAGS  = -g $(DEFINES) $(INCLUDE)
+
+# Libraries
+# If your X11 libraries are not in the typical location (/usr/lib/X11)
+# then put in the path to the library, e.g.
+# LIBPATH=-L/usr/lib/X11R4
+LIBPATH = 
+XLIBS   = -lX11 
+LIBS    = $(LIBPATH) $(XLIBS) -lm
+
+#
+# DON'T CHANGE ANYTHING ELSE AFTER THIS
+#
+
+#
+# Reusable X11/PS plot utilities
+#
+PLOT_SOURCES =    plotX11_cmn.c plotX11_2D.c plotX11_3D.c \
+                  plotps_cmn.c plotps_2D.c plotps_3D.c \
+                  plotcmn.c 
+
+PLOT_OBJECTS =    plotX11_cmn.o plotX11_2D.o plotX11_3D.o \
+                  plotps_cmn.o plotps_2D.o plotps_3D.o \
+                  plotcmn.o
+
+PLOT_HEADER  =    PXplot.h \
+                  $(LIBDIR)/CNplot.h $(LIBDIR)/CNplot3D.h 
+
+PLOT_LIBRARY =    plot.a
+
+#
+# Basic plotting library
+#
+CONTOUR_LIBRARY = $(LIBDIR)/libctr.a
+LIBRARY         = $(PLOT_LIBRARY) $(CONTOUR_LIBRARY)
+
+#
+# Test program that uses most of the utilities
+#
+TEST_SOURCES = test_plotmtv.c test_plotX11.c test_plotX11_mult.c
+TEST_OBJECTS = test_plotmtv.o test_plotX11.o test_plotX11_mult.o
+TEST_HEADER  = PXplot.h patchlevel.h
+TEST_PROGRAM = plotmtv
+
+
+all: $(PLOT_LIBRARY) $(TEST_PROGRAM)
+
+test: $(TEST_PROGRAM)
+
+#
+# Compile the plot-specific routines and put it in a library
+#
+$(PLOT_LIBRARY) : $(PLOT_OBJECTS)
+	ar ruv $(PLOT_LIBRARY) $(PLOT_OBJECTS)
+	ranlib $(PLOT_LIBRARY)
+
+$(PLOT_OBJECTS) : $(PLOT_HEADER)
+plotX11_cmn.o plotX11_2D.o plotX11_3D.o : plotX11.h
+plotps_cmn.o plotps_2D.o plotps_3D.o : plotps.h
+
+#
+# Compile a test program to test plotting routines
+#
+$(TEST_PROGRAM) : $(LIBRARY) $(TEST_OBJECTS)
+	$(CC) $(CFLAGS) -o $(TEST_PROGRAM) $(TEST_OBJECTS) \
+	$(LIBRARY) $(LIBS)
+
+$(TEST_OBJECTS) : $(TEST_HEADER)
+
+#
+# For saber C
+#
+saber: $(TEST_SOURCES) $(PLOT_SOURCES)
+	#load -I$(INCDIR) -I$(LIBDIR) $(TEST_SOURCES) $(PLOT_SOURCES) $(CONTOUR_LIBRARY) $(LIBS)
+
+#
+# For purify 
+#
+purify : $(LIBRARY) $(TEST_OBJECTS)
+	purify $(CC) $(CFLAGS) -o $(TEST_PROGRAM) $(TEST_OBJECTS) \
+	$(LIBRARY) $(LIBS)
+
+$(TEST_OBJECTS) : $(TEST_HEADER)
+
+# 
+# Clean
+#
+cleanall : clean
+	rm -f $(PLOT_LIBRARY) $(TEST_PROGRAM)
+clean : 
+	rm -f $(PLOT_OBJECTS) $(TEST_OBJECTS) core dataplot.ps
+
+# 
+# Lint
+#
+lint :
+	lint -u $(INCLUDE) $(PLOT_SOURCES) $(TEST_SOURCES) | sed -e /\\/usr\\/include/D
+
+#
+# Backup
+#
+BACKUP = Backup
+backup :
+	-if [ ! -d $(BACKUP) ]; then mkdir $(BACKUP); fi 
+	cp Makefile *.[ch] $(BACKUP)
+
+#
+# Install
+#
+install::
+	$(INSTALL) -c $(TEST_PROGRAM) $(BINDIR)

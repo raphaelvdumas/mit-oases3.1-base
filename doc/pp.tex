@@ -1,0 +1,573 @@
+\section{PP - The OASES Pulse Post-processor}
+\label{postproc}
+    The  post-processor  PP  convolves  the  transfer   functions 
+produced  by OASP, RDOASP, OASP3D or SUPERSNAP with an interactively selected 
+source  spectrum 
+and   performs  the  inverse  Fourier  transform   yielding   the 
+synthetics.
+
+    The  synthetics  are  plotted directly using  MINDIS or PLOTMTV,  and  a 
+hardcopy  can  be  requested  after each plot 
+Alternatively,  a  trace file can be created in  a  user  specified 
+format, containing the computed timeseries.
+
+\subsection{Executing PP}
+
+    PP is menu-driven, with the menus being  machine-independent. 
+The  program  is  executed directly  without  any  parameters  or 
+switches by issuing the command {\bf pp}, prompting with the menu:
+
+\small
+\begin{verbatim}
+ ********************************************************************
+ *                     OASES PULSE POST-PROCESSOR                   *
+ ********************************************************************
+ *  1. File name:      temmllra.trf                                 *
+ *  2. Source type:           2     (    -1 -    6 )                *
+ *  3. Source file:    tria.sou                                     *
+ *  4. Min frequency:         0.000  Hz                             *
+ *  5. Max frequency:         0.000  Hz                             *
+ *  6. Cen frequency:         0.000  Hz                             *
+ *  7. Plot options:   SHD,POS                                      *
+ *  8. Contour options:CPX                                          *
+ *  9. Depth stacked:                                               *
+ * 10. Range stacked:                                               *
+ * 11. Azimuth stacked:                                             *
+ * 12. Individual:                                                  *
+ * 13. Transmission Los                                             *
+ * 14. Snap shots:                                                  *
+ * 15. Source pulses:                                               *
+ * 16. Demodulation:          N     ( Y/N )                         *
+ * 17. Log Traces:            N     ( Y/N )                         *
+ * 18. Save plot files:       N     ( Y/N )                         *
+ * 19. Trace format:          A     ( Asc/Cfs/Gld/Mat/Sdr )         *
+ * 20. Add TRF files:                                               *
+ * 21. Multiply TRF fil                                             *
+ * 22. Exit PP:                                                     *
+ ********************************************************************
+     SELECT OPTION: 1
+File name:      ?   input.trf
+\end{verbatim}
+\normalsize
+
+    The first option selected is 1 to specify the file name, here a
+file {\bf input.trf} containing transfer functions produced by OASP or
+another compatible code. PP now reads the header of the file and
+displays the frequency interval, the default source type (the source
+types 1-5 are those given in the SAFARI manual \cite{hs:saf}) and the
+center frequency specified in the OASP data file.  Any of these parameters may
+now be changed if desired. The plot options (field 7) can be specified
+in the format described in Sec.\,\ref{sec:mplot}, and similarly
+for the contour options (field 8) in Sec.\,\ref{sec:cplot}.
+
+\subsection{Source Pulses}
+
+PP has a set of built-in source pulses, selected in Field 2 of the PP
+main menu. Types 1 to 5 are those available in SAFARI \cite{hs:saf}.
+
+Type 6 is a new pulse type. It is generated as a Hanning windowed sine
+wave with a duration corresponding to the bandwidth of
+the transfer function in the {\bf trf}-file. This source pulse
+minimizes artificial ringing of the response due to the truncation of
+the transfer function and is the recommended pulse type for narrow
+band propagation problems.
+
+Type $-1$ yields the band-limited impulse response by simply
+eliminating the source pulse convolution. To reduce truncation ringing
+the transfer function is Hermite-extrapolated before being Fourier
+transformed.
+
+Type 0 lets the user input his own pulse shape. The source pulse
+should be defined in an ASCII file in the following format:
+
+
+\begin{tabular}{cc}
+$t_0$ & $p_0$ \\
+$t_1$ & $p_1$ \\
+$t_2$ & $p_2$ \\
+$t_3$ & $p_3$ \\
+  :   &   :   \\
+  :   &   :   \\
+$t_n$ & $p_n$ 
+\end{tabular}
+
+\noindent where $t_i$ is the time in seconds and $p_i$ is the
+corresponding source pulse amplitude. The time sampling does not have
+to be equidistant, and the file needs only contain the actual length
+of the source pulse. PP will use interpolation and zero-padding to
+conform with the time window and sampling defined by the {\bf
+trf}-file. The name of the source file is specified in Field~3 of the
+main menu. 
+
+\subsection{Trace file format}
+
+All timeseries submenues include the option of creating trace files,
+rather than the scaled plot files, for post-processing. A generic
+ASCII file format is the default, while the other formats represent
+site-specific costumizations. Thus, for example (\bf G} chooses the
+GLD format used extensively in the past by MIT/WHOI. As the latest
+addition (Version 2.2 and higher) the trace files may be generated
+directly in MATLAB-5\copyright  format ({\bf M}). The {\em
+matlab{\_}util} sub-directory contains a sample MATLAB script, \tt
+pp{\_}matreader.m \rm,  for reading
+the files.   
+ 
+All file formats include a header identifying the traces. Thus, for
+example, the ASCII file has a master header with information etc., and
+a sub-header for each trace with depth, range etc. The data for each
+trace then follow sequencially:
+
+\small
+\begin{verbatim}
+TEMME-MULLER. Auto f.                                                   
+           V          # Parameter
+           1          # Number of planes
+          23          # Number of traces
+        1001          # Number of samples/trace
+    1000.00           # Sampling frequency in Hz
+
+    600.000           # Range (m)
+    50.0000           # Depth (m)
+   0.000000E+00       # Bearing (deg)
+   0.000000E+00       # Starting time (sec)
+  -0.366703E-08  -0.292363E-08  -0.200186E-08  -0.977132E-09   0.445733E-10
+   0.947549E-09   0.163239E-08   0.203979E-08   0.216378E-08   0.205015E-08
+    .
+    .
+   0.253403E-06   0.303194E-06   0.327134E-06   0.318899E-06   0.278182E-06
+   0.211619E-06
+
+    600.000           # Range (m)
+    75.0000           # Depth (m)
+   0.000000E+00       # Bearing (deg)
+   0.000000E+00       # Starting time (sec)
+   0.371295E-08   0.323503E-08   0.249180E-08   0.154489E-08   0.474728E-09
+    .
+    .
+\end{verbatim}
+\normalsize
+
+Field 16 and 17 control the plot format for all timeseries plots and
+trace outputs. IF 'Y' is selected in field 16, all timeseries will be
+demodulated by the centre frequency to generate the magnitude complex
+signal envelope. If in addition 'Log traces' is chosen in field 17,
+the magnitude envelopes will be plotted or output in dB. This option
+is particularly useful when large dynamic range is needed, such as for
+reverberation simulations using OASSP.
+
+\newpage
+\subsection{Depth-Stacked Time Series}
+
+If  the 
+synthetics  should be depth-stacked, Field 9 is selected in the main
+menu,  showing  the sub-menu:
+
+\small
+\begin{verbatim} 
+ *********************************************************************
+ *                         DEPTH STACKED PLOTS                       *
+ *********************************************************************
+ *  1. Plot title:     TEMME-MULLER. Auto f.                         *
+ *  2. Min time:              0.000 s                                *
+ *  3. Max time:              1.000 s                                *
+ *  4. Time tick inc:         0.200 s                                *
+ *  5. t-axis length:        20.000 cm                               *
+ *  6. Depth down:          700.000 m                                *
+ *  7. Depth up:              0.000 m                                *
+ *  8. Depth tick inc:      100.000 m                                *
+ *  9. d-axis length:        15.000 cm                               *
+ * 10. d-axis label:   Depth (m)                                     *
+ * 11. Red. velocity:         0.000 m/s                              *
+ * 12. Range:                 0.600 km                               *
+ * 13. Azimuth:               0.000 deg                              *
+ * 14. Scale factor:          1.000                                  *
+ * 15. Parameter:             V     ( V H )                          *
+ * 16. Generate plot:                                                *
+ * 17. Trace file:                                                   *
+ * 18. Return:                      ( PP main menu )                 *
+ *********************************************************************
+     SELECT OPTION: 
+\end{verbatim} 
+\normalsize
+
+    The  menu should be self explanatory for users familiar  with 
+SAFARI, with only the following being particular to PP: 
+\begin{description}
+\item[Field 12]  selects the receiver range.
+\item[Field 13] specifies the azimuth of the receiver plane. This parameter
+is only significant for transfer functions with horizontal
+directionality, produced by OASP3D.
+\item[Field 14] represents a scaling factor which will be applied to 
+          all  traces. The default is 1.0, i.e. no  scaling,  but 
+          may be changes as desired.
+\item[Field 15]  represents  the  parameter to be  plotted, consistent
+with the options specified in the OASP data file, i.e.  with  N 
+          representing the normal stress or negative pressure  in 
+          fluids,  V  the vertical particle velocity  and  H  the 
+          horizontal  particle  velocity etc. The  bracket  indicates 
+          that   only  V and H  transfer   functions   are 
+          available  in the file, and the program will  therefore 
+          not allow any other choice.
+\item[Field 16] produces the plot with the specified parameters.
+\item[Field 17] produces  a  trace file containing  the  time 
+          series, in file format specified in main menu (default
+          ASCII). The trace file include all the timeseries which
+          would be included in the stacked plot.
+\item[Field 18] Returns to main menu for change of e.g. source data, 
+          plot format etc. 
+\end{description}
+
+\newpage
+\subsection{Range-Stacked Time Series}
+
+     If instead the range stacking was selected the following menu 
+appears:
+
+\small
+\begin{verbatim}
+ *********************************************************************
+ *                         RANGE STACKED PLOTS                       *
+ *********************************************************************
+ *  1. Plot title:     TEMME-MULLER. Auto f.                         *
+ *  2. Min time:              0.000 s                                *
+ *  3. Max time:              1.000 s                                *
+ *  4. Time tick inc:         0.200 s                                *
+ *  5. T-axis length:        20.000 cm                               *
+ *  6. Range down:           -0.500 km                               *
+ *  7. Range up:              1.000 km                               *
+ *  8. Range tick inc:        0.500 km                               *
+ *  9. R-axis length:        15.000 cm                               *
+ * 10. R-axis label:   Range (km)                                    *
+ * 11. Red. velocity:         0.000 m/s                              *
+ * 12. Depth:               600.000 m                                *
+ * 13. Azimuth:               0.000 deg                              *
+ * 14. Scale factor:          1.000                                  *
+ * 15. Range scaling?         N     ( Y/N )                          *
+ * 16. Parameter:             V     ( V H )                          *
+ * 17. Generate plot:                                                *
+ * 18. Trace file:                                                   *
+ * 19. Return:                      ( PP main menu )                 *
+ *********************************************************************
+      SELECT OPTION: 
+\end{verbatim}
+\normalsize 
+    The  menu should be self explanatory for users familiar  with 
+SAFARI, with only the following being particular to PP: 
+\begin{description}
+\item[Field 12] selcts the depth of the receivers to be stacked.
+\item[Field 13] specifies the azimuth of the receiver plane. This parameter
+is only significant for transfer functions with horizontal
+directionality, produced by OASP3D.
+\item[Field 14] represents a scaling factor which will be applied to 
+          all  traces. The default is 1.0, i.e. no  scaling,  but 
+          may be changes as desired.
+\item[Field 15]  enables/disables  the  range  scaling   (amplitudes 
+          multiplied  by  range). By defaults  range  scaling  is 
+          enabled.
+\item[Field 16]  represents  the  parameter to be  plotted,  with  N 
+          representing the normal stress or negative pressure  in 
+          fluids,  V  the vertical particle velocity  and  H  the 
+          horizontal  particle  velocity. The  bracket  indicates 
+          that   only  V and H  transfer   functions   are 
+          available  in the file, and the program will  therefore 
+          not allow any other choice.
+\item[Field 17] produces the plot with the specified parameters.
+\item[Field 18]  produces  a  trace file containing  the  time 
+          series, in file format specified in main menu (default
+          ASCII). The trace file include all the timeseries which
+          would be included in the stacked plot. 
+\item[Field 19] Returns to main menu for change of e.g. source data, 
+          plot format etc. 
+\end{description} 
+
+\newpage
+\subsection{Azimuth-Stacked Time Series}
+
+     If the azimuth stacking was selected the following menu 
+appears:
+
+\small
+\begin{verbatim}
+ *********************************************************************
+ *                        AZIMUTH STACKED PLOTS                      *
+ *********************************************************************
+ *  1. Plot title:     TEMME-MULLER. Auto f.                         *
+ *  2. Min time:              0.000 s                                *
+ *  3. Max time:              1.000 s                                *
+ *  4. Time tick inc:         0.200 s                                *
+ *  5. t-axis length:        20.000 cm                               *
+ *  6. Azimuth down:        -50.000 deg                              *
+ *  7. Azimuth up:          400.000 deg                              *
+ *  8. Azim. tick inc:       50.000 deg                              *
+ *  9. a-axis length:        15.000 cm                               *
+ * 10. Red. velocity:         0.000 m/s                              *
+ * 11. Range:                 0.600 km                               *
+ * 12. Depth:               600.000 m                                *
+ * 13. No. of traces:        18     (     1 -  999 )                 *
+ * 14. Scale factor:          1.000                                  *
+ * 15. Parameter:             V     ( V H )                          *
+ * 16. Generate plot:                                                *
+ * 17. Trace file:                                                   *
+ * 18. Return:                      ( PP main menu )                 *
+ *********************************************************************
+      SELECT OPTION: 
+\end{verbatim}
+\normalsize 
+    The  menu should be self explanatory for users familiar  with 
+SAFARI, with only the following being particular to PP: 
+\begin{description}
+\item[Field 11] specifies the range of the receivers in km.
+\item[Field 12] specifies the depth of the receivers in meters.
+\item[Field 13] specifies the number of azimuths of the receiver plane
+          for which the response should be computed and stacked.
+\item[Field 14] represents a scaling factor which will be applied to 
+          all  traces. The default is 1.0, i.e. no  scaling,  but 
+          may be changes as desired.
+\item[Field 15]  represents  the  parameter to be  plotted,  with  N 
+          representing the normal stress or negative pressure  in 
+          fluids,  V  the vertical particle velocity  and  H  the 
+          horizontal  particle  velocity. The  bracket  indicates 
+          that   only V and H   functions   are 
+          available  in the file, and the program will  therefore 
+          not allow for any other choice.
+\item[Field 16] produces the plot with the specified parameters.
+\item[Field 17] produces  a  trace file containing  the  time 
+          series, in file format specified in main menu (default
+          ASCII). The trace file include all the timeseries which
+          would be included in the stacked plot. 
+\item[Field 19] Returns to main menu for change of e.g. source data, 
+          plot format etc. 
+\end{description} 
+
+\newpage
+\subsection{Transmission Loss Plots}
+
+Version 2.1 of PP has been modified to allow for plotting of
+transmission losses, derived from the OASP transfer functions. This
+also allows for extreme near-field transmission loss computations with
+the full exact Bessel function integration (OASP option {\bf f}). 
+
+Choosing field 13 brings up the transmission loss submenu,, allowing
+selction of plot formats, currently supporting TL vs range, depth or
+frequency, depth-averaged TL, or depth-range contours:
+
+\small
+\begin{verbatim}
+ ********************************************************************
+ *                          TRANSMISSION LOSS                       *
+ ********************************************************************
+ *  1. TL vs Freq:                                                  *
+ *  2. TL vs Range:                                                 *
+ *  3. TL vs Depth:                                                 *
+ *  4. Depth Average:                                               *
+ *  5. Depth-Range Cont                                             *
+ *  6. Return:                      ( PP main menu )                *
+ ********************************************************************
+      SELECT OPTION: 5
+                          --------------------
+ ********************************************************************
+ *                      DEPTH-RANGE TL CONTOURS                     *
+ ********************************************************************
+ *  1. Plot title:     TEMME-MULLER. Auto f.                        *
+ *  2. Range left:            0.000 km                              *
+ *  3. Range right:           0.600 km                              *
+ *  4. Range tick inc:        0.100 km                              *
+ *  5. R-axis length:        20.000 cm                              *
+ *  6. Depth down:          600.000 m                               *
+ *  7. Depth up:              0.000 m                               *
+ *  8. Depth tick inc:      100.000 m                               *
+ *  9. D-axis length:        12.000 cm                              *
+ * 10. Azimuth:               0.000 deg                             *
+ * 11. Frequency:            50.000 Hz                              *
+ * 12. Min. loss:            30.000 dB                              *
+ * 13. Max. loss:            90.000 dB                              *
+ * 14. Increment:             3.000 dB                              *
+ * 15. Undef. file:                                                 *
+ * 16. Shade file:                                                  *
+ * 17. Parameter:             V     ( V H )                         *
+ * 18. Generate plot:                                               *
+ * 19. Return:                      ( PP main menu )                *
+ ********************************************************************
+\end{verbatim}
+\normalsize
+
+\newpage
+\subsection{Snap Shots}
+
+This option (Field 14) produces snap shots of the field in the form of
+contours vs range and depth.
+
+\small
+\begin{verbatim}
+ *********************************************************************
+ *                          PULSE SNAP SHOTS                         *
+ *********************************************************************
+ *  1. Plot title:     TEMME-MULLER. Auto f.                         *
+ *  2. Range left:            0.000 km                               *
+ *  3. Range right:           0.600 km                               *
+ *  4. Range tick inc:        0.100 km                               *
+ *  5. R-axis length:        20.000 cm                               *
+ *  6. Depth down:          600.000 m                                *
+ *  7. Depth up:              0.000 m                                *
+ *  8. Depth tick inc:      100.000 m                                *
+ *  9. D-axis length:        12.000 cm                               *
+ * 10. Time,frst frame:       0.000 s                                *
+ * 11. Time,last frame:       0.000 s                                *
+ * 12. Number of frames       0     (     1 -   99 )                 *
+ * 13. Max. level:          -99.000                                  *
+ * 14. Norm. exp.:          -99     (   -99 -   99 )                 *
+ * 15. No. contours:          0     (     1 -   21 )                 *
+ * 16. Undef. file:                                                  *
+ * 17. Shade file:                                                   *
+ * 18. Parameter:             V     ( V H )                          *
+ * 19. Range scaling?         N     ( Y/N )                          *
+ * 20. Generate plot:                                                *
+ * 21. return:                      ( PP main menu )                 *
+ *********************************************************************
+
+
+     SELECT OPTION: 
+\end{verbatim} 
+\normalsize
+
+    The  menu should be self explanatory for users familiar  with 
+SAFARI, with only the following being particular to PP: 
+\begin{description}
+\item[Field 10] specifies the time in seconds of the first snapshot
+produced. This will also be the trace used for the automatic scaling
+invoked by fields 13 and 14.
+\item[Field 11] specifies the time in seconds of the last snapshot.
+\item[Field 12] specifies the number of snapshots produced
+equidistantly for the selected time interval.
+\item[Field 13] Is used to set the maximum level $A_{\mbox{max}}$ for the
+contours. The interval $[ -A_{\mbox{max}}, A_{\mbox{max}}]$ will be
+equidistantly covered by the number of contours specified in Field~13.
+\item[Field 14] Here the logarithm of the scaling factor is specified.
+If -99 is specified the exponent will be selected automatically based on the
+snap-shot data. Usually the first snap-shot is made with automatic
+scaling, whereas the rest are produced with the so determined
+exponent. The automatic scaling will also suggest a value of $A_{\mbox{max}}$ 
+ in Field~11, which may of course be changed by the user if
+desired.
+\item[Field 15] Number of contour levels applied for snapshots. For
+UNIRAS colour plots this number should not be more that 12. UNIRAS is
+selected by specifying the contour options \tt UNI,X11,COL \rm in
+Field~8 of the main menu (X11 selects X-windows as device).
+\item[Field 16] Name of a file containing a binary map of undefined
+points.
+\item[Field 17] Name of file containing the coordinates of an optional
+shaded polygon superimposed to the snap-shot. Used for shading bottom
+or objects. The file format is the standard shading specification used
+in the {\bf cdr} files providing plot parameters to {\bf cplot}.
+\item[Field 18]  represents  the  parameter to be  plotted, consistent
+with the options specified in the OASP data file, i.e.  with  N 
+          representing the normal stress or negative pressure  in 
+          fluids,  V  the vertical particle velocity  and  H  the 
+          horizontal  particle  velocity etc.
+\item[Field 19] a 'Y' here applies a linear scaling of the snapshots
+          with horizontal range, similar to the range scaling in the
+          range-stacked plots. This is useful for animations of
+          near-field  problems with significant geometric spreading.
+\item[Field 20] produces the contour plots with the specified parameters.
+\item[Field 21] Returns to main menu for change of e.g. source data, 
+          plot format etc. 
+\end{description}
+
+
+\section{Interface to MATLAB Post Processing}
+
+An alternative to using the PP postprocessor for generating graphics,
+producing timeseries etc., is to use MATLAB. A number of matlab
+utilities for producing high quality graphics and for processing the
+simulated transfer functions and timeseries has been developed by
+OASES users over the years. A collection of very powerful and well
+documented set of utilities are included in
+the OASES distribution, in the directory \tt Oases/matlab\_util/
+\rm.
+
+\subsection{Reading Transfer Function Files}
+
+The script\tt trf\_reader\_oases3d.m \rm reads the binary
+transfer function files \tt (*.trf) \rm into MATLAB. The use of this
+and other scripts in \tt matlab\_util \rm is described in the header
+of the script, visualized using the MATLAB \tt help \rm command,
+
+\begin{verbatim}
+
+>> help trf_reader_oases3D
+ function[out,sd,z,range,f,fo,omegim,msuft]=trf_reader_oases3d(fname)
+ 
+  function to read oases trf file and return contents
+ 
+  Kevin D. LePage
+  SACLANTCEN
+  22/8/00
+ 
+  INPUTS
+ 
+  fname		file name (ascii string, with our without .trf extension)
+ 
+  OUTPUTS
+ 
+  out		complex transfer function (length(z)xlength(r)xlength(f))
+  sd		source depth (m)
+  z		receiver depths
+  range		receiver ranges
+  f		receiver frequencies
+  fo		receiver center frequency
+  omegim        imaginary part of radian frequency
+  msuft         number of Fourier harmonics
+
+>> 
+\end{verbatim}
+
+Thus, for example, for the synthetic sesmogram example in \tt
+Oases/pulse \rm, use the commands,
+
+\begin{verbatim}
+> cd Oases/pulse
+> oasp temmllr
+> matlab
+
+>>
+[out,sd,z,range,f,fo,omegim,msuft]=trf_reader_oases3d('temmllr.trf');
+  
+>> here goes your own processing stuff
+\end{verbatim}
+
+\subsection{Reading PP Timeseries Files}
+
+Another MATLAB interface is a script, which reads the \tt .mat \rm
+files optionally  generated by PP,
+
+\begin{verbatim}
+
+ help pp_matreader
+ [ts,t,z,r,b,tit,parameter,planes,traces,samples,fs]=pp_matreader(file)
+ 
+  function to read mat files output by pp
+ 
+  Eddie Scheer
+  WHOI
+  8/24/99
+ 
+  INPUTS	
+ 
+  file 		file name (string)
+ 
+  OUTPUTS
+ 
+  ts		time series (length(t) x (planes x traces))
+  t		start times 
+  z		depths (vector of corresponding depths)
+  r		range (vector of corrsponding ranges)
+  b		bearing (vector of corresponding bearings)
+  title		character string
+  parameter	character string (N is normal stress)
+  planes	number (for different bearings, for instance)
+  traces	number (for depth or range stacks, for instance)
+  samples	number (N)
+  fs		sample frequency (Hz)
+
+>> 
+\end{verbatim}

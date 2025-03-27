@@ -1,0 +1,501 @@
+#!/usr/bin/perl
+#PERL script
+
+$| = 1;
+$file=$ARGV[0];
+$cmdopt1=$ARGV[1];
+$fileplp = $file.'.plp';
+$fileplt = $file.'.plt';
+# printf"%s %s\n",$fileplp,$fileplt;
+open(FH1,$fileplp);	
+open(FH2,$fileplt);	
+open(FH3,">$file.mtv");	
+$NPLOTS = 0;
+$START = 0;
+$line = 0;
+undef($ptit);
+undef($title);
+undef(@lab);
+undef($xlabel);
+undef($xtype);
+undef($ylabel);
+undef($ytype);
+
+while (<FH1>)
+{
+  @arr = split(' ');
+  $line++;
+#  printf"line $line\n";
+#  printf"START $START\n";
+  if ($line==1)
+    {
+      $modulus = $arr[0];
+#      printf"Modulus: $modulus\n";
+      next;
+    }
+  if ($line== $START + 2)
+    {
+      $opt1 = substr($_,1,6);
+      $opt2 = substr($_,7,6);
+#       printf"opt1,opt2: $opt1 $opt2\n";
+      @xopt = split(',',substr($_,14,65));
+      $nopt = $#xopt;
+      for($ixopt=0;$ixopt<=$nopt;$ixopt++)
+        {
+#	  printf"xopt[$ixopt]: $xopt[$ixopt]\n";
+	}
+      
+      next;
+    }
+  if ($line== $START + 3)
+    {
+#      print;
+      undef($ptit);
+      for ($ii=0;$ii<=$#arr;$ii++)
+	{
+#	  printf"arr: $arr[$ii]\n";
+	  $ptit = $ptit." ".$arr[$ii];
+	}
+      $ptit=&rem_trail_dollarsign($ptit);
+#      printf"ptit: $ptit\n";
+      next;
+    }
+  if ($line== $START + 4)
+    {
+      for ($ii=0;$ii<=$#arr;$ii++)
+	{
+#	  printf"arr: $arr[$ii]\n";
+	  $title = $title." ".$arr[$ii];
+	}
+      $title=&rem_trail_dollarsign($title);
+#      printf"title: $title\n";
+      next;
+    }
+  if ($line== $START + 5)
+    {
+      $nlab = $arr[0];
+#      printf"nlab: $nlab\n";
+      next;
+    }
+  for($ilab=0;$ilab<$nlab;$ilab++)
+    {
+      if ($line== $START + 6+$ilab)
+	{
+	  for ($ii=0;$ii<=$#arr;$ii++)
+	    {
+	      $lab[$ilab] = $lab[$ilab]." ".$arr[$ii];
+	    }
+	  $lab[$ilab]=&rem_trail_dollarsign($lab[$ilab]);
+#	  printf"lab[$ilab]: $lab[$ilab]\n";
+          last;
+	}
+    }
+  if ($flag == $START +  1){next;}
+  if ($line== $START + 6+$nlab)
+    {
+      $xlen = $arr[0];
+#      printf"xlen: $xlen\n";
+      next;
+    }
+  if ($line== $START + 7+$nlab)
+    {
+      $ylen = $arr[0];
+#      printf"ylen: $ylen\n";
+      next;
+    }
+  if ($line== $START + 8+$nlab)
+    {
+      $igrid = $arr[0];
+#      printf"igrid: $igrid\n";
+      next;
+    }
+  if ($line== $START + 9+$nlab)
+    {
+      $xleft = $arr[0];
+#      printf"xleft: $xleft\n";
+      next;
+    }
+  if ($line== $START + 10+$nlab)
+    {
+      $xright = $arr[0];
+#      printf"xright: $xright\n";
+      next;
+    }
+  if ($line== $START + 11+$nlab)
+    {
+      $xinc = $arr[0];
+#      printf"xinc: $xinc\n";
+      next;
+    }
+  if ($line== $START + 12+$nlab)
+    {
+      $xdiv = $arr[0];
+#      printf"xdiv: $xdiv\n";
+      next;
+    }
+  if ($line== $START + 13+$nlab)
+    {
+      for ($ii=0;$ii<=$#arr;$ii++)
+	{
+	  $xlabel = $xlabel." ".$arr[$ii];
+	}
+      $xlabel=&rem_trail_dollarsign($xlabel);
+#      printf"xlabel: $xlabel\n";
+      next;
+    }
+  if ($line== $START + 14+$nlab)
+    {
+      for ($ii=0;$ii<=$#arr;$ii++)
+	{
+	  $xtype = $xtype." ".$arr[$ii];
+	}
+#      printf"xtype: $xtype\n";
+      next;
+    }
+  if ($line== $START + 15+$nlab)
+    {
+      $ydown = $arr[0];
+#      printf"ydown: $ydown\n";
+      next;
+    }
+  if ($line== $START + 16+$nlab)
+    {
+      $yup = $arr[0];
+#      printf"yup: $yup\n";
+      next;
+    }
+  if ($line== $START + 17+$nlab)
+    {
+      $yinc = $arr[0];
+#      printf"yinc: $yinc\n";
+      next;
+    }
+  if ($line== $START + 18+$nlab)
+    {
+      $ydiv = $arr[0];
+#      printf"ydiv: $ydiv\n";
+      next;
+    }
+  if ($line== $START + 19+$nlab)
+    {
+      for ($ii=0;$ii<=$#arr;$ii++)
+	{
+	  $ylabel = $ylabel." ".$arr[$ii];
+	}
+      $ylabel=&rem_trail_dollarsign($ylabel);
+#      printf"ylabel: $ylabel\n";
+      next;
+    }
+  if ($line== $START + 20+$nlab)
+    {
+      for ($ii=0;$ii<=$#arr;$ii++)
+	{
+	  $ytype = $ytype." ".$arr[$ii];
+	}
+#      printf"ytype: $ytype\n";
+      next;
+    }
+  if ($line== $START + 21+$nlab)
+    {
+      $NC = $arr[0];
+#      printf"NC: $NC\n";
+      next;
+    }
+  for($inc=0;$inc<$NC;$inc++)
+    {
+#      printf"Line $line\n";
+#      printf"$_\n";
+      if ($line== $START + 22+$nlab+$inc*5)
+	{
+	  $NNN[$inc]= $arr[0];
+#	  printf"NNN[$inc]: $NNN[$inc]\n";
+	  last;
+	}
+
+      if ($line== $START + 23+$nlab+$inc*5)
+	{
+	  $xoff[$inc]= $arr[0];
+#	  printf"xoff[$inc]: $xoff[$inc]\n";
+	  last;
+	}
+      if ($line== $START + 24+$nlab+$inc*5)
+	{
+	  $dx[$inc]= $arr[0];
+#	  printf"dx[$inc]: $dx[$inc]\n";
+	  last;
+	}
+      if ($line== $START + 25+$nlab+$inc*5)
+	{
+	  $yoff[$inc]= $arr[0];
+#	  printf"yoff[$inc]: $yoff[$inc]\n";
+	  last;
+	}
+      if ($line== $START + 26+$nlab+$inc*5)
+	{
+	  $dy[$inc]= $arr[0];
+#	  printf"dy[$inc]: $dy[$inc]\n";
+	  last;
+	}
+    }
+#GOT ONE PLOT
+  if ($line == $START + 26 + $nlab + ($NC-1)*5)
+    {
+      $START = $line-1;
+      $NPLOTS++;  
+#      printf"NPLOTS = $NPLOTS\n";
+#      printf"START = $START\n\n\n";
+
+      printf FH3 "\$DATA = CURVE2D\n";
+      
+      $toplabel = $ptit;
+#      $toplabel =~s/\W/ /g;
+      $toplabel = &string_trim($toplabel);
+	  
+      printf FH3 "%%toplabel=\"%s\"\n",$toplabel;
+      printf FH3 "%%sidelabel=false\n";
+
+      $yc0 = $yup*$ydiv;
+      $dyc = 0.0375*($ydown-$yup)*$ydiv;
+
+      $xc1=$xleft*$xdiv;
+      $xc2=$xc1+0.00001*($xleft-$xright)*$xdiv;
+      $subtitle = $title;
+#      $subtitle =~ s/\W/ /g;
+      $subtitle = &string_trim($subtitle);
+      $yc=$yc0-$dyc;
+      printf FH3 "\@line lc=-1 x1=%f y1=%f ",$xc1,$yc;
+      printf FH3 "x2=%f y2=%f ",$xc2,$yc;
+      printf FH3 "clip=false absolute=false ";
+      printf FH3 "fn=14 ll=\"%s\"\n",$subtitle;      
+
+      $xc1=$xright*$xdiv;
+      $xc2=$xc1+0.00001*($xright-$xleft)*$xdiv;
+      $options=$opt1 . $opt2;
+
+#      for($ixopt=0;$ixopt<$nopt;$ixopt++)
+#	{
+#	  $options = $options . " ".$xopt[$ixopt];
+#	}
+
+      $DSD=0;
+      $COL=0;
+      $MRK=0;
+      for($ixopt=0;$ixopt<=$nopt;$ixopt++)
+      {	
+	  if ( DSD != 1 ) 
+	  { if ( index(lc($xopt[$ixopt]),"dsd") >=0 ) 
+	    { $DSD=1; $IDSD=0; next; } }
+	  if ( COL != 1 ) 
+	  { if ( index(lc($xopt[$ixopt]),"col") >=0 )
+	    { $COL=1; $ICOL=0; next; }}
+	  if ( MRK != 1 ) 
+	  { if ( index(lc($xopt[$ixopt]),"mrk") >=0 )
+	    { $MRK=1; $IMRK=0; next; }}
+      }
+
+      $options =~ s/\W/ /g;
+      $yc=$yc0-$dyc;
+      printf FH3 "\@line lc=-1 x1=%f y1=%f ",$xc1,$yc;
+      printf FH3 "x2=%f y2=%f ",$xc2,$yc;
+      printf FH3 "clip=false absolute=false ";
+      printf FH3 "fn=14 ll=\"%s\"\n",$options;
+      
+      for($ilab=0;$ilab<$nlab;$ilab++)
+	{ 
+	    $yc=$yc0+$dyc*($ilab+1);
+	    printf FH3 "\@line lc=0 x1=%f y1=%f ",$xc1,$yc;
+	    printf FH3 "x2=%f y2=%f ",$xc2,$yc;
+	    printf FH3 "clip=false absolute=false ";
+	    printf FH3 "fn=12 ll=\"%s\"\n",$lab[$ilab];
+	}
+
+
+      if ($xlen > 0)
+        {
+	  if ($ylen >0)
+	    {
+	      $xyratio = $ylen/$xlen;
+	      printf FH3 "%%xyratio=%f\n",$xyratio;
+	    }
+        }
+      
+#      $xlabel =~ s/\W/ /g;
+      printf FH3 "%%xlabel=\"%s\"\n",$xlabel;
+      if ($xleft>$xright)
+      {
+	  $xtemp = $xleft; $xleft = $xright; $xright = $xtemp;
+	  printf FH3 "%%xflip=T\n";
+      }
+      $xticks=($xright-$xleft)/$xinc;
+      if ($xticks>0) { printf FH3 "%%xticks=%6.0f\n",$xticks; }
+      $xright = $xright*$xdiv;
+      $xleft = $xleft*$xdiv;
+      printf FH3 "%%vxmin=%f vxmax=%f\n",$xleft,$xright;
+      if ( index(lc($xtype),"log") >= 0 )
+      { printf FH3 "%%xlog=T\n"; }      
+
+#      $ylabel =~ s/\W/ /g;
+      printf FH3 "%%ylabel=\"%s\"\n",$ylabel;
+      if ($ydown>$yup)
+      {
+	  $ytemp = $ydown; $ydown = $yup; $yup = $ytemp;
+	  printf FH3 "%%yflip=T\n";
+      }
+      $yticks=($yup-$ydown)/$yinc;
+      if ($yticks>0) { printf FH3 "%%yticks=%6.0f\n",$yticks; }
+      $yup = $yup*$ydiv;
+      $ydown = $ydown*$ydiv;
+      printf FH3 "%%vymin=%f vymax=%f\n",$ydown,$yup;
+      if ( index(lc($ytype),"log") >= 0 )
+      { printf FH3 "%%ylog=T\n"; }
+
+#      for($ilab=0;$ilab<$nlab;$ilab++)
+#	{
+#	  $hhh = .65-$ilab*.05;
+#	  printf FH3"\@text x1=0.80 y1=$hhh z1=0.0 linelabel=\"$lab[$ilab]\" absolute=True \n";
+#	}
+
+      if ( $igrid == 1 ) { printf FH3 "%%grid=true\n"; }
+      if ( $cmdopt1 eq "-s" ) { printf FH3 "%%spline=4\n"; }
+
+      for($inc=0;$inc<$NC;$inc++)
+	{
+# Handle the XXX values;
+	  if ($dx[$inc]==0)
+	    {
+	      $count = 0;
+	      while (<FH2>)
+		{
+#		  print $_;
+		  @arr = split(' ');
+#		  printf" count $#arr\n";
+		  for($ii=0;$ii<=$#arr;$ii++)
+		    {
+		      $xxx[$count+$ii] = $arr[$ii]*$xdiv+$xoff[$inc]*$xdiv;
+#		      printf" adding $xxx[$count+$ii]\n";
+		    }
+		  $count += $#arr+1;
+		  if ($count >= $NNN[$inc])
+		    {last;}
+		}
+	    }
+	  else
+	    {
+	      for($ii=0;$ii<$NNN[$inc];$ii++)
+		{
+		  $xxx[$ii] = $xdiv*($xoff[$inc]+$ii*$dx[$inc]);
+		}
+	    }
+
+# Handle the YYY values;
+	  if ($dy[$inc]==0)
+	    {
+	      $count = 0;
+	      while (<FH2>)
+		{
+#		  print $_;
+		  @arr = split(' ');
+#		  printf" count $#arr\n";
+		  for($ii=0;$ii<=$#arr;$ii++)
+		    {
+		      $yyy[$count+$ii] = $arr[$ii]*$ydiv+$yoff[$inc]*$ydiv;
+#		      $yyy[$count+$ii] = $arr[$ii]+$yoff[$inc];
+#		      printf" adding $yyy[$count+$ii]\n";
+		    }
+		  $count += $#arr+1;
+		  if ($count >= $NNN[$inc])
+		    {last;}
+		}
+	    }
+	  else
+	    {
+	      for($ii=0;$ii<$NNN[$inc];$ii++)
+		{
+		  $yyy[$ii] = $ydiv*($yoff[$inc]+$ii*$dy[$inc]);
+		}
+	    }
+
+# Write these to output MTV file
+
+
+# linetype
+	  if ( $DSD == 1 ) 
+ 	  { $IDSD=$IDSD+1; if ( $IDSD > 3 ) { $IDSD=$IDSD-3 ; } }
+	  else
+	  { $IDSD=1; }
+	  $linetype=$IDSD;
+
+# linecolor
+	  if ( $COL == 1 ) 
+ 	  { $ICOL=$ICOL+1; if ( $ICOL > 6 ) { $ICOL=$ICOL-6 ; } }
+	  else
+	  { $linecolor=0; }
+	  if ( $ICOL == 1 ) { $linecolor=4; }
+	  if ( $ICOL == 2 ) { $linecolor=3; }
+	  if ( $ICOL == 3 ) { $linecolor=2; }
+	  if ( $ICOL == 4 ) { $linecolor=9; }
+	  if ( $ICOL == 5 ) { $linecolor=7; }
+	  if ( $ICOL == 6 ) { $linecolor=1; }
+
+#markertype
+	  if ( $MRK == 1 ) 
+ 	  { 
+	      $IMRK=$IMRK+1; if ( $IMRK > 12 ) { $MRK=$IMRK-12 ; }
+	      $markertype=$IMRK+1;
+	  }
+	  else
+	  { $markertype=0; }
+
+	  printf FH3 "%%lt=%d lc=%d ",$linetype,$linecolor;
+	  if ( $NC > 1 ) 
+	  { printf FH3 "linelabel=\"LINE NO.%d\" ",$inc+1; }
+	  printf FH3 "ms=2 mt=%d mc=%d\n",$markertype,$linecolor;
+	  for($ii=0;$ii<$NNN[$inc];$ii++)
+	    {
+	      printf FH3 "$xxx[$ii] $yyy[$ii]\n";
+#	      printf "xxx,yyy: $xxx[$ii] $yyy[$ii]\n";
+	    }
+	  print FH3 "\n \n";
+	}
+      undef($ptit);
+      undef($title);
+      undef(@lab);
+      undef($xlabel);
+      undef($xtype);
+      undef($ylabel);
+      undef($ytype);
+    }
+}
+close(FH1);
+close(FH2);
+close(FH3);
+system("plotmtv -geom 800x600 -l -noframe -o $file.ps $file.mtv");
+
+sub rem_trail_dollarsign{
+  $str = $_[0];
+  $lll = length($str);
+  $lchar = substr($str,$lll,1);
+  $lchar_m1 = substr($str,$lll-1,1);
+  if ($lchar eq "\$"){
+    $str2=substr($str,1,$lll-1);
+    $str2;
+  }
+  elsif($lchar_m1 eq "\$"){
+    $str2=substr($str,1,$lll-2);
+    $str2;
+  }
+  else {
+    $str;
+  }
+}
+
+sub string_trim{
+    $str = $_[0];
+    $str = substr($str,index($str," ")+1);
+    for ($ii=length($str)-1;$ii>-1;$ii--)
+    {
+	if ( substr($str,$ii,1) ne " " ) { last; }
+    }
+    substr($str,0,$ii+1);
+}
+

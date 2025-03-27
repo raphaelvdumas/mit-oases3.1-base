@@ -1,0 +1,685 @@
+\section{OASSP: 2-D Waveguide Reverberation Realizations}
+
+    The OASES-OASSP module is the time domain equivalent of the OASS
+reverberation model. However, in contrast to OASS which directly
+generates expectation values for the scattered field correlation,
+OASSP generates timeseries using realizations of the environmental
+perturbations. Earlier versions of OASSP allowed for rough interfaces
+with Gaussian or power law power spectra. Version 2.2 and later in
+addition allows for generating field realizations for scattering from
+volume inhomogeneities in fluid layers with or without sound speed
+gradients, based on the theoretical developments of LePage and Schmidt
+\cite{Lepage_99}. OASSP is used in conjunction with OASP, which is
+used for computing the mean, coherent field, which is driving the
+scattering. The data files for OASSP are very similar to those of
+OASP, and OASSP generates a transfer function file in the same format,
+which is post-processed and plotted using PP.  As is the case for all
+the other modules, both stresses and particle velocities can be
+computed.
+
+\subsection{Transfer Functions}
+
+Similar to OASP, in addition to generating timeseries,
+OASSP may be used for generating the complex CW reverberant field over a
+rectangular grid in range and depth. Here again it should be noted
+that when OASSP is used with option 'O' or with automatic
+sampling enabled, the transfer functions are computed for complex
+frequencies. Complex frequency corresponds to applying a {\em
+time-domain damping} which cannot be directly compensated for in the
+transfer functions. However, real frequencies can be forced in
+automatic sampling mode by using option 'J' (Version 2.1 and
+later). In any case the frequency sampling must be consistent for the
+computation of the mean and scattered fields.
+
+\subsection{Input Files for OASSP}
+
+The input files for OASSP are virtually identical to the ones used for
+computing the mean field using OASP. A few of the options have
+different significance ({\bf s}), and the option {\bf p } is unique to
+OASSP. In addition, OASSP is unique in terms of allowing for
+computation of the reverberation from sound speed inhomogeneities in
+fluid layers. The spatial statistics of the volume inhomogeneities is
+controlled by the interface roughness parameters for such layers.
+The input files for OASSP are structured in 8 blocks,
+as outlined in Table\,\ref{tab:oasspI}. 
+\begin{table}
+\begin{center}
+\small
+\begin{tabular}{|l|l|c|c|}
+\hline \hline
+Input parameter & Description & Units & Limits \\
+\hline \hline
+\multicolumn{4}{|l|}{\bf BLOCK I: TITLE } \\
+\hline
+TITLE & Title of run  & - & $\leq$ 80 ch. \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK II: OPTIONS} \\
+\hline
+A B C $\cdots$ & Output options & - & $\leq$ 40 ch. \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK III: SOURCE FREQUENCY} \\
+\hline
+FRC,COFF,IT,VS,VR & FRC: Center frequency of source & Hz & $>0$ \\
+ 	& COFF: Integration contour offset & dB/$\Lambda$ & COFF$\geq 0$ \\
+        & IT: Source pulse type (only for option d) & & \\
+	& VS,VR: Sou./Rec. velocity  (only for option d) & m/s & \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK IV: ENVIRONMENT} \\
+\hline
+NL 	& Number of layers, incl. halfspaces	& - & NL$\geq 2$  \\
+D,CC,CS,AC,AS,RO,RG,CL & D: Depth of interface. & m & - \\
+.	& CC: Compressional speed & m/s & CC$\geq 0$ \\
+.	& CS: Shear speed & m/s & - \\
+.	& AC: Compressional attenuation & dB/$\Lambda$ & AC$\geq 0$ \\
+.	& AS: Shear attenuation & dB/$\Lambda$ & AS$\geq 0$ \\
+	& RO: Density 	& g/cm$^{3}$ & RO$\geq 0$ \\
+	& RG: RMS value of interface roughness & m & - \\
+	& CL: Correlation length of roughness & m & - \\
+	& M:  Spectral exponent &   & > 1.5 \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK V: SOURCES} \\
+\hline
+SD,NS,DS,AN,IA,FD,DA & SD: Source depth (mean for array) & m & - \\
+	& NS: Number of sources in array & - &  NS$>0$ \\
+	& DS: Vertical source spacing	& m & DS$>0$ \\
+	& AN: Grazing angle of beam & deg & - \\
+	& IA: Array type & - & $1 \leq $IA$\leq 5$ \\
+	& FD: Focal depth of beam & m & FD$\neq$SD \\
+        & DA: Dip angle. (Source type 4). & deg & - \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK VI: RECEIVER DEPTHS} \\
+\hline
+RD1,RD2,NRD & RD1: Depth of first receiver & m & - \\
+	& RD2: Depth of last receiver  & m & RD2$>$RD1 \\
+	& NRD: Number of receiver depths & - & NR$>0$ \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK VII: WAVENUMBER SAMPLING} \\
+\hline
+CMIN,CMAX & CMIN: Minimum phase velocity & m/s & CMIN$>0$ \\
+	& CMAX: Maximum phase velocity & m/s & - \\
+NW,IC1,IC2,IF & NW: Number of wavenumber samples & - & $>0$, -1 (auto) \\
+	& IC1: First sampling point & - & IC1$\geq 1$ \\
+	& IC2: Last sampling point & - & IC2$\leq$NW \\
+        & IF: Freq. sample increment for kernels & & $\geq 0$ \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK VIII: FREQUENCY AND RANGE  SAMPLING} \\
+\hline
+NT,FR1,FR2,DT,R1,DR,NR & NT: Number of time samples & & NT$=2^{M}$ \\
+	& FR1: lower limit of frequency band & Hz & $\geq 0$ \\
+	& FR2: upper limit of frequency band & Hz & $\geq$FR1 \\
+        & DT: Time sampling increment & s & $> 0$ \\ 
+        & R1: First range & km & \\
+        & DR: Range increment & km & \\
+	& NR: Number of ranges & & $> 0$ \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Layout of OASSP input files: Computational parameters.
+	\label{tab:oasspI} }
+\end{table} 
+
+\subsection{Block I: Title}
+
+The title printed on all graphic output generated by OASSP.
+
+\subsection{Block II: OASSP options}
+
+The significance of the single-letter OASSP options are:
+\begin{itemize}
+    \item[{\bf C}] Creates an $ \omega - k$ representation of the
+      field in the form of contours of integration kernels as function
+      of horizontal wavenumber (slowness if option {\bf B} is
+      selected) and frequency (logarithmic y-axis). All axis
+      parameters are determined automatically.  
+\item[{\bf G}] Rough
+      interfaces are assumed to be characterized by a Goff-Jordan
+      power spectrum rather than the default Gaussian.  
+\item[{\bf H}]
+      Horizontal (radial) particle velocity calculated.  
+\item[{\bf J}] Complex wavenumber contour. The contour is shifted into the
+      upper halfpane by an offset controlled by the input parameter
+      COFF (Block III). NOTE: If this option is used together with
+      automatic sampling, the complex frequency integration (option
+      {\bf O}) is disabled, allowing for computation of complex CW
+      fields or transmission losses (plotted using PP). 
+\item[{\bf K}]
+      Computes the bulk stress. In elastic media the bulk stress only
+      has contributions from the compressional potential. In fluid
+      media the bulk stress is equal to the negative of the pressure.
+      Therefore for fluids this option yields the same result as
+      option N or R.  
+\item[{\bf L}] Linear vertical source array.
+\item[{\bf N}] Normal stress $\sigma_{zz}$ ($=-p$ in fluids)
+      calculated.  
+\item[{\bf O}] Complex frequency integration
+      contour. This new option is the frequency equivalent of the
+      complex wavenumber integration ({\bf J} option in OAST). It
+      moves the frequency contour away from the real axis by an amount
+      reducing the time domain wrap-around by a factor 50
+      \cite{jkps}. This option can yield significant computational
+      savings in cases where the received signal has a long time
+      duration, and only the initial part is of interest, since it
+      allows for selection of a time window shorter than the actual
+      signal duration. Note that only wrap around from later times is
+      reduced; therefore the time window should always be selected to
+      contain the beginning of the signal!  
+\item[{\bf P}] Plane
+      geometry. The sources will be line-sources instead of
+      point-sources as used in the default cylindrical geometry.
+\item[{\bf R}] Computes the radial normal stress $\sigma_{rr}$
+      (or $\sigma_{xx}$ for plane geometry).  \item[{\bf S}] Computes
+      the stress equivalent of the shear potential in elastic
+      media. This is an angle-independent measure, proportional to the
+      shear potential, with no contribution from the compressional
+      potential (incontrast to shear stress on a particular plane).
+      For fluids this option yields zero.  
+\item[{\bf T}] The new
+      option `T' allows for specification of an array tilt in the
+      vertical plane containing the source and the receivers.  See
+      below for specification of array tilt parameters.  
+\item[{\bf U}] Decomposed seismograms.  This option generates 5 transfer
+      function files to be processed by PP:
+
+          \begin{tabular}{ll}
+          File name & Contents \\ \hline
+          input.trf &     Complete transfer functions \\
+          input.trfdc &    Downgoing compressional waves \\
+          input.trfuc  &  Upgoing compressional waves  \\
+          input.trfds  &  Downgoing  shear waves alone \\
+          input.trfus &    Upgoing shear waves
+          \end{tabular}
+\item[{\bf V}] Vertical particle velocity calculated.
+\item[{\bf Z}] Plot of SVP will be generated.
+
+\item[{\bf d}] Radial {\em Doppler shift} is accounted for by
+specifying  this option, using the theory developed by Schmidt and Kuperman
+\cite{sk:jasa94}.  The source pulse and the radial projections of the
+source and  receiver velocities must be specified in the input file
+following the specification of the centre frequency and the contour
+offset (Block II). Since this option requires incorporation of the
+source function in the wavenumber integral, the PP post-processor
+\underline{must} be used with source pulse -1 (impulse response).
+
+    \item[{\bf f}] Full Bessel function integration. This new option
+          does not apply the asymptotic representation of the Bessel
+          function in the evaluation of the inverse Hankel transforms.
+          The implementation is very efficient, and the integral
+          evaluation is performed just as fast as the asymptotic
+          evaluations. 
+          
+\item[{\bf g}] Rough interfaces and volume inhomogeneities
+          are assumed to be characterized by a Goff-Jordan power
+          spectrum rather than the default Gaussian (Same as G).
+          
+\item[{\bf l}] User defined source array. This new option is
+          similar to option {\bf L} in the sense that that it
+          introduces a vertical source array of time delayed sources
+          of identical type. However, this option allows the depth,
+          amplitude and delay time to be be specified individually for
+          each source in the array. The source data should be provided
+          in a separate file, {\bf input.src}, in the format described
+          in Section~\ref{oaspsar}.  
+\item[{\bf p}] The perturbed Green's functions will be used for the
+          waveguide propagation of the scattered field. This
+          corresponds to applying scattering loss to the propagation
+          and therefore constitutes a higher order scattering term,
+          representing multiple scattering. In general {\bf p} will yield
+          a lower bound for the scattered field, while the default
+          yields an upper bound. Option {\bf p} has no effect for
+          volume scattering, which is always computed in the Born
+          approximation. 
+\item[{\bf s}]
+          OASSP will compute the scattered field perturbation
+          alone. By default the total field will be calculated.
+\item[{\bf t}] Eliminates the wavenumber integration and
+          computes transfer functions for individual slowness
+          components (or plane wave components). The Fourier transform
+          performed in PP will then directly compute the
+          slowness/intercept-time or $\tau - p$ response for each of
+          the selected depths. When option {\bf t} is selected, the
+          range parameters in the data file are insignificant.
+\item[{\bf v}] As option {\bf l} this option allows for
+          specifying a non-standard source array. However, it is more
+          general in the sense that different types of sources can be
+          applied in the same array, and the sources can have
+          different signatures. The array geometry and the complex
+          amplitudes are specified in a file {\bf input.strf} which
+          should be of {\bf trf} format as described in
+          Section~\ref{oaspsar}.  \item[{\bf \#}] Number $(1-5)$
+          specifying the source type (explosive, forces, seismic
+          moment) as described in Section~\ref{oaspsou}
+\end{itemize}
+
+
+\subsubsection{Block III: Source Frequency}
+
+FRC is the source center frequency. As the source convolution is
+performed in PP,  FRC is not used in OASSP, except for cases involving
+moving sources (option {\bf d}), but will be written to the
+transfer function file and become the default for PP.
+
+COFF is the complex wavenumber
+integration 
+contour offset. To be specified in
+		$dB/\lambda$, where $\lambda$ is the wavelength at the source 
+		depth SD. As only the horizontal part of
+		the integration contour is considered, this parameter
+		should not be chosen so large, that the amplitudes
+		at the ends of the integration interval become 
+		significant. In lossless cases too small values
+		will give sampling problems at the normal modes
+		and other singularities. For intermediate values,
+		the result is independent of the choice of COFF,
+		but a good value to choose is one that gives 60 dB
+		attenuation at the longest range considered in the FFT, i.e.
+                \begin{displaymath}
+		\mbox{COFF} = \frac{60 \ast \mbox{CC(SD)}}{( \mbox{FREQ} \ast \mbox{R}_{max} )}
+		\end{displaymath} 
+       		where the maximum FFT range is
+       		\begin{displaymath}
+		\mbox{R}_{max} = \frac{\mbox{NP}}{\mbox{FREQ}\ast(1/\mbox{CMIN} - 1/\mbox{CMAX})}
+		\end{displaymath}
+		This value is the default which is applied if COFF
+		is specified to 0.0.
+
+\noindent{\bf Doppler shift}
+
+By specifying option {\bf d} in OASP V.1.7 and higher,
+radial {\em Doppler shift} is accounted for 
+using the theory developed by Schmidt and Kuperman
+\cite{sk:jasa94}.  The source pulse and the radial projections of the
+source and  receiver velocities must be specified in the input file
+following the specification of the centre frequency and the contour
+offset (Block II), i.e.
+
+\begin{tabular}{cc}
+   Standard   &    For option {\bf d} \\ \hline
+FRC COFF & IT VS VR
+\end{tabular}
+
+
+\tt IT \rm is a number identifying the source pulse as described
+in Sec.\,\ref{postproc}. \tt VS \rm and \tt VR \rm are the
+projected radial velocities in m/s of the source and receiver, respectively,
+both being positive in the direction from source to receiver.
+Since this option requires incorporation of the
+source function in the wavenumber integral, the PP post-processor
+\underline{must} subsequently be used with source pulse -1 (impulse response).
+
+
+\subsubsection{Block IV: Environmental Model}
+
+OASSP supports all the environmental models allowed for SAFARI as well as the
+ones described above in Section~\ref{oas_env}.  The significance of
+the standard environmental parameters is as follows
+\begin{itemize}	
+		\item[NL:]	Number of layers, including the upper and lower
+		half-spaces. These should always be included,
+		even in cases where they are vacuum.
+
+		\item[D:]	Depth in $m$ of upper boundary of layer or
+		halfspace. The reference depth can be choosen
+		arbitrarily, and D() is allowed to be negative.
+		For layer no. 1, i.e. the upper half-space, this
+     		parameter is dummy.
+
+		\item[CC:]	Velocity of compressional waves in $m/s$.
+        	If specified to 0.0, the layer or half-space is
+		vacuum.
+
+		\item[CS:]	Velocity of shear waves in m/s.
+ 		If specified to 0.0, the layer or half-space is fluid.
+                If CS()$< 0$, it is the compressional velocity at bottom of
+		layer, which is treated as fluid with $1/c(z)^{2}$ linear.
+
+		\item[AC:]   Attenuation of compressional waves in 
+		$dB/\lambda$. If the layer is fluid, and AC() is specified to
+		0.0, then an imperical water attenuation is
+		used (Skretting \& Leroy).
+
+		\item[AS:]   Attenuation of shear waves in $dB/\lambda$
+
+		\item[RO:]   Density in $g/cm^{3}$.
+
+		\item[RG:] RMS roughness of interface in $m$. RG(1) is
+		dummy. If RG$<0$ it represents the negative of the RMS
+		roughness, and the associated correlation length CL and the spectral exponent 
+		should follow. If RG$>0$ the correlation length is
+		assumed to be infinite.  
+
+                \item[CL:] Roughness correlation length in m. If
+		RG and CL are both negative, the interface is assumed to be
+		smooth, but the layer below will contain volume
+		inhomogeneities with vertical and horizontal
+		correlation lengths -RG and -CL, respectively. 
+
+                \item[M:] Spectral exponent of the power spectrum as
+                defined by Turgut \cite{Turgut_97}, with $1.5 <
+                \mbox{M} \le 2.5 $ for realistic surfaces, with
+                $\mbox{M} =1.5 $ corresponding to the highest
+                roughness, and $\mbox{M}=2.5$ being a very smooth
+                variation. For 2-D Goff-Jordan surfaces, the fractal
+                dimension is $ \mbox{D} = 4.5 - \mbox{M} $
+                Insignificant
+                for Gaussian spectrum (option {\bf g} not specified)
+                but a  value must
+                be given.
+\end{itemize}
+
+\subsubsection{Volume Scattering Layer}
+If a volume scattering layer is flagged by RG and CL both being
+		negative, these parameters will be interpreted as the
+		negative of the vertical and horizontal correlation
+		lengths of the volume inhomogeneities. In this
+		case 4 more parameters should be added on the same
+		line to completely describe the spatial statistics:
+\begin{verbatim}
+D CC CS AC AS RO RG CL SKW M RMS GAM
+\end{verbatim}
+with the significance:
+ \begin{itemize}
+ \item[SKW] Skewness angle of the correlation ellipse in degrees. 0.0
+ represents no skewness. Angle measured positive downwards.
+ \item[M] Volume spectral exponent as defined by Turgut
+ \cite{Turgut_97} for power-law spectra.  $ \mbox{M} > 1.5 $ is
+ required for the power spectrum to be integrable, independent on the
+ dimension of the problem. Insignificant
+ unless option {\bf g} was specified.
+ \item[RMS] RMS of relative sound speed perturbation $\Delta c / c$ for
+ volume inhomogeneities.
+ \item[GAM] Ratio $\gamma$ of relative density perturbation to sound speed
+ perturbation, $ \Delta \rho / \rho = 2.0 \gamma \; \Delta c / c$.
+ \end{itemize}
+
+
+
+\subsubsection{Block V: Sources}
+
+When computing the total field (option {\bf s} not specified), OASSP
+supports the same sources as OASP, as described in
+Sec.\,\ref{oaspsou}, including source arrays. However, the source
+specification must be consistent with the one used for the associated
+OASP run, since the scattered field is controlled by the latter.  If
+option {\bf s} is specified in OASSP, the source type is
+insignificant.
+
+
+\subsubsection{Block VI: Receivers}
+
+The default specification of the receiver depths is the same as for
+SAFARI, i.e. through the parameters RD1, RD2 and NRD in Block VI, with
+\begin{itemize}
+\item[RD1]  Depth of uppermost receiver in meters
+\item[RD2]  Depth of lowermost receiver in meters
+\item[NRD]   Number of receiver depths 
+\end{itemize}
+
+The NRD receivers are placed equidistantly in the vertical.
+
+\noindent {\bf Non-equidistant Receiver Depths}
+
+In OASES the receiver depths can optionally be specified individually.
+The parameter NRD is used as a flag for this option. Thus, if NRD $< 0$
+the number of receivers is interpreted as --NRD, with the individual
+depths following immidiately following Block VI. 
+
+The PP Post-processor is compatible and will depth-stack the traces at
+the correct depths.
+
+\noindent {\bf Tilted Receiver Arrays}
+
+Option `T' allows for specification of an array tilt in the
+vertical plane containing the source and the receivers.
+
+The tilt angle and rotation origin is specified in the receiver depth
+line (Block VI):
+
+\begin{tabular}{cc}
+   Standard   &    For option T \\ \hline
+RD1 RD2 NR &  ZREF  ANGLE
+\end{tabular}
+
+
+The vertical arrays are rotated by an angle `ANGLE' in deg relative
+to the vertical. The rotation is performed with origin at depth `ZREF'.
+
+The parameters RD1, RD2 and NR always refer to the untilted case. 
+In the tilted case these parameters do therefore define the array
+geometry and not the actual depths of the receivers in the tilted array.
+The same is the case for the graphics output produced by the
+post-processor PP. 
+
+
+The source(s) is always at the origin and is therefore not rotated.
+Thus, for zero-offset tilted VSP-s, the reference depth ZREF should be set 
+equal to the source depth SD!
+
+
+
+\subsubsection{Block VII: Wavenumber integration}
+
+This block specifies the wavenumber sampling in the standard OASES
+format, with the significance of the parameters being as follows:
+\begin{itemize}
+		\item[CMIN:]   Minimum phase velocity in m/s. Determines the
+		upper limit of the truncated horizontal wavenumber space:
+			\begin{displaymath}
+			k_{max} = \frac{2\pi \ast \mbox{FREQ}}{\mbox{CMIN}}
+			\end{displaymath}
+		\item[CMAX:]	Maximum phase velocity in m/s. Determines the
+		lower limit of the truncated horizontal wave-
+		number space:
+			\begin{displaymath}
+			k_{min} = \frac{2\pi \ast \mbox{FREQ}}{\mbox{CMAX}}
+			\end{displaymath}
+		In plane geometry ( option P ) CMAX may be specified as 
+		negative. In this case, the negative wavenumber spectrum
+		will be included with $k_{min}=-k_{max}$, yielding correct 
+		solution also at zero range.
+		\item[NW:]	Number of sampling points in wavenumber space.
+		In contrast to what is the case for OAST, 
+		NW does here not have to be an integer  power of 2.				The sampling points are placed equidistantly
+		in the truncated wavenumber space determined
+		by CMIN and CMAX. If CMAX$<0$, i.e. the inclusion of
+		the negative spectrum is enabled, then the NW sample
+		points will be distributed along the positive
+		wavenumber axis only, with the negative
+		components obtained by symmetry. NW=-1 activates
+		automatic wavenumeber sampling.
+
+		\item[IC1:]  Number of the first sampling point where the
+		calculation is to be performed. If IC1$>1$, 
+		then the Hankel transform is Hanning-windowed in the
+		interval 1,2$\ldots$IC1-1 before
+		integration.  Insignificant for automatic sampling (NW
+		= -1).
+
+		\item[IC2:]	Number of the last sampling point where the 
+		calculation is to be performed. If IC2$<$NWN,
+		then the Hankel transform is Hanning windowed in the
+		interval IC2+1,$\ldots$NW before integration. Insignificant for automatic sampling (NW
+		= -1).
+
+		\item[IF:] Frequency increment for plotting of
+integration  kernels. A value of 0 disables the plotting.
+		\end{itemize}
+ 
+\noindent {\bf Automatic wavenumber sampling}
+
+
+
+As foor the other OASES modules the  automatic sampling  is  activated  by 
+specifying the parameter NW to $ -1$ and it automatically  activates 
+the  complex frequency integration contour even though option  {\bf O} 
+may  not have been specified. The parameters IC1 and IC2 have  no 
+effect if the automatic sampling is selected.
+ 
+\subsection{Execution of OASSP}
+
+    As  for  the other modules  filenames  are  passed  to  the  code   via 
+environmental parameters. In Unix systems a typical command  file 
+{\bf oassp} (in  \$HOME/oases/bin) is:
+
+\small
+\begin{verbatim}
+#!/bin/csh
+    setenv FOR001 $1.dat       # input file 
+    setenv FOR002 $1.src       # Source array input file
+    setenv FOR015 $1.strf      # Source array trf file
+    setenv FOR019 $1.plp       # plot parameter file
+    setenv FOR020 $1.plt       # plot data file  
+    setenv FOR028 $1.cdr       # contour plot parameter file 
+    setenv FOR029 $1.bdr       # contour plot data file 
+    setenv FOR045 $2.rhs       # mean field amplitudes at rough interface
+    setenv FOR046 $2.vol       # mean field in volume scattering layer
+    oassp2                      # executable
+\end{verbatim}
+\normalsize
+
+    After preparing an OASP  data file with the name \tt input-rhs.dat
+\rm, OASP  is 
+executed by the command:
+
+    $>$ {\bf oasp input-rhs}
+
+To generate the associated scattered field transfer functions, OASSP
+    is then executed,
+
+    $>$ {\bf oassp input-scat input-rhs}
+
+where \tt input-scat.dat \rm is the input file for OASSP. 
+
+\newpage
+\subsection{OASSP - Examples}
+
+\subsubsection{Rough Seabed Reverberation}
+
+This example computes the reverberation in a 200 Hz band around 500 Hz
+from a rough stratified seabed in shallow water. The source is assumed
+to be a line source (option P). The field is computed for vertical
+arrays at range 0 m (monostatic) and 500 m (bistatic). The data file
+\tt wg-rhs.dat \rm for computing the mean field using automatic
+sampling is:
+
+\begin{verbatim}
+Line source. Mean field. Goff. auto.
+P B N s g O 
+500 0
+4
+0          0      0     0     0     0      0
+0       1500      0     0     0     1      0 
+128.    1470   0000.00  0.01  0.00  1.650  0.5  0
+228.00  2300   0000.00  0.50  0.00  2.650  0.0000  	
+
+100.
+52. 127. 51
+
+1200 -1200
+-1 1 1 0
+2048 400 600 0.0004 0 .5 2 
+\end{verbatim}
+
+\figmit{figs/wg_rhs.ps}{7.0}{Mean field envelope in shallow water
+example}{fig:wg_mean}
+
+Figure\,\ref{fig:wg_mean} shows the depth-stacked plots of the the mean
+field envelopes for the monostatic receiver array, generated using PP. 
+
+The associated input file \tt wg-scat.dat \rm for OASSP is:
+
+\begin{verbatim}
+Seabed scat. Line source. Goff-J. auto.
+P B N O s g  
+500 0
+4
+  0.       0      0     0     0     1      0       0
+  0.    1500      0     0     0     1      0       0
+128.    1470   0000.00  0.01  0.00  1.650  -0.5   5.0 
+228.00  2300   0000.00  0.50  0.00  2.650  0.0000 0.0 	
+
+128.
+77. 127. 51
+
+1200 -1200
+2048 1 2048 0
+2048 400 600 0.0004 0 0.5 2
+\end{verbatim}
+
+\figmit{figs/wg_scat.ps}{7.0}{Reverberant  field envelope in shallow water
+seabed roughness scattering example}{fig:wg_scat}
+
+The main difference is that the wavenumber sampling was chosen
+manually here, and a finite roughness correlation length was
+specified. The field envelopes for the monostatic vertical array are
+shown in Fig.\,\ref{fig:wg_scat}.
+
+\subsubsection{Seabed Volume Scattering}
+
+The use of OASSP for computing realizations of scattering and
+reverberation produced by random distributions of volume
+inhomogeneities in the seabed is illustrated by the following
+example. The environment is similar to the above, but the seasurface
+is eliminated. The data file \tt vol-rhs.dat \rm for the OASP mean field is 
+
+\begin{verbatim}
+Halfsp. Line source. Mean field. Goff. auto.
+P B N s g O 
+500 0
+3
+128.    1500      0     0     0     1      0       0
+128.    1470  -2270.10  0.01  0.00  1.650  1.0000  0
+228.00  2300   0000.00  0.50  0.00  2.650  0.0000  0	
+
+100.
+77. 127. 51
+
+1200 -1200
+-1 1 1 0
+2048 400 600 0.0004 0 .5 2
+\end{verbatim}
+
+\figmit{figs/vol_rhs.ps}{7.0}{Monostatic mean field envelope in shallow water
+environment with sediment layer having a strong sound speed gradient
+and volume inhomogeneities}{fig:vol_mean}
+
+The resulting depth-stacked envelope plot is shown in
+Fig.\,\ref{fig:vol_mean}.
+
+The associated OASSP data file \tt vol-scat.dat \rm for calculating
+the field scattered is
+
+\begin{verbatim}
+Volume scat. Line source. . Goff-J. auto.
+P N s O g  
+500 0
+3
+128.    1500      0     0     0     1       0    0.0
+128.    1470  -2270.10  0.01  0.00  1.650  -2.0 -5.0 0 2.5 1.0 0.0
+228.00  2300   0000.00  0.50  0.00  2.650  0.0000 0.0 	
+
+128.
+77. 127. 51
+
+1200 -1200
+2048 1 2048 0
+2048 400 600 0.0004 0 0.5 2
+\end{verbatim}
+
+With the skewness set to 0 deg the main axes of the correlation function
+are alligned with the stratification, and the horizontal correlation
+length is specified to 5 m, with the vertical  correlation length
+being 2 m. The fractal dimension of the power law spectrum (option
+'g') is 2.5. The RMS relative sound speed perturbation is set to unity,
+while the relative density is set to 0. 
+
+\figmit{figs/vol_scat.ps}{7.0}{Monostatic backscattering envelope in
+shallow water environment with sediment layer having a strong sound
+speed gradient and volume inhomogeneities}{fig:vol_scat}
+
+The resulting depth-stacked scattered field envelopes are shown in
+Fig.\,\ref{fig:vol_scat}. The fundamental differences between the
+scattering from seabed roughness and volume inhomogeneities is
+didcussed in Ref.~\cite{Lepage_99}.
+
+    
+

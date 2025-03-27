@@ -1,0 +1,17 @@
+SCARAB halfsp. Line source. Mean field. Goff. auto.
+N s g O 
+500 0
+4
+128.    1500 0 0 0 1.024 0 0
+128.    1455   0.00   0.001  0.00 1.4  0.5     0
+128.01    1455  -1555.00   0.001  0.00 1.4  0     0
+228.00  1555   0000.00   0.001  0.00 1.4  0.0000  0	
+
+103. 		Sender
+78. 128. 51	Receiver
+
+700 1E8      Min and max phase velocity
+-1 1 1 0	Automatic wave number sampling
+4096 400 600 0.0004 0  1.0 2 #freq start end time step ranges
+
+

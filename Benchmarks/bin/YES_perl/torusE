@@ -1,0 +1,21 @@
+#!/usr/local/bin/tcsh
+mv ./tloss/torusE.plt ./tloss/torusE.plt.old
+mv ./tloss/torusE.plp ./tloss/torusE.plp.old
+./bin/make_plug ./run/torusE ./tloss/stubs/torusE ./tloss/torusE
+cat ./refs/BEM/torusE.bem.par1.bac.rx1.dat ./run/torusE.rdo.par1.bac.rx1.dat > f1
+cat ./refs/BEM/torusE.bem.par1.bac.rx2.dat ./run/torusE.rdo.par1.bac.rx2.dat > f2
+#cat f1 ./refs/CORE/torusE.gem.par1.bac.rx1.dat > g1
+#cat f2 ./refs/CORE/torusE.gem.par1.bac.rx2.dat > g2
+cat f1 f2 > ./tloss/torusE.plt
+rm -f g? f?
+if ( $#argv == 1 ) then
+  if ($argv[1] == "S") then
+# Silent mode selected if argument is S
+  else
+# Plotting mode otherwise
+mplot ./tloss/torusE
+  endif 
+else
+# Plotting mode as default with no arguments
+mplot ./tloss/torusE
+endif

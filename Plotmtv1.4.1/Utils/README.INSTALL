@@ -1,0 +1,18 @@
+
+This directory contains utility programs to convert from the UC Berkeley 
+contour, pdraw and drawplot formats to the MTVDAT format used by plotmtv.
+
+First, modify the Makefile and change the $CC, $FC and $CFLAGS variables.
+This Makefile compiles only the C programs; if you want to compile the 
+Fortran programs too, change the PROGRAMS variable to
+
+          PROGRAMS = $(C_PROGRAMS) $(F_PROGRAMS)
+
+Then to compile, type:
+          
+         % make all
+
+
+To test these programs, cd into the TESTS directory and type:
+
+         % run.csh

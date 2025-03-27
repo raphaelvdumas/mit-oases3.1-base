@@ -1,0 +1,113 @@
+      128                                              MODU
+ OASTL STLRAN COL 
+ TRANSMISSION LOSS                                                               
+ TRANSPARENT CUT TEST (FLUID)                                                               
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:    100.0 m$ 
+ RD:     30.0 m$ 
+     20.0000                                           XLEN
+     12.0000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    0.000000E+00                                      XLEFT
+     8.00000                                         XRIGHT
+     1.00000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     50.0000                                          YDOWN
+     10.0000                                            YUP
+     10.00000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB//1Pa)$                                                        
+ LIN
+        3                                                NC
+     2750                                                 N
+    0.000000E+00                                       XOFF
+    0.292969E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+>>>
+      1000                                                 N
+    0.000000E+00                                       XOFF
+    0.800000E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+ OASTL WTLRAN COL
+ TRANSMISSION LOSS                                                               
+ FNORM SAFARI - w                                                                
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:    100.0 m$ 
+ RD:     30.0 m$ 
+     15.0000                                           XLEN
+     9.00000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    0.000000E+00                                      XLEFT
+     8.00000                                         XRIGHT
+     1.00000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     80.0000                                          YDOWN
+     10.0000                                            YUP
+     5.00000                                           YINC
+     1.00000                                           YDIV
+ Vert. particle velocity (dB//1m/s)$                                             
+ LIN
+        3                                                NC
+      504                                                 N
+    0.000000E+00                                       XOFF
+    0.159999E-01                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+>>>
+      1000                                                 N
+    0.000000E+00                                       XOFF
+    0.800000E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+ OASTL UTLRAN COL
+ TRANSMISSION LOSS                                                               
+ FNORM SAFARI - u                                                                
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:    100.0 m$ 
+ RD:     30.0 m$ 
+     15.0000                                           XLEN
+     9.00000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    0.000000E+00                                      XLEFT
+     8.00000                                         XRIGHT
+     1.00000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     50.0000                                          YDOWN
+     10.0000                                            YUP
+     5.00000                                           YINC
+     1.00000                                           YDIV
+ Hor. particle velocity (dB//1m/s)$                                              
+ LIN
+        3                                                NC
+      504                                                 N
+    0.000000E+00                                       XOFF
+    0.159999E-01                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+>>>
+      1000                                                 N
+    0.000000E+00                                       XOFF
+    0.800000E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+ RDOAS PLTEND
+
+
+
+
+
+
+
+
+

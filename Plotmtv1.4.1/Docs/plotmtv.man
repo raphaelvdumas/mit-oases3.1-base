@@ -1,0 +1,282 @@
+.TH PLOTMTV L "July 16, 1995"
+.SH NAME
+plotmtv - fast multi-purpose plotting program for X11-windows 
+
+.SH SYNOPSIS
+.TP 8
+.B
+plotmtv
+.br
+[-mult]
+.na
+[-P\fIprinter\fP]
+[-printcmd \fPprint_command\fP]
+[-colorps]
+.br
+[-3d]
+[-v]
+[-d]
+[-l]
+[-scale \fIscale\fP]
+.br
+[-noframe]
+[-nodate]
+[-noxplot]
+[-plotall]
+[-print]
+.br
+[-pbg \fIbackground_color\fP]
+[-pfg \fIforeground_color\fP]
+.br
+[-geom \fIgeometry\fP]
+[-rv]
+[-bg \fIbackground_color\fP]
+[-fg \fIforeground_color\fP]
+.br
+[-o \fIpostscript-file\fP]
+.br
+[-clobber]
+.br
+\fIdata-file1 data-file2 ...\fP
+.ad
+
+.SH DESCRIPTION
+.LP
+\fBplotmtv\fP is a fast and convenient X11 program for
+visualization of scientific data. 
+The program reads in data in the MTVDAT format 
+and plots each dataset in the \fIdata-file\fP in turn. 
+Each plot comes with a simple but functional
+Graphical User Interface (GUI), which allows users
+to zoom in or pan to areas of interest on the plot, or to toggle between 2D
+and 3D plots. The plots may then be sent directly to a grayscale or color
+PostScript
+printer for hard-copy output.
+.LP
+\fBplotmtv\fP's capabilities include 2D line and scatter plots (x-vs-y),
+contour plots, 3D surface, line and
+scatter plots as well as vector plots.
+The program has been extended recently to include probability plots, barcharts 
+and histograms. See the \fIMTV Plot Data Format\fP for details on the
+data-formats used to specify data for the above-mentioned plot-types.
+.LP
+The Graphical User Interface for \fBplotmtv\fP is quite limited, consisting
+of several toggle buttons for setting commonly used plot options, and an
+interactive zoom and pan capability via the mouse. The GUI also allows
+toggling between 2D and 3D plots, rotating 3D
+plots, and some (limited) customization of the resultant plots.
+Through the GUI, one can also print the plot using the "Print" button,
+or save the Postscript plot to a file using the "Print to File" button.
+.LP
+If more than one data-file or data-set is specified, a small "page" widget
+will appear in the lower left corner of the \fBplotmtv\fP plot window.
+The "page" widget allows one to page between different plots, using the same
+window, by clicking on the Up or Down buttons.
+.LP
+The X11 plot in \fBplotmtv\fP can also be controlled from the keyboard,
+i.e., by pressing specific keys on the keyboard while the mouse is within
+the X11 plot window.
+Pressing on "n" (next) and "p" (previous) pages between different plots, while
+pressing the "q" key is a fast way of exiting the program.
+For the 3D plot,
+the viewing vector can be changed using the "h", "j", "k", "l" and "o" keys
+on the keyboard; the plot on the screen can be rotated
+sideways using the "h" or "l" keys, rotated up or down using
+the "j" and "k" keys, and drawn with the original viewing vector using "o".
+The "a", "s", "d" and "f" keys will produce 90\(de rotations.
+"z" will plot the image projected on the x-y plane (z=constant),
+"y" will plot the image projected on the x-z plane (y=constant),
+and "x" will plot the image projected on the y-z plane (x=constant).
+.LP
+.RS
+.ta 1i
+.nf
+\fBKey\fP	\fBAction\fP
+p	page to the previous plot
+n	page to the next plot
+q	end program
+h	rotate right 10\(de (3D plot only)
+j	rotate down 10\(de (3D plot only)
+k	rotate up 10\(de (3D plot only)
+l	rotate left 10\(de (3D plot only)
+a	rotate right 90\(de (3D plot only)
+s	rotate down 90\(de (3D plot only)
+d	rotate up 90\(de (3D plot only)
+f	rotate left 90\(de (3D plot only)
+o	return to original view (3D plot only)
+z	project on x-y plane (3D plot only)
+x	project on y-z plane (3D plot only)
+y	project on x-z plane (3D plot only)
+.fi
+.RE
+
+.SH DATA FORMAT
+.LP
+\fBplotmtv\fP uses the MTVDAT data format, which is too long to describe in
+this document.  
+The data format is described fully in 
+\fIThe MTV Plot Data Format\fP document.
+
+.SH OPTIONS
+.TP 5
+.B \-mult
+Brings up an X-window with multiple plots. This is a useful way of comparing
+different plots on the same page.
+.TP 5
+.B \-P\fIprinter\fP
+Specifies the printer to which to send the PostScript plot.
+The default uses the printer name from the environment variable $PRINTER.
+.IP
+Note: \fBplotmtv\fP will send a PostScript file to the specified printer
+\fIonly\fP if the size of the file is less than 1000Kbytes. This maximum
+file size is due to the limitations of the UNIX \fBlpr\fP(1) command.
+.TP 5
+.B \-printcmd \fIprint_command\fP
+Specifies the \fIprint_command\fP to be executed in sending a PostScript
+plot to the printer. The default is the UNIX "lpr -h" command.
+The \fIprint_command\fP may also be set using the environment variable
+$MTV_PRINTER_CMD, i.e., 'setenv MTV_PRINTER_CMD "lpr -h"'.
+.TP 5
+.B \-colorps
+.TP 5
+.B \-color
+.TP 5
+.B \-pscolor
+Instructs the PostScript renderer to include colors in the PostScript
+description of the plot.  
+By default, \fBplotmtv\fP produces gray-scale PostScript plots.
+The color PostScript file produced with this option
+may be printed out on a color
+PostScript printer.  Be aware however that the same file will not print out
+correctly on a black-and-white PostScript printer.
+The color PostScript mode may also be set by setting 
+the $MTV_PSCOLOR environment variable, i.e., "setenv MTV_PSCOLOR ON".
+.TP 5
+.B \-3d
+Plots in 3D instead of the default 2D.
+.TP 5
+.B \-v
+Makes \fBplotmtv\fP more talkative.
+.TP 5
+.B \-d
+Makes \fBplotmtv\fP extremely loquacious.
+.TP 5
+.B \-l
+Prints the PostScript plot in landscape mode (rotated 90\(de).
+.TP 5
+.B \-noframe
+Prints the PostScript plot without a bounding box frame.  The bounding box
+frame is drawn only when the plot is printed with a scale value less than 1.
+Specifying this option turns off the frame.
+.TP 5
+.B \-nodate
+Prints the PostScript plot without a time/date stamp.
+.TP 5
+.B \-noxplot
+.TP 5
+.B \-noplot
+Stops the program from starting up the X11 graphics routines.
+The normal mode of operation is start up \fBplotmtv\fP from an
+X-terminal or X-display and
+interact with the graphics using the Graphical User Interface.
+However, the \fB-noxplot\fP option is also provided to allow the plots to be
+directly drawn in PostScript, thus bypassing the X11 plotting routines.
+This is particularly useful for batch-mode operation, where multiple plots
+can be sent to a printer without user intervention.
+.TP 5
+.B \-plotall
+Plots all the datasets found in a single plot. Useful for combining data
+from different files.
+.TP 5
+.B \-print
+Sends the PostScript plot to the printer automatically.
+Usually this is used together with the \fB-noxplot\fP option to produce
+PostScript plots in batch, i.e., "plotmtv -noxplot -print datafile".
+.TP 5
+.B \-scale \fIscale\fP
+Sets a plot scale factor.  This is used only for PostScript plotting.
+.TP 5
+.B \-pfg \fIforeground_color\fP
+.TP 5
+.B \-fg \fIforeground-color\fP
+.TP 5
+.B \-pbg \fIbackground_color\fP
+.TP 5
+.B \-bg \fIbackground-color\fP
+Sets the foreground and background colors in the \fBplotmtv\fP X11 Plot
+Window.
+.TP 5
+.B \-display \fIhost:display.screen\fP
+Opens a window on the given host and display
+.TP 5
+.B \-geom \fIgeometry\fP
+Set the window geometry. The geometry is specified using the X11 geometry
+convention <width>x<height>{+/-}<xoffset>{+/-}<yoffset>.
+.TP 5
+.B \-rv
+Reverse the foreground and background colors in the \fBplotmtv\fP X11 Plot
+Window.
+.TP 5
+.B \-clobber
+Deletes the input datafiles after quitting the program.  This is a
+\fIvery\fP dangerous option and should be used with caution.  This option is
+useful primarily when calling \fBplotmtv\fP from a separate program.
+.TP 5
+.B \fIdata-file1 data-file2...\fP
+Specifies the MTVDAT data-file(s).
+
+.SH ENVIRONMENT VARIABLES
+.ta 2i
+PRINTER	printer name for hardcopy (e.g., "hpps")
+.br
+MTV_PRINTER_CMD	name of the UNIX print command (e.g., "lpr -h")
+.br
+MTV_PSCOLOR	for color PostScript (e.g., "ON")
+.br
+MTV_WRB_COLORMAP	uses a different color map for contours (e.g., "ON")
+.br
+MTV_USE_ISOLATIN_FONT	is used to turn off the ISOLATIN PostScript Plot (e.g., "OFF")
+.br
+MTV_PSFONT1	specifies the size of the top-label PostScript font (e.g. "25")
+.br
+MTV_PSFONT2	specifies the size of the axis-label PostScript font (e.g. "20")
+.br
+MTV_PSFONT3	specifies the size of the axis-ticks PostScript font (e.g. "15")
+.br
+MTV_PSFONT4	specifies the size of the side-label PostScript font (e.g. "12")
+.br
+MTV_PSFONT5	specifies the size of the annotations PostScript font (e.g. "12")
+.br
+MTV_PSFONT6	specifies the size of the date-stamp PostScript font (e.g. "10")
+.br
+MTV_PSFONT7	specifies the size of the contour-label PostScript font (e.g. "8")
+
+.SH HISTORY
+.LP
+\fBplotmtv\fP is based on the 
+\fB\s-1DRAWPLOT\s0\fP, \fB\s-1CONTOUR\s0\fP and \fB\s-1PDRAW\s0\fP 
+programs from 
+U.C. Berkeley (yes, I'm responsible for those too!). \fBplotmtv\fP essentially
+combines all the capabilities of the three packages into one single package.
+
+.SH BUGS/LIMITATIONS
+.LP
+The GUI is very limited.  The 3D viewing stuff is quite limited too;
+hidden-surface removal is implemented as a simple painter's algorithm, so
+large 3D polygons don't get plotted (with hidden-surfaces) correctly.
+Also there are no perspective plots yet (and probably never will be)...
+.LP
+\fBplotmtv\fP uses some level 2 PostScript commands.  This sometimes causes
+plots to disappear if plotted on older PostScript-level-1 printers.  If this
+happens, try setting the environment variable "MTV_USE_ISOLATIN_FONT" to False,
+i.e. "% setenv MTV_USE_ISOLATIN_FONT False".
+
+.SH AUTHOR
+Kenny K.H. Toh (ktoh@td2cad.intel.com)
+
+.SH FILES
+\fIdataplot.ps\fP 	default PostScript file
+.ta
+
+.SH SEE ALSO
+\fIThe MTV Plot Data Format\fP

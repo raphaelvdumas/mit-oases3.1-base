@@ -1,0 +1,15 @@
+Haro Strait simulation 1 
+R O  B
+1000 0                         src freq
+4                              nb of layers
+  0    0  0 0    0     0   0   #1 : upper half space (vacuum)
+  0 1500  0 0 -888.888 1.0 0   #2
++15.0
+ 45 1500  0 0    0     1.0 0
+225 1800  0 0.15 0     1.8 0   
+55                             src depth
+1 260 50                   rcv depths
+1300 1e8                       cmin cmax
+-1 1 1 0                  k integration parameters
+4096 900.0 1100.0 0.00025 2 .1 1    time, freq & range param.
+

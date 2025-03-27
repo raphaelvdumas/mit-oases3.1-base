@@ -1,0 +1,154 @@
+      128                                              MODU
+ OASTRDNTLRAN NWR COL
+                                                                
+ F-S CORNER - 30-deg - Forward Szz                                         
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     30.0 m$ 
+ RD:    100.0 m$ 
+     15.0000                                           XLEN
+     9.00000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    0.000000E+00                                      XLEFT
+    1.00000                                         XRIGHT
+    0.200000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     40.0000                                          YDOWN
+     10.000000E+00                                        YUP
+     5.0000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB)$                                                        
+ LIN
+        3                                                NC
+      279                                             N
+    0.443000E+00                                       XOFF
+    0.199994E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+      267                                                 N
+    0.373276E-02                                       XOFF
+    0.374537E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+      249                                                 N
+    0.4E-02                                       XOFF
+    0.4E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+ OASTRDNTLRAN NWR COL
+                                                                
+ F-S CORNER - 30-deg - Forward Szz                                         
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     30.0 m$ 
+ RD:    300.0 m$ 
+     15.0000                                           XLEN
+     9.00000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    0.000000E+00                                      XLEFT
+    1.000000                                         XRIGHT
+    0.200000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     50.0000                                          YDOWN
+     10.000000E+00                                        YUP
+      5.0000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB)$                                                        
+ LIN
+        3                                                NC
+      279                                             N
+    0.443000E+00                                       XOFF
+    0.199994E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+      267                                                 N
+    0.373276E-02                                       XOFF
+    0.374537E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+      249                                                 N
+    0.4E-02                                       XOFF
+    0.4E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+ OASTRDNTLRAN NWR COL
+                                                                
+ F-S CORNER - 30-degs - Backward Szz                                        
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     30.0 m$ 
+ RD:    100.0 m$ 
+     15.0000                                           XLEN
+     9.00000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    0.000000E+00                                      XLEFT
+    0.500000                                         XRIGHT
+    0.100000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     70.0000                                          YDOWN
+     35.000000E+00                                        YUP
+      5.0000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB)$                                                        
+ LIN
+        3                                                NC
+      215                                             N
+    0.000000E+00                                       XOFF
+    0.199994E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+      267                                                 N
+    0.373276E-02                                       XOFF
+    0.374537E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+      249                                                 N
+    0.4E-02                                       XOFF
+    0.4E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+ OASTRDNTLRAN NWR COL
+                                                                
+ F-S CORNER - 30-deg - Backward Szz                                        
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     30.0 m$ 
+ RD:    300.0 m$ 
+     15.0000                                           XLEN
+     9.00000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    0.000000E+00                                      XLEFT
+    0.500000                                         XRIGHT
+    0.100000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     50.0000                                          YDOWN
+    20.000000E+00                                        YUP
+     5.0000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB)$                                                        
+ LIN  
+        3                                                NC
+      215                                             N
+    0.000000E+00                                       XOFF
+    0.199994E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+      267                                                 N
+    0.373276E-02                                       XOFF
+    0.374537E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+      249                                                 N
+    0.4E-02                                       XOFF
+    0.4E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+ RDOAS PLTEND

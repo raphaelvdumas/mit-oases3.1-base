@@ -1,0 +1,55 @@
+$ DATA=BARCHART
+
+# A single set of bars
+
+              "Speed"
+"Sparc"         4.2
+"IBM RS/6000"   8.1
+"Alpha"        10.2
+
+$ DATA=BARCHART
+
+# A single set of bars
+
+              "Speed"
+"Sparc"        -4.2
+"IBM RS/6000"  -8.1
+"Alpha"       -10.2
+
+$ DATA=BARCHART
+
+# This format is used for the bar-chart
+#
+
+% xlabel = "Year"
+% ylabel = "$"
+#% barmin = -100
+#% yabs
+         "Income"   "Expenses"   "Savings"
+1982       100         200          -100
+1983       120         200           -80
+1984       140         200           -60
+1985       160         220           -60
+1986       200         230           -30
+1987       400         240           160
+% fillcolor  5           4             3
+
+$ DATA=BARCHART
+
+# This format is used for the bar-chart
+#
+
+% xlabel = "Year"
+% ylabel = "$"
+% barmin = -100
+#% yabs
+         "Income"   "Expenses"   "Savings"
+1982       100         200          -100
+1983       120         200           -80
+1984       140         200           -60
+1985       160         220           -60
+1986       200         230           -30
+1987       400         240           160
+% fillcolor  5           4             3
+
+$ END

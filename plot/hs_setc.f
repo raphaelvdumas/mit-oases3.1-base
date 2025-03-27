@@ -1,0 +1,3 @@
+      SUBROUTINE HS$SETC(ICOL)
+      RETURN
+      END

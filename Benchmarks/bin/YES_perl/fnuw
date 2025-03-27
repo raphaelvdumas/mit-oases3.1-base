@@ -1,0 +1,25 @@
+#!/usr/local/bin/tcsh
+mv ./tloss/fnuw.plt ./tloss/fnuw.plt.old
+mv ./tloss/fnuw.plp ./tloss/fnuw.plp.old
+./bin/make_plug ./run/fnuw ./tloss/stubs/fnuw ./tloss/fnuw
+cat ./refs/OASES/fnorm.saf.n.rx1.dat ./run/fnuw.rdo.par1.for.rx1.dat > f1
+cat ./refs/OASES/fnorm.saf.w.rx1.dat ./run/fnuw.rdo.par2.for.rx1.dat > f2
+cat ./refs/OASES/fnorm.saf.u.rx1.dat ./run/fnuw.rdo.par3.for.rx1.dat > f3
+cat f1 ./refs/CORE/fnuw.gem.par1.for.rx1.dat > fff1
+cat f2 ./refs/CORE/fnuw.gem.par2.for.rx1.dat > fff2
+cat f3 ./refs/CORE/fnuw.gem.par3.for.rx1.dat > fff3
+cat fff1 fff2 fff3> ./tloss/fnuw.plt
+rm -f fff? f?
+if ( $#argv == 1 ) then
+  if ($argv[1] == "S") then
+# Silent mode selected if argument is S
+  else
+# Plotting mode otherwise
+mplot ./tloss/fnuw
+  endif 
+else
+# Plotting mode as default with no arguments
+mplot ./tloss/fnuw
+endif
+
+

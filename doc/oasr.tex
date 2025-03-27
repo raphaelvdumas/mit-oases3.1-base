@@ -1,0 +1,447 @@
+\section{    OASR: OASES Reflection Coefficient Module}
+
+    OASR  is downward compatible with SAFARI-FIPR  Version 
+3.0  and higher, and therefore supports all options and  features 
+described in the SAFARI manual. A couple of new options have been added.
+
+\subsection{Input Files for OASR}
+
+The input data are structured in 9 blocks. The first 5 blocks, shown in 
+Table~\ref{tab:oasrI}, specify the title, options, 
+environmental parameters, together with the desired grazing angle and frequency
+sampling. The last 4 blocks, outlined in 
+Tables~\ref{tab:oasrI} and \ref{tab:oasrII}, contain axis specifications
+for the graphical output. Some of these blocks
+should always be included and others only if certain 
+options have been specified. The single blocks and parameters are
+described in detail in the following.
+
+\begin{table}
+\centering
+\begin{tabular}{|l|l|c|c|}
+\hline \hline
+Input parameter & Description & Units & Limits \\
+\hline \hline
+\multicolumn{4}{|l|}{\bf BLOCK I: TITLE } \\
+\hline
+TITLE & Title of run  & - & $\leq$ 80 ch. \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK II: OPTIONS } \\
+\hline
+A B C & Output options & - & $\leq$ 40 ch. \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK III: ENVIRONMENT } \\
+\hline
+NL 	& Number of layers, incl. halfspaces	& - & NL$\geq 2$  \\
+D,CC,CS,AC,AS,RO,RG,CL & D: Depth of interface. & m & - \\
+.	& CC: Compressional speed & m/s & CC$\geq 0$ \\
+.	& CS: Shear speed & m/s & - \\
+.	& AC: Compressional attenuation & dB/$\Lambda$ & AC$\geq 0$ \\
+.	& AS: Shear attenuation & dB/$\Lambda$ & AS$\geq 0$ \\
+	& RO: Density 	& g/cm$^{3}$ & RO$\geq 0$ \\
+	& RG: RMS value of interface roughness & m & - \\
+	& CL: Correlation length of roughness & m & CL$>0$ \\
+	& M:  Spectral exponent &   & > 1.5 \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK IV: FREQUENCY SAMPLING } \\
+\hline
+FMIN,FMAX,NRFR,NFOU & FMIN: Minimum frequency & Hz & FMIN$>0$ \\
+	& FMAX: Maximum frequency & Hz & FMAX$>0$ \\
+	& NRFR: Number of frequencies & - & NRFR$\geq 1$ \\
+	& NFOU: Plot output increment & - & NFOU$\geq 0$ \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK V: ANGLE/SLOWNESS SAMPLING } \\
+\hline
+AMIN,AMAX,NRAN,NAOU & AMIN: Minimum angle/slowness & dg/(s/km) & AMIN$\geq 0$ \\
+	& AMAX: Maximum angle/slowness & dg/(s/km) & AMAX$\geq 0$ \\
+	& NRAN: Number of angles/slownesses & - & NRAN$\geq 1$ \\
+	& NAOU: Plot output increment & - & NAOU$\geq 0$ \\ 
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK VI: ANGLE/SLOWNESS AXES } \\
+\hline
+ALEF,ARIG,ALEN,AINC & ALEF: Left border, angle/slws axis & dg/(s/km) & - \\
+RALO,RAUP,RALN,RAIN & ARIG: Right border, angle/slws axis & dg/(s/km) & - \\
+(only for NFOU$>0$) & ALEN: Length of angle/slws axis & cm & ALEN$>0$ \\
+	& AINC: Distance between tick marks & dg/(s/km) & AINC$>0$ \\
+	& RALO: Lower border of R-loss axis & dB & - \\
+	& RAUP: Upper border of R-loss axis & dB & - \\
+	& RALN: Length of loss and phase axes & cm & RALN$>0$ \\
+	& RAIN: R-loss axis tick mark interval & dB & RAIN$>0$ \\
+\hline
+\end{tabular}
+\caption{Layout of OASR input files: I. Calculation and plot parameters.
+	\label{tab:oasrI} }
+\end{table} 
+
+\begin{table}
+\centering
+\begin{tabular}{|l|l|c|c|}
+\hline \hline
+Input parameter & Description & Units & Limits \\
+\hline \hline
+\multicolumn{4}{|l|}{\bf BLOCK VII: LOSS/FREQUENCY AXES } \\
+\hline
+FLEF,FRIG,FLEN,FINC & FLEF: Left border of frequency axis & Hz & - \\
+RFLO,RFUP,RFLN,RFIN & FRIG: Right border of frequency axis & Hz & - \\
+(only for NAOU$>0$) & FLEN: Length of frequency axis & cm & FLEN$>0$ \\
+	& FINC: Distance between tick marks & Hz & FINC$>0$ \\
+	& RFLO: Lower border of R-loss axis & dB & - \\
+	& RFUP: Upper border of R-loss axis & dB & - \\
+	& RFLN: Length of loss and phase axes & cm & RALN$>0$ \\
+	& RFIN: R-loss axis tick mark interval & dB & RAIN$>0$ \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK VIII: LOSS CONTOUR PLOTS (Option C) } \\
+\hline
+ALEF,ARIG,ALEN,AINC & ALEF: Left border, angle/slws axis & dg/(s/km) & - \\
+FRLO,FRUP,OCLN,NTKM & ARIG: Right border, angle/slws axis & dg/(s/km) & - \\
+ZMIN,ZMAX,ZINC & ALEN: Length of angle/slws axis & cm & ALEN$>0$ \\
+(only for option C) & AINC: Distance between tick marks & dg/(s/km) & AINC$>0$ \\
+	& FRLO: Lower border of frequency axis & Hz & FRLO$>0$ \\
+	& FRUP: Upper border of frequency axis & Hz & FRUP$>0$ \\
+	& OCLN: Length of one octave & cm & OCLN$>0$ \\
+	& NTKM: Number of tickmarks pr octave & - & NTKM$>0$ \\
+	& ZMIN: Minimum contour level & dB & - \\
+	& ZMAX: Maximum contour level & dB & - \\
+	& ZINC: Contour level increment & dB & ZINC$>0$ \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK IX: SVP AXES } \\
+\hline
+VLEF,VRIG,VLEN,VINC & VLEF: Wave speed at left border & m/s & - \\
+DVUP,DVLO,DVLN,DVIN & VRIG: Wave speed at right border & m/s & - \\
+(only for option Z) & VLEN: Length of wave speed axis & cm & VLEN$>0$ \\
+		& VINC: Wave speed tickmark distance & m/s & VINC$>0$ \\
+		& DVUP: Depth at upper border  & m & - \\
+		& DVLO: Depth at lower border  & m & - \\
+		& DVLN: Length of depth axis   & cm & DVLN$>0$ \\
+		& DVIN: Depth axis tickmark distance & m & DVIN$>0$ \\
+\hline
+\end{tabular}
+\caption{Layout of OASR input files: II. Plot parameters.
+	\label{tab:oasrII} }
+\end{table} 
+
+\subsubsection{Block I: Title}
+
+The title printed on all graphic output generated by OAST.
+
+\subsubsection{Block II: OASR options}
+
+In addition to supporting the SAFARI options described in \cite{hs:saf}, 
+OASR supports several new options.
+             \begin{itemize}
+	     \item[B] This option replaces the default P-P wave
+		reflection or transmission coefficient by the P-Slow wave
+		coefficient. Only allowed for Biot layers.
+	     \item[C] Loss contours plotted in frequency and grazing angle.
+	     \item[L] Generates a plot of reflection loss in dB in addition to 
+                the default linear magnitude plot  vs frequency or angle.
+	     \item[N] This is the default option, which therefore
+		never needs to be specified. It calculates the P-P reflection
+		loss as function of angle and frequency.
+	     \item[P] Phase angle of reflection coefficient plotted
+		in addition to the default magnitude.
+	     \item[S] This option replaces the default P-P wave
+		reflection or transmission coefficient by the P-SV wave
+		reflection coefficient.
+	     \item[T] Generates a table of computed complex reflection 
+                coefficients. The file is in ASCII format and will be 
+                given the same name as the input file, but extension 
+                \tt .rco \rm . 
+	     \item[Z] Plot of velocity profiles.
+             \item[p] Calculates and plots reflection coefficients vs
+                horizontal slowness rather than the default grazing angle. 
+                This option allows for computing ``reflection coefficients'' 
+                in the evanescent regime. When this option is specified, the 
+                sampling in Block V should be given in slowness in s/km, and 
+                similarly for the plot parameters in Blocks VI and VIII.
+	     \item[s] Generates a file with boundary discontinuities for the 
+                rough interfaces. Used by OASS for computing scattering 
+                kernels.
+	     \item[t] Computes transmission coefficients instead of the 
+                default reflection  coefficients. The transmission 
+                coefficients refer to the lowermost halfspace.
+             \end{itemize}
+
+\subsubsection{Block IV: Environmental Model}
+
+OASR supports all the environmental models allowed for SAFARI as well as the
+ones described above in Section~\ref{oas_env}.  The significance of
+the standard environmental parameters is as follows
+\begin{itemize}	
+		\item[NL:]	Number of layers, including the upper and lower
+		half-spaces. These should Always be included,
+		even in cases where they are vacuum.
+
+		\item[D:]	Depth in $m$ of upper boundary of layer or
+		halfspace. The reference depth can be choosen
+		arbitrarily, and D() is allowed to be negative.
+		For layer no. 1, i.e. the upper half-space, this
+     		parameter is dummy.
+
+		\item[CC:]	Velocity of compressional waves in $m/s$.
+        	If specified to 0.0, the layer or half-space is
+		vacuum.
+
+		\item[CS:]	Velocity of shear waves in m/s.
+ 		If specified to 0.0, the layer or half-space is fluid.
+                If CS()$< 0$, it is the compressional velocity at bottom of
+		layer, which is treated as fluid with $1/c(z)^{2}$ linear.
+
+		\item[AC:]   Attennuation of compressional waves in 
+		$dB/\lambda$. If the layer is fluid, and AC() is specified to
+		0.0, then an imperical water attenuation is
+		used (Skretting \& Leroy).
+
+		\item[AS:]   Attenuation of shear waves in $dB/\lambda$
+
+		\item[RO:]   Density in $g/cm^{3}$.
+
+		\item[RG:]  RMS roughness of interface in $m$. RG(1) is dummy. 
+                If RG$<0$ it represents the negative of the RMS roughness, and 
+                the associated correlation length CL and spectral exponent 
+                should follow. If RG$>0$ 
+                the correlation length is assumed to be infinite.
+		\item[CL:] Roughness correlation length in m. 
+
+                \item[M:] Spectral exponent of the power spectrum as
+                defined by Turgut \cite{Turgut_97}, with $1.5 <
+                \mbox{M} \le 2.5 $ for realistic surfaces, with
+                $\mbox{M} =1.5 $ corresponding to the highest
+                roughness, and $\mbox{M}=2.5$ being a very smooth
+                variation. For 2-D Goff-Jordan surfaces, the fractal
+                dimension is $ \mbox{D} = 4.5 - \mbox{M} $
+                Insignificant
+                for Gaussian spectrum (option {\bf g} not specified)
+                but a  value must
+                be given.
+
+		\end{itemize}
+
+
+
+
+\subsection{Execution of OASR}
+
+    As  for  FIPR,  filenames  are  passed  to  OASR   via 
+environmental parameters. In Unix systems a typical command  file 
+{\bf oasr} (in  \$HOME/oases/bin) is:
+
+\small
+\begin{verbatim}
+    #                            the pound sign invokes the C-shell 
+    setenv FOR001 $1.dat       # input file 
+    setenv FOR019 $1.plp       # plot parameter file
+    setenv FOR020 $1.plt       # plot data file  
+    setenv FOR028 $1.cdr       # contour plot parameter file 
+    setenv FOR029 $1.bdr       # contour plot data file 
+    setenv FOR022 $1.rco       # reflection coefficient table
+    setenv FOR023 $1.trc       # reflection coefficient table
+    setenv FOR045 $1.rhs       # scattering output file
+    oasr1                      # executable
+\end{verbatim}
+\normalsize
+
+    After preparing a data file with the name {\bf input.dat}, OASR  is 
+executed by the command:
+
+    $>$ {\bf oasr input}
+
+\subsection{Graphics}  
+
+    Command files are provided in a path directory for generating 
+the graphics.
+
+\noindent    To generate curve plots, issue the command:
+
+    $>$ {\bf mplot input}
+
+\noindent    To generate contour plots, issue the command:
+
+    $>$ {\bf cplot input}
+
+\subsection{Output Files}
+
+With option {\bf T} specified, OAST will generate a file 'input'.rco containg
+the magnitude $|R|$ and phase $ \phi $ of the complex reflection
+coefficient  $R = |R| \exp \phi $. 
+Assume you add option T to \tt saffipr1.dat \rm, and also add option p
+to select slowness sampling:
+
+\begin{verbatim}
+SAFARI FIPR case 1.
+P Z T p
+3
+0 1500 0 0 0 1 0
+0 1600 400 0.2 0.5 1.8 0
+20 1800 600 0.1 0.2 2.0 0
+50 50 1 1
+0.1 4.0 200 0              # Slowness sampling 0.1 - 4 s/km
+0 4 20 1                   # Slowness axes
+0 15 12 5
+0 2000 10 1000
+-20 40 10 20
+\end{verbatim}
+
+Then, after issuing the command
+
+$>$ {\bf oasr saffipr1}
+
+\noindent the file \tt saffipr1.rco \rm will be generated:
+
+\begin{verbatim}
+      50.000      50.000   1   1
+       50.000   200  # Frequency, # of slownesses
+       0.100000       0.339462     -15.996886
+       0.119598       0.342714     -15.640528
+       0.139196       0.346415     -15.196492
+       0.158794       0.350498     -14.655071
+       0.178392       0.354880     -14.006412
+       0.197990       0.359469     -13.240785
+       0.217588       0.364159     -12.349057
+       0.237186       0.368833     -11.322515
+       0.256784       0.373363     -10.153061
+       0.276382       0.377615      -8.832868
+       0.295980       0.381445      -7.354058
+       0.315578       0.384707      -5.707997
+       0.335176       0.387249      -3.883928
+       0.354774       0.388919      -1.867177
+        .              .              .
+        .              .              .
+        .              .              .
+\end{verbatim}
+
+\noindent Note that the reflection coefficients are listed vs {\em
+horizontal  slowness} in s/km, and phase angles are stated in {\em degrees}.
+
+\label{trc-form}
+Another output file \tt
+input.trc \rm  will be generated, identical to the \tt input.rco \rm
+file, except for the reflection coefficients being listed vs grazing
+angle in degrees.
+The format of both these output files
+ is compatible with the one required by \tt OAST \rm as input for
+options \tt t \rm and \tt b \rm. The file \tt input.trc \rm generated by
+the input file above is as follows
+
+\begin{verbatim}
+      50.000      50.000   1   2  # fr1, fr2, nf, slowns/angle(1/2)
+       50.000   200               # Frequency, # of angles
+      81.373070       0.339462     -15.996886
+      79.665359       0.342714     -15.640528
+      77.948311       0.346415     -15.196492
+      76.220207       0.350498     -14.655071
+      74.479210       0.354880     -14.006412
+      72.723396       0.359469     -13.240785
+      70.950676       0.364159     -12.349057
+      69.158813       0.368833     -11.322515
+      67.345337       0.373363     -10.153061
+      65.507576       0.377615      -8.832868
+      63.642544       0.381445      -7.354058
+      61.746929       0.384707      -5.707997
+      59.816971       0.387249      -3.883928
+      57.848427       0.388919      -1.867177
+        .              .              .
+        .              .              .
+        .              .              .
+\end{verbatim} 
+
+\noindent Note that the slowness/angle sampling is identified by the
+last number in the first line, with 1 indicating slowness sampling,
+and 2 indicating angle sampling. 
+
+
+\subsection{OASR - Examples}
+
+\figmithtwo{figs/Kan_fig4.ps}{7.0}{figs/sand_R.ps}{6.5}
+{Reflection coefficients vs frequency and angle for porous
+       sand halfspace, reproducing results of Stoll and Kan.}
+{fig:sandrc}
+
+As an example of the use of OASR for computing
+seismo-acousticreflection coefficients, the following datafile
+reproduces the results presented for a sand bottom in Stoll and Kan's
+paper \cite{Stoll_81}:
+
+\begin{verbatim}
+Sand. Stoll and Kan 81.
+N C Z
+2
+0 1414 0 0 0 1 0
+0 -1800 -600 0.1 0.2 2.0 0
+1. 2.E9 .001 2.65 3.6E10 .47 1.E-10 3.9E-5 2.61E7 4.36E7 1.3 1.3 1.25
+10 100000 17 4
+0 90 181 0
+90 0 10 10
+0 15 12 5
+0 90 12 15
+10 100000 1 1
+1 20 0.5
+0 2000 12 500
+-10 10 12 5
+\end{verbatim}
+
+Assembled in one plot, Fig.\,\ref{fig:sandrc}, the resulting reflection coeffiecients at the 5
+frequencies 0.01, 0.1, 1, 10, and 100 kHz reproduce exactly the
+results shown in Fig. 4 of Stoll and Kan's paper. In addition, the
+datafile produces the contour plot in Fig.\,\ref{fig:sandrc} of reflection coefficients vs angle
+and frequency.
+
+\figmithtwo{figs/sand_soft_R.ps}{6.5}{figs/soft_sand_R.ps}{6.5}
+{Reflection coefficients vs frequency and angle for (a) a 1
+       meter layer of porous
+       sand overlying a ``soft'' halfspace, and (b) a 1 meter thick
+       ``soft'' layer overlying a sand halfspace. Prameters for both
+       media are consistent with those given by Stoll and Kan.}
+{fig:ssrc}
+
+
+OASES handles arbitrary poro-elastic stratifications, and
+Fig.\,\ref{fig:ssrc}(a) shows the equivalent frequency-angle contours
+of the reflection coefficient of a 1 m thick layer of sand overlying
+Stoll and Kan's ``soft'' sediment. Similarly Fig.\,\ref{fig:ssrc}{b)
+shows the reflection coefficients for a 1 meter ``soft'' layer over
+sand. The datafile for generating Fig.\,\ref{fig:ssrc}(a) is
+
+\begin{verbatim}
+1 m Sand over Soft.
+N C Z
+3
+0 1414 0 0 0 1 0
+0 -1800 -600 0.1 0.2 2.0 0
+1. 2.E9 .001 2.65 3.6E10 .47 1.E-10 3.9E-5 2.61E7 4.36E7 1.3 1.3 1.25
+1.0  -1800 -600 0.1 0.2 2.0 0
+1. 2.E9 .001 2.65 3.6E10 .76 1.6E-15 1.56E-7 2.21E7 3.69E7 4.3 4.3 1.25
+10 100000 17 4
+0 90 181 0
+90 0 10 10
+0 15 12 5
+0 90 12 15
+10 100000 1 1
+1 10 0.5
+0 2000 12 500
+-10 10 12 5
+\end{verbatim}
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

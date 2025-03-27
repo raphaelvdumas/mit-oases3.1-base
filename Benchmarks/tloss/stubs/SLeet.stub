@@ -1,0 +1,130 @@
+      128                                              MODU
+ OASTL NTLRAN COL
+ TRANSMISSION LOSS                                                               
+ Elastic-Elastic Transparent - Szz                    
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     25.0 m$ 
+ RD:     35.0 m$ 
+     15.0000                                           XLEN
+     9.00000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    0.000000E+00                                      XLEFT
+     4.00000                                         XRIGHT
+    0.500000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     50.0000                                          YDOWN
+     20.000000E+00                                        YUP
+     5.00000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB)$                                                        
+ LIN
+        3                                                NC
+      252                                                 N
+    0.000000E+00                                       XOFF
+    0.159999E-01                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+>>>
+      250                                                 N
+    0.000000E+00                                       XOFF
+    0.160000E-01                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+ OASTL WTLRAN COL
+ TRANSMISSION LOSS                                                               
+ Elastic-Elastic Transparent  - w                      
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     25.0 m$ 
+ RD:     35.0 m$ 
+     15.0000                                           XLEN
+     9.00000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    0.000000E+00                                      XLEFT
+     4.00000                                         XRIGHT
+    0.500000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     70.0000                                          YDOWN
+     30.000000E+00                                        YUP
+      5.00000                                           YINC
+     1.00000                                           YDIV
+ Vert. particle velocity (dB//1m/s)$                                             
+ LIN
+        3                                                NC
+      252                                                 N
+    0.000000E+00                                       XOFF
+   0.159999E-01                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+>>>
+      250                                                 N
+    0.000000E+00                                       XOFF
+    0.16000E-01                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+ OASTL UTLRAN COL
+ TRANSMISSION LOSS                                                               
+ Elastic-Elastic Transparent  - u                      
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     25.0 m$ 
+ RD:     35.0 m$ 
+     15.0000                                           XLEN
+     9.0000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    0.000000E+00                                      XLEFT
+     4.00000                                         XRIGHT
+    0.500000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+      70.000                                          YDOWN
+     20.000000E+00                                        YUP
+     5.0000                                           YINC
+     1.00000                                           YDIV
+ Hor. particle velocity (dB//1m/s)$                                              
+ LIN
+        3                                                NC
+      252                                                 N
+    0.000000E+00                                       XOFF
+    0.159999E-01                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+>>>
+      250                                                 N
+    0.000000E+00                                       XOFF
+    0.16000E-01                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+ OASTL PLTEND
+
+
+
+
+
+
+# BEM -> Second curve
+# No. of points for normal stress
+      996                                                 N
+    2.002000E+00                                       XOFF
+    0.199994E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+
+# No. of points for displacements
+      990                                                 N
+    2.002000E+00                                       XOFF
+    0.199994E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+
+
+
+
+
+

@@ -1,0 +1,9 @@
+echo '-------------------------------------------'
+date
+echo 'Start ASA wedge (ELASTIC)'
+rdoast ./input/ASAwedgeE > ./logs/ASAwedgeE.out
+mv ./input/ASAwedgeE.pl? ./run
+mv ./input/ASAwedgeE.?dr ./run
+pltsplit -f ./run/ASAwedgeE -b 2 -p 1 -r 2 -d 1
+./bin/ASAwedgeE S
+echo 'End ASA wedge (ELASTIC)'

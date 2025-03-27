@@ -1,0 +1,107 @@
+\documentstyle[11pt,epsfig,times]{article}
+\pagestyle{headings}
+%\psdraft
+%\batchmode
+
+\textwidth  = 145 mm
+\textheight = 200 mm
+
+\topmargin      = 20 mm
+\oddsidemargin  = 12 mm
+\evensidemargin = 12 mm
+
+\setlength{\parskip}{0.3cm}
+
+% >>>>>>>>>>>>>>>> MIT figure definitions
+
+\newcommand{\mitspecial}[3]{
+% MIT definition -->
+ \centerline{\psfig{figure=#2,height=#1cm}}
+% SACLANT definition -->
+%\vspace{#1cm}
+%\special{#2 #3}
+}
+
+\newcommand{\figmit}[4]{
+   \begin{figure}
+% MIT definition -->
+      \centerline{\psfig{figure=#1,height=#2cm}}
+      \caption{#3} \label{#4}
+   \end{figure}
+}
+
+\newcommand{\figmittwo}[6]{
+    \begin{figure}
+% MIT definition -->
+       \vbox{\centerline{\psfig{figure=#1,height=#2cm}}}
+       \vbox{\centerline{\psfig{figure=#3,height=#4cm}}}
+       \caption{#5} \label{#6}
+    \end{figure}          }
+
+\newcommand{\figmithtwo}[6]{
+    \begin{figure}
+% MIT definition -->
+   \centerline{\hbox{
+       \psfig{figure=#1,height=#2cm}
+       \psfig{figure=#3,height=#4cm}
+              }     }
+       \caption{#5} \label{#6}
+    \end{figure}          }
+
+
+
+\title{{\bf OASES} \\ Version 3.1 \\  User Guide and Reference Manual}
+
+\author{Henrik Schmidt \\Department of Ocean Engineering 
+\\ Massachusetts Institute of Technology}
+\date{\today}
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\tableofcontents
+
+
+\newpage
+\input{oases_intro}
+\newpage
+\input{oases_install}
+\newpage
+\input{oases_gen}
+\newpage
+\input{oasr}
+\newpage
+\input{oast.tex}
+\newpage
+\input{rdoast.tex}
+\newpage
+\input{oasp.tex}
+\newpage
+\input{rdoasp.tex}
+\newpage
+\input{oasp3d}
+\newpage
+\input{oasn.tex}
+\newpage
+\input{oasi.tex}
+\newpage
+\input{mfp.tex}
+\newpage
+\input{oass.tex}
+\newpage
+\input{oassp.tex}
+\newpage
+\input{pp}
+\newpage
+\input{oases_graph}
+\newpage
+\input{oases_bib}
+\newpage
+\input{oases_appendix}
+
+\end{document}
+
+
+

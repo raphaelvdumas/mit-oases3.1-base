@@ -1,0 +1,147 @@
+      128                                              MODU
+ OASTRDNTLRAN COL NWR
+                                                                
+ (a)                                               
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     50.0 m$ 
+ RD:    100.0 m$ 
+     15.0000                                           XLEN
+      9.0000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+     0.000000E+00                                      XLEFT
+     10.0000                                         XRIGHT
+     2.00000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     70.0000                                          YDOWN
+     20.0000                                            YUP
+     5.0000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB)$                                                        
+ LIN
+        3                                                NC
+      1497                                                 N
+    7.008                                       XOFF
+    0.2E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+>>>
+      1250 
+     8E-03
+     8E-03
+     0.0
+     0.0
+ OASTRDNTLRAN NWR COL
+                                                                
+ (b)                                               
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     50.0 m$ 
+ RD:    300.0 m$ 
+     15.0000                                           XLEN
+      9.0000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+     0.000000E+00                                      XLEFT
+     10.0000                                         XRIGHT
+     2.00000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     60.0000                                          YDOWN
+     30.0000                                            YUP
+     5.0000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB)$                                                        
+ LIN
+        3                                                NC
+      1497                                                 N
+    7.008                                       XOFF
+    0.2E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+>>>
+      1250 
+     8E-03
+     8E-03
+     0.0
+     0.0
+ OASTRDNTLRAN NWR COL
+                                                                
+ (a)                                              
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     50.0 m$ 
+ RD:    100.0 m$ 
+     15.0000                                           XLEN
+      9.0000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    0.000000E+00                                      XLEFT
+     10.0000                                         XRIGHT
+     2.00000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     90.0000                                          YDOWN
+     50.0000                                            YUP
+     5.0000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB)$                                                        
+ LIN
+        3                                                NC
+      3500                                                 N
+    0.0                                      XOFF
+    0.2E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+>>>
+      1250 
+     8E-03
+     8E-03
+     0.0
+     0.0
+ OASTRDNTLRAN NWR COL
+                                                                
+ (b)                                              
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     50.0 m$ 
+ RD:    300.0 m$ 
+     15.0000                                           XLEN
+      9.0000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    0.000000E+00                                      XLEFT
+     10.0000                                         XRIGHT
+     2.00000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     90.0000                                          YDOWN
+     50.0000                                            YUP
+     5.0000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB)$                                                        
+ LIN
+        3                                                NC
+      3500                                                 N
+    0.0                                       XOFF
+    0.20E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+>>>
+      1250 
+     8E-03
+     8E-03
+     0.0
+     0.0
+ RDOAS PLTEND
+
+
+
+
+
+
+
+
+

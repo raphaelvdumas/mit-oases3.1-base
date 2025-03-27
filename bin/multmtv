@@ -1,0 +1,2 @@
+#
+plotmtv -mult -noframe -colorps $1_*.mtv

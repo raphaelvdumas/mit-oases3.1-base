@@ -1,0 +1,282 @@
+\section{Testing the Installation}
+\subsection{Installing the Benchmarks}
+The VISA distribution comes with a complete set of test problems
+and reference solutions. 
+To install this set of scripts, follow the few simple steps :
+\begin{itemize}
+\item In the \tt benchmarks \rm directory, type
+
+\tt make yesperl \rm
+
+or
+
+\tt make noperl \rm
+
+\noindent depending on whether your particular system has PERL installed.
+
+\item Next you will need to compile the \tt pltsplit \rm program. Change to the
+\tt ./src \rm directory and type
+
+\tt make \rm
+
+\noindent Then move the executable \tt pltsplit \rm to somewhere in your 
+\tt PATH \rm.
+
+\item If you are using the perl-based scripts, you will also need to 
+    move \tt ./bin/plpsub.pl \rm to a location in your \tt PATH \rm.
+
+\end{itemize}
+
+\subsection{Directory Tree}
+The scripts \tt MUST \rm be run from \tt benchmarks \rm. They assume that 
+files are stored in the following manner :
+\begin{verbatim}
+    ./input              -> VISA input files
+    ./logs               -> logs of each run
+    ./refs/PE            -> reference solution for PE
+    ./refs/BEM           -> reference solution for BEM
+    ./refs/CORE          -> reference solution for CORE
+    ./refs/COUPLE        -> reference solution for COUPLE
+    ./refs/OASES         -> reference solution for OASES
+    ./bin                -> All the relevant plotting scripts
+    ./bin/YES_perl       -> Use these scripts if perl is present
+    ./bin/NO_perl        -> Use these scripts if perl is not present
+    ./tloss              -> Final combined PLT/PLP files
+    ./tloss/default_plps -> PLP files for NO_perl scripts
+    ./tloss/stubs        -> PLP template files for YES_perl scripts
+    ./run                -> Results from VISA runs
+    ./src                -> Source for pltsplit program
+\end{verbatim}
+
+The VISA data files are located in the \tt ./input \rm directory. 
+Since these represent the standard test set, DO NOT change 
+the environmental variables in these files, as well as the 
+number of field options. You may change the sampling parameters 
+but if you did not install the perl-based scripts, then this 
+might require that you change the combined PLP files in \tt ./tloss \rm
+after each run (see below).
+
+\subsection{Running the scripts automatically}
+To run a particular test simply call the appropriate script. 
+For example to run Mike Collins Case D, 
+
+\tt do\_mikeExD \rm
+
+\noindent The final combined PLP/PLT files can be found in 
+\tt ./tloss/mikeExD.pl? \rm. To run {\em ALL} the tests do
+
+\tt doALL \rm
+
+\noindent These tests are run SEQUENTIALLY, i.e. one at a time to 
+avoid starting multiple copies of VISA!! The \tt doALL \rm script
+takes an argument \tt Q \rm or \tt q \rm to indicate \tt Quick \rm
+runs, i.e. when invoked as
+
+\tt doALL Q \rm or \tt doALL q \rm
+
+\noindent the script skip runs that involved more than 3 sectors.
+
+
+Upon completion, the results of individual VISA runs are stored in
+\tt ./run \rm. The directory \tt ./tloss \rm holds the combined
+PLP/PLT files, i.e. they contain the VISA solutions as well as any
+other 'correct' solutions for the problem. The plots are always 
+ordered as OASES, BEM, VISA and CORE. Note that we may not have
+all the solutions from the various codes for each test case. 
+Table~\ref{casedesc} shows the available reference solutions for
+each of the different test case.
+
+ The above scripts execute the entire run, split and packaging 
+ for you. The next section describes the individual steps involved. 
+ Look at \tt do\_mikeExD \rm to get an idea of it.
+
+ Note that the basename for each test is used consistently for the 
+ input data file, scripts and combined PLP/PLT files. For example,
+ \tt do\_mikeExD \rm, \tt mikeExD.dat \rm, \tt ./bin/mikeExD\rm, 
+ \tt ./tloss/mikeExD.pl*\rm, \tt ./logs/mikeExD.out\rm, 
+ \tt ./run/mikeExD.pl* \rm
+ forms the complete set of files for running the Mike Collin
+ Case D problem. Here, the basename is \tt mikeExD \rm.
+ TABLE ~\ref{casedesc} contains a short description of the test 
+ cases.
+
+\begin{table}
+\begin{center}
+\small
+\begin{tabular}{|l|l|l|}
+\hline \hline
+{\bf Input file (\tt .dat \rm) } & {\bf DESCRIPTION} & {\bf REFERENCE}
+ \\ \hline \hline
+ RSWT2a      & Reverb. + Scat. Workshop Test case 2a  & COUPLE, CORE \\ \hline
+ RSWT2b      & Reverb. + Scat. Workshop Test case 2b  & COUPLE, CORE \\ \hline
+ RSWT3a      & Reverb. + Scat. Workshop Test case 3a  & COUPLE, CORE \\ \hline
+ RSWT3b      & Reverb. + Scat. Workshop Test case 3b  & COUPLE, CORE \\ \hline
+ ASAwedgeE   & ASA Elastic wedge problem              & PE, CORE     \\ \hline
+ torusF      & Embedded Torus (FLUID)                 & BEM, CORE    \\ \hline
+ torusE      & Embedded Torus (ELASTIC)               & BEM, CORE    \\ \hline
+ gilbert     & Gilbert-Evans Fluid            	      & CORE         \\ \hline
+ gilbertE    & Gilbert-Evans Elastic   		      & CORE         \\ \hline
+ HorizForce  & E/E Test - Horizontal Point force.     & BEM, CORE    \\ \hline
+ VertForce   & E/E Test - Vertical Point force.       & BEM, CORE    \\ \hline
+ PntSrc      & E/E Test - Point source		      & BEM, CORE    \\ \hline
+ TranspHF    & Transparent Elastic - Horizontal Force & BEM, CORE    \\ \hline
+ TranspVF    & Transparent Elastic - Vertical Force   & BEM, CORE    \\ \hline
+ mikeExD     & Mike Collins Case D		      & BEM, CORE    \\ \hline
+ mikeExE     & Mike Collins Case E		      & BEM, CORE    \\ \hline
+ 30degLBeam  & 30-deg Llyod mirror beam F-S CORNER    & BEM, CORE    \\ \hline
+ 45degLBeam  & 45-deg Llyod mirror beam F-S CORNER    & BEM, CORE    \\ \hline
+ SLeeHC      & Single-layer High-contrast E/E test    & BEM, CORE    \\ \hline
+ SLeet       & Single-layer Transparent E/E test      & BEM, CORE    \\ \hline
+ SLeed       & Single-layer E/E test  		      & BEM, CORE    \\ \hline
+ SLef        & Single-layer E/F test  		      & BEM, CORE    \\ \hline
+ SLfe        & Single-layer F/E test  		      & BEM, CORE    \\ \hline
+ norda3a     & Modified NORDA 3a - Isovelocity case   & OASES, CORE  \\ \hline
+ norda3a25c2 & Modified NORDA 3a - $c^2$ case         & OASES  	     \\ \hline
+ fnuw        & Single-layer Fluid transparent problem & OASES, CORE  \\ \hline
+ SACL\_circle\_F & SACLANT semi-circle ridge (Fluid)  & COUPLE, CORE \\ \hline
+ SACL\_step\_F   & SACLANT step discontinuity (Fluid) & COUPLE, CORE \\ \hline
+\end{tabular}
+\end{center}
+\caption{One-line description for the test cases
+	\label{casedesc} }
+\end{table} 
+ 
+\subsection{Running the scripts manually}
+When VISA is done, you will need to split the PLT file, say 
+\tt X.plt \rm into separate parts so that they can be merged 
+with the reference solutions in \tt ./refs/* \rm 
+into a single PLT file. 
+The program that does this is \tt pltsplit \rm.
+The \tt do\_* \rm scripts calls \tt pltsplit \rm to do this for you automatically. 
+The program \tt pltsplit \rm can be used in various manners.
+\begin{itemize}
+\item Interactively - simply call \tt pltsplit \rm and answer the questions.
+\item Via command line arguments - this is useful for automating the 
+      split in shell scripts (see \tt do\_* \rm). The order of the 
+      input parameters is CRUCIAL.
+\item Type \tt pltsplit \rm -h to see the format of the command line inputs.
+\end{itemize}
+\tt pltsplit \rm splits BEM, VISA, SAFARI or CORE files into individual 
+traces depending on the number of parameters (N,V,H etc), number of 
+receiver depths and whether we have the forward, backward or 
+total field components. It uses a very simple line counting algorithm 
+and then split the file up based on the information you provided - 
+robustness is questionable but so far it works. 
+It then creates a series of files with unique filenames. 
+For example, if you have N,V,H and 2 receivers with 
+forward, backward and total field components, the file 
+\tt X.plt \rm will be split into
+
+\begin{verbatim}
+X.rdo.par1.for.rx1.dat    X.rdo.par1.bac.rx1.dat
+X.rdo.par2.for.rx1.dat    X.rdo.par2.bac.rx1.dat
+X.rdo.par3.for.rx1.dat    X.rdo.par3.bac.rx1.dat
+X.rdo.par1.for.rx2.dat    X.rdo.par1.bac.rx2.dat
+X.rdo.par2.for.rx2.dat    X.rdo.par2.bac.rx2.dat
+X.rdo.par3.for.rx2.dat    X.rdo.par3.bac.rx2.dat
+
+X.rdo.par1.tot.rx1.dat
+X.rdo.par2.tot.rx1.dat
+X.rdo.par3.tot.rx1.dat
+X.rdo.par1.tot.rx2.dat
+X.rdo.par2.tot.rx2.dat
+X.rdo.par3.tot.rx2.dat
+\end{verbatim}
+
+The extensions \tt for, bac, tot \rm stands for
+forward, backward and total field components. The extensions 
+\tt rdo, gem, saf \rm stands for VISA, CORE and SAFARI files. 
+BEM is treated as SAFARI. The extensions \tt par1, par2, par3 \rm 
+refers to N, V and H. Finally, the extensions \tt rx*\rm, refer 
+to the receiver depths, with the shallow receiver designated first.
+
+\noindent {\bf WARNING} : To properly use the scripts of course assume that
+          you always run with the same set of parameters
+          and receiver depths. Also NO INTEGRAND PLOTS are
+          expected. Table \ref{parmrx} shows the expected OPTIONS 
+	  and receiver depths for the various test cases.
+
+\begin{table}
+\begin{center}
+\small
+\begin{tabular}{|l|l|c|c|}
+\hline \hline
+{\bf Input file (\tt .dat \rm) }& {\bf OPTIONS} & {\bf Receiver depths
+(m)}&{\bf  $\#$ PLT points }\\ \hline \hline
+ RSWT2a           & N T J B         & 45       &   600  \\  \hline
+ RSWT2b           & N T J B         & 45       &   600  \\  \hline
+ RSWT3a           & P N T J B       & 45       &   600  \\  \hline
+ RSWT3b           & P N T J B       & 45       &   602  \\  \hline
+ ASAwedgeE        & K T C J         & 30, 150  &   1032 \\  \hline
+ torusF           & P N T J B       & 50, 170  &   549  \\  \hline
+ torusE           & P N T J B       & 50, 170  &   549  \\  \hline
+ gilbert   	  & N T J B         & 50       &   750  \\  \hline
+ gilbertE  	  & K S T J B       & 80       &   750  \\  \hline
+ HorizForce  	  & N V H T J P B 3 & 70       &   503  \\  \hline
+ VertForce  	  & N V H T J P B 2 & 35       &   503  \\  \hline
+ PntSrc  	  & N V H T J P B   & 35       &   503  \\  \hline
+ TranspHF 	  & N V H T J P B 2 & 35       &   471  \\  \hline
+ TranspVF 	  & N V H T J P B 2 & 35       &   471  \\  \hline
+ mikeExD   	  & P N T J B 	    & 100, 300 &   500  \\  \hline
+ mikeExE   	  & P N T J B 	    & 100, 300 &   1250 \\  \hline
+ 30degLBeam       & P N T J B 	    & 100, 300 &   267  \\  \hline
+ 45degLBeam       & P N T J B 	    & 100, 300 &   179  \\  \hline
+ SLeeHC           & P N T J B	    & 35       &   2009 \\  \hline
+ SLeet            & P N V H T J B   & 35       &   1883 \\  \hline
+ SLeed            & P N T J B       & 35       &   1831 \\  \hline
+ SLef      	  & P N T J B       & 35       &   503  \\  \hline
+ SLfe       	  & P N T J B       & 35       &   503  \\  \hline
+ norda3a25  	  & P N T J B 	    & 50, 110  &   1250 \\  \hline
+ norda3a25c2      & P N T J F 	    & 50, 110  &   658  \\  \hline
+ fnuw      	  & P N V H T J B   & 30       &   654  \\  \hline
+ SACL\_circle\_F  & P N T J B       & 50, 170  &   191  \\  \hline
+ SACL\_step\_F 	  & P N T J B 	    & 50, 170  &   801  \\  \hline
+\end{tabular}
+\end{center}
+\caption{Default parameter set up for the various test cases
+	\label{parmrx} }
+\end{table} 
+ 
+After the PLT file has been split using \tt pltsplit \rm, they can then
+be combined using the scripts in \tt ./bin \rm
+
+{\bf AGAIN} this assumes that the test case has been run using certain
+    wavenumber integration parameters that results in a PLT plot of
+    certain size. If this has been changed, you will need to change
+    the combined PLP file in \tt ./tloss \rm (unless you are using the
+    PERL-based scripts). 
+    TABLE~\ref{parmrx} shows the default PLT file size for the
+    VISA runs. Note that the scripts, input data file and the combined
+    PLP files all have the same basename.
+
+    We have included PERL-based scripts that automatically extract the
+    PLP information from the VISA runs and merge them into the
+    combined PLP files. This bypassed the above step of manually
+    changing the combined PLP files whenever the PLT size is
+    different. However it means that PERL must be installed
+    on your system. If PERL is not available, simply install the alternative
+    set of scripts in \tt ./bin/NO\_perl \rm. See the section on
+    \tt Installing the Benchmarks \rm for more information.
+
+  
+	These scripts call \tt mplot \rm by default and has a silent mode in
+which the combined PLT is created but \tt mplot \rm is not called. The silent
+mode (call scripts with argument \tt S \rm) 
+is used in the \tt do\_* \rm script to automatically create the combined
+PLT file in \tt ./tloss \rm after the run is completed. The default mode is
+useful for single runs. The scripts also saved the previous combined PLP/PLT
+files with an extension \tt .old \rm. This allows you to 
+recover the old results if the new ones are worse! (Very useful)
+
+{\bf NOTE} : These scripts assume that \tt tcsh \rm is located in
+\tt /usr/local/bin \rm. (see the first line of each script). 
+If you are unable to run the scripts, check to make sure that 
+\tt tcsh \rm is where it should be. If not simply create a link to it
+ (you will need to be \tt root \rm to do this) ,
+
+\begin{verbatim}
+ln -sf wherever_tcsh_is /usr/local/bin/tcsh
+\end{verbatim}
+\newpage
+
+

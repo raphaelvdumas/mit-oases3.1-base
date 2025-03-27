@@ -1,0 +1,428 @@
+\section{OASP3D: 3-D Wideband Transfer Functions}
+
+
+    The OASES-OASP3D module calculates the depth-dependent  Green's 
+function for a selected number of frequencies and determines  the 
+transfer function at any receiver position by evaluating  the 
+wavenumber  integral. The frequency integral is evaluated in the
+Post-processor PP.  
+As is  the 
+case for OASES-OASP, both stresses and particle velocities can be 
+computed, but the field may be produced by point or line 
+sources  with  {\em horizontal  directionality}  (forces  of  arbitrary 
+direction, seismic moment sources) as described in \cite{jkim}. The
+solution technique is 
+the 3-dimensional extension of the global matrix approach
+described in Ref.~\cite{sg:jasa85}.   
+Otherwise, OASP3D and OASP are identical in terms of environmental
+models, receiver arrays, wavenumber sampling etc. 
+
+\subsection{Two-Step Execution}
+
+    As is the case for OASP, OASP3D  is  always 
+executed  in the 2-step mode. OASP3D will generate  the  transfer 
+functions  for  the  selected  environment  and   source-receiver 
+geometry and for all Fourier orders of the source directionality. 
+The  interactive  postprocessor  is  then  used  to  select  time 
+windows, source pulses, stacking format etc. and azimuth for  the 
+receivers.
+
+\subsection{OASP3D Options}
+
+    Except for the specification of source type,
+OASP3D Version 3.6 is compatible with OASP Version 1.6
+in terms of options supported:
+\begin{itemize}
+    \item[{\bf C}]   Creates an $ \omega - k$ representation of the field in
+      the form of  contours   of  integration  kernels  as   function   of 
+          horizontal   wavenumber  (slowness  if  option   {\bf B}   is 
+          selected) and frequency (logarithmic y-axis). All  axis 
+          parameters are determined automatically. 
+    \item[{\bf K}] Computes the bulk stress. In elastic media the bulk
+	stress only has  contributions from the compressional potential. In
+	fluid media the bulk stress is equal to the negative of the pressure.
+	Therefore  for fluids this option yields the same result as option N
+	or R.
+    \item[{\bf O}]     Complex frequency integration contour. This new  option 
+          is  the frequency equivalent of the complex  wavenumber 
+          integration ({\bf J} option in OAST). It moves the  frequency 
+          contour  away from the real axis by an amount  reducing 
+          the time domain wrap-around by a factor 50 \cite{jkps}. This option 
+          can  yield significant computational savings  in  cases 
+          where the received signal has a long time duration, and 
+          only  the initial part is of interest, since it  allows 
+          for selection of a time window shorter than the  actual 
+          signal duration. Note that only wrap around from  later 
+          times  is  reduced; therefore the  time  window  should 
+          always  be  selected to contain the  beginning  of  the 
+          signal! 
+    \item[{\bf R}] Computes the radial normal stress $\sigma_{rr}$ (or $\sigma_{xx}$ 			for plane geometry).
+    \item[{\bf S}] Computes the shear stresses $\sigma_{rz}$ and 
+		$\sigma_{ \theta z}$. In PP these components are
+selected for display by 'X' and 'Y', respectively, under the
+``Parameter'' selection options.
+    \item[{\bf U}]     Decomposed   seismograms.  This  option  generates 7 
+          transfer function files to be processed by PP:
+
+          \begin{tabular}{ll}
+          File name & Contents \\ \hline
+          input.trf &     Complete transfer functions \\
+          input.trfdc &    Downgoing P waves \\
+          input.trfuc  &  Upgoing P waves  \\
+          input.trfds  &  Downgoing  SV waves  \\
+          input.trfus &    Upgoing SV waves \\
+          input.trfdh  &  Downgoing  SH waves  \\
+          input.trfuh &    Upgoing SH waves 
+          \end{tabular}
+    \item[{\bf f}] A full Hankel transform integration scheme is used
+for low values of $ kr $ and tapered into the FFP integration used for
+large $ kr $. The compensation is achieved at very low additional computational
+cost and is recommended highly for cases where the near field is
+needed.    
+    \item[{\bf l}] User defined source array. This new option is
+similar to option {\bf L} in the sense that that it introduces a
+vertical source array of time delayed sources of identical type. However,
+this option allows the depth, amplitude and  delay time to be
+specified individually for each source in the array. The source data
+should be provided in a separate file, {\bf input.src}, in the format
+described below in Section~\ref{oasp3sou}.  
+    \item[{\bf v}] As option {\bf l} this option allows for specifying
+a non-standard source array. However, it is more general in the sense
+that different types of sources can be applied in the same array, and
+the sources can have different signatures. The array geometry and the
+complex amplitudes are specified in a file {\bf input.strf} which
+should be of {\bf trf} format as described in Section~\ref{oasp3sou}. 
+    \item[{\bf t}] Eliminates the wavenumber integration and computes
+       transfer functions for individual slowness components (or plane wave
+       components). The Fourier transform performed in PP will then
+directly compute the slowness/intercept-time or $\tau - p$ response
+for each of the selected depths. When option {\bf t} is selected, the
+range parameters in the data file are insignificant.     
+\end{itemize}
+
+
+\subsection{Sources}
+
+The source specification is the only difference between data files
+prepared for OASP and OASP3D.
+
+\subsubsection{Source Types}
+
+    OASP3D  Version 3.5 supports the 5 types of sources (either  point 
+or line sources, controlled by option P), corresponding to those
+defined in \cite{jkim}:
+\begin{enumerate}
+    \item    Explosive (omnidirectional) sources.
+    \item    Force of arbitrary vertical and horizontal direction.
+    \item    Dip-slip  seismic  source of arbitrary  dip angle.
+    \item    Strike-slip seismic source of arbitrary dip angle.
+    \item    Tensile crack source in elastic media.
+    \item    Normal seismic moment source with arbitrary moment
+amplitudes $M_{11}$, $M_{22}$, and $M_{33}$
+    \item    General seismic moment source with arbitrary components $M_{ij}$.
+\end{enumerate}
+
+
+    The  source type and parameters are specified in a separate  line 
+right  after the environmental block in the data file,  
+before the source depth line. The format of this data line depends on
+the source type:
+
+\begin{tabular}{llllllll}
+    ITYP     & & & &                      & & &         (Type 1) \\
+    ITYP &  FMAG  &    HANG  &  VANG  & & &   &   (Type 2) \\
+    ITYP &  SMOM  &    DANG  &          &  & & &    (Type 3-4) \\
+    ITYP &  M11  & M22 & M33 & DANG & & & (Type 5,6) \\
+    ITYP &  M11 & M12 & M13 & M22 & M23 & M33 & (Type 7) 
+\end{tabular}
+
+\noindent where
+
+\begin{tabular}{ll}
+    ITYP:  &     Source type \\
+    FMAG:  &    Magnitude of force in N (N/m for line source). \\
+    HANG:  &  Horizontal angle of force relative to x-axis in deg. \\ 
+    VANG:  &  Vertical  angle in degg of force relative to \\ 
+           &  horizontal  plane. Positive downwards. \\
+    SMOM:  &  Seismic moment of slip sources in Nm \\
+    DANG:  &  Dip angle in deg. Positive rotation around x-axis \\
+           &  $0^{\circ}$ : crack in $x-y$ plane \\
+           &  $90^{\circ}$: crack in $x-z$ plane \\
+    M11:  &  Moment of force dipole in $x'$-direction, $M_{11}$. \\
+    M22:  &  Moment of force dipole in $y'$-direction, $M_{22}$. \\
+    M33:  &  Moment of force dipole in $z'$-direction  $M_{33}$. \\
+    Mii:  &  Seismic moment component.
+\end{tabular}
+
+
+    The pulse response output produced by PP  
+is  available  as either individual pulse plots for  each  single 
+receiver or as stacked plots, where the stacking can be performed 
+in either range, depth or  azimuth.  For 
+the individual plots the time series are produced in true  units, 
+i.e. Pa for stresses and m/s for particle velocities.
+
+As an example, to run the SAFARI-FIPP case 2 problem with automatic
+sampling, and a point force within the sea bed 
+at $45^{\circ}$ angle with the sea bed,
+and $30^{\circ}$ horizontal angle relative to the x-axis, 
+change the data file as  follows:
+
+\small
+\begin{verbatim}
+SAFARI-FIPP case 2. Auto sampling. Force 30/45 deg
+V H f                         # Bessel integration.
+5 0
+4
+  0    0     0 0   0   0   0
+  0 1500     0 0   0   1   0
+100 1600   400 0.2 0.5 1.8 0
+120 1800   600 0.1 0.2 2.0 0
+2 1.0 30.0 45.0                # ITYP, FMAG, HANG, VANG  
+101                            # SD = 101 m
+100 100 1 
+ 300 1E8                      
+-1 0 0                         # NW   =   -1
+2048 0.0 12.5 0.006 0.5 0.5 5
+\end{verbatim}
+\normalsize 
+
+\subsubsection{User defined Source Arrays}
+\label{oasp3sou}
+
+Version 3.6 of OASP3D has been upgraded to allow a user-defined source
+array through options {\bf l} and {\bf v}. 
+
+Option {\bf l} is intended
+for general physical arrays with uneven spacing or special shadings,
+As for the built-in arrays, such user-defined arrays may be present in
+fluid as well as elastic media. The source type is specified as
+described above, and the array geometry and shading should be given
+in the file {\bf input.src} in the following format
+
+\small
+\begin{verbatim}
+LS
+SDC(1)  SDELAY(1)  SSTREN(1)    # Depth (m), Delay (s), Amplitude
+SDC(2)  SDELAY(2)  SSTREN(2) 
+SDC(3)  SDELAY(3)  SSTREN(3) 
+  :        :          :
+  :        :          :
+SDC(LS) SDELAY(LS) SSTREN(LS) 
+\end{verbatim}
+\normalsize
+
+Option {\bf v} is more general in the
+sense that it allows for different source types to be mixed in the
+array, and the pure time delay is replaced by a specification of the
+complex amplitudes in the frequency domain, allowing for
+representation of multibles etc. This option is used for {\em indirect
+arrays} such as those imposed by coupling of wave systems. For
+example, 
+this option
+is used for coupling tube wave phenomenae to propagation in a
+stratified formation when modeling borehole seismics. Option {\bf v}
+is only allowed for source arrays in elastic media (including
+transversily isotropic layers). The complex amplitudes of the source
+array are specified in the file {\bf input.strf}. This should be an
+ASCII {\bf trf} file, and the frequency sampling should be consistent
+with the frequency sampling selected in the input file {\bf input.dat}.
+There are 3 source types available. All are omnidirectional in the
+horizontal.
+The source type is identified by a type number in the file header, 
+and each depth can
+have one of each source type present. The possible source types are:
+\begin{itemize}
+\item[{\bf 10}] Seismic monopole, i.e. 3 perpendicular and identical
+force dipoles. The unit is seismic moment (Nm).
+\item[{\bf 11}] Vertical force dipole. The unit is seismic moment
+(Nm).
+\item[{\bf 12}] Vertical force, positive downwards. The unit is force
+(N).
+\end{itemize}
+The source types are recognized by PP which can therefore be used to
+check your source timeseries by simply specifying {\bf input.strf} in
+Field~1 of the PP main menu. 
+An example of an {\bf strf}-file for 2 source depth, with a monopole
+and a dipole source  at each depth, is
+
+\small
+\begin{verbatim}
+ PULSETRF                               # TRF file identification
+ OASP16                                 # Calculating program
+           2                            # No. sources per depth NSIN
+          10          11                # Source types
+ tube wave simulation                   # Title
+ +                                      # Sign if time factor exponent
+ 400.0                                  # Center frequency 
+   6.0                                  # Depth of primary source
+  -0.5  19.5  21                        # SD-min, SD-max, LS
+   0.0   0.0   1                        # Range (fixed).
+  1024   2   104  0.0001                # Time/frequency parameters
+           1                            # Dummy
+  -38.20335                             # Imag. part of frequencies
+           1                            # One Fourier order (fixed)
+           1                            # Fixed
+           0                            # Dummy
+           0                            # Dummy
+           0                            # Dummy
+  0.0                                   # Dummy
+  0.0                                   # Dummy
+  0.0                                   # Dummy
+  0.0                                   # Dummy
+  0.0                                   # Dummy
+  -24.15950 82.01517 -24.15950 82.01517 # Data
+  -28.20251 83.04697 -28.20251 83.04697 # Data
+  -32.38960 83.93490 -32.38960 83.93490 # Data
+  -36.71837 84.66933 -36.71837 84.66933 # Data
+  -41.18590 85.24049 -41.18590 85.24049 # Data
+       :        :         :        :        :
+\end{verbatim}
+\normalsize
+
+\noindent {\bf Note:} All lines should start with an empty space!.
+ The time/frequency parameters are given in the form
+
+\small
+\begin{verbatim}
+ NT  LX  MX  DT
+\end{verbatim}
+\normalsize
+\noindent where
+\begin{itemize}
+\item[NT] is the number of time samples
+\item[DT] is the time sampling interval in seconds
+\item[LX] is the index of the first frequency, LX = INT(Fmin*DT)
+\item[MX] is the index of the last frequency, MX = INT(Fmax*DT)
+\end{itemize}
+
+\noindent The complex data must be written in the following loop structure
+
+\small
+\begin{verbatim}
+      DO 10 K = LX,MX
+       DO 10 L = 1,LS
+        WRITE(15,*) (REAL(TRF(K,L,M)),AIMAG(TRF(K,L,M)), M=1,NSIN)
+ 10   CONTINUE
+\end{verbatim}
+\normalsize
+
+\subsection{Receivers}
+
+The default specification of the receiver depths is the same as for
+SAFARI-FIPP, i.e. through the parameters RD1, RD2 and NR in Block VI, with
+
+\begin{tabular}{ll}
+Parameter & Description \\
+\hline
+RD1 & Depth of uppermost receiver in m \\
+RD2 & Depth of lowermost receiver in m \\
+NR  & Number of receiver depths 
+\end{tabular}
+
+The NR receivers are placed equidistantly in the vertical.
+
+\subsubsection{Non-equidistant Receiver Depths}
+
+In OASP3D the receiver depths can optionally be specified individually.
+The parameter NR is used as a flag for this option. Thus, if NR $< 0$
+the number of receivers is interpreted as --NR, with the individual
+depths following immidiately following Block VI. 
+As an example, to run the SAFARI-FIPP case 2 problem with automatic
+sampling, and a point force within the sea bed 
+at $45^{\circ}$ angle with the sea bed,
+and $30^{\circ}$ horizontal angle relative to the x-axis, and with
+receivers at depths 100, 105 and 120 m,
+change the data file as  follows:
+
+\small
+\begin{verbatim}
+SAFARI-FIPP case 2. Auto sampling. Force 30/45 deg
+V H f                         # Bessel integration.
+5 0
+4
+  0    0     0 0   0   0   0
+  0 1500     0 0   0   1   0
+100 1600   400 0.2 0.5 1.8 0
+120 1800   600 0.1 0.2 2.0 0
+2 1.0 30.0 45.0                # ITYP, FMAG, HANG, VANG  
+101                            # SD = 101 m
+100 100 -3                     # 3 receivers
+100.0 105.0 120.0              # Receiver depths in meters
+300 1E8                      
+-1 0 0                         # NW   =   -1
+2048 0.0 12.5 0.006 0.5 0.5 5
+\end{verbatim}
+\normalsize 
+
+The PP Post-processor is compatible and will depth-stack the traces at
+the correct depths.
+
+\subsubsection{Tilted Receiver Arrays}
+
+The new option `T' allows for specification of an array tilt in the
+vertical plane containing the source and the receivers.
+
+The tilt angle and rotation origin is specified in the receiver depth
+line (Block VI in SAFARI manual):
+
+\begin{tabular}{cc}
+   Standard   &    For option T \\ \hline
+RD1 RD2 NR &  ZREF  ANGLE
+\end{tabular}
+
+
+The vertical arrays are rotated by an angle `ANGLE' in deg relative
+to the vertical. The rotation is performed with origin at depth `ZREF'.
+
+The parameters RD1, RD2 and NR always refer to the untilted case. 
+In the tilted case these parameters do therefore define the array
+geometry and not the actual depths of the receivers in the tilted array.
+The same is the case for the graphics output produced by the
+post-processor PP. 
+
+
+The source(s) is always at the origin and is therefore not rotated.
+Thus, for zero-offset tilted VSP-s, the reference depth ZREF should be set 
+equal to the source depth SD!
+
+
+
+\subsection{Execution of OASP3D}
+
+    As  for  SAFARI,  filenames  are  passed  to  the  code   via 
+environmental parameters. In Unix systems a typical command  file 
+{\bf oasp3} (in  \$HOME/oases/bin) is:
+
+\small
+\begin{verbatim}
+    #                            the number sign invokes the C-shell 
+    setenv FOR001 $1.dat       # input file 
+    setenv FOR002 $1.src       # Source array input file
+    setenv FOR019 $1.plp       # plot parameter file
+    setenv FOR020 $1.plt       # plot data file  
+    setenv FOR028 $1.cdr       # contour plot parameter file 
+    setenv FOR029 $1.bdr       # contour plot data file 
+    oasp3d                     # executable
+\end{verbatim}
+\normalsize
+
+    After preparing a data file with the name {\bf input.dat}, OAST  is 
+executed by the command:
+
+    {\bf oasp3 input}
+
+
+\subsection{Graphics}  
+
+    Command files are provided in a path directory for generating 
+the graphics.
+
+\noindent    To generate curve plots, issue the command:
+
+    {\bf mplot input}
+
+\noindent    To generate contour plots, issue the command:
+
+    {\bf cplot input}
+

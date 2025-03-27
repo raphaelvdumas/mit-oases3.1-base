@@ -1,0 +1,80 @@
+     1024                                              MODU
+ OASTL NTLRAN COL NWR
+                                                                
+ (b)                                                 
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:    100.0 m$ 
+ RD:     50.0 m$ 
+     15.0000                                           XLEN
+      9.0000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+     0.0000                                          XLEFT
+     2.0000                                     XRIGHT
+     .5000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     70.0000                                          YDOWN
+     30.0000                                            YUP
+     10.0000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB)$                                                        
+ LIN
+        3                                               NC
+      151                                                 N
+    0.000                                           RMIN
+    0.10000E-01                                      RSTEP
+    0.000000E+00                                       YMIN
+    0.000000E+00                                         DY
+      801                                                 N
+    0.374065E-02                                       XOFF
+    0.374532E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+      249
+      0.8E-02
+     0.8E-02
+     0.
+     0.
+ OASTL NTLRAN COL NWR
+                                                                
+ (c)                                                
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:    100.0 m$ 
+ RD:    170.0 m$ 
+     15.0000                                           XLEN
+      9.0000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+     0.00000                                          XLEFT
+     2.00000                                     XRIGHT
+     .5000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     60.0000                                          YDOWN
+     20.0000                                            YUP
+     10.0000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB)$                                                        
+ LIN
+        3                                                NC
+      151                                                 N
+    0.000                                           RMIN
+    0.10000E-01                                      RSTEP
+    0.000000E+00                                       YMIN
+    0.000000E+00                                         DY
+      801                                                 N
+    0.374065E-02                                       XOFF
+    0.374532E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+     249
+      0.0
+     0.8E-02
+     0.
+     0.
+ SAFTL PLTEND
+
+

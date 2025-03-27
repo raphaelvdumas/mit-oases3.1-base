@@ -1,0 +1,617 @@
+\section{    OAST: OASES Transmission Loss Module}
+
+    Except for the specification of frequencies, 
+OAST  is downward compatible with SAFARI-FIP  Version 
+3.0  and higher, and therefore supports all options and  features 
+described in the SAFARI manual. In addition to improved speed and 
+stability, OAST offers several new options.
+
+\subsection{Input Files for OAST}
+
+The input files for OAST is structured in 12 blocks, as outlined in
+Tables\,\ref{tab:fipI} and \ref{tab:fipII}. In the following we
+describe the significance of the various blocks, with particular
+emphasis on differences between SAFARI-FIP and OAST. 
+
+\begin{table}
+\begin{center}
+\small
+\begin{tabular}{|l|l|c|c|}
+\hline \hline
+Input parameter & Description & Units & Limits \\
+\hline \hline
+\multicolumn{4}{|l|}{\bf BLOCK I: TITLE } \\
+\hline
+TITLE & Title of run  & - & $\leq$ 80 ch. \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK II: OPTIONS} \\
+\hline
+A B C $\cdots$ & Output options & - & $\leq$ 40 ch. \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK III: FREQUENCIES} \\
+\hline
+FR1,FR2,NF,COFF,[V] & FR1: First frequency & Hz & $>0$ \\
+	& FR2: Last frequency & Hz & $>0$ \\
+	& NF: Number of frequencies & & $>0$ \\
+ 	& COFF: Integration contour offset & dB/$\Lambda$ & COFF$\geq 0$ \\
+	& V: Source/receiver velocity (only for option d) \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK IV: ENVIRONMENT} \\
+\hline
+NL 	& Number of layers, incl. halfspaces	& - & NL$\geq 2$  \\
+D,CC,CS,AC,AS,RO,RG,CL & D: Depth of interface. & m & - \\
+.	& CC: Compressional speed & m/s & CC$\geq 0$ \\
+.	& CS: Shear speed & m/s & - \\
+.	& AC: Compressional attenuation & dB/$\Lambda$ & AC$\geq 0$ \\
+.	& AS: Shear attenuation & dB/$\Lambda$ & AS$\geq 0$ \\
+	& RO: Density 	& g/cm$^{3}$ & RO$\geq 0$ \\
+	& RG: RMS value of interface roughness & m & - \\
+	& CL: Correlation length of roughness & m & CL$>0$ \\
+	& M:  Spectral exponent &   & > 1.5 \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK V: SOURCES} \\
+\hline
+SD,NS,DS,AN,IA,FD,DA & SD: Source depth (mean for array) & m & - \\
+	& NS: Number of sources in array & - &  NS$>0$ \\
+	& DS: Vertical source spacing	& m & DS$>0$ \\
+	& AN: Grazing angle of beam & deg & - \\
+	& IA: Array type & - & $1 \leq $IA$\leq 5$ \\
+	& FD: Focal depth of beam & m & FD$\neq$SD \\
+        & DA: Dip angle. (Source type 4). & deg & - \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK VI: RECEIVERS} \\
+\hline
+RD1,RD2,NR,IR & RD1: Depth of first receiver & m & - \\
+	& RD2: Depth of last receiver  & m & RD2$>$RD1 \\
+	& NR: Number of receivers & - & NR$>0$ \\
+	& IR: Plot output increment & - & IR$\geq0$ \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK VII: WAVENUMBER SAMPLING} \\
+\hline
+CMIN,CMAX & CMIN: Minimum phase velocity & m/s & CMIN$>0$ \\
+	& CMAX: Maximum phase velocity & m/s & - \\
+NW,IC1,IC2 & NW: Number of wavenumber samples & - & NW$=2^{M}, -1 (auto)$ \\
+	& IC1: First sampling point & - & IC1$\geq 1$ \\
+	& IC2: Last sampling point & - & IC2$\leq$NW \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Layout of OAST input files: I. Computational parameters.
+	\label{tab:fipI} }
+\end{table} 
+
+\begin{table}
+\begin{center}
+\small
+\begin{tabular}{|l|l|c|c|}
+\hline \hline
+Input parameter & Description & Units & Limits \\
+\hline \hline
+\multicolumn{4}{|l|}{\bf BLOCK VIII: RANGE AXES} \\
+\hline
+RMIN,RMAX,RLEN,RINC & RMIN: Minimum range on plots & km & - \\
+	& RMAX: Maximum range on plots & km & - \\
+	& RLEN: Length of x-axis for all plots & cm & RLEN$>0$ \\
+	& RINC: Distance between tick marks & km & RINC$>0$ \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK IX: TRANSMISSION LOSS AXES (Only for
+Options A,D,T) } \\
+\hline
+TMIN,TMAX,TLEN,TINC & TMIN: Minimum transmission loss & dB & - \\
+ & TMAX: Maximum transmission loss & dB & - \\
+	& TLEN: Length of vertical TL axes & cm & TLEN$>0$ \\
+	& TINC: Distance between tick marks & dB & TINC$>0$ \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK X: DEPTH AXES (Only for Options C,D)} \\
+\hline
+DUP,DLO,DLN,DIN & DUP: Min. depth for plots & m & - \\
+         & DLO: Max. depth for plots & m & - \\
+	 & DLN: Length of depth axes & cm & DCLN$>0$ \\
+	& DIN: Distance between tick marks & m & DCIN$>0$ \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK XI: CONTOUR LEVELS (Only for Option C,f)} \\
+\hline
+ZMIN,ZMAX,ZINC & ZMIN: Minimum contour level & dB & - \\
+(	& ZMAX: Maximum contour level & dB & - \\
+	& ZINC: Contour level increment & dB & ZINC$>0$ \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK XII: SVP AXES (Only for Option Z)} \\
+\hline
+VLEF,VRIG,VLEN,VINC & VLEF: Wave speed at left border & m/s & - \\
+DVUP,DVLO,DVLN,DVIN & VRIG: Wave speed at right border & m/s & - \\
+                & VLEN: Length of wave speed axis & cm & VLEN$>0$ \\
+		& VINC: Wave speed tick mark distance & m/s & VINC$>0$ \\
+		& DVUP: Depth at upper border  & m & - \\
+		& DVLO: Depth at lower border  & m & - \\
+		& DVLN: Length of depth axis   & cm & DVLN$>0$ \\
+		& DVIN: Depth axis tick mark distance & m & DVIN$>0$ \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Layout of OAST input files: II. Plot parameters.
+	\label{tab:fipII} }
+\end{table} 
+
+\subsubsection{Block I: Title}
+
+The title printed on all graphic output generated by OAST.
+
+\subsubsection{Block II: OAST options}
+
+In addition to supporting the SAFARI options described in \cite{hs:saf}, 
+OAST supports a wide suite of new options.
+\begin{itemize}
+	     \item[{\bf A}] Depth-averaged transmission loss plotted
+		for each of the selected field parameters. 
+		The averaging is performed over
+		the specified number of receivers (block VI).
+	     \item[{\bf C}] Range-depth contour plot for transmission
+                loss. Only allowed for one field parameter
+		at a time.
+    \item[{\bf F}] In versions earlier than 2.3a  Filon-FFT is applied to evaluate the wavenumber
+integrals instead of the default FFP. However, this overestimates the transmission loss and provides no benefit for transmission loss calculations if the sampling criteria are satisfied. In fact it yields up to 3 dB error for automatic sampling and has therefore been disabled in the newer versions of OAST.
+    \item[{\bf G}] Rough interfaces are assumed to be characterized by
+a Goff-Jordan power spectrum rather than the default Gaussian. 
+	     \item[{\bf H}] Horizontal velocity calculated.
+	     \item[{\bf I}] Hankel transform integrands are plotted
+		for each of the selected field parameters.
+	     \item[{\bf J}]	Complex integration contour. The contour is shifted
+		into the upper halfpane by an offset controlled by the 
+		input parameter COFF (Block III).
+\item[{\bf K}]
+      Computes the bulk pressure. In elastic media the bulk pressure only
+      has contributions from the compressional potential. In fluid
+      media the bulk pressure is equal to the acoustic pressure.
+      Therefore for fluids this option yields the negative of the result
+      produced by option N or R.  
+
+	     \item[{\bf L}] Linear vertical source array.
+	     \item[{\bf N}] Normal stress $\sigma_{zz}$ ($=-p$ in fluids) calculated.
+	     \item[{\bf P}] Plane geometry. The sources will be line-sources
+		instead of point-sources as used in the default
+		cylindrical geometry.
+    \item[{\bf R}] Computes the radial normal stress $\sigma_{rr}$ (or
+		$\sigma_{xx}$ 	for plane geometry). 
+    \item[{\bf S}] Computes the stress equivalent of the shear potential in
+         elastic media. This is an angle-independent measure, proportional to 
+         the shear potential, with no contribution from the compressional 
+         potential (in contrast to shear stress on a particular plane). 
+        	For fluids this option yields zero.
+	     \item[{\bf T}] Transmission loss plotted as function of
+		range for each of the selected field
+		parameters.
+	     \item[{\bf V}] Vertical velocity calculated.
+	     \item[{\bf Z}] Plot of velocity profile.
+    \item[{\bf a}]     Angular spectra of the integration kernels are plotted. 
+          A  $0 - 90^{\circ}$ axis is automatically selected  representing 
+          the  grazing  angle  (  $0^{\circ}$  corresponds  to  horizontal 
+          propagation ). NOTE: The same wavenumber corresponds to 
+          different  grazing  angles  in  different  media!.  The 
+          vertical  axis is selected automatically,  representing 
+          the  angular  density  (as opposed  to  the  wavenumber 
+          density for integrand plots ( option I ).
+    \item[{\bf b}] Solves the depth-separated wave equation with the
+lowermost  interface condition expressed in terms of a complex
+reflection coefficient. The reflection coefficient must be tabulated in a input file \tt input.trc \rm
+which may either be produced from experimental data or by the
+reflection coefficient module OASR as described on
+Page\,\pageref{trc-form}. See also there for the file format.
+The lower halfspace must be specified as vacuum and the last layer as
+an isovelocity fluid without sources for this option. Add dummy layer
+if necessary. Further, the
+frequency sampling must be consistent. Therefore, if this option is
+combined with option \tt f \rm, the input file must have cosistent logarithmic
+sampling. Using \tt OASR \rm this is optained by using option \tt C
+\rm with the same minimum and maximum frequencies, and number of frequencies.
+Note: Care should be taken using this option with a complex
+integration contour, option \tt J \rm. The tabulated reflection
+coefficient must clearly correspond to the same imaginary wavenumber
+components for \tt OAST \rm to yield proper results. \tt OASR \rm calculates
+the reflection coefficient for real horizontal wavenumbers.
+    \item[{\bf c}]     Contours   of  integration  kernels  as   function   of 
+          horizontal  wavenumber  (abcissa)  and  receiver  depth           
+          (ordinate). The horizontal wavenumber axis is  selected           
+          automatically,  whereas  the  depth  axis  is   plotted           
+          according  to  the parameters given for option  C.  The           
+          contour levels are determined automatically.
+\item[{\bf d}] Source/receiver dynamics. OAST v 1.7 handles the problem of
+source and receiver moving through the waveguide at the same speed and
+direction. The velocity projection V onto the line connecting source
+and  receiver must be specified in Block III, as shown in
+table~\ref{tab:fipI}. Since source and receiver are moving at identical
+speeds there is no Doppler shift, but the Green's function is
+different from the static one, as described by Schmidt and
+Kuperman\cite{sk:jasa94}.
+    \item[{\bf f}] A full Hankel transform integration scheme is used
+for low values of $ kr $ and tapered into the FFP integration used for
+large $ kr $. The compensation is achieved at very low computational
+cost and is recommended highly for cases where the near field is
+needed.   
+    \item[{\bf o}] Contours of transmission loss plotted vs frequency
+and range, i.e. the traditional 'optimum frequency' contour plots. 
+Requires NFREQ $> 1$ (see below). A logarithmic frequency
+axis is assumed for this option. Requires ZMIN, ZMAX and ZINC to be
+specified in Block XII (same contour levels as for option {\bf C}
+which may be specified simultaneously). 
+    \item[{\bf g}] Rough interfaces are assumed to be characterized by
+a Goff-Jordan power spectrum rather than the default Gaussian (Same as G). 
+    \item[{\bf l}] User defined source array. This new option is
+similar to option {\bf L} in the sense that that it introduces a
+vertical source array of time delayed sources of identical type. However,
+this option allows the depth, amplitude and  delay time to be be
+specified individually for each source in the array. The source data
+should be provided in a separate file, {\bf input.src}, in the format
+described below in Section~\ref{oastsou}.
+    \item[{\bf s}]     Outputs  the  mean  field  discontinuity  at  a   rough 
+          interface  to  the file 'input'.rhs for  input  to  the 
+          reverberation model OASS.
+    \item[{\bf t}] Solves the depth-separated wave equation with the
+top  interface condition expressed in terms of a complex
+reflection coefficient. The reflection coefficient must be tabulated in a input file \tt input.trc \rm
+which may either be produced from experimental data or by the
+reflection coefficient module \tt OASR \rm as described on
+Page\,\pageref{trc-form}. See also there for the file format.
+The upper halfspace must be specified as vacuum and the first layer as
+an isovelocity fluid without sources for this option. Add dummy layer
+if necessary. Further, the
+frequency sampling must be consistent. Therefore, if this option is
+combined with option \tt f \rm, the input file must have cosistent logarithmic
+sampling. Using \tt OASR \rm this is optained by using option \tt C
+\rm with the same minimum and maximum frequencies, and number of frequencies.
+Note: Care should be taken using this option with a complex
+integration contour, option \tt J \rm. The tabulated reflection
+coefficient must clearly correspond to the same imaginary wavenumber
+components for \tt OAST \rm to yield proper results. \tt OASR \rm calculates
+the reflection coefficient for real horizontal wavenumbers.
+    \item[{\bf \#}] Number $(1-4)$ specifying the source type
+       (explosive, forces, moment) as described in Section~\ref{oastsout}  
+\end{itemize}
+
+\subsubsection{Block III: Frequencies}
+
+A frequency loop has been incorporated in OAST to allow for computation
+of transmission loss over a wide frequency band in one run. The frequency
+specification (Block III in SAFARI Manual) has therefore been changed to:
+
+\begin{verbatim}
+FR1 FR2 NF COFF [V]
+\end{verbatim}
+
+where FR1 and FR2 are the minimum and maximum frequencies, respectively.
+NF is the number of frequencies, spaced equidistantly between FR1
+and FR2, except if option {\bf f} was specified; then the frequencies
+will be spaced logarithmically. COFF is the complex wavenumber
+integration 
+contour offset. To be specified in
+		$dB/\lambda$, where $\lambda$ is the wavelength at the source 
+		depth SD. As only the horizontal part of
+		the integration contour is considered, this parameter
+		should not be chosen so large, that the amplitudes
+		at the ends of the integration interval become 
+		significant. In lossless cases too small values
+		will give sampling problems at the normal modes
+		and other singularities. For intermediate values,
+		the result is independent of the choice of COFF,
+		but a good value to choose is one that gives 60 dB
+		at the longest range considered in the FFT, i.e.
+                \begin{displaymath}
+		\mbox{COFF} = \frac{60 \ast \mbox{CC(SD)}}{( \mbox{FREQ} \ast \mbox{R}_{max} )}
+		\end{displaymath} 
+       		where the maximum FFT range is
+       		\begin{displaymath}
+		\mbox{R}_{max} = \frac{\mbox{NP}}{\mbox{FREQ}\ast(1/\mbox{CMIN} - 1/\mbox{CMAX})}
+		\end{displaymath}
+		This value is the default which is applied if COFF
+		is specified to 0.0.
+
+The optional parameter V is the identical speed of source and receiver
+relative to the medium, 
+projected onto the radial vector connecting them.
+This parameter is only used for option {\bf d}.
+
+\subsubsection{Block IV: Environmental Model}
+
+OAST supports all the environmental models allowed for SAFARI as well as the
+ones described above in Section~\ref{oas_env}.  The significance of
+the standard environmental parameters is as follows
+\begin{itemize}	
+		\item[NL:]	Number of layers, including the upper and lower
+		half-spaces. These should Always be included,
+		even in cases where they are vacuum.
+
+		\item[D:]	Depth in $m$ of upper boundary of layer or
+		halfspace. The reference depth can be choosen
+		arbitrarily, and D() is allowed to be negative.
+		For layer no. 1, i.e. the upper half-space, this
+     		parameter is dummy.
+
+		\item[CC:]	Velocity of compressional waves in $m/s$.
+        	If specified to 0.0, the layer or half-space is
+		vacuum.
+
+		\item[CS:]	Velocity of shear waves in m/s.
+ 		If specified to 0.0, the layer or half-space is fluid.
+                If CS()$< 0$, it is the compressional velocity at bottom of
+		layer, which is treated as fluid with $1/c(z)^{2}$ linear.
+
+		\item[AC:]   Attennuation of compressional waves in 
+		$dB/\lambda$. If the layer is fluid, and AC() is specified to
+		0.0, then an imperical water attenuation is
+		used (Skretting \& Leroy).
+
+		\item[AS:]   Attenuation of shear waves in $dB/\lambda$
+
+		\item[RO:]   Density in $g/cm^{3}$.
+
+		\item[RG:] RMS roughness of interface in $m$. RG(1) is
+		dummy. If RG$<0$ it represents the negative of the RMS
+		roughness, and the associated correlation length CL
+		and spectral exponment M should follow. If RG$>0$ the 
+                correlation length is
+		assumed to be infinite.  
+                \item[CL:] Roughness
+		correlation length in m.  
+
+                \item[M:] Spectral exponent of the power spectrum as
+                defined by Turgut \cite{Turgut_97}, with $1.5 <
+                \mbox{M} \le 2.5 $ for realistic surfaces, with
+                $\mbox{M} =1.5 $ corresponding to the highest
+                roughness, and $\mbox{M}=2.5$ being a very smooth
+                variation. For 2-D Goff-Jordan surfaces, the fractal
+                dimension is $ \mbox{D} = 4.5 - \mbox{M} $
+                Insignificant
+                for Gaussian spectrum (option {\bf g} not specified)
+                but a  value must
+                be given.
+                \end{itemize}
+
+
+\subsubsection{Block V: Sources}
+
+    OAST supports the same sources as  SAFARI-FIP,  i.e 
+explosive sources in fluids or solids or vertical point forces in 
+solids  (option  X).  Multible sources in a  vertical  array  are 
+supported. If sources with horizontal directionality are desired, 
+the 3-dimensional version OASP3D must be used. The significance of the
+source parameters are as follows
+\begin{itemize}
+		\item[SD:] Source depth in $m$. If option 'L' has been 
+		specified, then SD defines the mid-point of the vertical 
+		source array.
+		\item[NS:]	Number of sources in the array.
+		\item[DS:] Source spacing in $m$.
+		\item[AN:]  Specifies the nominal grazing ANG of the 
+		generated beam in degrees. $ANG>0$ corresponds to
+		downward propagation.
+		\item[IA:]	Array type
+			\begin{enumerate}
+	        	\item Rectangular weighted array
+		 	\item Hanning weighted array
+		 	\item Hanning weighted focusing array
+			\item Gaussian weighted array
+			\item Gaussian weighted focusing array
+			\end{enumerate}
+		\item[FD:] Focal depth in $m$ for an array of type 3 and 5.
+       		\item[DA:] Dip angle in degrees for dip-slip sources (type 4).
+		\end{itemize}
+
+
+\noindent {\bf Source Types}
+\label{oastsout}  
+
+As in SAFARI the default source type in OAST 
+is an explosive type compressional source. In addition to the optional
+vertical point force, and axisymmetric seismic moment source has been
+added to OAST. The source type is specified by a number $(1-3)$ in the
+option field (line 2). The translation is as follows:
+\begin{enumerate}
+\item Explosive source (default) normalized to unit pressure at 1 m distance.
+\item Vertical point force with amplitude 1 N.
+\item Horizontal (in-plane) point force with amplitude 1 N.
+\item Dip-slip source with seismic moment 1 Nm. Dip angle specified in 
+      degrees in block V, following the other parameters.
+\item Omnidirectional seismic moment source representing explosive source. Same as type 1, but all three force dipoles have seismic moment 1 Nm.
+\end{enumerate}
+
+\noindent {\bf Source Normalization}
+
+    In  SAFARI,  the source strength was normalized to yield unit
+pressure (in Pa) 
+at a distance of 1 m from the source (for 
+solids the negative of the normal stress 1 m below the source). 
+
+    In  OASES, the same source normalization has been  maintained 
+for point sources (explosive sources) in fluid media.
+    For solid media, however, the sources are normalized to  unit 
+volume (1 m$^3$) injection for explosive sources and unit force 
+1 N for point sources or 1 N/m for line sources.
+
+\noindent {\bf User defined Source Arrays}
+\label{oastsou}
+
+Version 1.6 of OAST has been upgraded to allow a user-defined source
+array through option {\bf l}. 
+
+Option {\bf l} is intended
+for general physical arrays with uneven spacing or special shadings,
+As for the built-in arrays, such user-defined arrays may be present in
+fluid as well as elastic media. The array definition should be given
+in the file {\bf input.src} in the following format
+
+\small
+\begin{verbatim}
+LS
+SDC(1)  SDELAY(1)  SSTREN(1)    # Depth (m), Delay (s), Amplitude
+SDC(2)  SDELAY(2)  SSTREN(2) 
+SDC(3)  SDELAY(3)  SSTREN(3) 
+  :        :          :
+  :        :          :
+SDC(LS) SDELAY(LS) SSTREN(LS) 
+\end{verbatim}
+\normalsize
+
+\subsubsection{Block VI: Receivers}
+
+The default specification of the receiver depths is the same as for
+SAFARI, i.e. through the parameters RD1, RD2, NR and IR in Block VI, with
+\begin{itemize}
+\item[RD1]  Depth of uppermost receiver in m 
+\item[RD2]  Depth of lowermost receiver in m 
+\item[NR] Number of receiver depths 
+\item[IR]   Depth increment for options I and T
+\end{itemize}
+
+By default, the NR receivers are placed equidistantly in the vertical.
+
+\noindent {\bf Non-equidistant Receiver Depths}
+
+In OASES the receiver depths can optionally be specified individually.
+The parameter NR is used as a flag for this option. Thus, if NR $< 0$
+the number of receivers is interpreted as --NR, with the individual
+depths following immidiately following Block VI. As an example, SAFARI
+FIP case 2 with receivers at 100, 105 and 120 m is run with the
+following data file: 
+
+\small
+\begin{verbatim}
+SAFARI-FIP case 2. 
+N I T J Z
+30 30 1 0
+5
+  0    0     0 0   0   0   0
+  0 1500 -1480 0   0   1   0
+ 30 1480 -1490 0   0   1   0
+100 1600   400 0.2 0.5 1.8 0
+120 1800   600 0.1 0.2 2.0 0
+50
+100 100 -3 1		       # 3 receiver depths
+100.0 105.0 120.0              # Receiver depths in meters
+700 1E8  
+1024 1 512
+ 0  5 20  1
+20 80 12 10
+1450 1550 10 25
+   0  100 10 20
+\end{verbatim}
+\normalsize 
+
+
+\subsubsection{Block VII: Wavenumber Integration}
+
+This block specifies the wavenumber sampling in the standard SAFARI
+format. The critical issues involved in selecting the wavenumber
+sampling is described in the SAFARI manual \cite{hs:saf}, but even
+more detailed in {\em Computational Ocean Acoustics} \cite{jkps}. 
+The structure of this input block is  as follows:
+\begin{itemize}
+		\item[CMIN:]   Minimum phase velocity in m/s. Determines the
+		upper limit of the truncated horizontal wave-
+		number space:
+			\begin{displaymath}
+			k_{max} = \frac{2\pi \ast \mbox{FREQ}}{\mbox{CMIN}}
+			\end{displaymath}
+		\item[CMAX:]	Maximum phase velocity in m/s. Determines the
+		lower limit of the truncated horizontal wave-
+		number space:
+			\begin{displaymath}
+			k_{min} = \frac{2\pi \ast \mbox{FREQ}}{\mbox{CMAX}}
+			\end{displaymath}
+		In plane geometry ( option P ) CMAX may be specified as 
+		negative. In this case, the negative wavenumber spectrum
+		will be included with $k_{min}=-k_{max}$, yielding correct 
+		solution also at zero range. In contrast to SAFARI,
+OAST allows for complex contour integration (option J) in this case.
+		\item[NW:]	Number of sampling points in wavenumber space.
+		Should be an integer power of 2, i.e. NWN$=2^{m}$.
+		The sampling points are placed equidistantly
+		in the truncated wavenumber space determined
+		by CMIN and CMAX.
+
+		\item[IC1:]  Number of the first sampling point, where the
+		calculation is to be performed. If IC1$>1$, 
+		then the Hankel transform is zeroed for sampling 
+		points 1,2$\ldots$IC1-1, and the discontinuity
+		is smoothed.
+
+		\item[IC2:]	Number of the last sampling point where the 
+		calculation is to be performed. If IC2$<$NWN,
+		then the Hankel transform is zeroed for sampling
+		points IC2+1,$\ldots$NW, and the discontinuity
+		is smoothed by Hermite polynomial extrapolation.
+		\end{itemize}
+
+\noindent {\bf Automatic wavenumber sampling}
+
+    OAST Version  1.5  has been supplied with  an  automatic  sampling 
+feature,  making  it possible for inexperienced users  to  obtain 
+correct   answers  in  the  first  attempt  without   the   usual 
+convergence  testing.  The  automatic sampling  is  activated  by 
+specifying the parameter NW = -1 and it automatically  activates 
+the  complex wavenumber integration contour even though option  $J$ 
+may  not have been specified. The parameters IC1 and IC2 have  no 
+effect if the automatic sampling is selected.
+
+As an example, to run the SAFARI-FIP case 2 problem with automatic
+sampling, change the data file as  follows:
+
+\small
+\begin{verbatim}
+SAFARI-FIP case 2. Auto sampling.
+N I T J Z
+30 30 1 0
+5
+  0    0     0 0   0   0   0
+  0 1500 -1480 0   0   1   0
+ 30 1480 -1490 0   0   1   0
+100 1600   400 0.2 0.5 1.8 0
+120 1800   600 0.1 0.2 2.0 0
+50
+100 100 1 1
+1300 1E8                       # CMIN = 1300
+-1 0 0                         # NW   =   -1
+ 0  5 20  1
+20 80 12 10
+1450 1550 10 25
+   0  100 10 20
+\end{verbatim}
+\normalsize 
+
+\subsection{Execution of OAST}
+
+    As  for  SAFARI,  filenames  are  passed  to  the  code   via 
+environmental parameters. In Unix systems a typical command  file 
+{\bf oast} (in  \$HOME/oases/bin) is:
+
+\small
+\begin{verbatim}
+    #                            the pound sign invokes the C-shell 
+    setenv FOR001 $1.dat       # input file 
+    setenv FOR002 $1.src       # Source array input file
+    setenv FOR019 $1.plp       # plot parameter file
+    setenv FOR020 $1.plt       # plot data file  
+    setenv FOR023 $1.trc       # reflection coefficient table (input)
+    setenv FOR028 $1.cdr       # contour plot parameter file 
+    setenv FOR029 $1.bdr       # contour plot data file 
+    setenv FOR045 $1.rhs       # file for scattering discontinuities  
+    oast2                      # executable
+\end{verbatim}
+\normalsize
+
+    After preparing a data file with the name {\bf input.dat}, OAST  is 
+executed by the command:
+
+    $>$ {\bf oast input}
+
+\subsection{Graphics}  
+
+    Command files are provided in a path directory for generating 
+the graphics.
+
+\noindent    To generate curve plots, issue the command:
+
+    $>$ {\bf mplot input}
+
+\noindent    To generate contour plots, issue the command:
+
+    $>$ {\bf cplot input}
+

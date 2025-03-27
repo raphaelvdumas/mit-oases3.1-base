@@ -1,0 +1,15 @@
+free/free waveguide
+R O B F
+190.0 0                         src freq
+4                              nb of layers
+  0    0 0 0    0     0   0   #1 (upper half space)
+  0 1500 0 0 -888.888    1.0 0   #2
+-1.50
+ 60 1500 0 0    0     1.0 0
+200    0 0 0    0     0   0   #4
+65                             src depth
+0.2 199.8 500                  rcv depths
+1200 1e8                       cmin cmax
+2048 1 2048 1024                k integration parameters
+8192 180.0 200.0 0.002 4 .1  1    time, freq & range param.
+

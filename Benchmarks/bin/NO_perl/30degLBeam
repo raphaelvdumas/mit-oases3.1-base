@@ -1,0 +1,26 @@
+#!/usr/local/bin/tcsh
+mv ./tloss/30degLBeam.plt ./tloss/30degLBeam.plt.old
+#mv ./tloss/30degLBeam.plp ./tloss/30degLBeam.plp.old
+#./bin/make_plug ./run/30degLBeam ./tloss/stubs/30degLBeam ./tloss/30degLBeam
+cat ./refs/BEM/30degLB.bem.par1.for.rx1.dat ./run/30degLBeam.rdo.par1.for.rx1.dat> f1
+cat ./refs/BEM/30degLB.bem.par1.for.rx2.dat ./run/30degLBeam.rdo.par1.for.rx2.dat> f2
+cat ./refs/BEM/30degLB.bem.par1.bac.rx1.dat ./run/30degLBeam.rdo.par1.bac.rx1.dat> b1
+cat ./refs/BEM/30degLB.bem.par1.bac.rx2.dat ./run/30degLBeam.rdo.par1.bac.rx2.dat> b2
+cat f1 ./refs/CORE/30degLBeam.gem.par1.for.rx1.dat > ss1
+cat f2 ./refs/CORE/30degLBeam.gem.par1.for.rx2.dat > ss2
+cat b1 ./refs/CORE/30degLBeam.gem.par1.bac.rx1.dat > ss3
+cat b2 ./refs/CORE/30degLBeam.gem.par1.bac.rx2.dat > ss4
+cat ss1 ss2 ss3 ss4 > ./tloss/30degLBeam.plt
+rm -f f? s? ss? b?
+if ( $#argv == 1 ) then
+  if ($argv[1] == "S") then
+# Silent mode selected if argument is S
+  else
+# Plotting mode otherwise
+mplot ./tloss/30degLBeam
+  endif 
+else
+# Plotting mode as default with no arguments
+mplot ./tloss/30degLBeam
+endif
+

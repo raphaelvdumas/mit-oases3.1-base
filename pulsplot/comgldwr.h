@@ -1,0 +1,31 @@
+C MICROSOFT FORTRAN
+C   !!NON-STANDARD GLD FILE USE!!:
+C	expects date,time,and samprate to be in 2nd comment string
+C	of gld header!
+C	i.e. header bytes 135-138 = (long)year
+C	i.e. header bytes 139-142 = (long)julian day
+C	i.e. header bytes 143-146 = (long)hour
+C	i.e. header bytes 147-150 = (long)minute
+C	i.e. header bytes 151-158 = (double)seconds
+C	i.e. header bytes 159-166 = (double)fsamp (samps per second)
+C
+      REAL FLENT,FS,DSTART,DEND,BUF(128)
+	  REAL FSAMP,SEC
+	  CHARACTER PREC,TYPE
+	  CHARACTER HH(512),OUTBUF(512)
+        CHARACTER*378 COMM2
+	  CHARACTER*100 COMM1
+	  CHARACTER*300 GLDNAME
+        INTEGER*4 PDISP,RDISP,CDISP,FIRST,FIRPL,NPLANES,NROWS,NCOLS
+	  INTEGER*4 YEAR,DAY,HOUR,MIN,BST,BEN,RST,REN,MODST,MODEN
+        INTEGER*4 II,III,NRECS,ISTART,IEND,NVALS,IUNGLD
+        COMMON /GLDHDR/ HH,OUTBUF,GLDNAME,FLENT,FS,DSTART,DEND,ISTAT,
+     &                  YEAR,DAY,HOUR,MIN,SEC,IUNGLD
+
+C
+	EQUIVALENCE (HH(1),PDISP),(HH(5),RDISP),(HH(9),CDISP)
+	EQUIVALENCE (HH(13),FIRST),(HH(17),FIRPL),(HH(21),NPLANES)
+	EQUIVALENCE (HH(25),NROWS),(HH(29),NCOLS)
+	EQUIVALENCE (HH(33),PREC),(HH(34),TYPE)
+	EQUIVALENCE (HH(35),COMM1),(HH(135),COMM2)
+	EQUIVALENCE (OUTBUF(1),BUF(1))

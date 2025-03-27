@@ -1,0 +1,16 @@
+bruce run #3
+P O V H
+20	0				 Source Freq
+3 				 Number Of External Layers
+0      0    00.  0.     0.  1.  0 	 First Layer Z Cp Cs Ap As Rho Rough
+0   3500  1750   1    2.99 0.91 0  	 First Layer Z Cp Cs Ap As Rho Rough
+2.2 1435    00.  0.001   0. 1.  0	 First Layer Z Cp Cs Ap As Rho Rough
+1.1   					 Source: Depth
+2.2 2.2 1
+20 -20  				 Velocities For Inte
+1024  1 1024 50 	 			Nwno For Bem
+1024 0 50 0.0020 0.1 0.02  31		Nt F1 F2 Dt R0 Dr Nran
+1					 Number Of External Layers
+0   5000 2500   0.01  0.02 2.4 0 	 First Layer Z Cp Cs Ap As Rho Rough
+
+

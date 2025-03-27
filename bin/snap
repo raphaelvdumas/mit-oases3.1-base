@@ -1,0 +1,12 @@
+#!/bin/csh
+rm -f ?rc??f??.?dr
+setenv FOR020 $1.dat
+setenv LUPRT $1.prt
+ssnap
+setenv FOR010 $1.plp
+setenv FOR014 $1.plt
+convertx
+# combine contour plots into one file
+# for OASES compatibility
+cat ?rc??f??.cdr > $1.cdr 
+cat ?rc??f??.bdr > $1.bdr 

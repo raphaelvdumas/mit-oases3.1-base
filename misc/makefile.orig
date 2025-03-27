@@ -1,0 +1,41 @@
+# -----------------------------
+# Machine dependent definitions
+# -----------------------------
+# DEC 5000 - 240
+# -----------------------------
+FC = f77  
+FCO = $(FC) -O
+FCB = $(FC) -O
+FCK = $(FC) -O
+RANLIB = ranlib
+# -----------------------------------
+# Directory for executables
+BIN = ../bin
+LIB = ../lib
+all: 
+
+all: $(LIB)/libsysemu.a 
+
+#
+etime.o: etime.c
+	gcc -c etime.c
+
+chmod.o: chmod.c
+	gcc -c chmod.c
+
+getpid.o: getpid.c
+	gcc -c getpid.c
+
+idate.o: idate.c
+	gcc -c idate.c
+
+$(LIB)/libsysemu.a:	etime.o chmod.o getpid.o idate.o
+	ar rvu $(LIB)/libsysemu.a etime.o chmod.o getpid.o idate.o
+	$(RANLIB) $(LIB)/libsysemu.a
+
+
+
+
+
+
+

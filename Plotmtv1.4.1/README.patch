@@ -1,0 +1,94 @@
+
+Last update : 03/23/1997
+
+0. Summary
+   
+   I've added several features to Plotmtv1.4.1 to 
+   enhance graphic outputs (both X and PS).  
+   Now, it has more variety of colormaps and
+   alternative PS fonts.
+
+
+1. Installation
+
+   Step 1 :
+     Tar off original "Plotmtv1.4.1.tar.gz" ( or "Plotmtv1.4.1.tar.Z" )
+     to build source tree.
+   
+     gunzip -c Plotmtv1.4.1.tar.gz | tar xvf -
+
+   Step 2 :
+     Tar off "mtvpatch.tar.gz" ( or "mtvpatch.tgz" ) to
+     write several new files and overwrite some files to
+     the same directory trees. This file should be tarred off
+     at the same position as "Plotmtv1.4.1.tar.gz" because
+     both have the same tree structure. 
+
+     gunzip -c mtvpatch.tar.gz | tar xvf - 
+
+   Step 3 :
+     Follow plotmtv's installation procedure. Then, all set.
+
+2. Controlling outputs 
+
+ 2.1  MTV_COLORMAP
+
+   A. Purpose
+      
+      Change default colormap of Plotmtv. This parameter
+      overrides MTV_WRB_COLORMAP.
+
+   B. Possible values ( Both lower and upper cases allowed )
+
+      From PlotMTV : rgb, wrb
+      From MatLab  : hsv, gray, hot, cool, bone, copper, pink, jet
+      From PGPLOT  : astro, heat
+      From TecPlot : srb, lrb
+
+   C. Usage
+
+      setenv MTV_COLORMAP hot
+
+ 2.2 MTV_REVERSE  
+   
+   A. Purpose
+   
+      Reverse the default colormap space
+
+   B. Possible values
+      
+      on, true
+
+   C. Usage
+
+      setenv MTV_REVERSE on
+
+ 2.3 MTV_PSFONT   
+    
+   A. Purpose
+   
+      Change default font of PostScript output
+
+   B. Possible values ( Both lower and upper cases allowed )
+
+      times (default), helvetica, courier
+
+   C. Usage
+    
+      setenv MTV_PSFONT helvetica
+
+ 2.4 MTV_PSITALIC
+
+   A. Change the attribute of PS font.
+
+   B. Possible values 
+  
+      on, true
+
+   C. Usage
+
+      setenv MTV_PSITALIC on
+
+Enjoy 
+
+Austin Jai Lee

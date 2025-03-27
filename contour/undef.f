@@ -1,0 +1,8 @@
+      SUBROUTINE UNDEF(Z,NX,NY)
+      DIMENSION Z(NX,NY)
+      DO 1000   IX=1,NX
+      DO 1000   IY=1,NY
+      IF(Z(IX,IY).GE.1.0E30)   Z(IX,IY)=999.999
+ 1000 CONTINUE
+      RETURN
+      END

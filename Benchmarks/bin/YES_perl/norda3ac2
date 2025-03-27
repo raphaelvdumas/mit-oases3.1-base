@@ -1,0 +1,20 @@
+#!/usr/local/bin/tcsh
+mv ./tloss/norda3ac2.plt ./tloss/norda3ac2.plt.old
+mv ./tloss/norda3ac2.plp ./tloss/norda3ac2.plp.old
+./bin/make_plug ./run/norda3ac2 ./tloss/stubs/norda3ac2 ./tloss/norda3ac2
+cat ./refs/OASES/norda3a_c2.saf.par1.rx1.dat > g1
+cat g1 ./run/norda3ac2.rdo.par1.for.rx1.dat > f1
+cat f1 ./refs/OASES/norda3a_c2.saf.par1.rx2.dat > g2 
+cat g2 ./run/norda3ac2.rdo.par1.for.rx2.dat > ./tloss/norda3ac2.plt
+rm -f f1 f2 g1 g2
+if ( $#argv == 1 ) then
+  if ($argv[1] == "S") then
+# Silent mode selected if argument is S
+  else
+# Plotting mode otherwise
+mplot ./tloss/norda3ac2
+  endif 
+else
+# Plotting mode as default with no arguments
+mplot ./tloss/norda3ac2
+endif

@@ -1,0 +1,60 @@
+      128                                              MODU
+ OASTL NTLRAN COL
+                                                                
+ MODIFIED NORDA 3A TEST - SVP GRADIENT - Szz                                     
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     50.0 m$ 
+ RD:     50.0 m$ 
+     15.0000                                           XLEN
+     9.00000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    0.000000E+00                                      XLEFT
+     10.0000                                         XRIGHT
+    2.00000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     50.0000                                          YDOWN
+    10.000000E+00                                        YUP
+     10.00000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB)$                                                        
+ LIN
+        2                                                NC
+      630                                                 N
+    0.000000E+00                                       XOFF
+    0.159999E-01                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+>>>
+ OASTL NTLRAN COL
+                                                                
+ MODIFIED NORDA 3A TEST - SVP GRADIENT - Szz                                     
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     50.0 m$ 
+ RD:    110.0 m$ 
+     15.0000                                           XLEN
+     9.00000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    0.000000E+00                                      XLEFT
+     10.0000                                         XRIGHT
+    2.00000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     50.0000                                          YDOWN
+    10.000000E+00                                        YUP
+     10.00000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB)$                                                        
+ LIN
+        2                                                NC
+      630                                                 N
+    0.000000E+00                                       XOFF
+    0.159999E-01                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+>>>
+ OASTL PLTEND

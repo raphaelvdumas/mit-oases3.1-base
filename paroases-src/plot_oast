@@ -1,0 +1,40 @@
+#! /usr/bin/env python3
+#
+# Author: Gaute Hope <gaute.hope@nersc.no> / 2017-02-27
+
+import os
+import sys
+import subprocess
+import argparse
+
+from paroases.oast.plot_oast import PlotOast
+
+if __name__ == '__main__':
+  parser = argparse.ArgumentParser ( description = 'Plot transmission loss from OAST' )
+  parser.add_argument ('file', metavar = 'file', type = str, nargs = 1,
+                       help = '.dat, .mat or .npz file from OAST')
+
+  parser.add_argument ('-p', '--plot',  action='store_true', default = False,
+                       help = 'show plot')
+
+  parser.add_argument ('-s', '--save',  action='store_true', default = False,
+                       help = 'save plot output')
+
+  parser.add_argument ('--npz',  action='store_true', default = False,
+                       help = 'save input .dat as .npz (only with .dat)')
+
+
+  parser.epilog = "If neither -p or -s is specified, -s is on by default"
+  args = parser.parse_args (sys.argv[1:])
+
+  fname = args.file[0]
+  save  = args.save
+  plot  = args.plot
+  npz   = args.npz
+
+  if not plot and not save:
+    save = True
+
+
+  p = PlotOast (fname, plot, save, npz, True)
+  p.main ()

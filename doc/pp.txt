@@ -1,0 +1,116 @@
+ ************************************************************************
+ *                     OASES PULSE POST-PROCESSOR                       *
+ ************************************************************************
+ *  1. File name:      temmllra.trf                                     *
+ *  2. Source type:           2     (    -1 -    6 )                    *
+ *  3. Source file:    tria.sou                                         *
+ *  4. Min frequency:         0.000  Hz                                 *
+ *  5. Max frequency:         0.000  Hz                                 *
+ *  6. Cen frequency:         0.000  Hz                                 *
+ *  7. Plot options:   SHD,POS                                          *
+ *  8. Contour options:CPX                                              *
+ *  9. Depth stacked:                                                   *
+ * 10. Range stacked:                                                   *
+ * 11. Azimuth stacked:                                                 *
+ * 12. Individual:                                                      *
+ * 13. Transmission Los                                                 *
+ * 14. Snap shots:                                                      *
+ * 15. Source pulses:                                                   *
+ * 16. Demodulation:          N     ( Y/N )                             *
+ * 17. Save plot files:       N     ( Y/N )                             *
+ * 18. Trace format:          A     ( Asc/Cfs/Gld/Sdr )                 *
+ * 19. Add TRF files:                                                   *
+ * 20. Multiply TRF fil                                                 *
+ * 21. Exit PP:                                                         *
+ ************************************************************************
+      SELECT OPTION: 
+ omegim=  -3.820335    
+ IR=              23
+ nplot=            3
+ nout=             2
+ msuft=            1
+
+
+
+
+
+
+
+
+
+
+
+
+
+ ************************************************************************
+ *                          TRANSMISSION LOSS                           *
+ ************************************************************************
+ *  1. TL vs Freq:                                                      *
+ *  2. TL vs Range:                                                     *
+ *  3. TL vs Depth:                                                     *
+ *  4. Depth Average:                                                   *
+ *  5. Depth-Range Cont                                                 *
+ *  6. Return:                      ( PP main menu )                    *
+ ************************************************************************
+      SELECT OPTION: 
+
+    ***  Reading from data file  ***
+ omegim=  -3.820335    
+ IR=              23
+ nplot=            3
+ nout=             2
+ msuft=            1
+ ************************************************************************
+ *                             TL CONTOURS                              *
+ ************************************************************************
+ *  1. Plot title:     TEMME-MULLER. Auto f.                            *
+ *  2. Range left:            0.000 km                                  *
+ *  3. Range right:           0.600 km                                  *
+ *  4. Range tick inc:        0.100 km                                  *
+ *  5. R-axis length:        20.000 cm                                  *
+ *  6. Depth down:          600.000 m                                   *
+ *  7. Depth up:              0.000 m                                   *
+ *  8. Depth tick inc:      100.000 m                                   *
+ *  9. D-axis length:        12.000 cm                                  *
+ * 10. Azimuth:               0.000 deg                                 *
+ * 11. Frequency:            50.000 Hz                                  *
+ * 12. Min. loss:            30.000 dB                                  *
+ * 13. Max. loss:            90.000 dB                                  *
+ * 14. Increment:             3.000 dB                                  *
+ * 15. Undef. file:                                                     *
+ * 16. Shade file:                                                      *
+ * 17. Parameter:             V     ( V H )                             *
+ * 18. Generate plot:                                                   *
+ * 19. Return:                      ( PP main menu )                    *
+ ************************************************************************
+      SELECT OPTION: 
+ ************************************************************************
+ *                     OASES PULSE POST-PROCESSOR                       *
+ ************************************************************************
+ *  1. File name:      temmllra.trf                                     *
+ *  2. Source type:           2     (    -1 -    6 )                    *
+ *  3. Source file:    tria.sou                                         *
+ *  4. Min frequency:         0.977  Hz                                 *
+ *  5. Max frequency:       150.391  Hz                                 *
+ *  6. Cen frequency:        50.000  Hz                                 *
+ *  7. Plot options:   SHD,POS                                          *
+ *  8. Contour options:CPX                                              *
+ *  9. Depth stacked:                                                   *
+ * 10. Range stacked:                                                   *
+ * 11. Azimuth stacked:                                                 *
+ * 12. Individual:                                                      *
+ * 13. Transmission Los                                                 *
+ * 14. Snap shots:                                                      *
+ * 15. Source pulses:                                                   *
+ * 16. Demodulation:          N     ( Y/N )                             *
+ * 17. Save plot files:       N     ( Y/N )                             *
+ * 18. Trace format:          A     ( Asc/Cfs/Gld/Sdr )                 *
+ * 19. Add TRF files:                                                   *
+ * 20. Multiply TRF fil                                                 *
+ * 21. Exit PP:                                                         *
+ ************************************************************************
+      SELECT OPTION: 
+
+           ***  PULSPLOT STOP  ***
+
+

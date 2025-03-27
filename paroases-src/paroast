@@ -1,0 +1,84 @@
+#! /usr/bin/env python3
+#
+# Author: Gaute Hope <gaute.hope@nersc.no> / 2016-11-07
+
+import os
+import sys
+import subprocess
+
+import platform
+hostname = platform.node ()
+
+from paroases.oast.paroast import ParOast
+
+if __name__ == '__main__':
+
+  n = os.path.basename (sys.argv[0])
+
+  if n == 'paroast':
+    p = ParOast ()
+    p.main (sys.argv[1:])
+
+  elif n == 'mpioast':
+    from   mpi4py import MPI
+    comm = MPI.COMM_WORLD
+    rank = comm.Get_rank ()
+    size = comm.Get_size ()
+
+
+    ## This is used as an incomplete skeleton instance for the ParOast class
+    ## when launching this script for each MPI worker.
+    class DummyParOast:
+      JOB_DEBUG_LIMIT = ParOast.JOB_DEBUG_LIMIT
+      out      = None
+      file     = None
+      nodetype = 'mpi'
+      log      = sys.stdout
+      mpi      = True
+      workers  = size
+      progbar  = sys.stderr.isatty()
+
+    if rank == 0:
+      print ("mpioast: master (size:", size, ") on", hostname)
+
+      p = ParOast (mpi = True)
+      p.main (sys.argv[1:])
+
+      if not p.run:
+        # release workers
+        for i in range(size):
+          comm.send (False, dest = i)
+
+      print ("mpioast: master: done")
+
+
+    else:
+      # print ("mpioast: worker:", rank, "on", hostname, "ready..")
+
+      job = comm.recv (source = 0)
+      # print ("mpioast: worker:", rank, "got job:", job)
+
+      if job == False:
+        pass # do nothing, no need to work today
+
+      else:
+        out = job[0]
+        no  = job[1]
+        fle = job[2]
+        progbar = job[3]
+
+        slf      = DummyParOast ()
+        slf.out  = out
+        slf.file = fle
+        slf.progbar = progbar
+
+        ParOast.job_run (slf, no)
+
+        # we are done
+        comm.send (True, dest = 0)
+
+      # print ("mpioast: worker:", rank, "done.")
+  else:
+    print ("paroast: unknown invocation name:", n)
+
+

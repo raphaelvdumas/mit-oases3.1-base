@@ -1,0 +1,12 @@
+#!/bin/sh
+#oasp grad_rgh_rhs
+
+i=0
+n=8
+
+while [ $i -lt $n ]
+do
+ i=`expr $i + 1`
+ cp grad_rgh_scat.dat grad_rgh_${i}.dat
+ oassp grad_rgh_${i} grad_rgh_rhs
+done

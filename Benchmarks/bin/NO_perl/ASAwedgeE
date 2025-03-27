@@ -1,0 +1,23 @@
+#!/usr/local/bin/tcsh
+mv ./tloss/ASAwedgeE.plt ./tloss/ASAwedgeE.plt.old
+#mv ./tloss/ASAwedgeE.plp ./tloss/ASAwedgeE.plp.old
+#./bin/make_plug ./run/ASAwedgeE ./tloss/stubs/ASAwedgeE ./tloss/ASAwedgeE
+cat ./refs/PE/ASAwedgeE.PE.K.for.rx1.dat  ./run/ASAwedgeE.rdo.par1.for.rx1.dat > f1
+cat f1 ./refs/CORE/ASAwedgeE.gem.par1.for.rx1.dat > ff1
+cat ./refs/PE/ASAwedgeE.PE.K.for.rx2.dat ./run/ASAwedgeE.rdo.par1.for.rx2.dat > f2
+cat f2 ./refs/CORE/ASAwedgeE.gem.par1.for.rx2.dat > ff2
+cat ff1 ff2 > ./tloss/ASAwedgeE.plt
+rm -f ff? f?
+if ( $#argv == 1 ) then
+  if ($argv[1] == "S") then
+# Silent mode selected if argument is S
+  else
+# Plotting mode otherwise
+mplot ./tloss/ASAwedgeE
+  endif 
+else
+# Plotting mode as default with no arguments
+mplot ./tloss/ASAwedgeE
+endif
+
+

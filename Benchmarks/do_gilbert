@@ -1,0 +1,8 @@
+echo '-------------------------------------------'
+date
+echo 'Start Gilbert-Evans Fluid'
+rdoast ./input/gilbert > ./logs/gilbert.out
+mv ./input/gilbert.pl? ./run
+pltsplit -f ./run/gilbert -b 2 -p 1 -r 1 -d 3
+./bin/gilbert S
+echo 'End Gilbert-Evans Fluid'

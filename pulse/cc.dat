@@ -1,0 +1,12 @@
+Elastic Inclusion
+ 2 P N 
+20	0				 Source Freq
+2					 Number Of External Layers
+0 5000 2500 0.1 0.2 2.4 0
+0 5000 2500 0.1 0.2 2.4 0
+10
+20 -20  
+64 1 64 0 1 128 0  1 1024 0 	 			Nwno For Bem
+1024 0 45 0.0010 0.2 0.0087  40				Nt F1 F2 Dt R0 Dr Nran
+
+

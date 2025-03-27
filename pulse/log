@@ -1,0 +1,653 @@
+ **********************************
+ *       OASES Version 2.1       *
+ **********************************
+
+ Pulse Module OASP
+
+
+ Pekeris waveguide                                                               
+
+ OPTIONS:
+
+ NORMAL STRESS
+ COMPLEX INTEGRATION CONTOUR
+ FREQUENCY/SLOWNESS CONTOURS OF INTEGRANDS
+
+ SOURCE CENTRE FREQUENCY:     20.00 HZ 
+0     DEPTH        ALPHA       BETA      ATTENA       ATENB         RHO      ROUGHNESS
+      0.00000     0.00000     0.00000  0.00000000  0.00000000     0.00000     0.00000
+      0.00000  1500.00000     0.00000  0.00000000  0.00000000     1.00000     0.00000
+    100.00000  1800.00000     0.00000  0.00000000  0.00000000     1.80000     0.00000
+ SRCTYP= 1
+
+ SOURCE DATA:
+
+   N0.    DEPTH  LAYER      ZU        ZL
+      1      36.0     2      36.0      64.0
+
+ RECEIVER DATA:
+
+   NO.       DEPTH  LAYER           Z          DR
+      1      46.0     2      46.0       0.0
+
+ NUMBER OF LAYERS:        3
+ NUMBER OF SOURCES:       1
+ NUMBER OF RECEIVERS:     1
+
+ >>> AUTOMATIC SAMPLING 
+     Real Frequency Integration <<<
+     Complex Wavenumber Integration <<<
+     REFERENCE SPEED:  1800.
+     REFERENCE RANGE:  7843.2002
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ autinp:  1400.  1.E+09  184.320007  7843.2002  711.226807  597431232. 841 1 427
+ 0
+     MAX NO. OF WAVENUMBERS: 841
+ >>> Automatic Sampling <<<
+     Cmin,Cmax=  711.226807  597431232.
+     NO. OF WAVENUMBERS: 841
+     ICW1,ICW2=     1 427
+
+ DEFAULT CONTOUR OFFSET APPLIED,  0.150465831 dB/wavelength
+
+
+  CMIN =      711.227     M/S 
+  CMAX =     0.597431E+09 M/S 
+
+    NW      ICW1      ICW2     ICUT1     ICUT2
+   841         1       427         1       841
+
+ TIME STEP:            0.001000 SECS
+ MIN. TIME:            0.000000 SECS
+ FREQUENCY STEP:       0.976562 HZ
+ MIN. FREQUENCY:       0.976562 HZ
+ MAX. FREQUENCY:      50.781246 HZ
+
+ INTEGRAND PLOTS:      0 (*1)
+ PULSE PLOTS:          7 (*1)
+
+ MINIMUM RANGE:        0.000000 KM
+ RANGE STEP:           0.500000 KM
+
+ Source type:   1
+ Fourier terms: 1
+
+ trfhead: msuft= 1
+
+ >>> FREQUENCY:  0.97656244
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  7.82422256 dB/wavelength
+     Cmin,Cmax:    13.6774397  11489062.
+     K_r0,dK_r:    5.34066487E-07  0.000534066407
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.   2 :      0.977 HZ     0.030 SECS
+
+ >>> FREQUENCY:  1.95312488
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  3.91211128 dB/wavelength
+     Cmin,Cmax:    27.3548794  22978124.
+     K_r0,dK_r:    5.34066487E-07  0.000534066407
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.   3 :      1.953 HZ     0.020 SECS
+
+ >>> FREQUENCY:  2.92968726
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  2.60807419 dB/wavelength
+     Cmin,Cmax:    41.0323181  34467184.
+     K_r0,dK_r:    5.34066487E-07  0.000534066407
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.   4 :      2.930 HZ     0.020 SECS
+
+ >>> FREQUENCY:  3.90624976
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  1.95605564 dB/wavelength
+     Cmin,Cmax:    54.7097588  45956248.
+     K_r0,dK_r:    5.34066487E-07  0.000534066407
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.   5 :      3.906 HZ     0.030 SECS
+
+ >>> FREQUENCY:  4.88281202
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  1.56484461 dB/wavelength
+     Cmin,Cmax:    68.3871918  57445308.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.   6 :      4.883 HZ     0.020 SECS
+
+ >>> FREQUENCY:  5.85937452
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  1.30403709 dB/wavelength
+     Cmin,Cmax:    82.0646362  68934368.
+     K_r0,dK_r:    5.34066487E-07  0.000534066407
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.   7 :      5.859 HZ     0.030 SECS
+
+ >>> FREQUENCY:  6.83593702
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  1.11774611 dB/wavelength
+     Cmin,Cmax:    95.7420731  80423432.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.   8 :      6.836 HZ     0.020 SECS
+
+ >>> FREQUENCY:  7.81249952
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.978027821 dB/wavelength
+     Cmin,Cmax:    109.419518  91912496.
+     K_r0,dK_r:    5.34066487E-07  0.000534066407
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.   9 :      7.812 HZ     0.020 SECS
+
+ >>> FREQUENCY:  8.78906155
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.869358122 dB/wavelength
+     Cmin,Cmax:    123.096947  103401552.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  10 :      8.789 HZ     0.030 SECS
+
+ >>> FREQUENCY:  9.76562405
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.782422304 dB/wavelength
+     Cmin,Cmax:    136.774384  114890616.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  11 :      9.766 HZ     0.020 SECS
+
+ >>> FREQUENCY:  10.7421865
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.711292982 dB/wavelength
+     Cmin,Cmax:    150.451828  126379680.
+     K_r0,dK_r:    5.3406643E-07  0.000534066407
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  12 :     10.742 HZ     0.020 SECS
+
+ >>> FREQUENCY:  11.718749
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.652018547 dB/wavelength
+     Cmin,Cmax:    164.129272  137868736.
+     K_r0,dK_r:    5.34066487E-07  0.000534066407
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  13 :     11.719 HZ     0.030 SECS
+
+ >>> FREQUENCY:  12.6953115
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.601863325 dB/wavelength
+     Cmin,Cmax:    177.806702  149357808.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  14 :     12.695 HZ     0.020 SECS
+
+ >>> FREQUENCY:  13.671874
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.558873057 dB/wavelength
+     Cmin,Cmax:    191.484146  160846864.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  15 :     13.672 HZ     0.030 SECS
+
+ >>> FREQUENCY:  14.6484365
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.52161485 dB/wavelength
+     Cmin,Cmax:    205.161591  172335936.
+     K_r0,dK_r:    5.3406643E-07  0.000534066407
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  16 :     14.648 HZ     0.020 SECS
+
+ >>> FREQUENCY:  15.624999
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.48901391 dB/wavelength
+     Cmin,Cmax:    218.839035  183824992.
+     K_r0,dK_r:    5.34066487E-07  0.000534066407
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  17 :     15.625 HZ     0.020 SECS
+
+ >>> FREQUENCY:  16.6015606
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.460248441 dB/wavelength
+     Cmin,Cmax:    232.516449  195314048.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  18 :     16.602 HZ     0.030 SECS
+
+ >>> FREQUENCY:  17.5781231
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.434679061 dB/wavelength
+     Cmin,Cmax:    246.193893  206803104.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  19 :     17.578 HZ     0.020 SECS
+
+ >>> FREQUENCY:  18.5546856
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.411801219 dB/wavelength
+     Cmin,Cmax:    259.871338  218292160.
+     K_r0,dK_r:    5.34066544E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  20 :     18.555 HZ     0.020 SECS
+
+ >>> FREQUENCY:  19.5312481
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.391211152 dB/wavelength
+     Cmin,Cmax:    273.548767  229781232.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  21 :     19.531 HZ     0.030 SECS
+
+ >>> FREQUENCY:  20.5078106
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.372582018 dB/wavelength
+     Cmin,Cmax:    287.226227  241270288.
+     K_r0,dK_r:    5.34066544E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  22 :     20.508 HZ     0.020 SECS
+
+ >>> FREQUENCY:  21.4843731
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.355646491 dB/wavelength
+     Cmin,Cmax:    300.903656  252759360.
+     K_r0,dK_r:    5.3406643E-07  0.000534066407
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  23 :     21.484 HZ     0.030 SECS
+
+ >>> FREQUENCY:  22.4609356
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.340183616 dB/wavelength
+     Cmin,Cmax:    314.581085  264248416.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  24 :     22.461 HZ     0.020 SECS
+
+ >>> FREQUENCY:  23.4374981
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.326009274 dB/wavelength
+     Cmin,Cmax:    328.258545  275737472.
+     K_r0,dK_r:    5.34066487E-07  0.000534066407
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  25 :     23.437 HZ     0.020 SECS
+
+ >>> FREQUENCY:  24.4140606
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.31296891 dB/wavelength
+     Cmin,Cmax:    341.935974  287226528.
+     K_r0,dK_r:    5.34066544E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  26 :     24.414 HZ     0.030 SECS
+
+ >>> FREQUENCY:  25.3906231
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.300931662 dB/wavelength
+     Cmin,Cmax:    355.613403  298715616.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  27 :     25.391 HZ     0.020 SECS
+
+ >>> FREQUENCY:  26.3671856
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.289786011 dB/wavelength
+     Cmin,Cmax:    369.290863  310204672.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  28 :     26.367 HZ     0.020 SECS
+
+ >>> FREQUENCY:  27.3437481
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.279436529 dB/wavelength
+     Cmin,Cmax:    382.968292  321693728.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  29 :     27.344 HZ     0.030 SECS
+
+ >>> FREQUENCY:  28.3203106
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.269800782 dB/wavelength
+     Cmin,Cmax:    396.645721  333182784.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  30 :     28.320 HZ     0.020 SECS
+
+ >>> FREQUENCY:  29.2968731
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.260807425 dB/wavelength
+     Cmin,Cmax:    410.323181  344671872.
+     K_r0,dK_r:    5.3406643E-07  0.000534066407
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  31 :     29.297 HZ     0.030 SECS
+
+ >>> FREQUENCY:  30.2734356
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.252394289 dB/wavelength
+     Cmin,Cmax:    424.00061  356160928.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  32 :     30.273 HZ     0.020 SECS
+
+ >>> FREQUENCY:  31.2499981
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.244506955 dB/wavelength
+     Cmin,Cmax:    437.67807  367649984.
+     K_r0,dK_r:    5.34066487E-07  0.000534066407
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  33 :     31.250 HZ     0.020 SECS
+
+ >>> FREQUENCY:  32.2265587
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.237097666 dB/wavelength
+     Cmin,Cmax:    451.355469  379139008.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  34 :     32.227 HZ     0.030 SECS
+
+ >>> FREQUENCY:  33.2031212
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.23012422 dB/wavelength
+     Cmin,Cmax:    465.032898  390628096.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  35 :     33.203 HZ     0.020 SECS
+
+ >>> FREQUENCY:  34.1796837
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.223549232 dB/wavelength
+     Cmin,Cmax:    478.710358  402117152.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  36 :     34.180 HZ     0.020 SECS
+
+ >>> FREQUENCY:  35.1562462
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.217339531 dB/wavelength
+     Cmin,Cmax:    492.387787  413606208.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  37 :     35.156 HZ     0.030 SECS
+
+ >>> FREQUENCY:  36.1328087
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.211465493 dB/wavelength
+     Cmin,Cmax:    506.065216  425095264.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  38 :     36.133 HZ     0.020 SECS
+
+ >>> FREQUENCY:  37.1093712
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.205900609 dB/wavelength
+     Cmin,Cmax:    519.742676  436584320.
+     K_r0,dK_r:    5.34066544E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  39 :     37.109 HZ     0.030 SECS
+
+ >>> FREQUENCY:  38.0859337
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.200621098 dB/wavelength
+     Cmin,Cmax:    533.420105  448073408.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  40 :     38.086 HZ     0.020 SECS
+
+ >>> FREQUENCY:  39.0624962
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.195605576 dB/wavelength
+     Cmin,Cmax:    547.097534  459562464.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  41 :     39.062 HZ     0.020 SECS
+
+ >>> FREQUENCY:  40.0390587
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.190834716 dB/wavelength
+     Cmin,Cmax:    560.774963  471051520.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  42 :     40.039 HZ     0.030 SECS
+
+ >>> FREQUENCY:  41.0156212
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.186291009 dB/wavelength
+     Cmin,Cmax:    574.452454  482540576.
+     K_r0,dK_r:    5.34066544E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  43 :     41.016 HZ     0.020 SECS
+
+ >>> FREQUENCY:  41.9921837
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.181958675 dB/wavelength
+     Cmin,Cmax:    588.129883  494029664.
+     K_r0,dK_r:    5.3406643E-07  0.000534066407
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  44 :     41.992 HZ     0.020 SECS
+
+ >>> FREQUENCY:  42.9687462
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.177823246 dB/wavelength
+     Cmin,Cmax:    601.807312  505518720.
+     K_r0,dK_r:    5.3406643E-07  0.000534066407
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  45 :     42.969 HZ     0.030 SECS
+
+ >>> FREQUENCY:  43.9453087
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.173871621 dB/wavelength
+     Cmin,Cmax:    615.484741  517007776.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  46 :     43.945 HZ     0.020 SECS
+
+ >>> FREQUENCY:  44.9218712
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.170091808 dB/wavelength
+     Cmin,Cmax:    629.16217  528496832.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  47 :     44.922 HZ     0.030 SECS
+
+ >>> FREQUENCY:  45.8984337
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.166472822 dB/wavelength
+     Cmin,Cmax:    642.839661  539985920.
+     K_r0,dK_r:    5.3406643E-07  0.000534066407
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  48 :     45.898 HZ     0.020 SECS
+
+ >>> FREQUENCY:  46.8749962
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.163004637 dB/wavelength
+     Cmin,Cmax:    656.51709  551474944.
+     K_r0,dK_r:    5.34066487E-07  0.000534066407
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  49 :     46.875 HZ     0.020 SECS
+
+ >>> FREQUENCY:  47.8515587
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.159678012 dB/wavelength
+     Cmin,Cmax:    670.194519  562964032.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  50 :     47.852 HZ     0.030 SECS
+
+ >>> FREQUENCY:  48.8281212
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.156484455 dB/wavelength
+     Cmin,Cmax:    683.871948  574453056.
+     K_r0,dK_r:    5.34066544E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  51 :     48.828 HZ     0.020 SECS
+
+ >>> FREQUENCY:  49.8046837
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.153416142 dB/wavelength
+     Cmin,Cmax:    697.549377  585942144.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  52 :     49.805 HZ     0.030 SECS
+
+ >>> FREQUENCY:  50.7812462
+ >>> Reference range for sampling:  7843.2002 m
+ >>> Reference depth for tapering:  10. m
+ >>> Reference range for tapering:  284.320007 m
+ DEFAULT CONTOUR OFFSET APPLIED,  0.150465831 dB/wavelength
+     Cmin,Cmax:    711.226807  597431232.
+     K_r0,dK_r:    5.34066487E-07  0.000534066465
+     Wavenumber samples: 841 1 427
+
+ FREQ. NO.  53 :     50.781 HZ     0.020 SECS
+
+ *** OASES PULSE FINISHED ***
+
+     TOTAL TIME:      1.240 SECS

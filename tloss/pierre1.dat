@@ -1,0 +1,16 @@
+TL for low freq case
+N T J
+10 10 1 0                          src freq
+3                             nb of layers
+  0    0 0 0    0     0   0   #1 (upper half space)
+  0 1500 0 0 -888.888 1.0 0   #2
++100.0
+100 1800 0 0    0     1.8 0   #3
+50                            src depth
+50 50 1 1                     rcv depths
+1300 1e8                      cmin cmax
+-1 1 1 0                      k integration parameters
+0 20 20 1		      range param.
+30 70 10 5		      TL param.
+
+

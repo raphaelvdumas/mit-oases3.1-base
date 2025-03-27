@@ -1,0 +1,16 @@
+      SUBROUTINE READPE(Z,NX,NY,FORM)
+      CHARACTER*3 FORM
+      DIMENSION Z(NX,NY)
+C
+      IF(FORM.EQ.'BIN')   THEN
+       DO 1000 I=1,NX
+       READ(17)(Z(I,J),J=NY,1,-1)
+ 1000  CONTINUE
+      ELSE
+       DO 2000 I=1,NX
+       READ(17,*)(Z(I,J),J=NY,1,-1)
+ 2000  CONTINUE
+      END IF
+C
+      RETURN
+      END

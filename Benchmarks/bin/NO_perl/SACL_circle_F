@@ -1,0 +1,26 @@
+#!/usr/local/bin/tcsh
+mv ./tloss/SACL_circle_F.plt ./tloss/SACL_circle_F.plt.old
+#mv ./tloss/SACL_circle_F.plp ./tloss/SACL_circle_F.plp.old
+#./bin/make_plug ./run/SACL_circle_F ./tloss/stubs/SACL_circle_F ./tloss/SACL_circle_F
+cat ./refs/BEM/SACL_circle_F.bem.par1.bac.rx1.dat ./run/SACL_circle_F.rdo.par1.bac.rx1.dat > g1
+cat ./refs/BEM/SACL_circle_F.bem.par1.bac.rx2.dat ./run/SACL_circle_F.rdo.par1.bac.rx2.dat > g2
+cat g1 ./refs/CORE/SACL_circle_F.gem.par1.bac.rx1.dat > f1
+cat g2 ./refs/CORE/SACL_circle_F.gem.par1.bac.rx2.dat > f2
+cat f1 f2 > ./tloss/SACL_circle_F.plt
+rm -f g? f?
+if ( $#argv == 1 ) then
+  if ($argv[1] == "S") then
+# Silent mode selected if argument is S
+  else
+# Plotting mode otherwise
+mplot ./tloss/SACL_circle_F
+  endif 
+else
+# Plotting mode as default with no arguments
+mplot ./tloss/SACL_circle_F
+endif
+
+
+## Par1 -> Normal stress
+## Par2 -> Displacement w
+## Par3 -> Displacement u

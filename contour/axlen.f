@@ -1,0 +1,30 @@
+      SUBROUTINE AXLEN(BTYPE,V1,V2,WORD,SCALE,LENGTH,LUNIT)
+      REAL LENGTH
+      CHARACTER*3 BTYPE
+      CHARACTER*55 CODE
+      CHARACTER*72 WORD
+  420 FORMAT(1X,F15.4,1X,A55)
+      READ(WORD,420) VALUE, CODE
+      I=INDEX(CODE,'LENGTH')
+
+      IF( BTYPE .EQ. 'LIN')   THEN
+       IF( I .GT. 0 )   THEN
+        SCALE=ABS( (V2-V1)/VALUE )
+        LENGTH=VALUE
+       ELSE
+        LENGTH=ABS( (V2-V1)/VALUE )
+        SCALE=VALUE
+       END IF
+
+      ELSE
+       IF( I .GT. 0 )   THEN
+        SCALE=ABS( VALUE/(LOG(V1/V2)/LOG(2.0)) )
+        LENGTH=VALUE
+       ELSE
+        LENGTH=ABS(ALOG(V1/V2)/ALOG(2.0))*VALUE
+        SCALE=VALUE
+       END IF
+      END IF
+      RETURN
+      END
+

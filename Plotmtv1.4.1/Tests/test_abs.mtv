@@ -1,0 +1,62 @@
+#
+# This tests the xabs and yabs 
+#   - used primarily in combination with log plots
+#
+$ DATA=CURVE2D
+% toplabel="x vs y"
+% toplabel="This data is plotted without y absolute-valued"
+% linecolor=2
+% linelabel="x"
+% yabs=F
+% ylog=T
+1.0  1.0e10
+1.1  2.0e10
+1.2  4.0e10
+1.3  8.0e10
+1.4  2.0e10
+1.5  1.0e9
+1.6  1.0e8 
+1.7  1.0e7
+1.8  1.0e6 
+1.9  1.0e5
+2.0  1.0e4 
+2.1  1.0e2 
+2.2 -1.0e2 
+2.3 -1.0e4
+2.4 -1.0e6
+2.5 -1.0e8
+2.6 -1.0e9
+2.7 -1.0e9
+2.8 -3.0e10
+2.9 -3.4e10
+3.0 -3.0e10
+
+$ DATA=CURVE2D
+% toplabel="x vs abs(y)"
+% subtitle="This data is plotted with y absolute-valued"
+% linecolor=2
+% linelabel="x"
+% yabs=T
+% ylog=T
+1.0  1.0e10
+1.1  2.0e10
+1.2  4.0e10
+1.3  8.0e10
+1.4  2.0e10
+1.5  1.0e9
+1.6  1.0e8 
+1.7  1.0e7
+1.8  1.0e6 
+1.9  1.0e5
+2.0  1.0e4 
+2.1  1.0e2 
+2.2 -1.0e2 
+2.3 -1.0e4
+2.4 -1.0e6
+2.5 -1.0e8
+2.6 -1.0e9
+2.7 -1.0e9
+2.8 -3.0e10
+2.9 -3.4e10
+3.0 -3.0e10
+$QUIT

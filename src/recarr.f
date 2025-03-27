@@ -1,0 +1,4 @@
+      COMMON /RECARR/ RAN(NRMAX),TRAN(NRMAX),DEP(NRMAX),GAIN(NRMAX),
+     &               NRCV,IDEP(NRMAX),IRTYP(NRMAX),
+     &               IRCPAR(NRMAX),IRPAR(3,NRMAX)
+

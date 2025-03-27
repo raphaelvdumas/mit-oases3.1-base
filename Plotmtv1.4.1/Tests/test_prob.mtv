@@ -1,0 +1,101 @@
+$ DATA=PROBABILITY
+
+#
+# This format provides a sequence of numbers, from which an ordered list
+# and the corresponding probabilities are calculated by the program
+#
+#% ymin=-0.05 ymax=0.85
+% readprob = False
+% linetype=1
+% spline=1
+2954.63e-2
+2980.58e-2
+3053.02e-2
+3009.29e-2
+3116.46e-2
+
+3025.33e-2
+2861.48e-2
+2979.04e-2
+3109.85e-2
+3045.65e-2
+
+2984.65e-2
+2892.86e-2
+3051.01e-2
+3006.77e-2
+2925.79e-2
+
+3034.51e-2
+3020.70e-2
+2948.42e-2
+2998.25e-2
+3035.31e-2
+
+2780.27e-2
+2914.04e-2
+2924.46e-2
+3087.05e-2
+2982.11e-2
+
+@line x1=27.8 y1=0.02 x2=31.16 y2=0.98
+
+$ DATA=PROBABILITY
+
+#
+# This format provides a sequence of numbers, with values and cumulative
+# probabilities
+#
+
+% yflip=True
+% readprob=True
+% linetype=1
+2780.3e-2  0.02 
+2861.5e-2  0.06 
+2892.9e-2   0.1 
+  2914e-2  0.14 
+2924.5e-2  0.18 
+2925.8e-2  0.22 
+2948.4e-2  0.26 
+2954.6e-2   0.3 
+  2979e-2  0.34 
+2980.6e-2  0.38 
+2982.1e-2  0.42 
+2984.7e-2  0.46 
+2998.2e-2   0.5 
+3006.8e-2  0.54 
+3009.3e-2  0.58 
+3020.7e-2  0.62 
+3025.3e-2  0.66 
+3034.5e-2   0.7 
+3035.3e-2  0.74 
+3045.7e-2  0.78 
+  3051e-2  0.82 
+  3053e-2  0.86 
+3087.1e-2   0.9 
+3109.8e-2  0.94 
+3116.5e-2  0.98 
+
+$ DATA=PROBABILITY
+
+#
+# This format provides a sequence of numbers, from which an ordered list
+# and the corresponding probabilities are calculated by the program
+#
+#% ymin=-0.05 ymax=0.85
+% grid
+% linetype=2
+% pointID
+
+% readprob = True 
+1.0 0.01  
+1.5 0.25
+2.0 0.50
+2.5 0.75
+3.0 0.99
+
+@line  x1=1.0 y1=0.02 x2=3.0 y2=0.98
+@arrow x1=1.0 y1=0.03 x2=3.0 y2=0.97
+@point x1=1.5 y1=0.26 markertype=4
+@text  x1=1.6 y1=0.26 linelabel="Hello"
+@rect  x1=1.7 y1=0.40 x2=2.2 y2=0.55 linelabel="Box"

@@ -1,0 +1,37 @@
+From daemon Wed Apr  3 15:48:32 1996
+Received: from arctic.mit.edu (arctic [18.58.0.189]) by keel.mit.edu (8.7.2/8.7.2) with SMTP id PAA25275 for <henrik@keel>; Wed, 3 Apr 1996 15:48:31 -0500 (EST)
+From: jtgoh@arctic.mit.edu
+Received: from localhost by arctic.mit.edu; (5.65/1.1.8.2/04Mar95-8.2MAM)
+	id AA26721; Wed, 3 Apr 1996 15:48:30 -0500
+Message-Id: <9604032048.AA26721@arctic.mit.edu>
+To: Henrik Schmidt <henrik@keel.mit.edu>
+Subject: Re: rdoast 
+In-Reply-To: Your message of "Wed, 03 Apr 96 15:38:56 EST."
+             <3162E1E0.41C6@keel.mit.edu> 
+Date: Wed, 03 Apr 96 15:48:24 -0500
+X-Mts: smtp
+Status: R
+
+
+No, I have not seen the recent runs yet. The
+/project0/henrik/benchmarks directory is not readable.
+
+The rdtest script is nice - I am running the 1/2 -slope
+ATOC cases now. A useful tip. If you want to change
+all occurrences of rdoast to rdtest in all the
+do_* scripts do (from the prompt)
+
+perl -pi -e 's/rdtest/rdoast/g' do_*
+
+
+That's all. To change it back from rdtest to rdoast
+
+perl -pi -e 's/rdoast/rdtest/g' do_*
+
+I will be printing the thesis on archival bond paper
+sometime next week. I think the present set of
+solutions look really good.
+
+Have fun
+jt
+

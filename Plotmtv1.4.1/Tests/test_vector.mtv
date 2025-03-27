@@ -1,0 +1,51 @@
+#
+# Data file for vector
+#
+$ DATA=VECTOR
+% xmin =  0.1
+% xmax =  0.9
+% ymin = -0.1
+% ymax =  0.6
+% zmin = -0.5
+% zmax =  0.5
+% linecolor = 0
+% linewidth = 1
+% xlog=off vscale=0.2
+
+#@ line      x1=0.0 y1=0.05 x2=2.0 y2=0.05 linewidth=3
+
+# Reference set of vectors
+0.2 0.0 0.0   0.5 1.0 0.0
+0.2 0.1 0.0   0.4 1.0 0.0
+0.2 0.2 0.0   0.3 1.0 0.0
+0.2 0.3 0.0   0.2 1.0 0.0
+0.2 0.4 0.0   0.1 1.0 0.0
+0.2 0.5 0.0   0.0 1.0 0.0
+
+# This set has a z-component but the vector plot will look
+# identical as the reference set.
+0.4 0.0 0.0   0.5 1.0 1.0
+0.4 0.1 0.0   0.4 1.0 1.0
+0.4 0.2 0.0   0.3 1.0 1.0
+0.4 0.3 0.0   0.2 1.0 1.0
+0.4 0.4 0.0   0.1 1.0 1.0
+0.4 0.5 0.0   0.0 1.0 1.0
+
+# These have smaller y-components compared to the reference set
+0.6 0.0 0.0   0.0 0.5 0.0
+0.6 0.1 0.0   0.1 0.5 0.0
+0.6 0.2 0.0   0.2 0.5 0.0
+0.6 0.3 0.0   0.3 0.5 0.0
+0.6 0.4 0.0   0.4 0.5 0.0
+0.6 0.5 0.0   0.5 0.5 0.0
+
+# This set is identical to the previous except that x-y components are switched
+0.8 0.0 0.0   0.5 0.1 0.0
+0.8 0.1 0.0   0.5 0.2 0.0
+0.8 0.2 0.0   0.5 0.3 0.0
+0.8 0.3 0.0   0.5 0.4 0.0
+0.8 0.4 0.0   0.5 0.5 0.0
+0.8 0.5 0.0   0.5 0.6 0.0
+
+
+

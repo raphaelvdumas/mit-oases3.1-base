@@ -1,0 +1,8 @@
+echo '-------------------------------------------'
+date
+echo 'Start Single-Layer E/F cut'
+rdoast ./input/SLef > ./logs/SLef.out            
+mv ./input/SLef.pl? ./run
+pltsplit -f ./run/SLef -b 2 -p 1 -r 1 -d 3
+./bin/SLef S
+echo 'End Single-Layer E/F cut'

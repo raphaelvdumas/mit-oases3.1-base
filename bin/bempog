@@ -1,0 +1,18 @@
+#
+setenv FOR001 $1.dat
+setenv FOR002 $2b.dat
+setenv FOR011 $2.nod
+#setenv FOR006 $1.log
+setenv FOR019 $1.plp
+setenv FOR020 $1.plt
+setenv FOR022 $2.und
+setenv FOR028 $1.cdr
+setenv FOR029 $1.bdr
+setenv FOR048 $2.ext
+setenv FOR049 $2.rhs
+setenv FOR050 $2.int
+setenv FOR051 $2.ntr
+setenv FOR071 $1.ntm
+bempo1
+mv oases.trf $1.trf
+

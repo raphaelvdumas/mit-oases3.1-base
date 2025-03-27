@@ -1,0 +1,24 @@
+#!/usr/local/bin/tcsh
+mv ./tloss/RSWT3a.plt ./tloss/RSWT3a.plt.old
+#mv ./tloss/RSWT3a.plp ./tloss/RSWT3a.plp.old
+#./bin/make_plug ./run/RSWT3a ./tloss/stubs/RSWT3a ./tloss/RSWT3a
+cat ./refs/COUPLE/RSWT3a.for.r45.dat ./run/RSWT3a.rdo.par1.for.rx1.dat > f1
+cat ./refs/COUPLE/RSWT3a.bac.r45.dat ./run/RSWT3a.rdo.par1.bac.rx1.dat > f2
+cat ./refs/COUPLE/RSWT3a.tot.r45.dat ./run/RSWT3a.rdo.par1.tot.rx1.dat > f3
+cat f1 ./refs/CORE/RSWT3a.gem.par1.for.rx1.dat > ff1
+cat f2 ./refs/CORE/RSWT3a.gem.par1.bac.rx1.dat > ff2
+cat f3 ./refs/CORE/RSWT3a.gem.par1.tot.rx1.dat > ff3
+cat ff1 ff2 ff3 > ./tloss/RSWT3a.plt
+rm -f f? ff? 
+if ( $#argv == 1 ) then
+  if ($argv[1] == "S") then
+# Silent mode selected if argument is S
+  else
+# Plotting mode otherwise
+mplot ./tloss/RSWT3a
+  endif 
+else
+# Plotting mode as default with no arguments
+mplot ./tloss/RSWT3a
+endif
+

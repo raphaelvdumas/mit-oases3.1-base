@@ -1,0 +1,27 @@
+#!/usr/local/bin/tcsh
+mv ./tloss/mikeExE.plt ./tloss/mikeExE.plt.old
+mv ./tloss/mikeExE.plp ./tloss/mikeExE.plp.old
+./bin/make_plug ./run/mikeExE ./tloss/stubs/mikeExE ./tloss/mikeExE
+cat ./refs/BEM/mikeExE.bem.par1.for.rx1.dat ./run/mikeExE.rdo.par1.for.rx1.dat> s1
+cat ./refs/BEM/mikeExE.bem.par1.for.rx2.dat ./run/mikeExE.rdo.par1.for.rx2.dat> s2
+cat ./refs/BEM/mikeExE.bem.par1.bac.rx1.dat ./run/mikeExE.rdo.par1.bac.rx1.dat> s3
+cat ./refs/BEM/mikeExE.bem.par1.bac.rx2.dat ./run/mikeExE.rdo.par1.bac.rx2.dat> s4
+cat s1 ./refs/CORE/mikeExE.gem.par1.for.rx1.dat > ss1
+cat s2 ./refs/CORE/mikeExE.gem.par1.for.rx2.dat > ss2
+cat s3 ./refs/CORE/mikeExE.gem.par1.bac.rx1.dat > ss3
+cat s4 ./refs/CORE/mikeExE.gem.par1.bac.rx2.dat > ss4
+cat ss1 ss2 ss3 ss4 > ./tloss/mikeExE.plt
+rm -f s? ss?
+if ( $#argv == 1 ) then
+  if ($argv[1] == "S") then
+# Silent mode selected if argument is S
+  else
+# Plotting mode otherwise
+mplot ./tloss/mikeExE
+  endif 
+else
+# Plotting mode as default with no arguments
+mplot ./tloss/mikeExE
+endif
+
+

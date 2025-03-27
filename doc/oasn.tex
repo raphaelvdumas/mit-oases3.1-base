@@ -1,0 +1,690 @@
+\section{OASN: Noise, Covariance Matrices and Signal Replicas}
+
+The OASES-OASN module models the seismo-acoustic field on arbitrary
+3-dimensional arrays of hydrophones and geophones in the presence of
+surface noise sources and discrete signal sources. This module is used
+to model the propagation of surface-generated ambient noise and for
+providing simulated array responses as well as signal replicas to the
+array  processing module OASES-MFP described later. The SAFARI
+predecessor of OASN was used for the noise propagation study in Ref.
+\cite{sk:jasa88} and for computing  covariance matrices and
+replicas for the matched field processing study in Ref. \cite{bks:jasa88}.
+
+\subsection{Input Files for OASN}
+
+\begin{table}
+\begin{center}
+\small
+\begin{tabular}{|l|l|c|c|}
+\hline \hline
+Input parameter & Description & Units & Limits \\
+\hline \hline
+\multicolumn{4}{|l|}{\bf Block I: TITLE}  \\ \hline
+TITLE & Title of run  & - & $\leq$ 80 ch. \\
+\hline
+\multicolumn{4}{|l|}{\bf Block II: OPTIONS}  \\ \hline
+A B C $\cdots$ & Output and computational options & - & $\leq$ 40 ch. \\
+\hline
+\multicolumn{4}{|l|}{\bf Block III: FREQUENCIES}  \\ \hline
+FREQ1, FREQ2, NFREQ, COFF & FREQ1: Minimum frequency & Hz & $>0$ \\
+ 	& FREQ2: Maximum frequency & Hz & $>0$ \\
+        & NFREQ: Number of frequencies & & $>0$ \\
+ 	& COFF: Integration contour offset & dB/$\Lambda$ & $\geq 0$ \\
+\hline
+\multicolumn{4}{|l|}{\bf Block IV: ENVIRONMENT}  \\ \hline
+NL 	& Number of layers, incl. halfspaces	& - & $\geq 2$  \\
+D,CC,CS,AC,AS,RO,RG,CL & D: Depth of interface. & m &  \\
+.	& CC: Compressional speed & m/s & $\geq 0$ \\
+.	& CS: Shear speed & m/s &  \\
+.	& AC: Compressional attenuation & dB/$\Lambda$ & $\geq 0$ \\
+.	& AS: Shear attenuation & dB/$\Lambda$ & $\geq 0$ \\
+	& RO: Density 	& g/cm$^{3}$ & $\geq 0$ \\
+	& RG: RMS of interface roughness & m &  \\
+	& CL: Correlation length of roughness & m & $>0$ \\
+\hline
+\multicolumn{4}{|l|}{\bf Block V: RECEIVER ARRAY}  \\ \hline
+NRCV & NRCV: Number of receivers in array & - & $>0$ \\
+Z,X,Y,ITYP,GAIN & Z: Receiver depth & m & \\
+.	& X: x-offset of receiver & m & \\ 
+.	& Y: y-offset of receiver & m & \\
+.	& ITYP: Receiver type  & - & $>0$ \\
+	& GAIN: Receiver signal gain & dB & \\ 
+\hline
+\multicolumn{4}{|l|}{\bf Block VI: SOURCES}  \\ \hline
+SSLEV,WNLEV,DSLEV,NDNS & SSLEV: Surface noise source strength & dB & \\
+	& WNLEV: White noise level & dB & \\
+	& DSLEV: Deep source level & dB & \\
+	& NDNS: Number of discrete sources & & \\
+\hline
+\end{tabular}
+\end{center}
+\caption{OASN input file structure, mandatory components: Environment, 
+Array geometry and Sources.
+ \label{tab:oasnI} }
+\end{table} 
+
+\begin{table}
+\begin{center}
+\small
+\begin{tabular}{|l|l|c|c|}
+\hline \hline
+Input parameter & Description & Units & Limits \\
+\hline \hline
+\multicolumn{4}{|l|}{\bf Block VII: SEA SURFACE NOISE (SSLEV $\neq$ 0)}  \\ 
+\hline
+CMINS,CMAXS & Phase velocity interval, {\em surface noise} & & \\ 
+	& CMINS: Minimum phase velocity & m/s & $>0$ \\
+	& CMAXS: Maximum phase velocity & m/s & $>0$ \\
+NWSC,NWSD,NWSE & Wavenumber sampling, {\em surface noise} & & \\
+	& NWSC: Samples in {\em continuous} spectrum &  &  \\
+	& NWSD: Samples in {\em discrete} spectrum &  &  \\
+	& NWSE: Samples in {\em evanescent} spectrum &  &  \\
+\hline
+\multicolumn{4}{|l|}{\bf Block VIII: DEEP NOISE SOURCES (DSLEV $\neq$ 0)}  \\ 
+\hline
+DPSD 	& DPSD: Depth of {\em deep} source sheet & & \\
+CMIND,CMAXD & Phase velocity interval, {\em deep} sources & & \\ 
+	& CMIND: Minimum phase velocity & m/s & $>0$ \\
+	& CMAXD: Maximum phase velocity & m/s & $>0$ \\
+NWDC,NWDD,NWDE & Wavenumber sampling, {\em deep} sources & & \\
+	& NWDC: Samples in {\em continuous} spectrum &  &  \\
+	& NWDD: Samples in {\em discrete} spectrum &  &  \\
+	& NWDE: Samples in {\em evanescent} spectrum &  &  \\
+\hline
+\multicolumn{4}{|l|}{\bf Block IX: DISCRETE SOURCES (NDNS $>$ 0)}  \\ 
+\hline
+ZDN,XDN,YDN,DNLEV & ZDN: Depth of {\em discrete} source & m & \\
+:	& XDN: x-offset of discrete source & km & \\ 
+:	& YDN: y-offset of discrete source & km & \\
+	& DNLEV: Source level of discrete source & dB & \\
+CMIN,CMAX & Phase velocity interval, {\em discrete} sources & & \\ 
+	& CMIN: Minimum phase velocity & m/s & $>0$ \\
+	& CMAX: Maximum phase velocity & m/s & $>0$ \\
+NW,IC1,IC2 & NW: Wavenumber sampling, {\em discrete} sources & - &   \\
+	& IC1: First sampling point & - & $\geq 1$ \\
+	& IC2: Last sampling point & - & $\leq$NW \\
+\hline
+\multicolumn{4}{|l|}{\bf Block X: SIGNAL REPLICAS (Option R)}  \\ 
+\hline
+ZMINR,ZMAXR,NZR & Depth sampling of {\em replicas} & m & \\ 
+XMINR,XMAXR,NXR & x-offset sampling of {\em replicas} & km & \\ 
+YMINR,YMAXR,NYR & y-offset sampling of {\em replicas} & km & \\ 
+CMINR,CMAXR & Phase velocity interval, {\em replicas} & & \\ 
+	& CMINR: Minimum phase velocity & m/s & $>0$ \\
+	& CMAXR: Maximum phase velocity & m/s & $>0$ \\
+NWR,ICR1,ICR2 & NWR: Wavenumber sampling, {\em replicas} & - &   \\
+	& ICR1: First sampling point & - & $\geq 1$ \\
+	& ICR2: Last sampling point & - & $\leq$NWR \\
+\hline
+\end{tabular}
+\end{center}
+\caption{OASN input file structure, optional components: 
+Computational parameters.
+ \label{tab:oasnII} }
+\end{table} 
+
+The input file for oasn is structured in 10 blocks, the first 6 of
+which, shown in Table~\ref{tab:oasnI} contain data which must always
+be given, such as the  frequency selection, the environment and
+receiver array. The last 4 blocks
+should only be included for certain options and parameter settings, as
+indicated in Table~\ref{tab:oasnII}. The various blocks and the
+significance of the data is described in the following.
+
+\subsubsection{Block I: Title of Run}
+
+Arbitrary title to appear on graphics output.
+
+\subsubsection{Block II: Computational options}
+
+Similarly to the other modules, the output is controlled by a number
+of one-letter options:
+\begin{itemize}
+\item[C] Produces a contour plot of the spatial spectrum of the
+surface generated ambient noise vs. frequency and horizontal slowness.
+This
+option overrides option {\bf K}.
+\item[F] Produces a curve plot of the noise level in dB vs frequency for each
+sensor in the receiving array.
+\item[J] Applies a complex integration contour with offset given in
+Block III for all wavenumber integrations.
+\item[K] Creates a plot of the wavenumber spectrum of the surface
+generated ambient noise for each individual frequency.
+\item[N] Outputs the noise covariance matrices to a direct access
+file with extension \tt .xsm \rm. The file format is described below.
+\item[P] Produces plots of noise intensity vs. receiver number for
+each selected frequency.
+\item[R] Outputs the array replicas to a 
+file with extension \tt .rpo \rm. The file format is described below.
+\item[T] Produces a transfer function file with extension \tt .trf \rm 
+for the selected array and 
+one discrete source. Only allowed for \tt NDNS = 1 \rm. 
+For file format see \tt OASP \rm. The ranges for the receivers in the 
+\tt .trf \rm file are not the true ones, but simply the receiver numbers.
+To plot all traces together use {\em range stacking} in \tt PP \rm.
+\item[Z] Produces a plot of the sound speed profiles in the standard
+format.
+    \item[{\bf b}] Solves the depth-separated wave equation with the
+lowermost  interface condition expressed in terms of a complex
+reflection coefficient. The reflection coefficient must be tabulated in a input file \tt input.trc \rm
+which may either be produced from experimental data or by the
+reflection coefficient module OASR as described on
+Page\,\pageref{trc-form}. See also there for the file format.
+The lower halfspace must be specified as vacuum and the last layer as
+an isovelocity fluid without sources for this option. Add dummy layer
+if necessary. Further, the
+frequency sampling must be consistent. 
+Using \tt OASR \rm this is optained by using
+the same minimum and maximum frequencies, and number of frequencies, but without option \tt C \rm.
+Note: Care should be taken using this option with a complex
+integration contour, option \tt J \rm. The tabulated reflection
+coefficient must clearly correspond to the same imaginary wavenumber
+components for \tt OASN \rm to yield proper results. \tt OASR \rm calculates
+the reflection coefficient for real horizontal wavenumbers.
+    \item[{\bf t}] Solves the depth-separated wave equation with the
+top  interface condition expressed in terms of a complex
+reflection coefficient. The reflection coefficient must be tabulated in a input file \tt input.trc \rm
+which may either be produced from experimental data or by the
+reflection coefficient module \tt OASR \rm as described on
+Page\,\pageref{trc-form}. See also there for the file format.
+The upper halfspace must be specified as vacuum and the first layer as
+an isovelocity fluid without sources for this option. Add dummy layer
+if necessary. Further, the
+frequency sampling must be consistent. 
+Using \tt OASR \rm this is optained by using the same minimum and 
+maximum frequencies, and number of frequencies, but without option \tt C \rm.
+Note: Care should be taken using this option with a complex
+integration contour, option \tt J \rm. The tabulated reflection
+coefficient must clearly correspond to the same imaginary wavenumber
+components for \tt OASN \rm to yield proper results. \tt OASR \rm calculates
+the reflection coefficient for real horizontal wavenumbers.
+\item[\#] A digit (1--9) identifying the order of the surface source
+correllation. The default is totally uncorrelated sources.
+Higher numbers yield more vertical directionality.
+\end{itemize}
+
+\subsubsection{Block III: Frequency Selection}
+
+This block controls the frequency sampling. Covariance matrices,
+replicas and graphics will be produced for \tt NFREQ \rm frequencies
+equidistantly sampled between \tt FREQ1 \rm and \tt FREQ2 \rm. \tt
+COFF \rm is the wavenumber integration offset in DB/$\lambda$ and only
+has significance for option {\bf J}. Option {\bf J} and \tt COFF = 0
+\rm will invoke the default integartion offset.
+ 
+\subsubsection{Block IV: Environmental Data }
+
+The environmental data are specified in the standard SAFARI format.
+
+\subsubsection{Block V: Receiver Array}
+
+OASN will compute the noise and signal field on arbitrary
+three dimensional arrays. The first line of this block specifies the
+number of sensors. Then follows the position, type and gain for each
+sensor in the array. The the sensor positions are specified in
+cartesian coordinates \underline{in meters}. The types currently
+implemented are as follows
+
+\begin{enumerate}
+\item Hydrophone. Normal stress $ \sigma_{zz}$ (negative of pressure in
+water) in Pa for source level 1 Pa (or $\mu$Pa for source level 1 $\mu$Pa). 
+\item Geophone. Particle velocity $\dot{u}$ in $x$-direction
+(horizontal).  Unit is
+m/s for source level 1 Pa (or $\mu$m/s for source level 1 $\mu$Pa).
+\item Geophone. Particle velocity $\dot{v}$ in $y$-direction
+(horizontal).  Unit is
+m/s for source level 1 Pa (or $\mu$m/s for source level 1 $\mu$Pa).
+\item Geophone. Particle velocity $\dot{w}$ in $z$-direction
+(vertical, positive downwards).  Unit is
+m/s for source level 1 Pa (or $\mu$m/s for source level 1 $\mu$Pa).
+\end{enumerate}
+
+The gain is a calibration factor in dB which is applied to
+ambient noise and signal on all sensors. {\em Note that the gain is not
+applied to the white noise!} When combining hydrophones and geophones
+in array processing it is important to note that there is a  difference in
+order of magnitude of pressure and particle velocity of the order of
+the acoustic impedance. Therefore the geophone sensors should usually
+have a gain which is of the order 120 dB higher than the gain applied to the
+hydrophone sensors.
+
+\subsubsection{Block VI: Noise and Signal Sources}
+
+OASN treats 4 types of noise and signal sources simultaneously,
+depending on the value of the parameters in this block:
+
+\begin{description}
+\item[SSLEV] Strength in dB of sea surface noise sources. Per
+definition the source strength corresponds to the acoustic pressure
+the same source distribution would yield in an infinitely deep ocean
+\cite{jkps,sk:jasa88}.
+The value of \tt SSLEV \rm is interpreted in two different ways,
+depending on its sign:
+\begin{itemize}
+\item[SSLEV$\ge0$:] Level in dB of white surface source spectrum.
+\item[SSLEV$<0$:] A negative value identifies a logical unit for a file
+containing the frequency dependence of the surface source level. The format of
+the source level files is described in Section~\ref{sec:slevf}.
+\end{itemize}
+\item[WNLEV] Level of white noise on sensor in dB. Note that the white
+noise is added after the sensor gain.
+\item[DSLEV] To allow for more horizontal directionality of the noise
+field than predicted by the surface noise model, an additional, deeper
+sheet of sources can be introduced.
+\item[NDNS] This parameter specifies the number of discrete sources present
+(targets or interferers).
+\end{description}
+
+\subsubsection{Block VII: Surface Noise Parameters}
+
+This block contains the wavenumber sampling parameters for computing the
+noise covariance matrix. The parameters \tt CMINS \rm and \tt CMAXS
+\rm are the phase phase velocities defining the wavenumber integration
+interval. Note here that the continuous spectrum is always important
+for surface noise. Therefore \tt CMAXS \rm must be specified to a
+large number (e.g. $10^8$) to include the steep propagation angles.
+\tt CMINS \rm should be chosen small enough to include all important
+evanescent components. 
+
+The wavenumber sampling parameters \tt NWSC, NWSD \rm and \tt NWSE \rm are
+interpreted in two different ways by \tt oasn\rm, depending of the
+value specified for \tt NWSD \rm:
+
+\begin{description}
+\item[NWSD $< 10$] The wavenumber sampling parameters are given in the standard
+SAFARI format, with the parameters interpreted as follows:
+	\begin{itemize}
+	\item[NWSC] Total number of wavenumber samples, distributed
+		equidistantly between $k_{min} = \omega / c_{max} $ and 
+		$k_{max} = \omega / c_{min} $.
+	\item[NWSD] Sampling point where the kernel computation starts. The
+		kernel will be Hermite extrapolated. In
+		this  format NWSD will usually be set to 1 since the
+		steep  angles are always important. 
+	\item[NWSE] Sampling point where the kernel computation ends. The
+		kernel will be Hermite extrapolated.
+	\end{itemize} 
+\underline{NOTE:} The sampling parameters must be specified in this format for options {\bf K} and {\bf C}, which require equidistant sampling.
+\item[NWSD $\ge 10$] The wavenumber sampling parameters are given
+individually for each of the three spectral regimes. This allows for a
+much denser sampling in the discrete spectrum without forcing a dense sampling
+of the smooth kernel in the other regimes. 
+	\begin{itemize}
+	\item[NWSC] Number of wavenumber wavenumber samples distributed
+		equidistantly over the {\em continuous spectrum} 
+		between $k_{min} = \omega / c_{max} $ and
+		the critical wavenumber $k_c$ corresponding to the 
+		compressional speed in the sub-bottom. 
+	\item[NWSD] Number of wavenumber wavenumber samples distributed
+		equidistantly over the {\em discrete spectrum} 
+		between the critical wavenumber $k_c$ corresponding to the 
+		compressional speed in the sub-bottom and the
+		wavenumber $k_w$ corresponding to the minimum sound
+		speed in the water column.  
+	\item[NWSE] Number of wavenumber wavenumber samples distributed
+		equidistantly over the {\em evanescent spectrum} 
+		between the
+		wavenumber $k_w$ corresponding to the minimum sound
+		speed in the water column and $k_{max} = \omega / c_{min} $.  
+	\end{itemize} 
+\end{description}
+
+\subsubsection{Block VIII: Deep Noise Source Parameters}
+
+The parameter \tt DPSD \rm is the depth of the deep noise source
+sheet. The other parameters in this block are specified in a format
+identical to that described above for the surface sources.
+
+\subsubsection{Block IX: Discrete Noise and Signal Sources}
+
+If \tt NDNS\rm$>0$, then this block should first contain the
+coordinates and source level for each discrete source. Note that the
+depth is specified first in {\em meters}, followed by the $x$- and
+$y$-ranges in {\em kilometer} (in contrast to the array element
+coordinates which were all given in meters).
+
+The source levels \tt DNLEV \rm are interpreted in two different ways,
+dependent on whether specified value is positive or negative:
+
+\begin{description}
+\item[DNLEV$\ge0$:] Level in dB of white source spectrum.
+\item[DNLEV$<0$:] A negative value identifies a logical unit of a file
+containing the frequency dependence of the source level. The format of
+the source level files is described in Section~\ref{sec:slevf}.
+\end{description}
+
+The wavenumber sampling parameters for the discrete sources should
+follow in the standard OASES format. In Version 2.2 automatic sampling
+is supported, and activated by NW=-1. In this case Ic1 and IC2 are
+insignificant. As is the case for automatic sampling in all OASES
+modules, the desired phase velocity interval must be specified
+manually. The kernel tapering invoked by the automatic sampling will
+be initiated at the specified phase velocities.
+
+   
+\subsubsection{Block X: Signal Replica Parameters}
+
+The first three lines of this block defines the computational grid
+over which the replica sources will be placed. The sampling is
+equidistant in all 3 coordinate directions. Note the the depths $Z$
+should be specified in {\em meters} whereas the ranges $x$ and $y$ should
+be  specified  in {\em kilometers}.
+
+The wavenumber sampling parameters for the replica sources should
+follow in the standard OASES format. In Version 2.2 automatic sampling
+is supported, and activated by NW=-1. In this case IC1 and IC2 are
+insignificant. As is the case for automatic sampling in all OASES
+modules, the desired phase velocity interval must be specified
+manually. The kernel tapering invoked by the automatic sampling will
+be initiated at the specified phase velocities.
+
+
+
+\subsubsection{Source Level Input Files}
+\label{sec:slevf}
+
+The source level for surface generated noise and discrete sources is
+by default assumed to be constant in frequency. Although this is a
+reasonable assumption for surface generated noise over reasonably wide
+frequency bands, it is usually unrealistic for discrete sources which
+will be characterized by distinct frequency lines in their source
+spectrum. Therefore the source spectra can optionally be specified in
+ASCII files which will be read by OASN if the source levels are
+specified as negative, in which case the value is interpreted as the
+negative of the logical unit corresponding to the file. Therefore, the
+file should either be assigned to the environmental
+variable \tt FORxxx \rm or the file should have the name \tt
+fort.xxx\rm, where \tt xxx \rm is the absolute value of the number
+specified for \tt SNLEV \rm or \tt DNLEV \rm.
+
+A particular source file (and logical unit) can be shared by any
+number of sources.
+
+The format of the file is a follows:
+
+\small
+\begin{verbatim}
+      NFREQ   FREQ1   FREQ2
+      dB(FREQ1)
+      dB(FREQ1+DELFRQ)
+       :
+       :
+       :
+      dB(FREQ2) 
+\end{verbatim}
+\normalsize
+
+The first line specifies the frequency sampling of the source levels,
+and it must be consistent with the sampling specified in Block III of
+the input file. The following lines simply states the source level in dB at
+each frequency value. 
+
+\subsubsection{Examples}
+\label{sec:oasnex}
+
+The following OASN input file \tt fram4.dat \rm produces the covariance matrix and
+replicas used for the arctic matched field study reported in
+Ref.~\cite{sbk:jasa90}:
+
+\small
+\begin{verbatim}
+                # >>> Block I: Title
+FRAM IV environment.
+                # >>> Block II: Options
+R N J 3             # Covariance, replicas, cos^3 sources
+                # >>> Block III: Frequency sampling
+20 20 1 0           # 20 Hz
+
+                # >>> Block IV: Environment
+12				
+0 0 0 0 0 0 0
+0 1431 -1443 0 0 1 0
+85 1443 -1460 0 0 1 0
+200 1460 -1462 0 0 1 0
+330 1462 -1466 0 0 1 0
+1225 1466 -1508 0 0 1 0
+3800 1508 0 1.0 0 2.2 0
+4200 1508 -2506 0.5 0 2.9 0
+4433 2506 -3503 0.5 0 2.9 0
+4667 3503 -4500 0.5 0 2.9 0
+4900 4500 -6000 0.4 0 2.9 0
+5900 6000 0 0.2 0 2.9 0
+
+                # >>> Block V: Receiver Array 
+18                      # 18 elements
+30 0 0 1 -1             # Hydrophone at z = 30 m. Gain -1 dB
+60 0 0 1 -1
+90 0 0 1 -1
+140 0 0 1 -1
+180 0 0 1 -7
+210 0 0 1 -7            # Hydrophone at z =210 m. Gain -7 dB
+270 0 0 1 -1
+330 0 0 1 -1
+350 0 0 1 -1
+390 0 0 1 -1
+450 0 0 1 -1
+510 0 0 1 -1
+570 0 0 1 -1
+630 0 0 1 -1
+690 0 0 1 -1
+782 0 0 1 -1
+860 0 0 1 -1
+960 0 0 1 -1            # Hydrophone at z =960 m. Gain -1 dB
+
+                # >>> Block VI: Noise and Signal Sources
+70 50 0 1               # 70 dB surface noise. 50 dB white noise
+                        # 1 discrete source
+
+                # >>> Block VII: Surface noise
+1400 1E8                # CMINS, CMAXS
+400 400 100             # Samples in cont., discr., evanes. spec.
+
+                # >>> Block IX: Discrete source parameters
+91 250 0 180            # Source at depth 91 m, 250 km x-range,
+                        #        strength 180 dB. 
+1425 1570               # CMIN, CMAX. Only waterborne important.
+512 25 490              # 512 samples. (-1 0 0 for auto sampling)
+
+                # >>> Block X: Replica parameters
+10 1000 23              # 23 source depth, 10 - 1000 m
+150 300 76              # 76 source ranges, 150 - 300 km
+0 0 1                   # 1 y-range (omnidirectional response)
+
+1425 1570               # CMINR, CMAXR. Only waterborne important.
+512 25 490              # 512 samples. (-1 0 0 for auto sampling)
+\end{verbatim}
+\normalsize
+
+\subsection{Execution of OASN}
+
+    As  for the other OASES modules,  filenames  are  passed  to OASN   via 
+environmental parameters. In Unix systems a typical command  file 
+{\bf oasn} (in  \$HOME/oases/bin) is:
+
+\small
+\begin{verbatim}
+    #                            the number sign invokes the C-shell 
+    setenv FOR001 $1.dat       # input file 
+    setenv FOR019 $1.plp       # plot parameter file
+    setenv FOR020 $1.plt       # plot data file  
+    setenv FOR023 $1.trc       # reflection coefficient table (input)
+    setenv FOR028 $1.cdr       # contour plot parameter file 
+    setenv FOR029 $1.bdr       # contour plot data file 
+    setenv FOR014 $1.rpo       # signal replicas
+    setenv FOR016 $1.xsm       # covariance matrices
+    oasn2_bin                  # executable
+\end{verbatim}
+\normalsize
+
+    After preparing a data file with the name {\bf input.dat}, OASN  is 
+executed by the command:
+
+    {\bf oasn input}
+
+\subsection{Graphics}  
+
+    Command files are provided in a path directory for generating 
+the graphics produced by oasn.
+
+\noindent    To generate curve plots, issue the command:
+
+    {\bf mplot input}
+
+\noindent    To generate contour plots, issue the command:
+
+    {\bf cplot input}
+
+
+\subsection{Output Files}
+
+In addition to the graphics output files, OASN optionally produces
+files containing the computed covariance matrices and replica fields
+for use by the array processing module OASES-MFP, or by other
+processing software. Note that OASN assumes a time factor $ \exp(i
+\omega t) $. 
+
+
+\subsubsection{Covariance Matrices}
+\label{sec:cova}
+
+The covariance matrix is written to a binary, direct access file with
+a fixed record length of 8 bytes. The file will have the name \tt
+input.xsm \rm. The file is opened with the
+following statements:
+
+\small
+\begin{verbatim}
+C        *****  OPEN XSM FILE...Note that the logical unit 16 must 
+C        be assigned a filename external to the program, 
+C        in Unix: setenv FOR016 input.xsm
+         LUN=16
+         call getenv('FOR016',XSMFILE)
+         OPEN  ( UNIT       = LUN
+     -,          FILE       = XSMFILE
+     -,          STATUS     = 'UNKNOWN'
+     -,          FORM       = 'UNFORMATTED'
+     -,          ACCESS     = 'DIRECT'
+     -,          RECL       = 8         )
+\end{verbatim}
+\normalsize
+
+\noindent \underline{Note:} This \tt OPEN \rm statement is used for machines
+where the fixed record length for unformatted files is given in {\em
+bytes} (e.g. Alliant FX-40). 
+Some machines (e.g. DEC 5000 workstations) require the record lenth
+in words; in that case specify \tt RECL = 2 \rm.
+
+The first 10 records of the \tt xsm \rm file contains the header,
+identifying the file in terms of title, number of sensors and
+frequency sampling. The header has been written with the following
+statements, with the parameters defined in Table~\ref{tab:oasnI}:
+
+\small
+\begin{verbatim}
+C *** WRITE HEADER
+         WRITE (LUN,REC=1) TITLE(1:8)
+         WRITE (LUN,REC=2) TITLE(9:16)
+         WRITE (LUN,REC=3) TITLE(17:24)
+         WRITE (LUN,REC=4) TITLE(25:32)
+         WRITE (LUN,REC=5) NRCV, NFREQ
+c >>> Dummy integers IZERO
+         WRITE (LUN,REC=6) IZERO, IZERO
+         WRITE (LUN,REC=7) FREQ1, FREQ2
+c >>> DELFRQ is the frequency increment (FREQ2 - FREQ1)/(NFREQ-1)
+         WRITE (LUN,REC=8) DELFRQ, ZERO
+c >>> The surface and white noise levels for info
+         WRITE (LUN,REC=9) SSLEV,WNLEV
+c >>> BLANK FILL NEXT RECORD FOR FUTURE USE
+         WRITE (LUN,REC=10) ZERO,ZERO
+\end{verbatim}
+\normalsize
+
+OASN writes the covariance matrix columnwise using the following
+loop structure  
+
+\small
+\begin{verbatim}
+         :
+      COMPLEX COVMAT(NRCV,NRCV,NFREQ)
+         :
+         :
+C >>> WRITE XSM
+      DO 20 IFREQ=1,NFREQ
+       DO 20 JRCV=1,NRCV
+        DO 20 IRCV=1,NRCV
+         IREC = 10 + IRCV + (JRCV-1)*NRCV + (IFREQ-1)*NRCV*NRCV
+         WRITE (LUN,REC=IREC) COVMAT(IRCV,JRCV,IFREQ)
+20    CONTINUE
+\end{verbatim}
+\normalsize
+
+\subsubsection{Replica Fields}
+\label{sec:repl}
+
+If option {\bf R} is chosen, OASN writes the replica field toa binary,
+sequential file with the name \tt input.rpo \rm. The file is opened
+using the following statements
+
+\small
+\begin{verbatim}
+C        *****  OPEN RPO FILE...Note that the logical unit 14 must 
+C        be assigned a filename external to the program
+C        In Unix: setenv FOR014 input.rpo.
+C
+         LUN=14
+         CALL GETENV('FOR014',RPOFILE)
+         OPEN  (UNIT       =  LUN        ,
+     -          FILE       =  RPOFILE    ,
+     -          STATUS     = 'UNKNOWN'   ,
+     -          FORM       = 'UNFORMATTED')
+\end{verbatim}
+\normalsize
+
+The \tt rpo \rm file will first have a header for identification in
+terms
+of title, frequency sampling, array geometry and replica scanning
+space. The header is written by the following code, and should clearly
+be read accordingly. The parameters are defined in
+Tables~\ref{tab:oasnI} and \ref{tab:oasnII}.
+
+\small
+\begin{verbatim}
+        :
+      CHARACTER*80  TITLE
+        :
+        :
+c *** WRITE HEADER
+       WRITE (LUN) TITLE
+       WRITE (LUN) NRCV, NFREQ
+c >>> DELFRQ is the frequency increment (FREQ2 - FREQ1)/(NFREQ-1)
+       WRITE (LUN) FREQ1, FREQ2, DELFRQ
+c >>> Replica sampling
+       WRITE (LUN) ZMINR, ZMAXR, NZR
+       WRITE (LUN) XMINR, XMAXR, NXR
+       WRITE (LUN) YMINR, YMAXR, NYR
+c >>> Array element data
+       DO 10 IRCV=1,NRCV
+        WRITE(LUN) X(IRCV),Y(IRCV),Z(IRCV),ITYP(IRCV),GAIN(IRCV)
+ 10    CONTINUE
+\end{verbatim}
+\normalsize
+
+The complex replicas follow frequency by frequency, written with the
+following loop structure
+
+\small
+\begin{verbatim}
+        :
+      COMPLEX REPLIC(NRCV,NYR,NXR,NZR,NFREQ)
+        :
+        :
+       DO 20 IFREQ=1,NFREQ
+        DO 20 IZR=1,NZR
+         DO 20 IXR=1,NXR
+          DO 20 IYR=1,NYR
+           DO 20 IRCV=1,NRCV
+            WRITE (LUN) REPLIC(IRCV,IYR,IXR,IZR,IFREQ)
+20     CONTINUE
+\end{verbatim}
+\normalsize
+

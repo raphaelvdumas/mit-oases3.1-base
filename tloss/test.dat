@@ -1,0 +1,22 @@
+BEAM test
+GgLPNCId
+1000	0				 source freq
+5					 number of external layers
+0 1500   0  0   0 1  0 		 first layer z cp cs ap as rho rough
+0 1500   0  0   0 1  0 		 first layer z cp cs ap as rho rough
+65 1500   0  0   0 1  0 		 first layer z cp cs ap as rho rough
+100 1600  400  0.2 0.5 1.8 0		 first layer z cp cs ap as rho rough
+120 1800  600  0.1 0.2 2.0 0 		 first layer z cp cs ap as rho rough
+
+50 41 0.75 25. 4 100			 source: depth
+50 125 51 25   				 receiv: first dp, last dp, ir intf
+1500 -1500  				 velocities for inte
+2048 1 1950                         cmin nwno icut1 icut2 for last bem run
+-0.3 0.  20 0.05 			 xaxis 
+20 80 12 10
+50 125 12 25
+24 54 6
+
+ 80 280 12 40  				 yaxis
+1					 number of external layers
+0 3000 1600   1  2.5 0.9 0 		 first layer z cp cs ap as rho rough

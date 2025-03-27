@@ -1,0 +1,8 @@
+echo '-------------------------------------------'
+date
+echo 'Start embedded torus (FLUID)'
+rdoast  ./input/torusF > ./logs/torusF.out
+mv ./input/torusF.pl? ./run
+pltsplit -f ./run/torusF -b 2 -p 1 -r 2 -d 3
+./bin/torusF S
+echo 'End embedded torus (FLUID)'

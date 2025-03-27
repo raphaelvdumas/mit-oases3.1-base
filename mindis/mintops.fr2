@@ -1,0 +1,371 @@
+      PROGRAM MINPOST
+C
+C     ***DISPLA - SACLANTCEN VERSION
+C
+C     ***JOHN STEIERT   -   15-DEC-81
+C
+C -----------------------------------------------------
+C
+C     AMMENDED:
+C              JS  02-FEB-82    USE CHANNEL 48 (NOT 10)
+C              JS  03-MAR-82    DON'T MOVE IF ALREADY AT POINT
+C              JS   9-Jun-83    Standard FORTRAN version
+C              HS  25-Aug-87    Changed to subroutine for generating
+C                               Calcomp plots directly
+C              HS  30-Jan-89    Changed back to program to be chained
+C                               from MINDIS
+C              HS  31-Jan-89    Automatic spawn of laser hardcopy
+C              HS   8-MAY-90    Direct Post-script driver
+c	       HS  25-jun-90	type 7-8 added for polygon filling
+C              HS  21-Oct-93    Modified to perform postscript scaling
+C -----------------------------------------------------
+C
+C     ***PROGRAM TO PLOT DISPLA PLOT ON PostScript printer
+C
+      LOGICAL TRACE
+      LOGICAL LPGSET, LSCSET, LNWPLT, POLYG, LSTPEN, INCURV
+      CHARACTER*150 TITLE
+      CHARACTER*150 SP
+      CHARACTER CH1, CH2
+      CHARACTER*80 FILENM
+      CHARACTER*20 COMFILE,PLOTFILE
+      character*12 font
+      character*6 envvar(2)
+      REAL XSIZ(5),YSIZ(5)
+      REAL CURXPT,CURYPT
+      INTEGER TTLPTR
+      INTEGER SECRTY
+      integer getpid,pitch
+C *** LASER PRINTER DEFINITIONS
+      DATA DEFXSCALE /612.0/
+      DATA DEFYSCALE /792.0/
+      DATA XMARG,YMARG /39.0,20.0/
+      DATA FONT /'/Times-Roman'/
+      data pitch /10/
+      data widthlin /.5/
+      data scalfac /100.0/
+C
+C     ***INITIALISATION
+c
+       POLYG=.FALSE.
+      scalmarg=amin1((defxscale-xmarg)/defxscale,
+     &               (defyscale-ymarg)/defyscale)
+       ID=getpid()
+       write(comfile,'(A3,I5.5)') 'com',ID
+       write(plotfile,'(A3,I5.5)') 'ps.',ID
+       write(6,*) 'Saved in Postscript file: ',plotfile(1:8)
+c *** open postscript file
+       OPEN(UNIT=49,FILE=PLOTFILE,FORM='FORMATTED',STATUS='UNKNOWN')
+C *** WRITE DEFINITIONS TO POSTSCRIPT FILE
+c       WRITE(49,'(A)') ' ',' '
+       WRITE(49,'(A)') '%!'
+       WRITE(49,'(A)') '/tlwcontext save def'
+       write(49,'(f4.1,a)') widthlin,' setlinewidth'
+       write(49,'(a)') '/m {moveto} def'
+       write(49,'(a)') '/l {lineto} def'
+       write(49,'(a)') '/r {rmoveto} def'
+       write(49,'(a)') '/s {show} def'
+       write(49,'(a)') '/csm {currentpoint stroke moveto} def'
+       WRITE(49,'(A)') '/st {stroke} def'
+       WRITE(49,'(A)') '/np {newpath} def'
+       WRITE(49,'(A)') '/cp {closepath} def'
+       WRITE(49,'(A)') '/sg {setgray} def'
+      TRACE=.TRUE.
+      TRACE=.FALSE.
+      SP='    '
+      CONVFC=0.039
+
+      YSIZ(1)=210.*CONVFC
+      YSIZ(2)=297.*CONVFC
+      YSIZ(3)=420.*CONVFC
+      YSIZ(4)=594.*CONVFC
+      YSIZ(5)=841.*CONVFC
+      XSIZ(1)=297.*CONVFC
+      XSIZ(2)=420.*CONVFC
+      XSIZ(3)=594.*CONVFC
+      XSIZ(4)=841.*CONVFC
+      XSIZ(5)=1189.*CONVFC
+      LPGSET=.FALSE.
+      LSCSET=.FALSE.
+      LNWPLT=.FALSE.
+      TTLPTR=0
+      SECRTY=0
+      CURXPT=-10.0
+      CURYPT=-10.0
+C *** GET FILENAME FROM VALUE OF ENV. VARIABLE FOR048
+      envvar(1)='FOR048'
+      lenf=8
+cray      call getenv(envvar,filenm,lenf)
+      call getenv(envvar,filenm)
+       write(6,*) 'MINDIS file:',filenm
+      open(unit=48,file=filenm,status='old',form='unformatted')
+C      REWIND(48)
+ 1    CONTINUE
+        READ(48) ICMD, RVAL1, RVAL2
+        IF (TRACE) THEN
+          IF (ICMD.EQ.1) THEN
+             WRITE(6,100) RVAL1, RVAL2
+ 100           FORMAT(' CMD 1: PAGE SIZE: X= ',F10.5,' Y= ',F10.5)
+          ELSEIF (ICMD.EQ.2) THEN
+             WRITE(6,110) IFIX(RVAL1)
+ 110           FORMAT(' CMD 2: SECURITY: VALUE = ',I3)
+          ELSEIF (ICMD.EQ.3) THEN
+             WRITE(6,120) RVAL1, RVAL2
+ 120           FORMAT(' CMD 3: MOVE: X= ',F10.5,' Y= ',F10.5)
+          ELSEIF (ICMD.EQ.4) THEN
+             WRITE(6,130) RVAL1, RVAL2
+ 130           FORMAT(' CMD 4: DRAW: X= ',F10.5,' Y= ',F10.5)
+          ELSEIF (ICMD.EQ.5) THEN
+             WRITE(6,140) RVAL1, RVAL2
+ 140           FORMAT(' CMD 5: TITLE: ',2A1)
+          ELSEIF (ICMD.EQ.99) THEN
+             WRITE(6,150)
+ 150           FORMAT(' CMD 99: END OF FILE')
+             STOP
+          ELSE
+             WRITE(6,160) ICMD, RVAL1, RVAL2
+ 160           FORMAT(' CMD ',I5,' RVAL1 = ',F10.5,' RVAL2 = ',F10.5)
+             ENDIF
+          ENDIF
+C
+C       ***PROCESS LINE
+        IF (ICMD.EQ.1) THEN
+C
+             WRITE(6,100) RVAL1, RVAL2
+C          ***CMD 1: SPECIFY PAGE SIZE
+           LPGSET=.TRUE.
+           XLNGTH=RVAL1
+           YLNGTH=RVAL2
+           XPLEN=RVAL1
+           YPLEN=RVAL2
+           ISHEET=0
+           IF (XPLEN.LT.YPLEN) THEN
+                ISHEET=8
+                RTMP=XPLEN
+                XPLEN=YPLEN
+                YPLEN=RTMP
+                ENDIF
+           DO 50 I=1,5
+                IF (XSIZ(I).GE.XPLEN) GOTO 52
+ 50             CONTINUE
+           WRITE(6,401) XPLEN
+ 401           FORMAT(' ERROR: X DIMENSION TOO LARGE: ',F10.3)
+           STOP
+C
+ 52        CONTINUE
+           DO 54 J=I,5
+                IF (YSIZ(J).GE.YPLEN) GOTO 56
+ 54             CONTINUE
+           WRITE(6,403) YPLEN
+ 403           FORMAT(' ERROR: Y DIMENSION TOO LARGE: ',F10.3)
+           STOP
+C
+ 56        CONTINUE
+           ISHEET=ISHEET+5-J
+           WRITE(6,405) ISHEET
+ 405           FORMAT(' PLOT SHEET SIZE PARAMETER = ',I4)
+c *** postscript page sizes
+            write(49,'(a,4i5)') '%%BoundingBox: ',int(xmarg),
+     &                          int(ymarg),int(defxscale-xmarg),
+     &                          int((defxscale-xmarg)*rval2/rval1)
+            xscale=defxscale/rval1
+            yscale=defyscale/rval2
+            scale=amin1(xscale,yscale)
+        ELSEIF (ICMD.EQ.2) THEN
+C
+C          ***CMD 2: SET SECURITY LEVEL
+           LSCSET=.TRUE.
+           SECRTY=IFIX(RVAL1)
+        ELSEIF (ICMD.EQ.3) THEN
+C
+C          ***CMD 3: MOVE PEN
+               IF (.NOT.LNWPLT) THEN
+                LNWPLT=.TRUE.
+                IF (.NOT.LSCSET) THEN
+                      WRITE(6,601)
+  601                     FORMAT(' ERROR: SECURITY CLASS NOT SET')
+                      STOP
+                      ENDIF
+                IF (.NOT.LPGSET) THEN
+                      WRITE(6,603)
+ 603                      FORMAT(' ERROR: PAGE SIZE NOT SET')
+                      STOP
+                      ENDIF
+                WRITE(6,701) TITLE(1:TTLPTR)//SP(TTLPTR+1:80)
+ 701                FORMAT(' PLOT TITLE = ',1A60)
+                ELSE
+               ENDIF
+               IF (((RVAL1.LT.0.0).OR.(RVAL1.GT.XLNGTH)) .OR.
+     $            ((RVAL2.LT.0.0).OR.(RVAL2.GT.YLNGTH))) THEN
+                    WRITE(6,630) RVAL1, RVAL2
+ 630                FORMAT(' ERROR: ATTEMPT TO MOVE ',
+     $                     ' OUTSIDE SPECIFIED PLOT AREA.',' (X,Y)=',
+     $                     2F10.3)
+               ELSE
+                IF ((RVAL1.NE.CURXPT).OR.(RVAL2.NE.CURYPT).or.
+     &              (npcnt.ge.1400)) THEN
+C *** STROKE FOR EARLIER CURVE
+                 IF (.NOT.POLYG.AND.INCURV) THEN                 
+                  WRITE(49,'(A)') 'st'
+                  INCURV=.FALSE.
+                 end if
+                 write(49,'(a)') 'np'
+                 x=(xmarg/2.+scale*rval1)*scalmarg
+                 y=(ymarg/2.+scale*rval2)*scalmarg
+                 if (x.le.99.9) then
+                  if (y.le.99.9) then
+                   write(49,'(f4.1,f5.1,a)') x,y,' m'
+                  else
+                   write(49,'(f4.1,f6.1,a)') x,y,' m'
+                  end if
+                 else
+                  if (y.le.99.9) then
+                   write(49,'(f5.1,f5.1,a)') x,y,' m'
+                  else
+                   write(49,'(f5.1,f6.1,a)') x,y,' m'
+                  end if
+                 end if
+                 npcnt=1
+                 CURXPT=RVAL1
+                 CURYPT=RVAL2
+                 if (polyg) then
+                  xmin=min(xmin,x)
+                  xmax=max(xmax,x)
+                  ymin=min(ymin,y)
+                  ymax=max(ymax,y) 
+                 end if  
+                ENDIF
+               ENDIF
+        ELSEIF (ICMD.EQ.4) THEN
+C
+C          ***CMD 4: DRAW LINE
+           IF (.NOT.LNWPLT) THEN
+                LNWPLT=.TRUE.
+                IF (.NOT.LSCSET) THEN
+                      WRITE(6,605)
+  605                     FORMAT(' ERROR: SECURITY CLASS NOT SET')
+                      STOP
+                ENDIF
+                IF (.NOT.LPGSET) THEN
+                      WRITE(6,607)
+ 607                      FORMAT(' ERROR: PAGE SIZE NOT SET')
+                      STOP
+                ENDIF
+                WRITE(6,701) TITLE(1:TTLPTR)//SP(TTLPTR+1:80)
+           ENDIF
+           IF (((RVAL1.LT.0.0).OR.(RVAL1.GT.XLNGTH)) .OR.
+     $         ((RVAL2.LT.0.0).OR.(RVAL2.GT.YLNGTH))) THEN
+                WRITE(6,632) RVAL1, RVAL2
+ 632                FORMAT(' ERROR: ATTEMPT TO DRAW ',
+     $                     ' OUTSIDE SPECIFIED PLOT AREA.',' (X,Y)=',
+     $                     2F10.3)
+           ELSE
+
+            x=(xmarg/2.+scale*rval1)*scalmarg
+            y=(ymarg/2.+scale*rval2)*scalmarg
+            if (x.le.99.9) then
+             if (y.le.99.9) then
+              write(49,'(f4.1,f5.1,a)') x,y,' l'
+             else
+              write(49,'(f4.1,f6.1,a)') x,y,' l'
+             end if
+            else
+             if (y.le.99.9) then
+              write(49,'(f5.1,f5.1,a)') x,y,' l'
+             else
+              write(49,'(f5.1,f6.1,a)') x,y,' l'
+             end if
+            end if
+            npcnt=npcnt+1
+            IF (.NOT.POLYG) THEN
+              INCURV=.TRUE.
+            END IF
+            CURXPT=RVAL1
+            CURYPT=RVAL2
+            if (polyg) then
+             xmin=min(xmin,x)
+             xmax=max(xmax,x)
+             ymin=min(ymin,y)
+             ymax=max(ymax,y) 
+            end if  
+           ENDIF
+        ELSEIF (ICMD.EQ.5) THEN
+C
+C          ***CMD 5: SPECIFY TITLE
+           CH1=CHAR(IFIX(RVAL1))
+           CH2=CHAR(IFIX(RVAL2))
+           TITLE(TTLPTR+1:TTLPTR+1)=CH1
+           TITLE(TTLPTR+2:TTLPTR+2)=CH2
+           TTLPTR=TTLPTR+2
+        ELSEIF (ICMD.EQ.6) THEN
+C          ***CMD 6: SET PEN COLOR
+           IF (.NOT.LNWPLT) THEN
+            LSTPEN=.TRUE.
+            IPENNO=NINT(RVAL1)
+           ELSE
+                 IF (INCURV) THEN                 
+                  WRITE(49,'(A)') 'st'
+                  INCURV=.FALSE.
+                 end if
+            GREY=FLOAT(MOD(NINT(RVAL1),16)-1)/15.0
+            WRITE(49,'(F3.1,A)') GREY,' sg'
+           end if
+        ELSEIF (ICMD.EQ.7) THEN
+C          ***CMD 7: Start filled polygon
+                 IF (INCURV) THEN                 
+                  WRITE(49,'(A)') 'st'
+                  INCURV=.FALSE.
+                 end if
+            POLYG=.TRUE.
+c            WRITE(49,'(A)') 'np'
+            xmin=1e10
+            ymin=1e10
+            xmax=-1e10
+            ymax=-1e10
+            curxpt=-1
+            curypt=-1
+        ELSEIF (ICMD.EQ.8) THEN
+C          ***CMD 8: Close and fill polygon
+            POLYG=.false.
+            incurv=.false.
+            if ((xmax-xmin).gt.widthlin.and.
+     &          (ymax-ymin).gt.widthlin) then
+             WRITE(49,'(A)') 'cp'
+             WRITE(49,'(a)') 'fill'
+            else
+             write(49,'(a)') 'st'
+            end if
+            curxpt=0.0
+            curypt=0.0
+        ELSEIF (ICMD.EQ.99) THEN
+C
+C          ***CMD 99: END OF PLOT
+c            call pend()
+                 IF (INCURV) THEN                 
+                  WRITE(49,'(A)') 'st'
+                  INCURV=.FALSE.
+                 end if
+             write(49,'(a)') 'showpage'
+             write(49,*)
+C           CALL PLOT(0.,0.,999)
+c           CALL GCLOSE
+           GOTO 99
+           ENDIF
+        GOTO 1
+C
+C     ***END OF RUN
+ 99   CONTINUE
+        close(49,status='keep')
+        close(48,status='delete')
+C *** SPAWN PROCESS FOR LASER HARDCOPY
+c       open(unit=47,file=comfile,status='new',form='formatted')
+c       write(47,'(A1)') '#'
+c       write(47,'(A,A)') 'lpv ',plotfile
+c       write(47,'(A,A)') 'rm ',plotfile
+c       write(47,'(A,A)') 'rm ',comfile
+c       close(47,status='keep')
+c       call chmod(comfile,'00755')
+c       call system('csh '//comfile//' &')
+cray   call ishell('csh '//comfile //' &')
+C      return
+      END

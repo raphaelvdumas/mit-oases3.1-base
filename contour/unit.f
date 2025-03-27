@@ -1,0 +1,20 @@
+      SUBROUTINE UNIT(STRING,SUBSTR)
+      CHARACTER*28 STRING
+      CHARACTER*3 SUBSTR
+      DO 1400   I1=1,28
+      IF( STRING(I1:I1) .EQ. '('   )   THEN
+       DO 1200   I2=I1+1,I1+3
+       IF( STRING(I2:I2) .EQ. ')'   )   GO TO 1300
+ 1200  CONTINUE
+       I2=I2+1
+ 1300  CONTINUE
+       IF(I2-I1 .EQ. 1)  THEN
+        SUBSTR='   '
+       ELSE
+        SUBSTR=STRING(I1+1:I2-1)
+       END IF
+       RETURN
+      END IF
+ 1400 CONTINUE
+      RETURN
+      END

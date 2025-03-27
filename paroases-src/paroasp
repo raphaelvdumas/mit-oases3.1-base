@@ -1,0 +1,96 @@
+#! /usr/bin/env python3
+#
+# Author: Gaute Hope <gaute.hope@nersc.no> / 2016-11-07
+
+import os
+import sys
+import subprocess
+
+import platform
+hostname = platform.node ()
+
+from paroases.oasp.paroasp import ParOasp
+
+if __name__ == '__main__':
+
+  n = os.path.basename (sys.argv[0])
+
+  if n == 'paroasp':
+    p = ParOasp ()
+    p.main (sys.argv[1:])
+
+  elif n == 'mpioasp':
+    from   mpi4py import MPI
+
+    comm = MPI.COMM_WORLD
+    rank = comm.Get_rank ()
+    size = comm.Get_size ()
+    proc_name = MPI.Get_processor_name ()
+
+    ## This is used as an incomplete skeleton instance for the ParOast class
+    ## when launching this script for each MPI worker.
+    class DummyParOasp:
+      JOB_DEBUG_LIMIT = ParOasp.JOB_DEBUG_LIMIT
+      out       = None
+      file      = None
+      nodetype  = 'mpi'
+      log       = sys.stdout
+      mpi       = True
+      workers   = size
+      progbar   = sys.stderr.isatty()
+      rd        = False
+      oasp3d    = False
+      unbuffer  = False
+
+    if rank == 0:
+      print ("mpioasp: master (size:", size, ", rank:", rank, ") on", proc_name, "[", hostname, "]")
+
+      p = ParOasp (mpi = True)
+      p.main (sys.argv[1:])
+
+
+      if not p.run:
+        # release workers
+        for i in range(size):
+          comm.send (False, dest = i)
+
+      comm.Barrier ()
+      print ("mpioasp: master: done")
+
+
+    else:
+      # print ("mpioasp: worker:", rank, "on", hostname, "ready..")
+
+      job = comm.recv (source = 0)
+      # print ("mpioasp: worker:", rank, "got job:", job)
+
+      if job == False:
+        pass # do nothing, no need to work today
+
+      else:
+        out = job[0]
+        no  = job[1]
+        fle = job[2]
+        progbar = job[3]
+        rd      = job[4]
+        oasp3d  = job[5]
+        unbuffer = job[6]
+
+        slf      = DummyParOasp ()
+        slf.out  = out
+        slf.file = fle
+        slf.progbar = progbar
+        slf.rd      = rd
+        slf.oasp3d  = oasp3d
+
+        r = ParOasp.job_run (slf, no)
+
+        # we are done
+        comm.send (r, dest = 0)
+
+      comm.Barrier ()
+      print ("mpioasp: worker:", rank, "done.")
+
+  else:
+    print ('paroasp: unknown invocation name:', n)
+

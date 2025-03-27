@@ -1,0 +1,16 @@
+TESTING
+-------
+
+These instructions preassume that at this point, you've already done a
+successful make from the top level directory.
+
+Now, if everything has gone OK, there'll be a binary in the ./Bin directory
+named "plotmtv".  To test this binary, type "run.sh" in this directory
+   % cd ./Tests
+   % run.sh
+ 
+If you are unlucky, ./Tests/run.sh will refuse to run.  This happens on some
+platforms, e.g dec/mips, probably because of shell incompatibilites.
+If this happens, try running "run.csh" instead.
+   % run.csh
+

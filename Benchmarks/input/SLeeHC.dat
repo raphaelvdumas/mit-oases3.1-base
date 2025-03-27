@@ -1,0 +1,29 @@
+Single-layer E/E High-contrast cut
+P N T J B
+25 25 1 0				# FREQ
+
+2
+
+4 2                                     # NUML, RANGE(1)
+0 0 0 0 0 0 0				# LAYER 1 ; LEFT SIDE OF CUT  
+0  1700 700 0.2 0.5 1.5 0		#       2                     
+50 1700 700 0.2 0.5 1.5 0		#       3                     
+100 0 0 0 0. 0 0			#       8                     
+
+4  2                                    # NUML, RANGE(1)
+0 0 0 0 0 0 0				# LAYER 1 ; LEFT SIDE OF CUT  
+0  3000 1700 0.2 0.5 1.5 0		#       2                     
+50 3000 1700 0.2 0.5 1.5 0		#       3                     
+100 0 0 0 0. 0 0			#       8                     
+
+25					# source depth
+1 99 50 1
+35 35 1
+100 -100         			# Cmin Cmax
+-1 1 8192				# NWVNO ICUT1 ICUT2
+.0 4.0 20. .5    			# Xleft Xright Xaxis Xinc
+0. 60.0 12 5 				# LOSS LEVELS IN DB
+0 100 10 25
+20 40 2
+20 40 2
+

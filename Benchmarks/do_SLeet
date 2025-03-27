@@ -1,0 +1,8 @@
+echo '-------------------------------------------'
+date
+echo 'Start Single-Layer E/E Transparent cut'
+rdoast ./input/SLeet > ./logs/SLeet.out
+mv ./input/SLeet.pl? ./run
+pltsplit -f ./run/SLeet -b 2 -p 3 -r 1 -d 1
+./bin/SLeet S
+echo 'End Single-Layer E/E Transparent cut'

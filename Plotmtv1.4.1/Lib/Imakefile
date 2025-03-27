@@ -1,0 +1,164 @@
+# @(#)Imakefile 1/20/94 
+#
+# Imakefile - Plotmtv V1.4.0 Library
+#
+# Permission to use, copy, modify, and distribute this software and its
+# documentation for any purpose and without fee is hereby granted,
+# provided that the above copyright notice appear in all copies and that
+# both that copyright notice and this permission notice appear in
+# supporting documentation.
+#
+# This file is provided AS IS with no warranties of any kind.  The author
+# shall have no liability with respect to the infringement of copyrights,
+# trade secrets or any patents by this file or any part thereof.  In no
+# event will the author be liable for any lost revenue or profits or
+# other special, indirect and consequential damages.
+#
+#
+
+       INCLUDES = -I.
+LOCAL_LIBRARIES = 
+  SYS_LIBRARIES = -lm
+        DEFINES = 
+
+SOURCES = array.c \
+          list1.c \
+          list2.c \
+          list3.c \
+          list4.c \
+          list5.c \
+          list6.c \
+          listutils.c \
+          barchart.c \
+          cube.c \
+          cubedata.c \
+          grid.c \
+          griddata.c \
+          mesh4D.c \
+          mesh4Ddata.c \
+          histogram.c \
+          property.c \
+          annotate.c \
+          axislabel.c \
+          contlist.c \
+          read_cont.c \
+          contdata.c \
+          contour.c \
+          contstep.c \
+          rdm_data.c \
+          rdm_barchart.c \
+          rdm_column.c \
+          rdm_contour.c \
+          rdm_curve.c \
+          rdm_grid4D.c \
+          rdm_histogram.c \
+          rdm_polygon.c \
+          rdm_prob.c \
+          rdm_vector.c \
+          rdm_util.c \
+          rdm_print.c \
+          read_plot2D.c \
+          read_plot3D.c \
+          intersect.c \
+          intersect3D.c \
+          clip.c\
+          probe.c\
+          matrix.c \
+          spline.c \
+          vector.c \
+          pvector.c \
+          readdata.c \
+          bivar.c \
+          parser.c \
+          round.c \
+          probplot.c \
+          sort.c \
+          misc.c \
+          system.c \
+          time.c 
+
+OBJECTS = array.o \
+          list1.o \
+          list2.o \
+          list3.o \
+          list4.o \
+          list5.o \
+          list6.o \
+          listutils.o \
+          barchart.o \
+          cube.o \
+          cubedata.o \
+          grid.o \
+          griddata.o \
+          mesh4D.o \
+          mesh4Ddata.o \
+          histogram.o \
+          property.o \
+          annotate.o \
+          axislabel.o \
+          contlist.o \
+          read_cont.o \
+          contdata.o \
+          contour.o \
+          contstep.o \
+          rdm_data.o \
+          rdm_barchart.o \
+          rdm_column.o \
+          rdm_contour.o \
+          rdm_curve.o \
+          rdm_grid4D.o \
+          rdm_histogram.o \
+          rdm_polygon.o \
+          rdm_prob.o \
+          rdm_vector.o \
+          rdm_util.o \
+          rdm_print.o \
+          read_plot2D.o \
+          read_plot3D.o \
+          intersect.o \
+          intersect3D.o \
+          clip.o\
+          probe.o\
+          matrix.o \
+          spline.o \
+          vector.o \
+          pvector.o \
+          readdata.o \
+          bivar.o \
+          parser.o \
+          round.o \
+          probplot.o \
+          sort.o \
+          misc.o \
+          system.o \
+          time.o 
+
+HEADERS = CNplot.h \
+          CNannotate.h \
+          CNaxislabel.h \
+          CNbarchart.h \
+          CNcontlist.h \
+          CNcube.h \
+          CNdata.h \
+          CNdatatypes.h \
+          CNgrid.h \
+          CNmesh4D.h \
+          CNhistogram.h \
+          CNintersect.h \
+          CNplot3D.h \
+          CNprobe.h \
+          CNproperty.h \
+          CNquant.h \
+          CNreadmtv.h \
+          CNround.h \
+          CNsort.h \
+          CNspline.h \
+          CNstring.h \
+          CNvector.h \
+          CNpvector.h \
+          CNxdr.h
+
+install.local:: all
+
+NormalLibraryTarget(ctr,$(OBJECTS))
+LintLibraryTarget(ctr,$(SOURCES))

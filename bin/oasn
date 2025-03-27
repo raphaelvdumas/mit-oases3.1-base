@@ -1,0 +1,11 @@
+#!/bin/csh
+rm $1.xsm
+setenv FOR001 $1.dat
+setenv FOR019 $1.plp
+setenv FOR020 $1.plt
+setenv FOR026 $1.chk
+setenv FOR028 $1.cdr
+setenv FOR029 $1.bdr
+setenv FOR014 $1.rpo
+setenv FOR016 $1.xsm
+oasn2_bin

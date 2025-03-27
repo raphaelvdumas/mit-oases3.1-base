@@ -1,0 +1,185 @@
+$ DATA=CONTOUR 
+
+# This one is perfect 
+
+# Dataset/plotset options
+% toplabel   = "Default Contour Lines" 
+% subtitle   = "interp=0, contfill=F, meshplot=F"
+
+# Define the plot-boundary
+% vxmin = 0.5 vxmax=0.9
+
+# Define the headers
+% xmin = 0.1  xmax = 2.1
+% ymin = 0.0  ymax = 1.0
+% zmin = 0.0  zmax = 0.7
+% nx   = 5
+% ny   = 3
+0.0 0.0 0.0 0.0 0.0
+0.0 1.0 0.0 1.0 0.0
+0.0 0.0 1.0 0.0 0.0
+
+$ DATA=CONTOUR 
+
+# Plotset Top-label
+% toplabel   = "Contour fills" 
+% subtitle   = "interp=0, contfill=T, meshplot=T"
+
+# Rectangular interpolation with contour fills
+% interp     = 0                # Rectangular interpolation
+% contfill   = on               # Contour filling
+% meshplot   = on               # Draw the mesh  
+
+# Define the headers
+% xmin = 0.1  xmax = 2.1
+% ymin = 0.0  ymax = 1.0
+% zmin = 0.0  zmax = 0.7
+% nx   = 5
+% ny   = 3
+0.0 0.0 0.0 0.0 0.0
+0.0 1.0 0.0 1.0 0.0
+0.0 0.0 1.0 0.0 0.0
+
+$ DATA=CONTOUR 
+
+# Plotset Top-label
+% toplabel   = "Contour fills, triangular interp" 
+% subtitle   = "interp=2, contfill=T, meshplot=T"
+
+# Triangular interpolation with contour fills
+% interp     = 2                # Triangular interpolation
+% contfill   = on               # Contour filling
+% meshplot   = on               # Draw the mesh  
+
+# Define the headers
+% xmin = 0.1  xmax = 2.1
+% ymin = 0.0  ymax = 1.0
+% zmin = 0.0  zmax = 0.7
+% nx   = 5
+% ny   = 3
+0.0 0.0 0.0 0.0 0.0
+0.0 1.0 0.0 1.0 0.0
+0.0 0.0 1.0 0.0 0.0
+
+$ DATA=CONTOUR 
+
+# Plotset Top-label
+% toplabel   = "Contour fills, Rect Block-interpolation" 
+% subtitle   = "interp=3, contfill=T, meshplot=T"
+
+# Rectangular mesa-type mesh 
+% interp     = 3                # Rectangular interpolation
+% contfill   = on               # Contour filling
+% meshplot   = on               # Draw the mesh  
+
+# Define the headers
+% xmin = 0.1  xmax = 2.1
+% ymin = 0.0  ymax = 1.0
+% zmin = 0.0  zmax = 0.7
+% nx   = 5
+% ny   = 3
+0.0 0.0 0.0 0.0 0.0
+0.0 1.0 0.0 1.0 0.0
+0.0 0.0 1.0 0.0 0.0
+
+$ DATA=CONTOUR 
+
+# Plotset Top-label
+% toplabel   = "Surface Mesh" 
+% subtitle   = "interp=3, contfill=F, meshplot=F"
+
+# Normal rectangle - draw only surface 
+% interp     = 0                # Triangular interpolation
+% contstyle  = 3
+% hiddenline = off              # Use hiddenlines
+
+# Define the headers
+% xmin = 0.1  xmax = 2.1
+% ymin = 0.0  ymax = 1.0
+% zmin = 0.0  zmax = 0.7
+% nx   = 5
+% ny   = 3
+0.0 0.0 0.0 0.0 0.0
+0.0 1.0 0.0 1.0 0.0
+0.0 0.0 1.0 0.0 0.0
+
+$ DATA=CONTOUR 
+
+# This one is perfect 
+
+# Dataset/plotset options
+% toplabel   = "Default Contour Lines" 
+% subtitle   = "10 contour steps calculated automatically"
+
+# Define the headers
+% xmin = 0.1  xmax = 2.1
+% ymin = 0.0  ymax = 1.0
+% zmin = 0.0  zmax = 0.7
+% nx   = 5
+% ny   = 3
+0.0 0.0 0.0 0.0 0.0
+0.0 1.0 0.0 1.0 0.0
+0.0 0.0 1.0 0.0 0.0
+
+$ DATA=CONTOUR 
+
+# Plotset Top-label
+% toplabel   = "No of contour steps specified" 
+% subtitle   = "nsteps = 5"
+
+# Contour step specification
+% nsteps     = 5
+
+# Define the headers
+% xmin = 0.1  xmax = 2.1
+% ymin = 0.0  ymax = 1.0
+% zmin = 0.0  zmax = 0.7
+% nx   = 5
+% ny   = 3
+0.0 0.0 0.0 0.0 0.0
+0.0 1.0 0.0 1.0 0.0
+0.0 0.0 1.0 0.0 0.0
+
+$ DATA=CONTOUR 
+
+# Plotset Top-label
+% toplabel   = "Contour step size specified"
+% subtitle   = "csteps = 0.2"
+ 
+# Contour step specification
+% cstep      = 0.2
+
+# Define the headers
+% xmin = 0.1  xmax = 2.1
+% ymin = 0.0  ymax = 1.0
+% zmin = 0.0  zmax = 0.7
+% nx   = 5
+% ny   = 3
+0.0 0.0 0.0 0.0 0.0
+0.0 1.0 0.0 1.0 0.0
+0.0 0.0 1.0 0.0 0.0
+
+$ DATA=CONTOUR 
+
+# Plotset Top-label
+% toplabel   = "Individual Contour steps specified"
+% subtitle   = "contours = (0.15 0.25... 0.85)"
+ 
+# Contour step specification
+% contours = (0.1 0.2 0.3 lw=2 lt=1 lc=2 mt=2)
+% contours = (0.5 0.6 0.7 lw=1 lt=2 lc=3)
+% contours = (clear)
+% contours = (0.15 0.25 0.35 lw=1 lt=3 lc=4)
+% contours = (0.65 0.75 0.85 lw=4 lt=1 lc=5)
+
+# Define the headers
+% xmin = 0.1  xmax = 2.1
+% ymin = 0.0  ymax = 1.0
+% zmin = 0.0  zmax = 0.7
+% nx   = 5
+% ny   = 3
+0.0 0.0 0.0 0.0 0.0
+0.0 1.0 0.0 1.0 0.0
+0.0 0.0 1.0 0.0 0.0
+
+$ QUIT 

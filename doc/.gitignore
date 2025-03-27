@@ -1,0 +1,7 @@
+*.aux
+*.dvi
+*.toc
+*.log
+oases.ps
+oases.pdf
+

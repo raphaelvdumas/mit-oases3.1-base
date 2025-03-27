@@ -1,0 +1,8 @@
+echo '-------------------------------------------'
+date
+echo 'Start SACLANT circle discontinuity (FLUID)'
+rdoast  ./input/SACL_circle_F > ./logs/SACL_circle_F.out
+mv ./input/SACL_circle_F.pl? ./run
+pltsplit -f ./run/SACL_circle_F -b 2 -p 1 -r 2 -d 3
+./bin/SACL_circle_F S
+echo 'End SACLANT circle discontinuity (FLUID)'

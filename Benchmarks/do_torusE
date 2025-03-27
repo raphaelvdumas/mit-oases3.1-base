@@ -1,0 +1,8 @@
+echo '-------------------------------------------'
+date
+echo 'Start embedded torus (ELASTIC)'
+rdoast  ./input/torusE > ./logs/torusE.out
+mv ./input/torusE.pl? ./run
+pltsplit -f ./run/torusE -b 2 -p 1 -r 2 -d 3
+./bin/torusE S
+echo 'End embedded torus (ELASTIC)'

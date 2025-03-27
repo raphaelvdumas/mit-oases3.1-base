@@ -1,0 +1,22 @@
+      SUBROUTINE EXTN(LAB,BUFF,LBUFF)
+
+      CHARACTER*(*) BUFF,LAB
+
+      LBUFF=0
+      DO 3000   I=LEN(LAB),1,-1
+      IF(LAB(I:I) .EQ. '$')   GO TO 1000
+ 3000 CONTINUE
+      WRITE(6,*) 'ERROR 1 FROM EXTN '
+      STOP
+ 1000 CONTINUE
+      ISTART=I-2
+      DO 2000   I=ISTART,1,-1
+      IF(LAB(I:I) .EQ. ' ')   THEN
+       LBUFF=MAX(LBUFF,ISTART-I)
+       BUFF(1:LBUFF)=LAB(I+1:ISTART+1)
+       RETURN
+      END IF
+ 2000 CONTINUE
+      WRITE(6,*) ' ERROR 2 FROM EXTN '
+      STOP
+      END

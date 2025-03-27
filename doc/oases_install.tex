@@ -1,0 +1,331 @@
+\section{Installing OASES}
+
+OASES is available on all nodes of the computational environment of
+the MIT/WHOI acoustics group. The information on installation provided
+in this section is therefore only intended for recipients of new
+export versions. The MIT/WHOI user should proceed to Section~\ref{sec:sysset}. 
+
+\subsection{Loading OASES files}
+
+For recipients running UNIX, the whole OASES directory tree will be
+shipped in compressed {\bf tar} files, compressed with the standard \tt compress \rm and \tt gzip \rm utilities, respectively.
+
+\begin{verbatim}
+oases.tar.Z
+oases.tar.gz
+\end{verbatim}
+
+The ``export'' subset of oases is available via anonymous ftp from \tt
+ftp@keel.mit.edu. \rm  or via the World-wide-Web: {\em
+ftp://keel.mit.edu/pub/oases/ }
+The files are placed in the \tt pub/oases \rm directory, which also
+contains a \tt README \rm file..
+
+\noindent To install, download the tar file(s) in your desired root directory
+\$HOME and issue the commands
+
+\begin{verbatim}
+uncompress oases.tar.Z
+tar xvf oases.tar
+mv oases_export oases		# Only for Export package
+\end{verbatim}
+
+\noindent or, if you use \tt gzip \rm use the  command
+
+\begin{verbatim}
+gunzip -c oases.tar.gz | tar xvf -
+mv oases_export oases		# Only for Export package
+\end{verbatim}
+
+\noindent which will install the directory tree:
+
+\begin{tabular}{ll}
+\$HOME/oases & OASES root directory \\
+\$HOME/oases/src  & Source files for 2-D OASES \\
+\$HOME/oases/src3d & Source files for 3-D OASES \\
+\$HOME/oases/bin  & OASES scripts and destination of executables \\
+\$HOME/oases/lib & Destination of OASES libraries \\
+\$HOME/oases/tloss & Data files for OAST \\
+\$HOME/oases/pulse & Data files for OASP \\
+\$HOME/oases/rcoef & DATA files for OASR \\
+\$HOME/oases/plot & Source files for FIPPLOT \\
+\$HOME/oases/contour & Source files for CONTUR \\
+\$HOME/oases/mindis & MINDIS graphics library \\
+\$HOME/oases/pulsplot & Source files for Pulse Post-Processor \\
+\$HOME/oases/doc & This document in LaTeX format
+\end{tabular}
+
+\subsection{Building OASES Package}
+
+Version 2.1 shipped after May 5, 1997 have a new Master
+\tt Makefile \rm in the oases root directory \$HOME/oases, which
+automatically detects the platform type and sets compiler options accordingly. The only
+modification needed to this file is the specification of the \tt bin
+\rm and \tt lib \rm directories for the executables and libraries,
+respectively. The defaults are \$HOME/oases/bin and \$HOME/oases/lib.
+For Linux platforms a few aditional changes may necessary, 
+as described below. The entire package is installed by the statement
+
+\tt make all \rm
+
+\noindent which will recursively execute all the individual makefiles in the
+package. 
+
+In version 2.3 shipped after Feb. 11, 2000 the makefile 
+\tt \$HOME/oases/Makefile \rm 
+uses the environment variables \tt \$HOSTTYPE \rm and \tt \$OSTYPE \rm to
+determine platform-specific compiler flags, object and library paths etc.. This allows for using a single OASES root directory on networks with different platform and operating systems,  for example Alpha workstations running either OSF or Linix.
+The following platform/OS combinations are supported at present:
+
+\begin{tabbing}
+xxxxxxxxxxxxxxxxxxxx\= xxxxxxxxxxxxxxxxxxxxxxx \kill 
+\tt alpha-osf1 \rm \> Alpha workstations running OSF1\\
+\tt alpha-linux \rm \> Alpha workstations running Linux\\
+\tt decstation \rm \> DEC RISC workstations (e.g. 5000/240) \\
+\tt sun4 \rm \> SUN SPARC workstations \\
+\tt i386-linux-linux \> PC platforms running Linux \\
+\tt i486-linux-linux \> PC platforms running Linux \\
+\tt iris4d \rm \> SGI workstations 
+\end{tabbing} 		
+
+\noindent Any other platform is easily added by editing \tt Makefile
+\rm as
+described in the following section.
+
+
+Once the package is built, include the executable directory in your
+path, e.g. in your \tt .cshrc \rm file:
+
+\begin{verbatim}
+setenv OASES_SH ${HOME}/Oases/bin                  # OASES scripts
+setenv OASES_BIN ${OASES_SH}/${HOSTTYPE}-${OSTYPE} # OASES executables
+set path = ( $OASES_SH $OASES_BIN $path ) 
+\end{verbatim}
+
+\subsubsection{Compiler Definitions}
+
+The compiler options are set in the master makefile {\bf Makefile} in
+the OASES root directory. Hosts not supported may by added
+by including in \tt Makefile \rm a block with the compiler/linker 
+definitions, e.g. for a \tt HOSTTYPE hosttype \rm, running 
+\tt OSTYPE ostype \rm
+
+\begin{verbatim}
+############################################################
+#
+# host-type Workstations
+#
+############################################################
+#
+# Compiler flags
+#
+# Fortran statement
+FC.hosttype-ostype =	f77
+# CC Flags
+CFLAGS.hosttype-ostype = -O
+# Linker/loader flags 
+LFLAGS.hosttype-ostype =
+# ranlib definition 
+RANLIB.hosttype-ostype =	ranlib
+# Additional run-time libraries
+LIB_MISC.hosttype-ostype = 	
+# Run-time library emulation
+MISC.hosttype-ostype = 
+#
+\end{verbatim}
+
+
+
+The default works on most platforms, but
+for LINUX some changes may be  necessary, depending on which compiler you
+are using. For example, if you use the Absoft FORTRAN compiler on a
+Linux box \tt (HOSTTYPE = i386-linux, OSTYPE = linux),\rm then the Linux 
+header in Makefile should look as follows: 
+ 
+\begin{verbatim}
+############################################################
+#
+# PC HARDWARE RUNNING LINUX 
+#
+############################################################
+#
+# Compiler flags
+#
+#
+# For the ABSOFT FORTRAN compiler, un-comment the following
+# lines:
+#
+FC.i386-linux-linux =	f77  -f -s -N2 -N9 -N51
+LIB_MISC.i386-linux-linux = -lV77 -lU77
+MISC.i386-linux-linux = 
+#
+# For the standard F2C FORTRAN compiler, un-comment the following
+# lines:
+#
+# FC.i386-linux-linux =		fort77
+# LIB_MISC.i386-linux-linux = 	$(LIBDIR)/libsysemu.a
+# MISC.i386-linux-linux = misc.done
+#
+CFLAGS.i386-linux-linux = -I/usr/X11R6/include 
+LFLAGS.i386-linux-linux = -L/usr/X11R6/lib 
+RANLIB.i386-linux-linux =	ranlib
+\end{verbatim}
+
+\noindent    After  performing  the changes, set the default
+directory to the OASES root directory, and compile and link  by issuing the 
+command:
+
+\begin{verbatim}
+     make objdir
+     make all
+\end{verbatim}
+
+\subsubsection{Parameter settings}
+
+If  the default parameter settings are insufficient they  may 
+be  altered in the parameter include file 
+\begin{verbatim}
+ $OASES_ROOT/src/compar.f
+\end{verbatim} 
+The controling parameters are
+
+\begin{tabular}{llc}
+    Parameter & Description & Default \\
+    NLA    &    Max number of layers  & 200 \\
+    NPEXP  &    Max number of wavenumber and time  & \\
+           &    samples is $ 2^{\mbox{NPEXP} } $ &  16 \\
+    NRD    &    Max number of receiver depths & 101 
+\end{tabular}
+
+\subsection{Building Plotmtv}
+\label{sec:plotmtv}
+
+Plotmtv is a public domain package, producing high quality colour
+graphics. It is included in the distribution as compressed tarfiles.
+
+\begin{verbatim}
+	Oases/plotmtv/Plotmtv1.4.1.tar.gz
+	Oases/plotmtv/mtvpatch.tar.gz
+\end{verbatim}
+
+To install, execute the commands:
+
+\begin{verbatim}
+	gunzip -c Plotmtv1.4.1.tar.gz | tar xvf -
+	gunzip -c mtvpatch.tar.gz | tar xvf -
+\end{verbatim}
+
+Then follow the instructions in the \tt Plotmtv1.4.1/README \rm
+file. The installation requires that you have \tt xmkmf \rm installed
+(in Ubuntu: apt-get install xmkmf). Once you have built plotmtv
+remember to move the executable \tt plotmtv \rm to a directory in your
+path, e.g. \tt /usr/local/bin. \rm
+
+\newpage
+\section{System Settings}
+\label{sec:sysset} 
+
+Before using \tt OASES \rm you must change your \tt .login \rm to
+properly. 
+
+\subsection{Executable Path}
+
+First of all, include the directory containing the \tt OASES
+\rm scripts and executables in your \tt path \rm, e.g using the
+statement
+
+
+\begin{verbatim}
+setenv OASES_SH ${HOME}/Oases/bin                  # OASES scripts
+setenv OASES_BIN ${OASES_SH}/${HOSTTYPE}-${OSTYPE} # OASES executables
+set path = ( $OASES_SH $OASES_BIN $path ) 
+\end{verbatim}
+
+In the MIT/WHOI
+computational environment the paths to the OASES executables and scripts are
+
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+Node & Path & CPU \\ \hline
+ keel & /keel0/henrik/Oases/bin & Alpha OSF \\
+ boreas & /keel0/henrik/Oases/bin & Alpha Linux \\
+ frosty1 & /fr1/henrik/Oases/bin & Alpha OSF \\
+ frosty2 & /fr1/henrik/Oases/bin & PC Linux  \\
+ frosty3 & /fr3/henrik/bin & PC Linux \\
+ arctic & /keel0/henrik/Oases/bin & Alpha OSF \\
+ acoustics & /keel0/henrik/Oases/bin & PC Linux  \\
+ reverb & /reverb0/henrik/Oases/bin & PC Linux \\
+ vibration & /reverb0/henrik/Oases/bin & PC Linux \\
+ sonar & /keel0/henrik/Oases/bin & Alpha Linux \\ 
+ monopole & /dipole0/henrik/Oases/bin & Alpha Linux\\
+ dipole & /dipole0/henrik/Oases/bin & PC Linux \\
+\end{tabular}
+\end{center}
+
+\subsection{Environmental Parameters}
+
+You may want to set your terminal type to avoid having to
+specify it everytime you use \tt mplot \rm or \tt cplot. \rm If you
+are running X-windows, set the DISPLAY environmental variable properly
+and insert the statement
+
+\begin{verbatim}
+setenv USRTERMTYPE X 
+\end{verbatim}
+in your \tt .login \rm file or simply type it in if you are not
+usually using X-windows.
+
+If you are running from a Tektronix 4100-series terminal or emulator, 
+replace 'X' by 'tek4105'. Similarly, for the Tektronix 4000-series,
+replace 'X' by 'tek4010' or 'tek4014'.
+
+The default contour package is Mindis, creating black and white line
+contour plots.  To make Plotmtv your default contour package, execute
+the command, either manually or in your \tt .login \rm file: 
+
+\begin{verbatim}
+#
+# MTV environment
+#
+setenv CON_PACKGE MTV
+setenv MTV_WRB_COLORMAP "ON"
+setenv MTV_COLORMAP hot
+setenv MTV_PRINTER_CMD "lpr"
+setenv MTV_PSCOLOR "ON"
+\end{verbatim}
+
+The 'hot' colour scale is chosen in this case, overwriting the WRB
+colorscale which is a red-to-blue colorscale close to the classical
+one used e.g. in acoustics, e.g. in Ref.~\cite{jkps}. The other
+variables should be self-explanatory. The 'hot' colourscale has the
+advantage that it yields a gradual greytone scale when printed on a
+b/w printer. The default MATLAB color scale is 'jet'.
+
+Similarly, version 2.1 and later include a filter \tt plp2mtv \rm
+which translates the line plot \tt plp \rm and \tt plt \rm files to an \tt mtv
+\rm file and executes \tt plotmtv. \rm This filter may be used
+directly as a plot command instead of \tt mplot file \rm
+
+\begin{verbatim}
+plp2mtv file
+\end{verbatim}
+
+Alternatively, \tt plotmtv \rm may be chosen as the default line plot
+package used by the \tt mplot \rm command by setting an environment
+variable:
+
+\begin{verbatim}
+setenv PLP_PACKGE MTV
+\end{verbatim}
+
+It should be noted that some \tt mplot \rm options may not be fully
+supported by \tt plp2mtv. \rm
+
+
+
+
+
+
+
+

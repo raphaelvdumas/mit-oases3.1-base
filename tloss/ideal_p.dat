@@ -1,0 +1,24 @@
+E/E Test- RI - 17/7. Point Source.
+N V H T J P 
+25 25 1 0				# FREQ
+
+4 2                                    # NUML, RANGE(1)
+0 0 0 0 0 0 0				# LAYER 1 ; LEFT SIDE OF CUT  
+0   1700 700 0.2 0.5  1.2 0			#       2                     
+50  1700 700 0.2 0.5  1.2 0			#       3                     
+100 0 0 0 0. 0 0			#       8                     
+
+25					# source depth
+35 35 1 1
+400 -400         			# Cmin Cmax0
+-1 1 1				        # NWVNO ICUT1 ICUT2
+1.5 4.0 15. .5    			# Xleft Xright Xaxis Xinc
+20. 70.0 9 10. 				# LOSS LEVELS IN DB
+40. 80.0 9 10. 				# LOSS LEVELS IN DB
+30. 80.0 9 10. 				# LOSS LEVELS IN DB
+0 100 10 25
+18 84 2
+18 84 2
+
+
+

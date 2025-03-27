@@ -1,0 +1,8 @@
+echo '-------------------------------------------'
+date
+echo 'Start Modified NORDA 3a - SVP Gradient'
+rdoast  ./input/norda3ac2 > ./logs/norda3ac2.out            
+mv ./input/norda3ac2.pl? ./run
+pltsplit -f ./run/norda3ac2 -b 2 -p 1 -r 2 -d 1
+./bin/norda3ac2 S
+echo 'End Modified NORDA 3a - SVP Gradient'

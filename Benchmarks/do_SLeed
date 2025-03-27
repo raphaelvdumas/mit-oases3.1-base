@@ -1,0 +1,8 @@
+echo '-------------------------------------------'
+date
+echo 'Start Single-Layer E/E cut'
+rdoast ./input/SLeed > ./logs/SLeed.out
+mv ./input/SLeed.pl? ./run
+pltsplit -f ./run/SLeed -b 2 -p 1 -r 1 -d 3
+./bin/SLeed S
+echo 'End Single-Layer E/E cut'

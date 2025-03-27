@@ -1,0 +1,8 @@
+echo '-------------------------------------------'
+date
+echo 'Start Vertical Point Force test'
+rdoast ./input/VertForce > ./logs/VertForce.out
+mv ./input/VertForce.pl? ./run
+pltsplit -f ./run/VertForce -b 2 -p 3 -r 1 -d 3
+./bin/VertForce S
+echo 'End Vertical Point Force test'

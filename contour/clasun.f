@@ -1,0 +1,281 @@
+      SUBROUTINE CLASUN(KOLORS,OPTION,ZCLASS,NLEV,
+     &                  DEVICE,VUG,IBASE,REVERS,ROT,WDW)
+
+      PARAMETER (NCLZ=19, NCLZP1=NCLZ+1)
+
+      COMMON /GEO6XX/ KWRKSZ,KWORK(48000)
+
+      LOGICAL BATCH
+
+      EXTERNAL BATCH
+
+      INTEGER BW, BWVTT,  CYAN, MAGENT, YELLOW, BWSTEP
+      INTEGER BWB(NCLZP1),TBW1(NCLZP1),TBW2(NCLZP1),TBW3(NCLZP1)
+      INTEGER TBW1S(NCLZP1),TBW2S(NCLZP1),TBW3S(NCLZP1)
+
+      CHARACTER*3 BWCOL,LINEP,DEVICE,VUG,ROT,WDW
+      CHARACTER*10 OPTION
+
+      REAL COLOR(3), HATCH(3)
+
+      DIMENSION KOLORS(1), BW(NCLZP1), BWVTT(NCLZP1)
+      DIMENSION ZCLASS(NCLZ)
+      DIMENSION CYAN(NCLZP1),MAGENT(NCLZP1),YELLOW(NCLZP1)
+
+      COMMON /CHFLAG/ BWCOL, LINEP
+      COMMON /HSFLAG/ IFIRST,ILAST,CYL,FOM,PRB,SEG,ISEG,
+     &                IFR,SDFLAG,NCL
+
+      DATA BWB  /16,7,5,4,3,2,0,2,3,4,5,7,16,2*0,5*04/
+      DATA TBW1 /96,82,67,54,46,37,30,19,00,6*0,5*00/
+      DATA TBW2 /00,00,00,00,00,00,00,00,00,6*0,5*00/
+      DATA TBW3 /00,00,00,00,00,00,00,00,00,6*0,5*00/
+      DATA TBW1S /16,7,4,1,11*0,5*04/
+      DATA TBW2S /16,7,5,4,3,2,9*0,5*04/
+      DATA TBW3S /16,7,4,1,11*0,5*04/
+
+      DATA MAGENT/16,16,10,06,04,03,02,00,00,00,00,02,06,
+     >                                          02,04,06,02,16,08,08/
+      DATA YELLOW/00,08,08,08,08,06,04,00,00,00,00,00,00,
+     >                                          02,04,06,02,08,16,08/
+      DATA CYAN/  00,00,00,00,00,00,00,02,06,10,14,16,16,
+     >                                          02,04,06,02,08,08,16/
+      DATA BW/1,23,4,10,5,6,7,31,12*32/
+      DATA BWVTT/1,4,10,12,5,8,6,7,12*0/
+
+      KWRKSZ=48000
+      IFR=NCLZP1+2
+C
+  200 FORMAT(1X,/,' ***  INITIALISING TEKTRONIX 4100 SERIES',
+     & ' (MT41XX)  ***',/)
+  220 FORMAT(1X,/,' ***  INITIALISING DEC 240 (MREGIS)  ***',/)
+C
+C   **********
+C   OPENING OUTPUT DEVICE
+C   **********
+C
+      IF(SEG .GT. 10.0)   THEN
+        CALL GROUTE('SEL LDUMMY;EXIT')
+C       CALL LDUMMY
+      ELSE IF (DEVICE.EQ.'PRX')    THEN
+        CALL GROUTE('SEL GPRINTO;EXIT')
+      ELSE IF (DEVICE.EQ.'T93')    THEN
+        CALL GROUTE('SEL GT4693A4;EXIT')
+      ELSE IF (DEVICE.EQ.'PHA')    THEN
+        CALL GROUTE('SEL HTPPXA4;EXIT')
+      ELSE IF (DEVICE.EQ.'TEK')   THEN
+c        IF(VUG.EQ.'VUG')   THEN
+          CALL GROUTE('SEL GT4695;EXIT')
+c        ELSE
+c          CALL GROUTE('SEL HCPOSTA3;EXIT')
+c        END IF
+      ELSE IF (DEVICE.EQ.'VTT')   THEN
+        IF(WDW .EQ. 'DCW')   THEN
+          CALL GROUTE('SEL MX11;EXIT')
+        ELSE IF(WDW .EQ. 'VWS')   THEN
+          CALL GROUTE('SEL MGPX;EXIT')
+        ELSE
+          CALL GROUTE('SEL MREGIS;EXIT')
+C         CALL MREGIS
+        END IF
+      ELSE IF (DEVICE.EQ.'T41')   THEN
+        IF(WDW .EQ. 'DCW')   THEN
+          CALL GROUTE('SEL MX11;EXIT')
+        ELSE IF(WDW .EQ. 'VWS')   THEN
+          CALL GROUTE('SEL MGPX;EXIT')
+        ELSE
+          CALL GROUTE('SEL LT4105;EXIT')
+C         CALL MT41XX
+        END IF
+
+      ELSE IF (DEVICE .EQ. 'EPS')   THEN
+        IF( BWCOL .EQ. 'B/W')   THEN
+          CALL GROUTE('SEL HPOSTEPS;EXIT')
+        ELSE
+          CALL GROUTE('SEL HCPOSTEPS;EXIT')
+        END IF
+
+      ELSE IF (DEVICE .EQ. 'PSL')   THEN
+        CALL GROUTE('SEL HPOSTA4;EXIT')
+
+      ELSE IF (DEVICE .EQ. 'PSP')   THEN
+        CALL GROUTE('SEL HPOSTA4;EXIT')
+
+      ELSE IF (DEVICE.EQ.'G41')   THEN
+        CALL GROUTE('SEL G4105D;EXIT')
+C       CALL G4105D
+      ELSE IF (DEVICE.EQ.'LAS')   THEN
+C        CALL GROUTE('SEL PLN03P;EXIT')
+
+C  N.B. ****** IL PARAMETRO (75,150,300) VA COERENTEMENTE RIPORTATO 
+C NELLA  SPAWN 
+
+C   150 DPI, MEDIUM DENSITY
+c        CALL GROUTE('SEL GLN03MA4;EXIT')
+C    75 DPI, LOW DENSITY
+C        CALL GROUTE('SEL GLN03LA4;EXIT')
+C   300 DPI, HIGH DENSITY
+C        CALL GROUTE('SEL GLN03HA4;EXIT')
+c >>> Postscript laser
+       IF( BWCOL .EQ. 'B/W')   THEN
+c >>> Black and white
+        CALL GROUTE('SEL HPOSTA4; EXIT')
+       else
+c >>> Colour
+        CALL GROUTE('SEL HCPOSTA4; EXIT')
+       end if
+      END IF
+c      IF(.NOT.BATCH().AND.DEVICE.NE.'PRX')
+c     & CALL LIB$SPAWN('$SET TERM/NOBROAD')
+      CALL GOPENS(SEG,ISEG)
+
+C   **********
+C   SETTING COLOUR TABLE
+C   **********
+
+      IF(BWCOL.EQ.'COL')   THEN
+C
+        IF(OPTION(1:5) .EQ. 'TDPEN')   THEN
+          WRITE(6,*) ' COLOR SCALE FOR OPTION "TDPEN" IS REDEFINED '
+          MAGENT(7)=0
+          YELLOW(7)=0
+          CYAN(7)  =0
+        END IF
+C
+        CALL RCMODEN('CMY',16)
+         ibase=15
+c        IBASE=NCLZ
+        NCMAX=16
+        IF((OPTION(1:5).EQ.'DIFFER').OR.(OPTION(1:5).EQ.'ERROR')) THEN
+          NLEV=4
+          MAGENT(1)=00
+          YELLOW(1)=00
+          CYAN(1)  =06
+          MAGENT(2)=02
+          YELLOW(2)=02
+          CYAN(2)  =00
+          MAGENT(3)=06
+          YELLOW(3)=06
+          CYAN(3)  =00
+          MAGENT(4)=10
+          YELLOW(4)=10
+          CYAN(4)  =00
+          MAGENT(5)=16
+          YELLOW(5)=16
+          CYAN(5)  =00
+        END IF
+C
+        NLEV=MIN(NLEV,NCMAX-1)
+C
+        IF(REVERS.GT.0.0)   THEN
+          CALL REVRSE(CYAN,NLEV,MAGENT,NLEV,YELLOW,NLEV)
+          CALL NEWGCOL(3,CYAN,MAGENT,YELLOW,NCLZP1)
+          CALL REVRSE(CYAN,NLEV,MAGENT,NLEV,YELLOW,NLEV)
+        ELSE 
+          CALL NEWGCOL(3,CYAN,MAGENT,YELLOW,NCLZP1)
+        END IF
+        CALL RSHADE(3,-(NLEV+1))
+        CALL RCLASS(ZCLASS,NLEV,0)
+
+      ELSE
+
+C   BLACK AND WHITE PLOT
+        IF(OPTION(1:5) .EQ. 'TDPEN')   THEN
+          WRITE(6,*) ' COLOR SCALE FOR OPTION "TDPEN" IS REDEFINED '
+          CALL RCMODEN('CMY',16)
+          CALL NEWGCOL(3,BWB,BWB,BWB,NCLZP1)
+          CALL RSHADE(3,-(NLEV+1))
+          CALL RCLASS(ZCLASS,NLEV,0)
+        ELSE
+          BWSTEP=1
+          NLP1=NLEV + 1
+          IF (DEVICE.EQ.'TEK' .OR. 
+     &        DEVICE.EQ.'DCW' .OR.
+     &        DEVICE.EQ.'VTT' .OR.
+     &        DEVICE.EQ.'T41' .OR.
+     &        DEVICE.EQ.'C50' .OR.
+     &        DEVICE.EQ.'LAS' .OR.
+     &        DEVICE.EQ.'EPS' .OR.
+     &        DEVICE.EQ.'PSL' .OR.
+     &        DEVICE.EQ.'PSP' .OR.
+     &        DEVICE.EQ.'PRX')      THEN
+C              IF (REVERS.GT.0)   THEN
+C                CALL REVRSE(TBW1,NLP1,TBW2,NLP1,TBW3,NLP1)
+C              END IF
+
+
+            CALL GHALF
+            CALL RCMODEN('BWS',100)
+            NCOL= NLP1
+C
+C Load colors (NCOL > 0)
+C
+            INDEX= 3
+            STEP= 100./NLEV
+            DO 1000 I = 1, NCOL 
+              IF (REVERS .EQ. 0)   THEN
+                COLOR(1) = 100.0 - ( I - 1 ) * STEP
+              ELSE
+                COLOR(1) = ( I - 1 ) * STEP
+              END IF
+              COLOR(2) = 0.0
+              COLOR(3) = 0.0
+              CALL RCOLOR(0,INDEX+I-1,COLOR,HATCH)
+ 1000       CONTINUE
+C
+ 
+            CALL RSHADE(3,-NCOL)
+C            CALL GSHADE(KOLOR,NCOL)
+          END IF
+          CALL RCLASS(ZCLASS,NLEV,0)
+C   RESTORING ORIGINAL VALUES
+          IF (REVERS.GT.0) CALL REVRSE(TBW1,NLEV,TBW1S,NLEV,TBW2S,NLEV)
+        END IF
+      END IF
+C
+      RETURN
+      END
+
+      SUBROUTINE REVRSE(AAA,IA,BBB,IB,CCC,IC)
+      DIMENSION AAA(1), BBB(1), CCC(1)
+        DO 5000    J=1,(IA+1)/2
+        TEMP=AAA(J)
+        IND=IA-J+2
+        AAA(J)=AAA(IND)
+        AAA(IND)=TEMP
+ 5000   CONTINUE
+        DO 5200    J=1,(IB+1)/2
+        TEMP=BBB(J)
+        IND=IB-J+2
+        BBB(J)=BBB(IND)
+        BBB(IND)=TEMP
+ 5200   CONTINUE
+        DO 5400    J=1,(IC+1)/2
+        TEMP=CCC(J)
+        IND=IC-J+2
+        CCC(J)=CCC(IND)
+        CCC(IND)=TEMP
+ 5400   CONTINUE
+      RETURN
+      END
+
+      SUBROUTINE GOPENS(SEG,ISEG)
+      CALL GOPEN
+      IF(SEG .LT. 1.0)   RETURN
+      CALL GSEGWK(0)
+      DO 2000   JSEG=10,1,-1
+      CALL GSEGEX(JSEG,IFANSWER)
+      IF(IFANSWER .GT. 0)    THEN
+      WRITE(6,*) ' UNIPICT.DAT ALREADY CONTAINS SEGMENT ', JSEG
+      ISEG=JSEG+1
+      WRITE(6,*) ' WARNING : CREATING SEGMENT NO. ',ISEG
+      CALL GSEGCR(ISEG)
+      GO TO 3000
+      END IF
+ 2000 CONTINUE
+      WRITE(6,*) ' UNIPICT DOES NOT EXIST.  CREATING SEGMENT NO. 1 '
+      ISEG=1
+      CALL GSEGCR(1)
+ 3000 CONTINUE
+      RETURN
+      END

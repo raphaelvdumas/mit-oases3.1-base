@@ -1,0 +1,23 @@
+#!/usr/local/bin/tcsh
+mv ./tloss/SLeeHC.plt ./tloss/SLeeHC.plt.old
+mv ./tloss/SLeeHC.plp ./tloss/SLeeHC.plp.old
+./bin/make_plug ./run/SLeeHC ./tloss/stubs/SLeeHC ./tloss/SLeeHC
+cat ./refs/BEM/SLeeHC.bem.n.for.rx1.dat ./run/SLeeHC.rdo.par1.tot.rx1.dat > g1
+cat ./refs/BEM/SLeeHC.bem.n.bac.rx1.dat ./run/SLeeHC.rdo.par1.bac.rx1.dat > g2
+cat g1  ./refs/CORE/SLeeHC.gem.par1.tot.rx1.dat > f1
+cat g2  ./refs/CORE/SLeeHC.gem.par1.bac.rx1.dat > f2
+cat f1 f2 > ./tloss/SLeeHC.plt
+rm -f f? g?
+if ( $#argv == 1 ) then
+  if ($argv[1] == "S") then
+# Silent mode selected if argument is S
+  else
+# Plotting mode otherwise
+mplot ./tloss/SLeeHC
+  endif 
+else
+# Plotting mode as default with no arguments
+mplot ./tloss/SLeeHC
+endif
+
+

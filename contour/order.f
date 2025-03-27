@@ -1,0 +1,7 @@
+      SUBROUTINE ORDER(Z,NX,NY,LU)
+      DIMENSION Z(NX,NY)
+      DO 1000 JY=1,NY
+      READ(LU)(Z(JX,JY),JX=1,NX)
+1000  CONTINUE
+      RETURN
+      END

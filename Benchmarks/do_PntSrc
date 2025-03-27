@@ -1,0 +1,8 @@
+echo '-------------------------------------------'
+date
+echo 'Start Point source test'
+rdoast ./input/PntSrc > ./logs/PntSrc.out
+mv ./input/PntSrc.pl? ./run
+pltsplit -f ./run/PntSrc -b 2 -p 3 -r 1 -d 3
+./bin/PntSrc S
+echo 'End Point source test'

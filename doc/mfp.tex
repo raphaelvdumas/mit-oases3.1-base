@@ -1,0 +1,304 @@
+\section{OASM: Matched Field Processing Module}
+
+The OASES-MFP module is a post-processor used in connection with OASN or OASI
+to perform traditional or advanced signal processing on either real or
+synthetic fields on arbitrary 3-dimensional arrays of hydrophones
+and/or geophones. 
+
+MFP has built-in traditional plane wave replicas,
+but will accept any precomputed replicas in the file format described in
+Section~\ref{sec:repl}, including Green's function replicas for
+matched field processing.
+
+In terms of beamformers, OASES-MFP is modular and currently includes 4
+built-in algorithms, including the conventional Bartlett, and adaptive
+beamformers such as  MLM and MCM.
+
+The ambiguity functions are output as curve plots (displayed by \tt mplot\rm)
+vs angle for the plane wave replicas, or for 2-dimensional plane wave
+beamforming (bearing and pitch) in the form of contour plots
+(displayed by \tt cplot\rm). For
+matched field replicas MFP produces contour plots of the ambiguty
+function in vertical or horizontal planes.        
+The SAFARI-PEST
+predecessor of OASES-MFP was used for generating all ambiguity functions in
+Refs.~\cite{bks:jasa88,sbk:jasa90}, and OASES-MFP was used in
+combination with OASN to produce those in Chap.~10 of Ref.~\cite{jkps}.
+
+\subsection{Input Files for OASM}
+
+\begin{table}
+\begin{center}
+\small
+\begin{tabular}{|l|l|c|c|}
+\hline \hline
+Input parameter & Description & Units & Limits \\
+\hline \hline
+\multicolumn{4}{|l|}{\bf Block I: TITLE}  \\ \hline
+TITLE & Title of run  & - & $\leq$ 80 ch. \\
+\hline
+\multicolumn{4}{|l|}{\bf Block II: OPTIONS}  \\ \hline
+A B C $\cdots$ & Output and computational options & - & $\leq$ 40 ch. \\
+\hline
+\multicolumn{4}{|l|}{\bf Block III: FREQUENCIES}  \\ \hline
+FREQ1, FREQ2, NFREQ, COFF & FREQ1: Minimum frequency & Hz & $>0$ \\
+ 	& FREQ2: Maximum frequency & Hz & $>0$ \\
+        & NFREQ: Number of frequencies & & $>0$ \\
+ 	& COFF: Integration contour offset & dB/$\Lambda$ & $\geq 0$ \\
+\hline
+\multicolumn{4}{|l|}{\bf Block IV: RECEIVER ARRAY}  \\ \hline
+NRCV & NRCV: Number of receivers in array & - & $>0$ \\
+Z,X,Y,ITYP,GAIN & Z: Receiver depth & m & \\
+.	& X: x-offset of receiver & m & \\ 
+.	& Y: y-offset of receiver & m & \\
+.	& ITYP: Receiver type  & - & $>0$ \\
+	& GAIN: Receiver signal gain & dB & \\ 
+\hline
+\multicolumn{4}{|l|}{\bf Block V: REPLICA SPACE}  \\ \hline
+ZMINR,ZMAXR,NZR & Depth (grazing angle) interval& m ($^{\circ}$) & (-90--90)\\ 
+XMINR,XMAXR,NXR & $x$ (bearing) interval & km ($^{\circ}$) & (-360--360)\\ 
+YMINR,YMAXR,NYR & $y$ (dummy)  & km & \\ 
+\hline
+\multicolumn{4}{|l|}{\bf Block VI: REFERENCE SOUND SPEED (Option W)}  \\ \hline
+CBEAM & Reference speed for plane wave replicas & m/s & \\ 
+\hline
+\multicolumn{4}{|l|}{\bf Block VII: TOLERANT BEAMFORMER (Option T)} \\ \hline
+CLRMIN,CLRMAX,NCLR & Coherence lengths for {\em replicas} & m & \\ 
+TOLR & Tolerance &  & \\ 
+\hline
+\multicolumn{4}{|l|}{\bf Block VII: SIGNAL BLURRING (Option K)} \\ \hline
+CLS & Coherence length for {\em signals} & m & \\ 
+\hline
+\end{tabular}
+\end{center}
+\caption{OASM input file structure. Terms in bracket in Block V are for
+plane wave beamforming (option W).
+ \label{tab:OASMI} }
+\end{table} 
+
+The input file for OASM is structured in 7 blocks, the first 5 of
+which, shown in Table~\ref{tab:OASMI} contain data which must always
+be given, such as the  frequency selection,
+receiver array and replica sampling. The last 3 blocks
+should only be included for certain options 
+as
+indicated. The various blocks and the
+significance of the data is described in the following.
+
+\subsubsection{Block I: Title of Run}
+
+Arbitrary title to appear on graphics output.
+
+\subsubsection{Block II: Computational options}
+
+Similarly to the other modules, the output is controlled by a number
+of one-letter options:
+\begin{itemize}
+\item[B] Bartlett Beamformer \cite{bks:jasa88}.
+\item[M] Maximum Likelihood Method (MLM) Beamformer \cite{bks:jasa88}.
+\item[Q] Multible Constraint Method (MCM) Beamformer
+\cite{sbk:jasa90}.
+\item[T] Tolerant beamformer. One of ABB's inventions, not yet
+published. The estimated spatial coherence and the tolerance must be 
+specified in Block VII.
+\item[W] Plane wave replicas. Used in combination with any of the beamformers.
+\item[K] Blurring of covariance matrix corresponding to the coherence
+length specified in Block VIII.
+\item[D] Produces a contour plot of the ambiguity function vs depth
+and range (for matched field processing) for each of the selected
+beamformers.  The plot axes are determined
+automatically to fit the replica space. If option {\bf W} (plane wave
+beamforming) is also specified, the ambiguity function will be
+contoured vs azimuth (bearing) and vertical angle (grazing, positive
+downward).
+\item[R] Produces a contour plot of the ambiguity function vs $x$-range
+and $y$-range (for matched field processing) for each of the selected
+beamformers. The plot axes are determined
+automatically to fit the replica space. This option has no effect for
+option  {\bf W} (plane wave
+beamforming)
+\item[X] Produces an expanded printout of beamformer results.
+\end{itemize}
+
+\subsubsection{Block III: Frequency Selection}
+
+This block controls the frequency sampling. Covariance matrices,
+and replicas read from external files must be consistent with the
+specified sampling. OASM is usually run for a single frequency. If
+multible frequencies are specified, the ambiguity functions will be
+geometrically averaged as described in Ref.~\cite{bks:jasa88}.
+COFF \rm is the wavenumber integration offset in DB/$\lambda$ which is
+a dummy parameter for OASM. 
+ 
+\subsubsection{Block V: Receiver Array}
+
+For option {\bf W} OASM will compute the plane wave replicas for the
+specified array. Matched field and other replicas are read from an
+external
+file of the format described in Sec.~\ref{sec:repl}, and here the
+array geometry in Block IV is just used for consistency check. Note
+that such a consistency is not required for the covariance matrix
+file, which allows for simulation of array mismatch.
+The first line of this block specifies the
+number of sensors. Then follows the position, type and gain for each
+sensor in the array. The the sensor positions are specified in
+cartesian coordinates \underline{in meters}. The types currently
+implemented are as follows
+
+\begin{enumerate}
+\item Hydrophone. Normal stress $ \sigma_{zz}$ (negative of pressure in
+water) in Pa for source level 1 Pa (or $\mu$Pa for source level 1 $\mu$Pa). 
+\item Geophone. Particle velocity $\dot{u}$ in $x$-direction
+(horizontal).  Unit is
+m/s for source level 1 Pa (or $\mu$m/s for source level 1 $\mu$Pa).
+\item Geophone. Particle velocity $\dot{v}$ in $y$-direction
+(horizontal).  Unit is
+m/s for source level 1 Pa (or $\mu$m/s for source level 1 $\mu$Pa).
+\item Geophone. Particle velocity $\dot{w}$ in $z$-direction
+(vertical, positive downwards).  Unit is
+m/s for source level 1 Pa (or $\mu$m/s for source level 1 $\mu$Pa).
+\end{enumerate}
+
+The gain is a calibration factor in dB which is applied to
+the replica on all sensors. When combining hydrophones and geophones
+in array processing it is important to note that there is a  difference in
+order of magnitude of pressure and particle velocity of the order of
+the acoustic impedance. Therefore the geophone sensors should usually
+have a gain which is of the order 120 dB higher than the gain applied to the
+hydrophone sensors.
+
+   
+\subsubsection{Block V: Signal Replica Parameters}
+
+For \underline{non-plane} wave beamforming (matched field processing),
+the replicas are read from an external
+file, and in this case this block serves only as a consistency check.
+The sampling in the three coordinate directions must be identical to
+that used for OASN in computing the replicas.
+Note the the depths $z$
+should be specified in {\em meters} whereas the ranges $x$ and $y$ should
+be  specified  in {\em kilometers}.
+
+For plane wave beamforming (option {\bf W}), the first line defines the
+grazing angle interval and number of sampling points. Usually this
+interval ranges from $-90^{\circ}$ (upward) to $90^{\circ}$ (downward).
+The second line similarly selects the bearing interval and number of
+samples. The third line is dummy (but must be included) for plane wave
+beamforming. 
+
+\subsubsection{Block VI: Reference Sound Speed}
+
+This block should only be included for option {\bf W}. It defines the
+reference sound speed used for plane wave beamforming.
+
+\subsubsection{Block VII: Tolerant Beamformer}
+
+The tolerant beamformer (option {\bf T}) incorporates knowledge (or
+expectation) of the spatial signal correlation in the beamforming.
+This block, which should only be included for option {\bf T},
+specifies the coherence length  scanning interval; ambiguity functions 
+will be generated for all values of the coherence length.
+The tolerance \tt TOLR \rm is a tuning parameter (usually set to 0.1).
+
+\subsubsection{Block VIII: Signal Blurring}
+
+The signal component of the covariance matrix produced by OASN is
+characterized by a
+perfect spatial coherence. To account for a more realistic, limited
+spatial coherence, the covariance matrix can be blurred by specifying
+option {\bf K}. This block defines the coherence length \tt CLS \rm 
+to which the blurring should correspond.
+
+\subsubsection{Examples}
+
+The following OASM input file \tt frammfp.dat \rm
+produces the contour plots of the ambiguity functions shown in
+Fig.~8 in Ref.~\cite{sbk:jasa90}, using the covariance matrix and
+replicas computed by OASN from the corresponding data file \tt
+fram4.dat \rm shown in Sec.~\ref{sec:oasnex}.  
+
+\small
+\begin{verbatim}
+                # >>> Block I: Title
+FRAM IV environment.
+                # >>> Block II: Options
+M Q D               # MLM and MCM. Depth-range contours
+                # >>> Block III: Frequency sampling
+20 20 1 0           # 20 Hz
+
+                # >>> Block IV: Receiver Array 
+18                  # 18 elements
+30 0 0 1 -1         # Hydrophone at z = 30 m. Gain -1 dB
+60 0 0 1 -1
+90 0 0 1 -1
+140 0 0 1 -1
+180 0 0 1 -7
+210 0 0 1 -7        # Hydrophone at z =210 m. Gain -7 dB
+270 0 0 1 -1
+330 0 0 1 -1
+350 0 0 1 -1
+390 0 0 1 -1
+450 0 0 1 -1
+510 0 0 1 -1
+570 0 0 1 -1
+630 0 0 1 -1
+690 0 0 1 -1
+782 0 0 1 -1
+860 0 0 1 -1
+960 0 0 1 -1        # Hydrophone at z =960 m. Gain -1 dB
+
+                # >>> Block V: Replica parameters
+10 1000 23              # 23 source depth, 10 - 1000 m
+150 300 76              # 76 source ranges, 150 - 300 km
+0 0 1                   # 1 y-range (omnidirectional response)
+\end{verbatim}
+\normalsize
+
+\subsection{Execution of OASM}
+
+    As  for the other OASES modules,  filenames  are  passed  to OASM   via 
+environmental parameters. In Unix systems a typical command  file 
+{\bf mfp} (in  \$HOME/oases/bin) is:
+
+\small
+\begin{verbatim}
+    #                            the number sign invokes the C-shell 
+    setenv FOR001 $1.dat       # input file 
+    setenv FOR013 $2.rpo       # signal replicas
+    setenv FOR015 $3.xsm       # covariance matrices
+    setenv FOR019 $3.plp       # plot parameter file
+    setenv FOR020 $3.plt       # plot data file  
+    setenv FOR028 $3.cdr       # contour plot parameter file 
+    setenv FOR029 $3.bdr       # contour plot data file 
+    mfp2_bin
+\end{verbatim}
+\normalsize
+
+    After preparing a data file with the name {\bf input.dat}, \tt mfp \rm  is 
+executed by the command:
+
+{\bf    mfp input repinput covinput}
+
+The files \tt repinput \rm and \tt covinput \rm are the input {\em
+replica} and {\em covariance matrix} files, respectively. These files
+must be written in  the formats described in Sec.~\ref{sec:repl}
+and Sec.~\ref{sec:cova}, respectively. The file headers are checked
+for consistency with the input file in terms of frequencies, replica
+space and number of sensors in the array. The element positions in the
+array do not have to be consistent, allowing for simulation of array
+geometry mismatch.
+  
+\subsection{Graphics}  
+
+    Command files are provided in a path directory for generating 
+the graphics produced by \tt mfp \rm. Note that the plotfiles get the name of the input \underline{covariance} \underline{matrix} \underline{file}.
+
+\noindent    To generate curve plots, issue the command:
+
+    {\bf mplot covinput}
+
+
+\noindent    To generate contour plots, issue the command:
+
+     {\bf cplot covinput}
+ 

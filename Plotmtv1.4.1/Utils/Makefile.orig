@@ -1,0 +1,139 @@
+#
+# Makefile for building plotting utility libraries and test program
+#
+
+# Your favorite compiler (use xlf for ibm)
+CC      = cc
+FC      = f77
+
+# For installation
+INSTALL = install
+BINDIR  = ../Bin
+
+# Location of the contouring library
+LIBDIR  = ../Lib
+
+# Includes
+INCLUDE = -I$(LIBDIR)
+
+# If you want to optimize, then use -O
+CFLAGS  = -g $(DEFINES) $(INCLUDE)
+FFLAGS  = -v -g
+
+# Contouring library
+LIBRARY = $(LIBDIR)/libctr.a
+
+# Library flags 
+LIBS    = -lm
+
+#
+# Conversion utilities
+#
+CONV1_SOURCES = ctr2mtv.c
+CONV1_OBJECTS = ctr2mtv.o
+CONV1_HEADER  = $(LIBDIR)/CNplot.h 
+CONV1_PROGRAM = ctr2mtv
+
+CONV2_SOURCES = drawplot2mtv.c
+CONV2_OBJECTS = drawplot2mtv.o
+CONV2_HEADER  = $(LIBDIR)/CNplot.h 
+CONV2_PROGRAM = drawplot2mtv
+
+CONV3_SOURCES = pdraw2mtv.c
+CONV3_OBJECTS = pdraw2mtv.o
+CONV3_HEADER  = $(LIBDIR)/CNplot.h 
+CONV3_PROGRAM = pdraw2mtv
+
+CONV4_SOURCES = mtv2mtv.c
+CONV4_OBJECTS = mtv2mtv.o
+CONV4_HEADER  = $(LIBDIR)/CNplot.h 
+CONV4_PROGRAM = mtv2mtv
+
+CONV5_SOURCES = rand2mtv.f 
+CONV5_OBJECTS = rand2mtv.o 
+CONV5_HEADER  =  
+CONV5_PROGRAM = rand2mtv
+
+C_PROGRAMS    = $(CONV1_PROGRAM) $(CONV2_PROGRAM) \
+                $(CONV3_PROGRAM) $(CONV4_PROGRAM) 
+C_OBJECTS     = $(CONV1_OBJECTS) $(CONV2_OBJECTS) \
+                $(CONV3_OBJECTS) $(CONV4_OBJECTS) 
+F_PROGRAMS    = $(CONV5_PROGRAM)
+F_OBJECTS     = $(CONV5_OBJECTS)
+
+#
+# Use this to compile both C and Fortran
+#PROGRAMS = $(C_PROGRAMS) $(F_PROGRAMS)
+
+# For C-only
+PROGRAMS = $(C_PROGRAMS)
+
+# For Fortran-only
+#PROGRAMS = $(F_PROGRAMS)
+
+# Main target
+all: $(PROGRAMS)
+
+#
+# Compile program to convert from contour to plotmtv format
+#
+$(CONV1_PROGRAM) : $(LIBRARY) $(CONV1_OBJECTS)
+	$(CC) $(CFLAGS) -o $(CONV1_PROGRAM) $(CONV1_OBJECTS) $(LIBRARY) $(LIBS)
+
+$(CONV1_OBJECTS) : $(CONV1_HEADER)
+
+#
+# Compile program to convert from drawplot to plotmtv format
+#
+$(CONV2_PROGRAM) : $(LIBRARY) $(CONV2_OBJECTS)
+	$(CC) $(CFLAGS) -o $(CONV2_PROGRAM) $(CONV2_OBJECTS) $(LIBRARY) $(LIBS)
+
+$(CONV2_OBJECTS) : $(CONV2_HEADER)
+
+#
+# Compile program to convert from pdraw to plotmtv format
+#
+$(CONV3_PROGRAM) : $(LIBRARY) $(CONV3_OBJECTS)
+	$(CC) $(CFLAGS) -o $(CONV3_PROGRAM) $(CONV3_OBJECTS) $(LIBRARY) $(LIBS)
+
+$(CONV3_OBJECTS) : $(CONV3_HEADER)
+
+#
+# Compile program to convert from plotmtv to plotmtv format
+#
+$(CONV4_PROGRAM) : $(LIBRARY) $(CONV4_OBJECTS)
+	$(CC) $(CFLAGS) -o $(CONV4_PROGRAM) $(CONV4_OBJECTS) $(LIBRARY) $(LIBS)
+
+$(CONV4_OBJECTS) : $(CONV4_HEADER)
+
+#
+# Compile program to convert from random data to plotmtv contour format
+#
+$(CONV5_PROGRAM) : $(CONV5_OBJECTS)
+	$(FC) $(FFLAGS) -o $(CONV5_PROGRAM) $(CONV5_OBJECTS) 
+
+$(CONV5_OBJECTS) : $(CONV5_HEADER)
+
+# 
+# Clean
+#
+cleanall : clean
+	rm -f $(C_PROGRAMS) $(F_PROGRAMS)
+clean : 
+	rm -f $(C_OBJECTS) $(F_OBJECTS) core 
+
+#
+# Lint
+#
+lint :
+	lint -u $(INCLUDE) $(CONV1_SOURCES) | sed -e /\\/usr\\/include/D
+
+#
+# Install
+#
+install::
+	for i in $(PROGRAMS) ;\
+	do \
+	echo $(INSTALL) -c $$i $(BINDIR); \
+	$(INSTALL) -c $$i $(BINDIR); \
+	done

@@ -1,0 +1,72 @@
+     1024                                              MODU
+              COL NWR
+                                                        
+ (a)                          
+        3                      NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:    100.0 m$ 
+ RD:     30.0 m$ 
+       15.000000                           XLEN
+        9.000000                           YLEN
+        0                 GRID TYPE. 0: NO GRID
+    0.000000E+00                          XLEFT
+     4.00000                             XRIGHT
+     0.50000                               XINC
+     1.00000                               XDIV
+ Range (km)$                                                                     
+ LIN
+    100.0000                              YDOWN
+     30.0000                                YUP
+     10.0000                               YINC
+     1.00000                               YDIV
+ Loss  (dB)$                                                        
+ LIN
+       3                                    NC
+      798 
+      0.5e-2
+      0.5e-2
+      0.
+      0.
+>>>
+     55
+    0.035
+    0.070
+    0.
+    0.
+ RD-OASES     COL NWR 
+                                                             
+ (b)                          
+        3                      NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:    100.0 m$ 
+ RD:    150.0 m$ 
+       15.000000                           XLEN
+        9.000000                           YLEN
+        0                 GRID TYPE. 0: NO GRID
+    0.000000E+00                          XLEFT
+     4.00000                             XRIGHT
+     0.50000                               XINC
+     1.00000                               XDIV
+ Range (km)$                                                                     
+ LIN
+     110.0000                              YDOWN
+     30.0000                                YUP
+     20.0000                               YINC
+     1.00000                               YDIV
+ Loss (dB)$                                                        
+ LIN
+        3                                    NC
+    798 
+      0.5e-2
+      0.5e-2
+      0.
+      0.
+>>>
+     55
+    0.035
+    0.07
+    0.
+    0.
+ FIP   PLTEND
+
+

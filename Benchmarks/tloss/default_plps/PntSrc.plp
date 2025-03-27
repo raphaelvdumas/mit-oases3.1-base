@@ -1,0 +1,232 @@
+      128                                              MODU
+ OASTL NTLRAN COL NWR    
+                                                                
+ (a)                                              
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     25.0 m$ 
+ RD:     35.0 m$ 
+     15.0000                                           XLEN
+      9.0000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    1.500000E+00                                      XLEFT
+     4.00000                                         XRIGHT
+    0.500000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     70.0000                                          YDOWN
+     20.000000E+00                                        YUP
+     10.00000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB)$                                                        
+ LIN
+        3                                                NC
+       999                                                 N
+    2.002000E+00                                       XOFF
+    0.199994E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+      503                                                 N
+    0.847458E-02                                       XOFF
+    0.795125E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+      500                                                 N
+    0.8E-02                                       XOFF
+    0.8E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+ OASTL WTLRAN COL NWR    
+                                                                
+ (b)                                                
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     25.0 m$ 
+ RD:     35.0 m$ 
+     15.0000                                           XLEN
+      9.0000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    1.500000E+00                                      XLEFT
+     4.00000                                         XRIGHT
+    0.500000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     80.0000                                          YDOWN
+     40.000000E+00                                        YUP
+     10.00000                                           YINC
+     1.00000                                           YDIV
+ Velocity w (dB re 1um/s)$                                             
+ LIN
+        3                                                NC
+      999                                                 N
+    2.002000E+00                                       XOFF
+    0.199994E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+      503                                                 N
+    0.847458E-02                                       XOFF
+    0.795125E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+      500                                                 N
+    0.8E-02                                       XOFF
+    0.8E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+ OASTL UTLRAN COL NWR    
+                                                                 
+ (c)                                                
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     25.0 m$ 
+ RD:     35.0 m$ 
+     15.0000                                           XLEN
+     9.0000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    1.500000E+00                                      XLEFT
+     4.00000                                         XRIGHT
+    0.500000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     80.0000                                          YDOWN
+     30.000000E+00                                        YUP
+     10.00000                                           YINC
+     1.00000                                           YDIV
+ Velocity u (dB re 1um/s)$                                              
+ LIN
+        3                                                NC
+     999                                                 N
+    2.002000E+00                                       XOFF
+    0.199994E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+      503                                                 N
+    0.847458E-02                                       XOFF
+    0.795125E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+      500                                                 N
+    0.8E-02                                       XOFF
+    0.8E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+ OASTL NTLRAN COL NWR    
+                                                                
+ (a)                                             
+        3                                  NUMBER OF LABELS
+   Freq: 25.0 Hz$
+   SD:   25.0 m$ 
+   RD:   35.0 m$ 
+     15.0000                                           XLEN
+      9.0000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    0.000000E+00                                      XLEFT
+     2.500000                                         XRIGHT
+    0.500000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     60.0000                                          YDOWN
+    35.000000E+00                                        YUP
+     5.00000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB)$                                                        
+ LIN
+        3                                                NC
+      996                                                 N
+    0.0E-00                                       XOFF
+    0.2E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+      503                                                 N
+    0.847458E-02                                       XOFF
+    0.795125E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+      500                                                 N
+    0.8E-02                                       XOFF
+    0.8E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+ OASTL WTLRAN COL NWR     
+                                                                
+ (b)                                               
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     25.0 m$ 
+ RD:     35.0 m$ 
+     15.0000                                           XLEN
+      9.0000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    1.000000E+00                                      XLEFT
+     2.50000                                         XRIGHT
+    0.500000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     80.0000                                          YDOWN
+    40.000000E+00                                        YUP
+    10.00000                                           YINC
+     1.00000                                           YDIV
+ Velocity w (dB re 1um/s)$                                             
+ LIN
+        3                                                NC
+      996                                                 N
+    0.0E-00                                       XOFF
+    0.2E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+      503                                                 N
+    0.847458E-02                                       XOFF
+    0.795125E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+      500                                                 N
+    0.8E-02                                       XOFF
+    0.8E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+ OASTL UTLRAN COL NWR   
+                                                                
+ (c)                                               
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     25.0 m$ 
+ RD:     35.0 m$ 
+     15.0000                                           XLEN
+      9.0000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    0.000000E+00                                      XLEFT
+     2.500000                                         XRIGHT
+    0.500000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     80.0000                                          YDOWN
+     40.000000E+00                                        YUP
+     10.00000                                           YINC
+     1.00000                                           YDIV
+ Velocity u (dB re 1um/s)$                                              
+ LIN
+        3                                                NC
+      996                                                 N
+    0.0E-00                                       XOFF
+    0.2E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+      503                                                 N
+    0.847458E-02                                       XOFF
+    0.795125E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+      500                                                 N
+    0.8E-02                                       XOFF
+    0.8E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+ RDOAS PLTEND
+
+# EED (1700/700 -> 3000/1700) with explosive point source

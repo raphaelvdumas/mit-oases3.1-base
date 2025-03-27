@@ -1,0 +1,33 @@
+      SUBROUTINE OUT_TL(*,IC,HTXT,AX,AY,LAB,FREQ,SD,INDEX,
+     %                  REIDEP,N)
+     
+      LOGICAL IDT
+
+      CHARACTER*20 LAB(20)
+      CHARACTER*80 HTXT
+
+      REAL AX(1), AY(1)
+
+      COMMON /SETLOG / IFLG13,IDT
+
+  140 FORMAT(4X,F7.1)
+  150 FORMAT(A80)
+  230 FORMAT(4X,F7.1)
+  240 FORMAT(6(1X,E12.5))
+
+      IF(IC.EQ.1 .AND. IFLG13 .EQ. 0)   THEN
+        OPEN(13,STATUS='UNKNOWN',FORM='FORMATTED')
+        WRITE(13,150) HTXT
+        DELX=AX(2)-AX(1)
+        READ(LAB(1),140) FREQ
+        READ(LAB(2),140) SD
+        WRITE(13,*) SD,FREQ,INDEX,AX(1),DELX
+        IFLG13= 1
+      END IF
+
+      READ(LAB(3),230) REIDEP
+      WRITE(13,*) REIDEP,N
+      WRITE(13,240) (AY(JF),JF=1,N)
+
+      RETURN
+      END  

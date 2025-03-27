@@ -1,0 +1,34 @@
+'NORTH SEA CONDITIONS '
+'MANY LAYERS WITH COMPLEX OMEGA '
+'SOURCE DEPTH   MIN REC DEPTH    STEP VERT    MIN RANGE   STEP HOR   '
+'    (M)             (M)              (M)        (M)         (M)     '
+     0.0            00.0           100.    100.   100.
+'                                                                    '
+'              NUMBER OF DEPTHS    NUMBER OF RANGES                  '
+                      1              1
+'                                                                    '
+'      UPPER FREQUENCY  LOWER FREQUENCY  DELTA FREQUENCY             '
+'           (HZ)              (HZ)            (HZ)                   '
+         64.               0.0                   1.00
+'                                                                    '
+'     NUMBER OF INTERVALS PHASE VEL. MIN.  PHASE VEL. MAX.           '
+'                             (M/S)           (M/S)                  '
+             100             622          1.E9
+'                                                                    '
+'LAYER  DEPTH   COMP.VEL SHEAR VEL COMP.ATT. SHEAR ATT. DENSITY  '
+' NO.     M     M/S      M/S     DB/WVL    DB/WVL      KG/M3   '
+  1     0.0         0.0      0.0      0.000      0.0          0.
+  2   600.0      3048.0    000.0      0.100      0.200     2440. 
+  0    00.0      2438.0    000.0      0.100      0.200     2140. 
+'CALCULATION OF NORMAL STRESS (PRESSURE) OR VERTICAL PARTICLE VEL.'
+'IN THE NEXT LINE TYPE 1 FOR STRESS OR 2 FOR VERTICAL VELOCITY    '
+                          2
+'ICODE=?  & DISPERSION '   0 0  
+'SOURCE TYPE            RADIUS              FORCE'
+    3                    5                    5
+'FREQENCY STEPS IN POST          SOURCE TYPE (MTYPE) '
+       65                            9
+'NUMBER OF TRACES (IANT)   1:2 VERT OR HOR. TRACE (1 OR 9 )  '
+        1                        2               1
+'START OF TIME SERIE             SOURCE FREQUENCY (AK) '
+   0.0                              20.0

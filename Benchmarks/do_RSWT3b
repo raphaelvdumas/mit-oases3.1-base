@@ -1,0 +1,10 @@
+echo '-------------------------------------------'
+date
+echo 'Start R&S Workshop Test case 3b (FLUID)'
+rdoast ./input/RSWT3b > ./logs/RSWT3b.out
+mv ./input/RSWT3b.pl? ./run
+mv ./input/RSWT3b.?dr ./run
+pltsplit -f ./run/RSWT3b -b 2 -p 1 -r 1 -d 3
+./bin/RSWT3b S
+echo 'End R&S Workshop Test case 3b (FLUID)'
+

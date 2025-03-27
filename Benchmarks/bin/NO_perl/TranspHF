@@ -1,0 +1,30 @@
+#!/usr/local/bin/tcsh
+mv ./tloss/TranspHF.plt ./tloss/TranspHF.plt.old
+#mv ./tloss/TranspHF.plp ./tloss/TranspHF.plp.old
+#./bin/make_plug ./run/TranspHF ./tloss/stubs/TranspHF ./tloss/TranspHF
+cat ./refs/BEM/TranspHF.bem.par1.for.rx1.dat ./run/TranspHF.rdo.par1.for.rx1.dat > f1
+cat ./refs/BEM/TranspHF.bem.par2.for.rx1.dat ./run/TranspHF.rdo.par2.for.rx1.dat > f2
+cat ./refs/BEM/TranspHF.bem.par3.for.rx1.dat ./run/TranspHF.rdo.par3.for.rx1.dat > f3
+cat f1  ./refs/CORE/TranspHF.gem.par1.for.rx1.dat > g1
+cat f2  ./refs/CORE/TranspHF.gem.par2.for.rx1.dat > g2
+cat f3  ./refs/CORE/TranspHF.gem.par3.for.rx1.dat > g3
+cat g1 g2 g3 > ./tloss/TranspHF.plt
+rm -f f? g? 
+if ( $#argv == 1 ) then
+  if ($argv[1] == "S") then
+# Silent mode selected if argument is S
+  else
+# Plotting mode otherwise
+mplot ./tloss/TranspHF
+  endif 
+else
+# Plotting mode as default with no arguments
+mplot ./tloss/TranspHF
+endif
+
+
+## Par1 -> Normal stress
+## Par2 -> Displacement w
+## Par3 -> Displacement u
+
+

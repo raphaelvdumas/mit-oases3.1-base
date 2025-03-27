@@ -1,0 +1,59 @@
+
+ OASIS PULSE PROGRAM. Version 1.1, Update 11-Jun-1987
+
+ Safari Case 1 for BEM.                                                          
+
+ OPTIONS:
+
+ PLANE GEOMETRY
+ HORIZONTAL VELOCITY
+ VERTICAL VELOCITY
+ CREATING TRANSFER FUNCTION FILE
+ SOURCE TYPE: 2
+
+ SOURCE CENTRE FREQUENCY:     50.00 HZ 
+0     DEPTH        ALPHA       BETA      ATTENA       ATENB         RHO      ROUGHNESS
+      0.00000     0.00000     0.00000  0.00000000  0.00000000     0.00000     0.00000
+      0.00000  1500.00000   300.00000  0.00000000  0.00000000     1.00000     0.00000
+
+ NUMBER OF LAYERS:        2
+ NUMBER OF SOURCES:       1
+ NUMBER OF RECEIVERS:     1
+
+ SOURCE DATA:
+
+   N0.    DEPTH  LAYER      ZU        ZL
+      1      95.0     2      95.0     -95.0
+
+ RECEIVER DATA:
+
+   NO.       DEPTH  LAYER           Z
+      1      90.0     2      90.0
+
+ RECEIVER DEPTH:       90.00 M
+
+ >>>> NT MUST BE INTEGER POWER OF 2, CHANGED TO           2  <<<<
+
+
+  CMIN =      100.000     M/S 
+  CMAX =     -100.000     M/S 
+
+    NW       IC1       IC2
+    64        33        64
+ NEGATIVE SPECTRUM BY SYMMETRY
+
+ TIME STEP:           10.000000 SECS
+ MIN. TIME:            0.000000 SECS
+ FREQUENCY STEP:       0.050000 HZ
+ MIN. FREQUENCY:      60.000000 HZ
+ MAX. FREQUENCY:       0.000000 HZ
+
+ INTEGRAND PLOTS:      0 (*2)
+ PULSE PLOTS:         12 (*2)
+
+ MINIMUM RANGE:        0.000000 KM
+ RANGE STEP:          60.000000 KM
+
+ *** OASES PULSE FINISHED ***
+
+     TOTAL TIME:      0.057 SECS

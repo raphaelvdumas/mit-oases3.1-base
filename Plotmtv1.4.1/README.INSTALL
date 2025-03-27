@@ -1,0 +1,179 @@
+                             PLOTMTV V1.4.0
+                           Installation Notes
+                               Kenny Toh
+                                7/15/94
+
+OVERVIEW
+--------
+PLOTMTV is a multipurpose X11 plotting program. 
+PLOTMTV's capabilities include 2D line and scatter plots (x-vs-y), 
+contour plots, 3D surface, line and scatter plots as well as vector plots.
+The program has an rough but functional Graphical User Interface, through
+which it is possible to zoom in, zoom out, pan, toggle between 2D and 3D
+plots, and rotate 3D plots. Both color and grayscale postscript output are
+supported.
+
+The X11 plotting routines in PLOTMTV are based only on the X11R4 Xlib library. 
+That being the case, this program should compile under X11R5 as well (I hope).
+
+
+DISTRIBUTION DIRECTORIES
+------------------------
+The PLOTMTV source distribution consists of 5 directories:
+
+   ./Docs  - documentation.
+
+   ./Lib   - general purpose library
+             used for reading data, clipping, intersections, contours etc.
+
+   ./Plot  - everything required for X11 and PostScript plotting.
+
+   ./Tests - data files for testing the program.
+
+   ./Utils - various small programs mainly for translation of data formats.
+
+
+BUILDING PLOTMTV USING XMKMF
+----------------------------
+
+The easist way to build PLOTMTV is to use XMKMF and IMAKE, which are the
+standard methods for building programs under X.
+
+If you have "xmkmf" and "imake" then do the following:
+
+   (1) Customize the Imakefile in the toplevel directory (./Imakefile).
+       The only thing you'll need to do is to change the default
+       printer to your favorite printer, and the default print command.
+       The line below needs to be changed.
+          DEFINES = -DPRINTER_NAME=\"hpps\" -DPRINTER_CMD=\"lpr\ -h\"
+     
+       The PRINTER_NAME defines the default printer to which plots are
+       sent.  PLOTMTV typically checks the $PRINTER environment variable to
+       determine where to send the plots, but if that environment variable 
+       is not set, then it uses the PRINTER_NAME defined in the DEFINES line.
+
+       Typically the "lpr -h" command is used to send PostScript plots
+       to the desired printer, i.e.
+           lpr -h -#[copies] -P[printer] filename
+       In this case, use the -DPRINTER_CMD=\"lpr\ -h\" option.
+
+       Some non-SUN machines use 
+           lp -n[copies] -d[printer] filename
+       In this case, just set -DPRINTER_CMD=\"lp\".
+
+
+   (2) Use xmkmf to create the Makefile from Imakefile.
+           % xmkmf
+
+       If xmkmf does not work, you'll have to build Plotmtv the hard way.
+       See the section on Building PLOTMTV without XMKMF.
+                          ------------------------------
+
+
+   (3) Finally, to a full Make
+           % make World
+      
+       This compilation will take approximately 10 minutes, and when
+       complete, you will find "plotmtv" and a number of other utility
+       programs in the ./Bin directory.
+
+
+Building PLOTMTV without XMKMF
+------------------------------
+
+This section presumes that XMKMF and IMAKE are not available or do not work
+correctly on your machine.  In this case, it is necessary to modify the
+Makefiles in each of the sub-directories.
+
+   (1) Go to the ./Lib directory and modify "Makefile.orig" if necessary.
+       All you need to do here is change the $CC and $CFLAGS variables.
+
+   (2) Go to the .Plot directory and modify "Makefile.orig"
+       Here, you'll need to modify the $CC and $CFLAGS variables  
+       as well as the location of the X libraries.  Check with your 
+       system administrator if you are unsure where your X libraries 
+       and include files are located.
+   
+       You will also need to change the default printer name to your 
+       favorite printer, as well as the default print command.
+       The line below needs to be changed.
+          DEFINES = -DPRINTER_NAME=\"hpps\" -DPRINTER_CMD=\"lpr\ -h\"
+     
+       The PRINTER_NAME defines the default printer to which plots are
+       sent.  PLOTMTV typically checks the $PRINTER environment variable to
+       determine where to send the plots, but if that environment variable 
+       is not set, then it uses the PRINTER_NAME defined in the DEFINES line.
+
+       Typically the "lpr -h" command is used to send PostScript plots
+       to the desired printer, i.e.
+           lpr -h -#[copies] -P[printer] filename
+       In this case, use the -DPRINTER_CMD=\"lpr\ -h\" option.
+
+       Some non-SUN machines use 
+           lp -n[copies] -d[printer] filename
+       In this case, just set -DPRINTER_CMD=\"lp\".
+
+   (3) Next, go to the ./Utils directory and modify "Makefile.orig" 
+       if necessary.  Change the $CC, $FC and $CFLAGS variables.  
+       This Makefile compiles only the C programs; if you want to compile the
+       Fortran programs too, change the PROGRAMS variable to
+ 
+            PROGRAMS = $(C_PROGRAMS) $(F_PROGRAMS)
+ 
+   (4) Go back up to the toplevel directory (where this file is located)
+       and do a make
+          % make -f Makefile.orig
+
+Hopefully, everything should compile OK.  This program has been compiled
+successfully on IBM RS6000's, SUN SPARCs, SUN386i's, and HP700
+workstations (running X11R4).  
+
+TESTING
+-------
+Now, if everything has gone OK, there'll be a binary in the ./Bin directory
+named "plotmtv".  To test this binary, go into the ./Tests directory, and
+type "run.sh"
+   % cd ./Tests
+   % run.sh
+
+If you are unlucky, ./Tests/run.sh will refuse to run.  This happens on some
+platforms, e.g dec/mips, probably because of shell incompatibilities.
+If this happens, try running "run.csh" instead.
+   % run.csh
+
+INSTALLING
+----------
+If you want to automatically install the PLOTMTV binary and man pages,
+then modify the BINDIR and MANDIR in ./Makefile.orig and then type:
+   % make install
+   
+QUESTIONS
+---------
+
+Questions to ktoh@td2cad.intel.com
+
+I can't guarantee a quick response, but I'll try...
+
+
+AUTHOR INFO
+-----------
+Written by Kenny Toh (ktoh@td2cad.intel.com), software developer for
+the Technology CAD Department, Intel Corp, Santa Clara.
+
+If you like this software, send me a note...
+
+Standard disclaimer:
+#
+# Permission to use, copy, modify, and distribute this software and its
+# documentation for any purpose and without fee is hereby granted,
+# provided that the above copyright notice appear in all copies and that
+# both that copyright notice and this permission notice appear in
+# supporting documentation.
+#
+# These software is provided AS IS with no warranties of any kind.  The author
+# shall have no liability with respect to the infringement of copyrights,
+# trade secrets or any patents by these file or any part thereof.  In no
+# event will the author be liable for any lost revenue or profits or
+# other special, indirect and consequential damages.
+#
+#

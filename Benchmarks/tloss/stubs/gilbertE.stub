@@ -1,0 +1,118 @@
+     1024                                              MODU
+ OASTL BTLRAN NWR COL 
+                                                                
+ GILBERT and EVANS (ELASTIC) - Forward bulk stress                                           
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:    100.0 m$ 
+ RD:     80.0 m$ 
+     15.0000                                           XLEN
+      9.0000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+     0.00000                                          XLEFT
+     15.0000                                         XRIGHT
+     3.00000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     110.000                                          YDOWN
+     40.0000                                            YUP
+     10.0000                                           YINC
+     1.00000                                           YDIV
+ Bulk stress (dB//1Pa)$                                                          
+ LIN
+        2                                                NC
+>>>
+     750                                                 N
+    2E-02                                           RMIN
+    2E-02                                      RSTEP
+    0.000000E+00                                       YMIN
+    0.000000E+00                                         DY
+ OASTL STLRAN NWR COL
+                                                                
+ GILBERT and EVANS (ELASTIC) - Forward shear stress                                           
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:    100.0 m$ 
+ RD:     80.0 m$ 
+     15.0000                                           XLEN
+      9.0000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    4.000000                                          XLEFT
+     12.000                                         XRIGHT
+     2.00000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     110.000                                          YDOWN
+     70.0000                                            YUP
+     10.0000                                           YINC
+     1.00000                                           YDIV
+ Shear stress (dB//1Pa)$                                                        
+ LIN
+        2                                                NC
+>>>
+     750                                                 N
+    2E-02                                           RMIN
+    2E-02                                      RSTEP
+    0.000000E+00                                       YMIN
+    0.000000E+00                                         DY
+ OASTL BTLRAN NWR COL 
+                                                                
+ GILBERT and EVANS (ELASTIC) - Backward bulk stress                                           
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:    100.0 m$ 
+ RD:     80.0 m$ 
+     15.0000                                           XLEN
+      9.0000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+     0.00000                                          XLEFT
+     12.0000                                         XRIGHT
+     2.00000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     160.000                                          YDOWN
+     50.0000                                            YUP
+     20.0000                                           YINC
+     1.00000                                           YDIV
+ Bulk stress (dB//1Pa)$                                                          
+ LIN
+        2                                                NC
+>>>
+     750                                                 N
+    2E-02                                           RMIN
+    2E-02                                      RSTEP
+    0.000000E+00                                       YMIN
+    0.000000E+00                                         DY
+ OASTL BTLRAN NWR COL 
+                                                                
+ GILBERT and EVANS (ELASTIC) - Backward shear stress                                           
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:    100.0 m$ 
+ RD:     80.0 m$ 
+     15.0000                                           XLEN
+      9.0000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+     4.00000                                          XLEFT
+     12.0000                                         XRIGHT
+     2.00000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     160.000                                          YDOWN
+     100.0000                                            YUP
+     10.0000                                           YINC
+     1.00000                                           YDIV
+ Shear stress (dB//1Pa)$                                                          
+ LIN
+        2                                                NC
+>>>
+     750                                                 N
+    2E-02                                           RMIN
+    2E-02                                      RSTEP
+    0.000000E+00                                       YMIN
+    0.000000E+00                                         DY
+ CORE  PLTEND

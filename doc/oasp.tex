@@ -1,0 +1,786 @@
+\section{OASP: 2-D Wideband Transfer Functions}
+
+    The OASES-OASP module calculates the depth-dependent  Green's 
+function for a selected number of frequencies and determines  the 
+transfer function at any receiver position by evaluating  the 
+wavenumber  integral. The frequency integral is evaluated in the
+Post-processor PP.  As is  the 
+case for OASES-OAST, both stresses and particle velocities can be 
+determined, and the field may be produced by either point or line 
+sources.  By  arranging the sources in a vertical  phased  array, 
+pulsed beam propagation can be analyzed.
+
+\subsection{Two-Step Execution}
+
+    Whereas its predecessor SAFARI-FIPP was always run in a
+\underline{one-step} 
+mode,  directly generating the time responses on the receiver 
+array corresponding to the chosen source function, OASES-OASP 
+is always  run in a \underline{two-step} mode in conjunction with  the  PP 
+Pulse  Post-processor.  OASP   generates  the 
+transfer  functions  for  the selected  environment  and  source-
+receiver geometry. The interactive postprocessor is then used  to 
+select time windows, source pulses, stacking format etc. 
+
+    Since the computation of the transfer functions is by far the 
+most  computationally  intensive  part  of  synthetic  seismogram 
+computation,  the  2-step  mode will be most  user  friendly  and 
+efficient,  except  for cases where large  batches  of  synthetic 
+seismograms have to be generated. The transfer function file will have
+the same name as the input file, but extension {\bf .trf}, i.e. for an
+input file {\bf input.dat}, the transfer function file will be 
+
+{\bf
+input.trf}. 
+
+\subsection{Transfer Functions}
+
+In addition to generating timeseries through the two-step procedure,
+OASP may be used for generating the complex CW field over a
+rectangular grid in range and depth. Here it is important to note that
+when OASP is used with option 'O' or with automatic
+sampling enabled, the transfer functions are computed for complex
+frequencies. Complex frequency corresponds to applying a {\em
+time-domain damping} which cannot be directly compensated for in the
+transfer functions. However, real frequencies can be forced in
+automatic sampling mode by using option 'J' (Version 2.1 and later).
+
+Also, in version 2.1 and later, the postprocessor PP has been expanded
+with a transmission loss option which converts the transfer function
+to transmission losses plotted in the standard OAST forms of TL vs
+range or depth-range contours. Here it is obviously important to use option 'J'
+together with the automatic sampling. Otherwize the losses will be
+overestimated. Also note that the automatic sampling works differently
+from OAST's. Thus, OASP will use the selected time window to select a
+wavenumber sampling which eliminates time-domain wrap-around. This
+feature may actually be used for convergence tests, by systematically
+increasing the time window $ (NX \times DT) $ to allow reduced
+wavenumber sampling.
+  
+\subsection{Input Files for OASP}
+
+The input files for OASP is structured in 8 blocks, as outlined in
+Tables\,\ref{tab:oaspI}. In the following we
+describe the significance of the various blocks, with particular
+emphasis on differences between SAFARI-FIPP and OASP. 
+
+\begin{table}
+\begin{center}
+\small
+\begin{tabular}{|l|l|c|c|}
+\hline \hline
+Input parameter & Description & Units & Limits \\
+\hline \hline
+\multicolumn{4}{|l|}{\bf BLOCK I: TITLE } \\
+\hline
+TITLE & Title of run  & - & $\leq$ 80 ch. \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK II: OPTIONS} \\
+\hline
+A B C $\cdots$ & Output options & - & $\leq$ 40 ch. \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK III: SOURCE FREQUENCY} \\
+\hline
+FRC,COFF,IT,VS,VR & FRC: Center frequency of source & Hz & $>0$ \\
+ 	& COFF: Integration contour offset & dB/$\Lambda$ & COFF$\geq 0$ \\
+        & IT: Source pulse type (only for option d) & & \\
+	& VS,VR: Sou./Rec. velocity  (only for option d) & m/s & \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK IV: ENVIRONMENT} \\
+\hline
+NL 	& Number of layers, incl. halfspaces	& - & NL$\geq 2$  \\
+D,CC,CS,AC,AS,RO,RG,CL & D: Depth of interface. & m & - \\
+.	& CC: Compressional speed & m/s & CC$\geq 0$ \\
+.	& CS: Shear speed & m/s & - \\
+.	& AC: Compressional attenuation & dB/$\Lambda$ & AC$\geq 0$ \\
+.	& AS: Shear attenuation & dB/$\Lambda$ & AS$\geq 0$ \\
+	& RO: Density 	& g/cm$^{3}$ & RO$\geq 0$ \\
+	& RG: RMS value of interface roughness & m & - \\
+	& CL: Correlation length of roughness & m & CL$>0$ \\
+	& M:  Spectral exponent &   & > 1.5 \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK V: SOURCES} \\
+\hline
+SD,NS,DS,AN,IA,FD,DA & SD: Source depth (mean for array) & m & - \\
+	& NS: Number of sources in array & - &  NS$>0$ \\
+	& DS: Vertical source spacing	& m & DS$>0$ \\
+	& AN: Grazing angle of beam & deg & - \\
+	& IA: Array type & - & $1 \leq $IA$\leq 5$ \\
+	& FD: Focal depth of beam & m & FD$\neq$SD \\
+        & DA: Dip angle. (Source type 4). & deg & - \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK VI: RECEIVER DEPTHS} \\
+\hline
+RD1,RD2,NRD & RD1: Depth of first receiver & m & - \\
+	& RD2: Depth of last receiver  & m & RD2$>$RD1 \\
+	& NRD: Number of receiver depths & - & NR$>0$ \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK VII: WAVENUMBER SAMPLING} \\
+\hline
+CMIN,CMAX & CMIN: Minimum phase velocity & m/s & CMIN$>0$ \\
+	& CMAX: Maximum phase velocity & m/s & - \\
+NW,IC1,IC2,IF & NW: Number of wavenumber samples & - & $>0$, -1 (auto) \\
+	& IC1: First sampling point & - & IC1$\geq 1$ \\
+	& IC2: Last sampling point & - & IC2$\leq$NW \\
+        & IF: Freq. sample increment for kernels & & $\geq 0$ \\
+\hline
+\multicolumn{4}{|l|}{\bf BLOCK VIII: FREQUENCY AND RANGE  SAMPLING} \\
+\hline
+NT,FR1,FR2,DT,R1,DR,NR & NT: Number of time samples & & NT$=2^{M}$ \\
+	& FR1: lower limit of frequency band & Hz & $\geq 0$ \\
+	& FR2: upper limit of frequency band & Hz & $\geq$FR1 \\
+        & DT: Time sampling increment & s & $> 0$ \\ 
+        & R1: First range & km & \\
+        & DR: Range increment & km & \\
+	& NR: Number of ranges & & $> 0$ \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Layout of OASP input files: Computational parameters.
+	\label{tab:oaspI} }
+\end{table} 
+
+\subsection{Block I: Title}
+
+The title printed on all graphic output generated by OASP.
+
+\subsection{Block II: OASP options}
+
+    OASP is downward compatible with SAFARI  Version 
+3.0  and higher, and therefore supports all options and  features 
+described in the SAFARI manual, except for those affecting the
+generation of time-series, i.e. the following SAFARI options are 
+\underline{not}
+\underline{supported} by OASP:
+\begin{description}
+    \item[D] Depth stacked seismograms
+    \item[S] Range stacked seismograms
+    \item[R] Plot of source pulse
+    \item[n] Source pulse type
+\end{description}
+
+    In  addition  to improved speed and  stability,  OASP  offers 
+several new options. The currently supported options are:
+\begin{itemize}
+    \item[{\bf C}] Creates an $ \omega - k$ representation of the
+      field in the form of contours of integration kernels as function
+      of horizontal wavenumber (slowness if option {\bf B} is
+      selected) and frequency (logarithmic y-axis). All axis
+      parameters are determined automatically.  
+\item[{\bf H}]
+      Horizontal (radial) particle velocity calculated.  
+\item[{\bf J}] Complex wavenumber contour. The contour is shifted into the
+      upper halfpane by an offset controlled by the input parameter
+      COFF (Block III). NOTE: If this option is used together with
+      automatic sampling, the complex frequency integration (option
+      {\bf O}) is disabled, allowing for computation of complex CW
+      fields or transmission losses (plotted using PP). 
+\item[{\bf K}]
+      Computes the bulk pressure. In elastic media the bulk pressure only
+      has contributions from the compressional potential. In fluid
+      media the bulk pressure is equal to the acoustic pressure.
+      Therefore for fluids this option yields the negative of the result
+      produced by option N or R.  
+\item[{\bf L}] Linear vertical source array.
+\item[{\bf N}] Normal stress $\sigma_{zz}$ ($=-p$ in fluids)
+      calculated.  
+\item[{\bf O}] Complex frequency integration
+      contour. This new option is the frequency equivalent of the
+      complex wavenumber integration ({\bf J} option in OAST). It
+      moves the frequency contour away from the real axis by an amount
+      reducing the time domain wrap-around by a factor 50
+      \cite{jkps}. This option can yield significant computational
+      savings in cases where the received signal has a long time
+      duration, and only the initial part is of interest, since it
+      allows for selection of a time window shorter than the actual
+      signal duration. Note that only wrap around from later times is
+      reduced; therefore the time window should always be selected to
+      contain the beginning of the signal!  
+\item[{\bf P}] Plane
+      geometry. The sources will be line-sources instead of
+      point-sources as used in the default cylindrical geometry.
+\item[{\bf R}] Computes the radial normal stress $\sigma_{rr}$
+      (or $\sigma_{xx}$ for plane geometry).  \item[{\bf S}] Computes
+      the stress equivalent of the shear potential in elastic
+      media. This is an angle-independent measure, proportional to the
+      shear potential, with no contribution from the compressional
+      potential (incontrast to shear stress on a particular plane).
+      For fluids this option yields zero.  
+\item[{\bf T}] The new
+      option `T' allows for specification of an array tilt in the
+      vertical plane containing the source and the receivers.  See
+      below for specification of array tilt parameters.  
+\item[{\bf U}] Decomposed seismograms.  This option generates 5 transfer
+      function files to be processed by PP:
+
+          \begin{tabular}{ll}
+          File name & Contents \\ \hline
+          input.trf &     Complete transfer functions \\
+          input.trfdc &    Downgoing compressional waves \\
+          input.trfuc  &  Upgoing compressional waves  \\
+          input.trfds  &  Downgoing  shear waves alone \\
+          input.trfus &    Upgoing shear waves
+          \end{tabular}
+\item[{\bf V}] Vertical particle velocity calculated.
+\item[{\bf Z}] Plot of SVP will be generated.
+
+\item[{\bf d}] Radial {\em Doppler shift} is accounted for by
+specifying  this option, using the theory developed by Schmidt and Kuperman
+\cite{sk:jasa94}.  The source pulse and the radial projections of the
+source and  receiver velocities must be specified in the input file
+following the specification of the centre frequency and the contour
+offset (Block II). Since this option requires incorporation of the
+source function in the wavenumber integral, the PP post-processor
+\underline{must} be used with source pulse -1 (impulse response).
+    \item[{\bf f}] A full Hankel transform integration scheme is used
+for low values of $ kr $ and tapered into the FFP integration used for
+large $ kr $. The compensation is achieved at insignificant
+additional computational cost and is recommended highly for cases
+where the near field is  needed.    
+          \item[{\bf g}] Rough interfaces 
+          are assumed to be characterized by a Goff-Jordan power
+          spectrum rather than the default Gaussian (Same as G).
+          \item[{\bf l}] User defined source array. This new option is
+          similar to option {\bf L} in the sense that that it
+          introduces a vertical source array of time delayed sources
+          of identical type. However, this option allows the depth,
+          amplitude and delay time to be be specified individually for
+          each source in the array. The source data should be provided
+          in a separate file, {\bf input.src}, in the format described
+          below in Section~\ref{oaspsar}.  
+\item[{\bf r}] Computes {\em Reflectivity Seismograms}, i.e. no source contyributions included.
+\item[{\bf s}] Outputs the
+          mean field discontinuity at a rough interface to the file
+          'input'.rhs for input to the time domain reverberation model
+          OASSP.  
+\item[{\bf t}] Eliminates the wavenumber integration
+          and computes transfer functions for individual slowness
+          components (or plane wave components). The Fourier transform
+          performed in PP will then directly compute the
+          slowness/intercept-time or $\tau - p$ response for each of
+          the selected depths. When option {\bf t} is selected, the
+          range parameters in the data file are insignificant.
+\item[{\bf v}] As option {\bf l} this option allows for
+          specifying a non-standard source array. However, it is more
+          general in the sense that different types of sources can be
+          applied in the same array, and the sources can have
+          different signatures. The array geometry and the complex
+          amplitudes are specified in a file {\bf input.strf} which
+          should be of {\bf trf} format as described in
+          Section~\ref{oaspsar}. 
+ \item[{\bf \#}] Number $(1-5)$
+          specifying the source type (explosive, forces, seismic
+          moment) as described in Section~\ref{oaspsou}
+\end{itemize}
+
+
+\subsubsection{Block III: Source Frequency}
+
+FRC is the source center frequency. As the source convolution is
+performed in PP,  FRC is not used in OASP, but will be written to the
+transfer function file and become the default for PP.
+
+COFF is the complex wavenumber
+integration 
+contour offset. To be specified in
+		$dB/\lambda$, where $\lambda$ is the wavelength at the source 
+		depth SD. As only the horizontal part of
+		the integration contour is considered, this parameter
+		should not be chosen so large, that the amplitudes
+		at the ends of the integration interval become 
+		significant. In lossless cases too small values
+		will give sampling problems at the normal modes
+		and other singularities. For intermediate values,
+		the result is independent of the choice of COFF,
+		but a good value to choose is one that gives 60 dB
+		attenuation at the longest range considered in the FFT, i.e.
+                \begin{displaymath}
+		\mbox{COFF} = \frac{60 \ast \mbox{CC(SD)}}{( \mbox{FREQ} \ast \mbox{R}_{max} )}
+		\end{displaymath} 
+       		where the maximum FFT range is
+       		\begin{displaymath}
+		\mbox{R}_{max} = \frac{\mbox{NP}}{\mbox{FREQ}\ast(1/\mbox{CMIN} - 1/\mbox{CMAX})}
+		\end{displaymath}
+		This value is the default which is applied if COFF
+		is specified to 0.0.
+
+\noindent{\bf Doppler shift}
+
+By specifying option {\bf d} in OASP V.1.7 and higher,
+radial {\em Doppler shift} is accounted for 
+using the theory developed by Schmidt and Kuperman
+\cite{sk:jasa94}.  The source pulse and the radial projections of the
+source and  receiver velocities must be specified in the input file
+following the specification of the centre frequency and the contour
+offset (Block II), i.e.
+
+\begin{tabular}{cc}
+   Standard   &    For option {\bf d} \\ \hline
+FRC COFF & IT VS VR
+\end{tabular}
+
+
+\tt IT \rm is a number identifying the source pulse as described
+in Sec.\,\ref{postproc}. \tt VS \rm and \tt VR \rm are the
+projected radial velocities in m/s of the source and receiver, respectively,
+both being positive in the direction from source to receiver.
+Since this option requires incorporation of the
+source function in the wavenumber integral, the PP post-processor
+\underline{must} subsequently be used with source pulse -1 (impulse response).
+
+
+\subsubsection{Block IV: Environmental Model}
+
+OASP supports all the environmental models allowed for SAFARI as well as the
+ones described above in Section~\ref{oas_env}.  The significance of
+the standard environmental parameters is as follows
+\begin{itemize}	
+		\item[NL:]	Number of layers, including the upper and lower
+		half-spaces. These should always be included,
+		even in cases where they are vacuum.
+
+		\item[D:]	Depth in $m$ of upper boundary of layer or
+		halfspace. The reference depth can be choosen
+		arbitrarily, and D() is allowed to be negative.
+		For layer no. 1, i.e. the upper half-space, this
+     		parameter is dummy.
+
+		\item[CC:]	Velocity of compressional waves in $m/s$.
+        	If specified to 0.0, the layer or half-space is
+		vacuum.
+
+		\item[CS:]	Velocity of shear waves in m/s.
+ 		If specified to 0.0, the layer or half-space is fluid.
+                If CS()$< 0$, it is the compressional velocity at bottom of
+		layer, which is treated as fluid with $1/c(z)^{2}$ linear.
+
+		\item[AC:]   Attenuation of compressional waves in 
+		$dB/\lambda$. If the layer is fluid, and AC() is specified to
+		0.0, then an imperical water attenuation is
+		used (Skretting \& Leroy).
+
+		\item[AS:]   Attenuation of shear waves in $dB/\lambda$
+
+		\item[RO:]   Density in $g/cm^{3}$.
+
+		\item[RG:]  RMS roughness of interface in $m$. RG(1) is dummy. If RG$<0$ it represents the negative of the RMS roughness, and the associated correlation length CL and the spectral exponent M should follow. If RG$>0$ the correlation length is assumed to be infinite.
+		\item[CL:] Roughness correlation length in m. 
+
+                \item[M:] Spectral exponent of the power spectrum as
+                defined by Turgut \cite{Turgut_97}, with $1.5 <
+                \mbox{M} \le 2.5 $ for realistic surfaces, with
+                $\mbox{M} =1.5 $ corresponding to the highest
+                roughness, and $\mbox{M}=2.5$ being a very smooth
+                variation. For 2-D Goff-Jordan surfaces, the fractal
+                dimension is $ \mbox{D} = 4.5 - \mbox{M} $
+                Insignificant
+                for Gaussian spectrum (option {\bf g} not specified)
+                but a  value must
+                be given.
+		\end{itemize}
+
+
+\subsubsection{Block V: Sources}
+
+    OASP supports the same sources as  SAFARI-FIPP,  i.e 
+explosive sources in fluids or solids or vertical point forces in 
+solids  (option  X).  Multible sources in a  vertical  array  are 
+supported. If sources with horizontal directionality are desired, 
+the 3-dimensional version OASP3D must be used.
+
+\noindent {\bf Source Types}
+\label{oaspsou}  
+
+As in SAFARI the default source type in OASP 
+is an explosive type compressional source. In addition to the optional
+vertical and horizontal point forces, various seismic moment sources have  been
+added to OASP. The source type is specified by a number $(1-5)$ in the
+option field (line 2). The translation is as follows:
+\begin{enumerate}
+\item Explosive source (default) normalized to unit pressure at 1 m distance.
+\item Vertical point force with amplitude 1 N.
+\item Horizontal (in-plane) point force with amplitude 1 N.
+\item Dip-slip source with seismic moment 1 Nm. Dip angle specified in 
+      degrees in block V, following the other parameters.
+\item Omnidirectional seismic moment source representing explosive source. Same as type 1, but all three force dipoles have seismic moment 1 Nm.
+\end{enumerate}
+
+\noindent {\bf Source Normalization}
+
+    In  SAFARI-FIPP,  the source pulse shape was defined  as  the 
+pressure pulse produced at a distance of 1 m from the source (for 
+solids the negative of the normal stress 1 m below the source). 
+
+    In  OASP, the same source normalization has been  maintained 
+for point sources (explosive sources) in fluid media.
+    For solid media, however, the sources are normalized to  unit 
+volume (1 m$^3$) injection for explosive sources and unit force 
+1 N for point sources or 1 N/m for line sources.
+
+\noindent {\bf User defined Source Arrays}
+\label{oaspsar}
+
+Version 1.6 of OASP has been upgraded to allow a user-defined source
+array through options {\bf l} and {\bf v}. 
+
+Option {\bf l} is intended
+for general physical arrays with uneven spacing or special shadings,
+As for the built-in arrays, such user-defined arrays may be present in
+fluid as well as elastic media. The source type is specified as
+described above, and the array geometry and shading should be given
+in the file {\bf input.src} in the following format
+
+\small
+\begin{verbatim}
+LS
+SDC(1)  SDELAY(1)  SSTREN(1)    # Depth (m), Delay (s), Amplitude
+SDC(2)  SDELAY(2)  SSTREN(2) 
+SDC(3)  SDELAY(3)  SSTREN(3) 
+  :        :          :
+  :        :          :
+SDC(LS) SDELAY(LS) SSTREN(LS) 
+\end{verbatim}
+\normalsize
+
+
+Option {\bf v} is more general in the
+sense that it allows for different source types to be mixed in the
+array, and the pure time delay is replaced by a specification of the
+complex amplitudes in the frequency domain, allowing for
+representation of multibles etc. This option is used for {\em virtual
+arrays} such as those imposed by coupling of wave systems. For
+example, 
+this option
+is used for coupling tube wave phenomenae to propagation in a
+stratified formation when modeling borehole seismics. Option {\bf v}
+is only allowed for source arrays in elastic media (including
+transversily isotropic layers). The complex amplitudes of the source
+array is specified in the file {\bf input.strf}. This should be an
+ASCII {\bf trf} file, and the frequency sampling should be consistent
+with the frequency sampling selected in the input file {\bf input.dat}.
+The sources are omnidirectional in the
+horizontal.
+The source type is identified by a type number in the file header, 
+and each depth can
+have one of each source type present. The possible source types are:
+\begin{itemize}
+\item[{\bf 10}] Seismic monopole, i.e. 3 perpendicular and identical
+force dipoles. The unit is seismic moment (Nm).
+\item[{\bf 11}] Vertical force dipole. The unit is seismic moment
+(Nm).
+\item[{\bf 12}] Vertical force, positive downwards. The unit is force
+(N). This source type is e.g. used to represent caliber changes in fluid filled boreholes, as discussed by Kurkjian etal. \cite{Kurkjian_94}. 
+\item[{\bf 13}] Tube wave source. The strf file contains the tube wave
+pressure dependent term in Eq. (5) and (6) in the paper by Kurkjian
+etal. \cite{Kurkjian_94},
+\begin{displaymath}
+\frac{2 \pi a^2 \alpha_T}{-i \omega} p(\omega),
+\end{displaymath}
+where $p(\omega)$ is the complex pressure at angular frequency $\omega$, $a$ is the tube radius, and $\alpha_T$ is the tube wave speed at the source depths. 
+\end{itemize}
+The source types are recognized by PP which can therefore be used to
+check your source timeseries by simply specifying {\bf input.strf} in
+Field~1 of the PP main menu. 
+An example of an {\bf strf}-file for 21 source depths, with a monopole
+and a dipole source  at each depth, is
+
+\small
+\begin{verbatim}
+ PULSETRF                               # TRF file identification
+ OASP16                                 # Calculating program
+           2                            # No. sources per depth NSIN
+          10          11                # Source types
+ tube wave simulation                   # Title
+ +                                      # Sign if time factor exponent
+ 400.0                                  # Center frequency 
+   6.0                                  # Depth of primary source
+  -0.5  19.5  21                        # SD-min, SD-max, LS
+   0.0   0.0   1                        # Range (fixed).
+  1024   2   104  0.0001                # Time/frequency parameters
+           1                            # Dummy
+  -38.20335                             # Imag. part of frequencies
+           1                            # One Fourier order (fixed)
+           1                            # Fixed
+           0                            # Dummy
+           0                            # Dummy
+           0                            # Dummy
+  0.0                                   # Dummy
+  0.0                                   # Dummy
+  0.0                                   # Dummy
+  0.0                                   # Dummy
+  0.0                                   # Dummy
+  -24.15950 82.01517 -24.15950 82.01517 # Data
+  -28.20251 83.04697 -28.20251 83.04697 # Data
+  -32.38960 83.93490 -32.38960 83.93490 # Data
+  -36.71837 84.66933 -36.71837 84.66933 # Data
+  -41.18590 85.24049 -41.18590 85.24049 # Data
+       :        :         :        :        :
+\end{verbatim}
+\normalsize
+
+\noindent {\bf Note:} All lines should start with an empty space!.
+ The time/frequency parameters are given in the form
+
+\small
+\begin{verbatim}
+ NT  LX  MX  DT
+\end{verbatim}
+\normalsize
+\noindent where
+\begin{itemize}
+\item[NT] is the number of time samples
+\item[DT] is the time sampling interval in seconds
+\item[LX] is the index of the first frequency, LX = INT(FR1*DT)
+\item[MX] is the index of the last frequency, MX = INT(FR2*DT)
+\end{itemize}
+
+\noindent The complex data must be written in the following loop structure
+
+\small
+\begin{verbatim}
+      DO 10 K = LX,MX
+       DO 10 L = 1,LS
+        WRITE(15,*) (REAL(TRF(K,L,M)),AIMAG(TRF(K,L,M)), M=1,NSIN)
+ 10   CONTINUE
+\end{verbatim}
+\normalsize
+
+\subsubsection{Block VI: Receivers}
+
+The default specification of the receiver depths is the same as for
+SAFARI, i.e. through the parameters RD1, RD2 and NRD in Block VI, with
+\begin{itemize}
+\item[RD1]  Depth of uppermost receiver in meters
+\item[RD2]  Depth of lowermost receiver in meters
+\item[NRD]   Number of receiver depths 
+\end{itemize}
+
+The NRD receivers are placed equidistantly in the vertical.
+
+\noindent {\bf Non-equidistant Receiver Depths}
+
+In OASES the receiver depths can optionally be specified individually.
+The parameter NRD is used as a flag for this option. Thus, if NRD $< 0$
+the number of receivers is interpreted as --NRD, with the individual
+depths following immidiately following Block VI. As an example, SAFARI
+FIPP case 2 with receivers at 100, 105 and 120 m is run with the
+following data file: 
+
+\small
+\begin{verbatim}
+SAFARI-FIPP case 2.
+V H F O			       # Complex frequency integration. 
+5 0
+4
+  0    0     0 0   0   0   0
+  0 1500     0 0   0   1   0
+100 1600   400 0.2 0.5 1.8 0
+120 1800   600 0.1 0.2 2.0 0
+95
+100 100 -3                     # 3 receivers
+100.0 105.0 120.0              # Receiver depths in meters
+300 1E8                      
+1024 1 950 0
+2048 0.0 12.5 0.006 0.5 0.5 5
+\end{verbatim}
+\normalsize 
+
+The PP Post-processor is compatible and will depth-stack the traces at
+the correct depths.
+
+\noindent {\bf Tilted Receiver Arrays}
+
+The new option `T' allows for specification of an array tilt in the
+vertical plane containing the source and the receivers.
+
+The tilt angle and rotation origin is specified in the receiver depth
+line (Block VI):
+
+\begin{tabular}{cc}
+   Standard   &    For option T \\ \hline
+RD1 RD2 NR &  ZREF  ANGLE
+\end{tabular}
+
+
+The vertical arrays are rotated by an angle `ANGLE' in deg relative
+to the vertical. The rotation is performed with origin at depth `ZREF'.
+
+The parameters RD1, RD2 and NR always refer to the untilted case. 
+In the tilted case these parameters do therefore define the array
+geometry and not the actual depths of the receivers in the tilted array.
+The same is the case for the graphics output produced by the
+post-processor PP. 
+
+
+The source(s) is always at the origin and is therefore not rotated.
+Thus, for zero-offset tilted VSP-s, the reference depth ZREF should be set 
+equal to the source depth SD!
+
+
+
+\subsubsection{Block VII: Wavenumber integration}
+
+This block specifies the wavenumber sampling in the standard SAFARI
+format, with the significance of the parameters being as follows:
+\begin{itemize}
+		\item[CMIN:]   Minimum phase velocity in m/s. Determines the
+		upper limit of the truncated horizontal wavenumber space:
+			\begin{displaymath}
+			k_{max} = \frac{2\pi \ast \mbox{FREQ}}{\mbox{CMIN}}
+			\end{displaymath}
+		\item[CMAX:]	Maximum phase velocity in m/s. Determines the
+		lower limit of the truncated horizontal wave-
+		number space:
+			\begin{displaymath}
+			k_{min} = \frac{2\pi \ast \mbox{FREQ}}{\mbox{CMAX}}
+			\end{displaymath}
+		In plane geometry ( option P ) CMAX may be specified as 
+		negative. In this case, the negative wavenumber spectrum
+		will be included with $k_{min}=-k_{max}$, yielding correct 
+		solution also at zero range. In contrast to SAFARI,
+		OASP allows for complex contour integration (option J)
+		in this case.
+		\item[NW:]	Number of sampling points in wavenumber space.
+		In contrast to what is the case for OAST, 
+		NW does here not have to be an integer  power of 2.				The sampling points are placed equidistantly
+		in the truncated wavenumber space determined
+		by CMIN and CMAX. If CMAX$<0$, i.e. the inclusion of
+		the negative spectrum is enabled, then the NW sample
+		points will be distributed along the positive
+		wavenumber axis only, with the negative
+		components obtained by symmetry.
+
+		\item[IC1:]  Number of the first sampling point where the
+		calculation is to be performed. If IC1$>1$, 
+		then the Hankel transform is Hanning-windowed in the
+		interval 1,2$\ldots$IC1-1 before integration.
+
+		\item[IC2:]	Number of the last sampling point where the 
+		calculation is to be performed. If IC2$<$NWN,
+		then the Hankel transform is Hanning windowed in the
+		interval IC2+1,$\ldots$NW before integration.
+
+		\item[IF:] Frequency increment for plotting of
+integration  kernels. A value of 0 disables the plotting.
+		\end{itemize}
+ 
+\noindent {\bf Automatic wavenumber sampling}
+
+
+
+    OASP Version  1.4 and higher  have been supplied with  an  
+automatic  sampling 
+feature,  making  it possible for inexperienced users  to  obtain 
+correct   answers  in  the  first  attempt  without   the   usual 
+convergence  testing.  The  automatic sampling  is  activated  by 
+specifying the parameter NW to $ -1$ and it automatically  activates 
+the  complex frequency integration contour even though option  {\bf O} 
+may  not have been specified. The parameters IC1 and IC2 have  no 
+effect if the automatic sampling is selected.
+ 
+As an example, to run the SAFARI-FIPP case 2 problem with automatic
+sampling, change the data file as  follows:
+
+\small
+\begin{verbatim}
+SAFARI-FIPP case 2. Auto sampling.
+V H f                         # Bessel integration.
+5 0
+4
+  0    0     0 0   0   0   0
+  0 1500     0 0   0   1   0
+100 1600   400 0.2 0.5 1.8 0
+120 1800   600 0.1 0.2 2.0 0
+95
+100 100 1 
+ 300 1E8                      
+-1 0 0                         # NW   =   -1
+2048 0.0 12.5 0.006 0.5 0.5 5
+\end{verbatim}
+\normalsize 
+
+\subsection{Execution of OASP}
+
+    As  for  SAFARI,  filenames  are  passed  to  the  code   via 
+environmental parameters. In Unix systems a typical command  file 
+{\bf oasp} (in  \$HOME/oases/bin) is:
+
+\small
+\begin{verbatim}
+    #                            the number sign invokes the C-shell 
+    setenv FOR001 $1.dat       # input file 
+    setenv FOR002 $1.src       # Source array input file
+    setenv FOR015 $1.strf      # Source array trf file
+    setenv FOR019 $1.plp       # plot parameter file
+    setenv FOR020 $1.plt       # plot data file  
+    setenv FOR028 $1.cdr       # contour plot parameter file 
+    setenv FOR029 $1.bdr       # contour plot data file 
+    setenv FOR045 $1.rhs       # mean field amplitudes at rough interface
+    setenv FOR046 $1.vol       # mean field in volume scattering layer
+    oasp2                      # executable
+\end{verbatim}
+\normalsize
+
+    After preparing a data file with the name {\bf input.dat}, OASP  is 
+executed by the command:
+
+    $>$ {\bf oasp input}
+
+
+\subsection{Graphics}  
+
+    Command files are provided in a path directory for generating 
+the graphics.
+
+\noindent    To generate curve plots, issue the command:
+
+    $>$ {\bf mplot input}
+
+\noindent    To generate contour plots, issue the command:
+
+    $>$ {\bf cplot input}
+
+\newpage
+\subsection{OASP - Examples}
+
+\subsubsection{OASP Transmission loss calculation}
+
+\figmithtwo{figs/free.ps}{6.5}{figs/free_f.ps}{6.5}
+{Transmission loss contours produced by OASP and PP for a point source
+in an infinite fluid medium. a) Default trapezoidal rule integration
+with fast-field Hankel function approximation. b) Same problem, but
+full bessel function integration (Option f)}
+{fig:free}
+
+As an example of the use of OASP for computing transmission losses,
+and for demonstrating the difference between the full Bessel function
+integration and the default fast-field Hankel function approximation,
+the following data files computes the transfer function for a 150 Hz
+simple point source in a lossless, infinite fluid medium.
+
+\begin{verbatim}
+free.dat                           |   free_f.dat
+_____________________________________________________________________
+Infinite medium.                   |   Inf. medium. OASP Bes.Int.
+N J                                |   N J f  
+150 0                              |   150 0
+2                                  |   2
+0 1500 0 0.1 0 1 0                 |   0 1500 0 0.1 0 1 0
+0 1500 0 0.1 0 1 0                 |   0 1500 0 0.1 0 1 0
+0                                  |   0
+-200 200 61 30                     |   -200 200 61 30
+1000 1E8                           |   1000 1E8
+-1 1 1 1                           |   -1 1 1 1
+1024 150 150 0.0005 0 0.005 81     |   1024 150 150 0.0005 0 0.005 81  
+\end{verbatim}
+
+The execution of OASP with these input files generates the transfer
+function files, which are then converted to transmission loss by
+PP. Figure\,\ref{fig:free} shows the transmission loss contours in
+depth and range, plotted from PP using \tt plotmtv. The near field
+differences between the 'exact' and the fast-field Hankel transforms
+are evident.
+
+
+
+

@@ -1,0 +1,60 @@
+#
+# Root makefile for visualization project
+#
+
+LIBDIR   = Lib
+PLOTDIR  = Plot
+DOCDIR   = Docs
+UTILDIR  = Utils
+SUBDIRS  = $(LIBDIR) $(PLOTDIR) $(UTILDIR)
+INCDIR   = /usr/include
+LIBPATH  =
+
+# Your favorite installer
+# INSTALL = cp
+INSTALL = install -c -s
+
+# The binary is to be installed here
+PROGRAM  = plotmtv
+BINDIR   = ./Bin
+
+# The man pages are to to be installed here
+MANDIR   = /tcad/home/tig/ktoh/man/manl
+
+# ename the man page with the .l tag (plotmtv.l)
+MANTYPE  = .l
+
+world: all install
+
+all::
+	for i in $(SUBDIRS) ;\
+	do \
+	(cd $$i ; echo "making" all "in $(CURRENT_DIR)/$$i..."; \
+	$(MAKE) -f Makefile.orig all); \
+	done
+
+install::
+	if [ ! -d $(BINDIR) ] ; then mkdir $(BINDIR); fi;\
+	for i in $(SUBDIRS) ;\
+	do \
+	(cd $$i ; echo "making" install "in $(CURRENT_DIR)/$$i..."; \
+	$(MAKE) -f Makefile.orig install); \
+	done
+	cp $(DOCDIR)/$(PROGRAM).man $(MANDIR)/$(PROGRAM)$(MANTYPE)
+
+cleanall::
+	for i in $(SUBDIRS) ;\
+	do \
+	(cd $$i ; echo "making" cleanall "in $(CURRENT_DIR)/$$i..."; \
+	$(MAKE) -f Makefile.orig cleanall); \
+	done
+	\rm -f $(BINDIR)/*
+
+clean::
+	for i in $(SUBDIRS) ;\
+	do \
+	(cd $$i ; echo "making" clean "in $(CURRENT_DIR)/$$i..."; \
+	$(MAKE) -f Makefile.orig clean); \
+	done
+
+FORCE:

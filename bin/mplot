@@ -1,0 +1,5 @@
+#!/bin/csh
+setenv FOR019 $1.plp
+setenv FOR020 $1.plt
+#minfipplot
+fipplot

@@ -1,0 +1,8 @@
+echo '-------------------------------------------'
+date
+echo 'Start Single-Layer E/E High-contrast cut'
+rdoast ./input/SLeeHC > ./logs/SLeeHC.out
+mv ./input/SLeeHC.pl? ./run
+pltsplit -f ./run/SLeeHC -b 2 -p 1 -r 1 -d 3
+./bin/SLeeHC S
+echo 'End Single-Layer E/E High-contrast cut'

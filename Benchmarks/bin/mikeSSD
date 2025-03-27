@@ -1,0 +1,23 @@
+#!/usr/local/bin/tcsh
+mv ./tloss/mikeSSD.plt ./tloss/mikeSSD.plt.old
+mv ./tloss/mikeSSD.plp ./tloss/mikeSSD.plp.old
+./bin/make_plug ./run/mikeSSD ./tloss/stubs/mikeExD ./tloss/mikeSSD
+cat  ./refs/BEM/mikeExD.bem.par1.tot.rx1.dat ./run/mikeSSD.rdo.par1.for.rx1.dat>s1
+cat  s1 ./refs/CORE/mikeExD.gem.par1.for.rx1.dat > sfu2
+cat  ./refs/BEM/mikeExD.bem.par1.tot.rx2.dat ./run/mikeSSD.rdo.par1.for.rx2.dat>s3
+cat  s3 ./refs/CORE/mikeExD.gem.par1.for.rx2.dat > sfu4
+
+cat sfu2 sfu4 > ./tloss/mikeSSD.plt
+rm -f sfu? s?
+if ( $#argv == 1 ) then
+  if ($argv[1] == "S") then
+# Silent mode selected if argument is S
+  else
+# Plotting mode otherwise
+mplot ./tloss/mikeSSD
+  endif 
+else
+# Plotting mode as default with no arguments
+mplot ./tloss/mikeSSD
+endif
+

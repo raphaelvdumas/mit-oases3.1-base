@@ -1,0 +1,7 @@
+        SUBROUTINE BLANKS(XLN,YLN)
+        CALL BLNK1(-0.5,XLN+0.5,-0.5,-0.02,0)
+        CALL BLNK2(-0.5,XLN+0.5,YLN+0.02,YLN+0.5,0)
+        CALL BLNK3(-0.5,-0.02,-0.02,YLN+0.02,0)
+        CALL BLNK4(XLN+0.02,XLN+0.5,-0.02,YLN+0.02,0)
+        RETURN
+        END

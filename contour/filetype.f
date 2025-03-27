@@ -1,0 +1,44 @@
+      SUBROUTINE FILETYPE(FORM,FILENM,LUCDR,LUBDR)
+
+      CHARACTER*3 ADD, OPENED, LASTP
+      CHARACTER*3 FORM
+      CHARACTER*80 FILENM, INPFILE
+
+      COMMON /FLAGS/ ADD, OPENED, LASTP
+
+      IF(OPENED .EQ. 'YES')   RETURN
+
+      INQUIRE(UNIT=LUCDR,NAME=INPFILE)
+
+      DO 1000   J=80,1,-1
+      IF(INPFILE(J:J) .NE. '.')   GO TO 1000
+      IF(INPFILE(J+1:J+3) .EQ. 'CON')   THEN
+
+       IF(FORM .EQ. 'BIN')   THEN
+        OPEN(UNIT=LUBDR,FILE=FILENM,STATUS='OLD',
+     &  FORM='UNFORMATTED')
+       ELSE
+        OPEN(UNIT=LUBDR,FILE=FILENM,STATUS='OLD',
+     &  FORM='FORMATTED')
+       END IF 
+
+      ELSE
+
+       IF(FORM .EQ. 'BIN')   THEN
+c        OPEN(UNIT=LUBDR,STATUS='OLD',
+c     &  FORM='UNFORMATTED')
+        call opfilb(lubdr,ioerr)
+       ELSE
+c        OPEN(UNIT=LUBDR,STATUS='OLD',
+c     &  FORM='FORMATTED')
+        call opfilr(lubdr,ioerr)
+       END IF
+      END IF
+      GO TO 2000
+ 1000 CONTINUE
+      WRITE(6,*) ' ERROR IN SEARCHING INPUT DATA FILE NAME '
+      WRITE(6,*) INPFILE
+      STOP
+ 2000 CONTINUE
+      RETURN 
+      END

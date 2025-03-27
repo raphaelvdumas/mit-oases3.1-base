@@ -1,0 +1,67 @@
+$ DATA = CURVE2D
+
+% grid
+
+% xticklabel = (0   Tick1)
+% xticklabel = (1   Tick2)
+% xticklabel = (2   Tick3)
+% xticklabel = (2.5 Tick3.5)
+% xticklabel = (3   Tick4)
+
+% yticklabel = (0   Tick1234556779)
+% yticklabel = (1   Tick2)
+% yticklabel = (2   Tick3)
+% yticklabel = (2.5 Tick3.5)
+% yticklabel = (3   Tick4)
+
+% zticklabel = (-1.5 A0000)
+% zticklabel = (-0.5 B0000)
+% zticklabel = ( 0.0 C0000)
+% zticklabel = ( 0.5 D0000)
+% zticklabel = ( 1.5 E0000)
+
+0 0
+1 1
+2 2 
+3 3
+
+$ DATA = CURVE2D
+
+% grid
+
+% xticklabel = (0   Tick1)
+% xticklabel = (1   Tick2)
+% xticklabel = (2   Tick3)
+% xticklabel = (2.5 Tick3.5)
+% xticklabel = (3   Tick4)
+
+0 0
+1 1
+2 2 
+3 3
+
+$ DATA = CURVE2D
+
+% grid
+
+% yticklabel = (0   Tick1234556779)
+% yticklabel = (1   Tick2)
+% yticklabel = (2   Tick3)
+% yticklabel = (2.5 Tick3.5)
+% yticklabel = (3   Tick4)
+
+0 0
+1 1
+2 2 
+3 3
+
+$ DATA = CURVE2D
+
+% xticks = 4
+% grid   = on
+
+0 0
+1 1
+2 2 
+3 3
+$ END

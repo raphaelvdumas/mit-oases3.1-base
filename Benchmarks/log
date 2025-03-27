@@ -1,0 +1,300 @@
+-------------------------------------------
+Wed Sep  3 04:45:46 EDT 1997
+Start R&S Workshop Test case 2a (FLUID)
+ Processing RDOAST type file!
+ Number of lines in base file =          162
+ No. of lines per split file =           54
+Writing : ./run/RSWT2a.rdo.par1.for.rx1.dat       
+Writing : ./run/RSWT2a.rdo.par1.bac.rx1.dat       
+Writing : ./run/RSWT2a.rdo.par1.tot.rx1.dat       
+End R&S Workshop Test case 2a (FLUID)
+-------------------------------------------
+Wed Sep  3 04:46:46 EDT 1997
+Start R&S Workshop Test case 3a (FLUID)
+ Processing RDOAST type file!
+ Number of lines in base file =          162
+ No. of lines per split file =           54
+Writing : ./run/RSWT3a.rdo.par1.for.rx1.dat       
+Writing : ./run/RSWT3a.rdo.par1.bac.rx1.dat       
+Writing : ./run/RSWT3a.rdo.par1.tot.rx1.dat       
+End R&S Workshop Test case 3a (FLUID)
+-------------------------------------------
+Wed Sep  3 04:48:27 EDT 1997
+Start 30-deg Lloyd mirror beam
+ Processing RDOAST type file!
+ Number of lines in base file =          132
+ No. of lines per split file =           22
+Writing : ./run/30degLBeam.rdo.par1.for.rx1.dat   
+Writing : ./run/30degLBeam.rdo.par1.for.rx2.dat   
+Writing : ./run/30degLBeam.rdo.par1.bac.rx1.dat   
+Writing : ./run/30degLBeam.rdo.par1.bac.rx2.dat   
+Writing : ./run/30degLBeam.rdo.par1.tot.rx1.dat   
+Writing : ./run/30degLBeam.rdo.par1.tot.rx2.dat   
+End 30-deg Lloyd mirror beam
+-------------------------------------------
+Wed Sep  3 04:49:36 EDT 1997
+Start 45-deg Lloyd mirror beam
+ Processing RDOAST type file!
+ Number of lines in base file =          162
+ No. of lines per split file =           27
+Writing : ./run/45degLBeam.rdo.par1.for.rx1.dat   
+Writing : ./run/45degLBeam.rdo.par1.for.rx2.dat   
+Writing : ./run/45degLBeam.rdo.par1.bac.rx1.dat   
+Writing : ./run/45degLBeam.rdo.par1.bac.rx2.dat   
+Writing : ./run/45degLBeam.rdo.par1.tot.rx1.dat   
+Writing : ./run/45degLBeam.rdo.par1.tot.rx2.dat   
+End 45-deg Lloyd mirror beam
+-------------------------------------------
+Wed Sep  3 04:53:34 EDT 1997
+Start Horizontal Force test
+ Processing RDOAST type file!
+ Number of lines in base file =          801
+ No. of lines per split file =           89
+Writing : ./run/HorizForce.rdo.par1.for.rx1.dat   
+Writing : ./run/HorizForce.rdo.par2.for.rx1.dat   
+Writing : ./run/HorizForce.rdo.par3.for.rx1.dat   
+Writing : ./run/HorizForce.rdo.par1.bac.rx1.dat   
+Writing : ./run/HorizForce.rdo.par2.bac.rx1.dat   
+Writing : ./run/HorizForce.rdo.par3.bac.rx1.dat   
+Writing : ./run/HorizForce.rdo.par1.tot.rx1.dat   
+Writing : ./run/HorizForce.rdo.par2.tot.rx1.dat   
+Writing : ./run/HorizForce.rdo.par3.tot.rx1.dat   
+End Horizontal Force test
+-------------------------------------------
+Wed Sep  3 04:57:33 EDT 1997
+Start Point source test
+ Processing RDOAST type file!
+ Number of lines in base file =          801
+ No. of lines per split file =           89
+Writing : ./run/PntSrc.rdo.par1.for.rx1.dat       
+Writing : ./run/PntSrc.rdo.par2.for.rx1.dat       
+Writing : ./run/PntSrc.rdo.par3.for.rx1.dat       
+Writing : ./run/PntSrc.rdo.par1.bac.rx1.dat       
+Writing : ./run/PntSrc.rdo.par2.bac.rx1.dat       
+Writing : ./run/PntSrc.rdo.par3.bac.rx1.dat       
+Writing : ./run/PntSrc.rdo.par1.tot.rx1.dat       
+Writing : ./run/PntSrc.rdo.par2.tot.rx1.dat       
+Writing : ./run/PntSrc.rdo.par3.tot.rx1.dat       
+End Point source test
+-------------------------------------------
+Wed Sep  3 04:59:16 EDT 1997
+Start SACLANT step discontinuity (FLUID)
+ Processing RDOAST type file!
+ Number of lines in base file =          792
+ No. of lines per split file =          132
+Writing : ./run/SACL_step_F.rdo.par1.for.rx1.dat  
+Writing : ./run/SACL_step_F.rdo.par1.for.rx2.dat  
+Writing : ./run/SACL_step_F.rdo.par1.bac.rx1.dat  
+Writing : ./run/SACL_step_F.rdo.par1.bac.rx2.dat  
+Writing : ./run/SACL_step_F.rdo.par1.tot.rx1.dat  
+Writing : ./run/SACL_step_F.rdo.par1.tot.rx2.dat  
+End SACLANT step discontinuity (FLUID)
+-------------------------------------------
+Wed Sep  3 05:02:30 EDT 1997
+Start Single-Layer E/E High-contrast cut
+ Processing RDOAST type file!
+ Number of lines in base file =         1053
+ No. of lines per split file =          351
+Writing : ./run/SLeeHC.rdo.par1.for.rx1.dat       
+Writing : ./run/SLeeHC.rdo.par1.bac.rx1.dat       
+Writing : ./run/SLeeHC.rdo.par1.tot.rx1.dat       
+End Single-Layer E/E High-contrast cut
+-------------------------------------------
+Wed Sep  3 05:10:37 EDT 1997
+Start Single-Layer E/E cut
+ Processing RDOAST type file!
+ Number of lines in base file =         1059
+ No. of lines per split file =          353
+Writing : ./run/SLeed.rdo.par1.for.rx1.dat        
+Writing : ./run/SLeed.rdo.par1.bac.rx1.dat        
+Writing : ./run/SLeed.rdo.par1.tot.rx1.dat        
+End Single-Layer E/E cut
+-------------------------------------------
+Wed Sep  3 05:18:42 EDT 1997
+Start Single-Layer E/E Transparent cut
+ Processing RDOAST type file!
+ Number of lines in base file =         1062
+ No. of lines per split file =          354
+Writing : ./run/SLeet.rdo.par1.for.rx1.dat        
+Writing : ./run/SLeet.rdo.par2.for.rx1.dat        
+Writing : ./run/SLeet.rdo.par3.for.rx1.dat        
+End Single-Layer E/E Transparent cut
+-------------------------------------------
+Wed Sep  3 05:30:13 EDT 1997
+Start Single-Layer E/F cut
+ Processing RDOAST type file!
+ Number of lines in base file =          267
+ No. of lines per split file =           89
+Writing : ./run/SLef.rdo.par1.for.rx1.dat         
+Writing : ./run/SLef.rdo.par1.bac.rx1.dat         
+Writing : ./run/SLef.rdo.par1.tot.rx1.dat         
+End Single-Layer E/F cut
+-------------------------------------------
+Wed Sep  3 05:31:02 EDT 1997
+Start Single-Layer F/E cut
+ Processing RDOAST type file!
+ Number of lines in base file =          267
+ No. of lines per split file =           89
+Writing : ./run/SLfe.rdo.par1.for.rx1.dat         
+Writing : ./run/SLfe.rdo.par1.bac.rx1.dat         
+Writing : ./run/SLfe.rdo.par1.tot.rx1.dat         
+End Single-Layer F/E cut
+-------------------------------------------
+Wed Sep  3 05:31:49 EDT 1997
+Start Transparent vertical Point Force test
+ Processing RDOAST type file!
+ Number of lines in base file =          270
+ No. of lines per split file =           90
+Writing : ./run/TranspVF.rdo.par1.for.rx1.dat     
+Writing : ./run/TranspVF.rdo.par2.for.rx1.dat     
+Writing : ./run/TranspVF.rdo.par3.for.rx1.dat     
+End Transparent vertical Point Force test
+-------------------------------------------
+Wed Sep  3 05:34:18 EDT 1997
+Start Transparent Horizontal Point Force test
+ Processing RDOAST type file!
+ Number of lines in base file =          270
+ No. of lines per split file =           90
+Writing : ./run/TranspHF.rdo.par1.for.rx1.dat     
+Writing : ./run/TranspHF.rdo.par2.for.rx1.dat     
+Writing : ./run/TranspHF.rdo.par3.for.rx1.dat     
+End Transparent Horizontal Point Force test
+-------------------------------------------
+Wed Sep  3 05:36:48 EDT 1997
+Start Vertical Point Force test
+ Processing RDOAST type file!
+ Number of lines in base file =          801
+ No. of lines per split file =           89
+Writing : ./run/VertForce.rdo.par1.for.rx1.dat    
+Writing : ./run/VertForce.rdo.par2.for.rx1.dat    
+Writing : ./run/VertForce.rdo.par3.for.rx1.dat    
+Writing : ./run/VertForce.rdo.par1.bac.rx1.dat    
+Writing : ./run/VertForce.rdo.par2.bac.rx1.dat    
+Writing : ./run/VertForce.rdo.par3.bac.rx1.dat    
+Writing : ./run/VertForce.rdo.par1.tot.rx1.dat    
+Writing : ./run/VertForce.rdo.par2.tot.rx1.dat    
+Writing : ./run/VertForce.rdo.par3.tot.rx1.dat    
+End Vertical Point Force test
+-------------------------------------------
+Wed Sep  3 05:40:45 EDT 1997
+Start Fluid transparent problem
+ Processing RDOAST type file!
+ Number of lines in base file =          135
+ No. of lines per split file =           45
+Writing : ./run/fnuw.rdo.par1.for.rx1.dat         
+Writing : ./run/fnuw.rdo.par2.for.rx1.dat         
+Writing : ./run/fnuw.rdo.par3.for.rx1.dat         
+End Fluid transparent problem
+-------------------------------------------
+Wed Sep  3 05:42:07 EDT 1997
+Start Gilbert-Evans Fluid
+ Processing RDOAST type file!
+ Number of lines in base file =          252
+ No. of lines per split file =           84
+Writing : ./run/gilbert.rdo.par1.for.rx1.dat      
+Writing : ./run/gilbert.rdo.par1.bac.rx1.dat      
+Writing : ./run/gilbert.rdo.par1.tot.rx1.dat      
+End Gilbert-Evans Fluid
+-------------------------------------------
+Wed Sep  3 05:42:27 EDT 1997
+Start Gilbert-Evans Elastic
+ Processing RDOAST type file!
+ Number of lines in base file =         1998
+ No. of lines per split file =          333
+Writing : ./run/gilbertE.rdo.par1.for.rx1.dat     
+Writing : ./run/gilbertE.rdo.par2.for.rx1.dat     
+Writing : ./run/gilbertE.rdo.par1.bac.rx1.dat     
+Writing : ./run/gilbertE.rdo.par2.bac.rx1.dat     
+Writing : ./run/gilbertE.rdo.par1.tot.rx1.dat     
+Writing : ./run/gilbertE.rdo.par2.tot.rx1.dat     
+End Gilbert-Evans Elastic
+-------------------------------------------
+Wed Sep  3 05:52:00 EDT 1997
+Start Mike Collins Case D
+ Processing RDOAST type file!
+ Number of lines in base file =          888
+ No. of lines per split file =          148
+Writing : ./run/mikeExD.rdo.par1.for.rx1.dat      
+Writing : ./run/mikeExD.rdo.par1.for.rx2.dat      
+Writing : ./run/mikeExD.rdo.par1.bac.rx1.dat      
+Writing : ./run/mikeExD.rdo.par1.bac.rx2.dat      
+Writing : ./run/mikeExD.rdo.par1.tot.rx1.dat      
+Writing : ./run/mikeExD.rdo.par1.tot.rx2.dat      
+End Mike Collins Case D
+-------------------------------------------
+Wed Sep  3 05:55:57 EDT 1997
+Start Mike Collins Case E
+ Processing RDOAST type file!
+ Number of lines in base file =          888
+ No. of lines per split file =          148
+Writing : ./run/mikeExE.rdo.par1.for.rx1.dat      
+Writing : ./run/mikeExE.rdo.par1.for.rx2.dat      
+Writing : ./run/mikeExE.rdo.par1.bac.rx1.dat      
+Writing : ./run/mikeExE.rdo.par1.bac.rx2.dat      
+Writing : ./run/mikeExE.rdo.par1.tot.rx1.dat      
+Writing : ./run/mikeExE.rdo.par1.tot.rx2.dat      
+End Mike Collins Case E
+-------------------------------------------
+Wed Sep  3 05:59:52 EDT 1997
+Start Modified NORDA 3a
+ Processing RDOAST type file!
+ Number of lines in base file =          890
+ No. of lines per split file =          445
+Writing : ./run/norda3a.rdo.par1.for.rx1.dat      
+Writing : ./run/norda3a.rdo.par1.for.rx2.dat      
+End Modified NORDA 3a
+-------------------------------------------
+Wed Sep  3 06:06:24 EDT 1997
+Start Modified NORDA 3a - SVP Gradient
+ Processing RDOAST type file!
+ Number of lines in base file =          890
+ No. of lines per split file =          445
+Writing : ./run/norda3ac2.rdo.par1.for.rx1.dat    
+Writing : ./run/norda3ac2.rdo.par1.for.rx2.dat    
+End Modified NORDA 3a - SVP Gradient
+-------------------------------------------
+Wed Sep  3 06:14:14 EDT 1997
+Start R&S Workshop Test case 2b (FLUID)
+ Processing RDOAST type file!
+ Number of lines in base file =          168
+ No. of lines per split file =           56
+Writing : ./run/RSWT2b.rdo.par1.for.rx1.dat       
+Writing : ./run/RSWT2b.rdo.par1.bac.rx1.dat       
+Writing : ./run/RSWT2b.rdo.par1.tot.rx1.dat       
+End R&S Workshop Test case 2b (FLUID)
+-------------------------------------------
+Wed Sep  3 07:02:28 EDT 1997
+Start R&S Workshop Test case 3b (FLUID)
+ Processing RDOAST type file!
+ Number of lines in base file =          171
+ No. of lines per split file =           57
+Writing : ./run/RSWT3b.rdo.par1.for.rx1.dat       
+Writing : ./run/RSWT3b.rdo.par1.bac.rx1.dat       
+Writing : ./run/RSWT3b.rdo.par1.tot.rx1.dat       
+End R&S Workshop Test case 3b (FLUID)
+-------------------------------------------
+Wed Sep  3 08:42:32 EDT 1997
+Start ASA wedge (ELASTIC)
+ Processing RDOAST type file!
+ Number of lines in base file =          182
+ No. of lines per split file =           91
+Writing : ./run/ASAwedgeE.rdo.par1.for.rx1.dat    
+Writing : ./run/ASAwedgeE.rdo.par1.for.rx2.dat    
+End ASA wedge (ELASTIC)
+-------------------------------------------
+Wed Sep  3 08:55:14 EDT 1997
+Start SACLANT circle discontinuity (FLUID)
+ Processing RDOAST type file!
+ Number of lines in base file =          780
+ No. of lines per split file =          130
+Writing : ./run/SACL_circle_F.rdo.par1.for.rx1.dat
+Writing : ./run/SACL_circle_F.rdo.par1.for.rx2.dat
+Writing : ./run/SACL_circle_F.rdo.par1.bac.rx1.dat
+Writing : ./run/SACL_circle_F.rdo.par1.bac.rx2.dat
+Writing : ./run/SACL_circle_F.rdo.par1.tot.rx1.dat
+Writing : ./run/SACL_circle_F.rdo.par1.tot.rx2.dat
+End SACLANT circle discontinuity (FLUID)
+Wed Sep  3 09:04:33 EDT 1997
+-------------------------------------------
+All done
+-------------------------------------------

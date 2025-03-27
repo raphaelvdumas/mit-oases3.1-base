@@ -1,0 +1,175 @@
+      SUBROUTINE PLOTFIP(*,IC,OPTS,TIT,NT,TST,HGTC,MAXNP,
+     & N,AX,AY,PF,QF,INDEX,MARK,RDSYMB,LAB,SIM,XSTA,
+     & VXSTA,VYSTA,YSTA,ICURV,FMIN,FMAX,HTXT)
+
+      INTEGER RDSYMB
+
+
+      REAL AAX(1), AAY(1), TRACK1(2), TRACK2(2)
+      REAL AX(1), AY(1), PF(1), QF(1)
+
+      CHARACTER*2 FORMT, BDEV
+      CHARACTER*3 SIM(10), SYMB(20), ADD, PLOP(21),
+     & DEV, XBTYPE, YBTYPE, URC, ULC, NWR
+
+      CHARACTER*11 FACTORTMP
+      CHARACTER*12 OPTS
+      CHARACTER*20 LAB(20), BUFF
+      CHARACTER*80 TIT, HTXT, TITX, TITY
+
+      include 'default.f'
+
+      COMMON /SCALES/ YSCALETMP, DRRATIO, YOLDLEN,
+     &  SCFAC, HSCFAC, IHSC, FACTOR, FACT, FACSCALE, SCALEFACT
+
+      COMMON /SCISS/ SCXL, SCXR, SCYUP, SCYDOWN
+
+      COMMON /SETPRM/ PLOP, ADD, BDEV, FACTORTMP,
+     &  SYMB, DEV, FORMT, URC, ULC, NWR
+
+      COMMON /XAX/ X1,XL,XLEFT,XRIGHT,XSCALE,XINC,DX,
+     &  X1PL,XDUM4,IXDUM1,XDUM5,XDUM6,XDIV,XVAL(100),NXVAL
+
+      COMMON /XAXC/ TITX,XBTYPE
+
+      COMMON /XYLAST/ XLAST,YLAST,XLN,YLN,ISGN
+
+      COMMON /YAX/ Y1,YL,YUP,YDOWN,YSCALE,YINC,DY,
+     &  Y1PL,YDUM4,IYDUM1,YDUM5,YDUM6,YDIV,YVAL(100),NYVAL,
+     &  YBOX
+
+      COMMON /YAXC/ TITY,YBTYPE
+
+
+
+C     FORMATS
+
+  200 FORMAT(I2)
+  210 FORMAT(I3)
+  260 FORMAT(1X,//,' ****  WARNING : ',/,
+     & ' CHECK FOR DATA CLIPPING NOT PERFORMED BECAUSE OF ARRAY',/,
+     & ' SIZE LIMITATIONS.')
+C
+      IF(NOP .EQ. 1)   RETURN
+      ymean=yoffset(ic)
+
+      IF((OPTS(1:5).EQ.'PAREQ' .AND. PLOP(1).EQ.'RAN') .OR.
+     &   (OPTS(3:5).EQ.'IFD'   .AND. PLOP(1).EQ.'RAN'))   THEN
+          IF(IC.EQ.1)   THEN
+            CALL RESET('BLNKS')
+            DO IJTIT=1,50
+            IF(TIT(IJTIT:IJTIT+2).EQ.'NP=') GO TO 1000
+            END DO
+ 1000       WRITE(TIT(IJTIT+3:IJTIT+4),200) NSPP
+            CALL MESSAG(TIT,NT,TST/2.,YLN+.5*HGTC)
+          END IF 
+
+          IF(NSPP.GT.1)   CALL SMOOTL(NSPP, N, AX, AY, PF )
+
+          CALL OUT_TL(*2000,IC,HTXT,AX,AY,LAB,FREQ,SD,INDEX,
+     &                REIDEP,N)
+
+
+      ELSE IF(((OPTS(1:5).NE.'PAREQ') .AND. (NSPP.GT.1)) .OR.
+     &        ((OPTS(3:5).NE.'IFD'  ) .AND. (NSPP.GT.1)))   THEN
+           CALL SMOOTL(NSPP, N, AX, AY, PF )
+      END IF
+
+      IF (IUNI .NE.1)   THEN
+        IF(IDASH.GT.0)   THEN
+          IF (MOD(IC,3).EQ.2)   CALL DASH
+          IF (MOD(IC,3).EQ.0)   CALL DOT
+        END IF
+
+        IF(OPTS(8:12) .NE. 'ANGLE')   THEN
+           IF(N .LE. MAXNP)   THEN
+              CALL SCISSOR( AX, SCXL , SCXR   ,
+     &                  AY, SCYUP, SCYDOWN,
+     &                  N, PF, QF, NPTS    )
+        IF(NPTS .LE. 0)   RETURN
+           ELSE
+              WRITE(6,260) 
+           END IF
+         ELSE
+           DO 1238 I = 1,N
+             AX(I) = AMAX1(AX(I),XLEFT)
+             AX(I) = AMIN1(AX(I),XRIGHT)
+             AY(I) = AMAX1(AY(I),YUP)
+             AY(I) = AMIN1(AY(I),YDOWN)
+ 1238      CONTINUE    
+        END IF
+
+
+       IF(OPTS(8:12) .EQ. 'ANGLE' ) THEN 
+          CALL ANGPLT(INDEX,N,AX,AY,
+     &    XLEFT,XRIGHT,XLN,YUP,YDOWN,YLN,HGTC)
+
+       ELSE IF(OPTS(8:12) .EQ. 'TLAVR')   THEN
+          CALL MULTPLT(MARK,RDSYMB,AX,AY,1,NPTS,HGTC,ICURV,ymean)
+          IF(ADD .NE. 'ADD')   THEN
+            Y=((YDOWN-AY(N))*YLN)/(YDOWN-YUP)
+            CALL EXTN(LAB(IC+1),BUFF,LBUFF)
+            BUFF(LBUFF+1:LBUFF+1)='$'
+            Y=((YDOWN-AY(N))*YLN)/(YDOWN-YUP)-0.5*HGTC
+            CALL MESSAG(BUFF,LBUFF+1,XLN+1.5*HGTC,Y)
+          END IF
+
+        ELSE IF(OPTS(8:12) .EQ. 'TLAVF')   THEN
+          XDEL=XRIGHT-XLEFT
+          DELOG=ALOG(XRIGHT/XLEFT)
+          DO 1240 I=1,N
+          AX(I)=XLEFT+XDEL*ALOG(AX(I)/XLEFT)/DELOG
+ 1240     CONTINUE
+          CALL MULTPLT(MARK,RDSYMB,AX,AY,1,NPTS,HGTC,ICURV,ymean)
+
+        ELSE IF(OPTS(8:12) .EQ. 'GROUP')   THEN
+          CALL RESET('BLNKS')
+          XPOS= XLN + 2.0*HGTC
+          YPOS= YLN - 2.0*HGTC
+          IF(IC.EQ.1 )  CALL MESSAG('MODE',4,XPOS,YPOS)
+          CALL HEIGHT( HGTC )
+          CALL MARKER(IC)
+          CALL SCLPIC(1.0)
+          TSYY=0.93*YLN - FLOAT(IC)*0.05*YLN
+          WRITE(SIM(IC),210) INDEX
+          CALL MESSAG(SIM(IC)//'$',3,XSTA+0.4,TSYY)
+          AAX(1)=XLEFT+(XLN+0.18)*VXSTA
+          YSTA=TSYY+0.03
+          AAY(1)=YDOWN+YSTA*VYSTA
+          CALL CURVE(AAX,AAY,1,-1)
+          CALL CURVE(AX,AY,NPTS,1)
+
+        ELSE IF( (OPTS(8:12).EQ.'PROFL') .AND.
+     &    ((OPTS(1:4).EQ.'SNAP') .OR. (OPTS(1:6).EQ.'COUPLE')) )   THEN
+          CALL MARKER(8)
+          CALL CURVE(AX,AY,NPTS,1)
+        ELSE IF(OPTS(1:6) .EQ. 'MOCASS') THEN
+            CALL EXTLEG(HGTC,IC,LAB,AX,AY,1,NPTS,VXSTA,VYSTA)
+        ELSE 
+          CALL MULTPLT(MARK,RDSYMB,AX,AY,1,NPTS,HGTC,ICURV,Ymean)
+
+        END IF
+
+C       CALL BLANKS(XLN,YLN)
+        IF(HTXT.EQ.'SOURCE SPECTRUM') THEN
+          CALL DASH
+          TRACK1(1)=FMIN
+          TRACK1(2)=FMIN
+          TRACK2(1)=0.0
+          TRACK2(2)=YUP
+          CALL CURVE(TRACK1,TRACK2,2,0)
+          TRACK1(1)=FMAX
+          TRACK1(2)=FMAX
+          CALL CURVE(TRACK1,TRACK2,2,0)
+        END IF
+
+C       RESETTING DEFAULT VALUE FOR LINE (CONTINUOUS)
+        CALL DASH
+        CALL RESET('DASH')
+
+      END IF
+
+      RETURN
+ 2000 RETURN 1
+
+      END

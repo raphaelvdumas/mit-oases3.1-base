@@ -1,0 +1,293 @@
+From @dkuug.dk:vilmann@oedan.dk Wed Aug  8 08:55:03 1990
+Return-Path: <@dkuug.dk:vilmann@oedan.dk>
+Received: from dkuug.dk ([129.142.96.41]) by acoustics. (5.0/Alliant-5.0)
+	id AA15563; Wed, 8 Aug 90 08:54:07 EDT
+Received: from oedan.dk by dkuug.dk via EUnet with UUCP (5.64+/8+bit/IDA-1.2.8)
+	id AA10967; Wed, 8 Aug 90 15:03:22 +0200
+Date: Wed, 8 Aug 90 15:03:22 +0200
+From: vilmann@oedan.dk
+Message-Id: <9008081303.AA10967@dkuug.dk>
+To: pgers@acoustics.mit.edu
+Subject: pldriv.f
+X-Charset: ASCII
+X-Char-Esc: 29
+Status: R
+
+C
+C DEVICE DRIVER MODULES, PLOT, SYMBOL, PLOPEN, PLCLOS
+C USED BY OUTPUT MODLUES SSIOUT AND MSIOUT.
+C
+      SUBROUTINE PLOPEN(LUP)
+C
+      INTEGER X,Y,WIDTH,HEIGHT,LUP,K,L
+      CHARACTER*30 DATFIL,E30
+      CHARACTER*1 CE,CLT
+C      CALL PLOTS(0,0,4)
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C SELECT DEVICE AND INITIALIZE UNIRAS:                                 C
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C      CALL GROUTE('S LH300HA;E')
+C      CALL ROPEN
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C CHOOSE ABSOLUTE COORDINATES, I.E. ALL DISPLACEMENTS ARE IN PLOTTER-  C
+C UNITS. CLEAR SCREEN. SET UNIRAS JUSTIFICATION OF TEXT IN A WAY THAT  C
+C ALL TEXTSTRINGS WILL BE POSITIONED WITH LOWER LEFT CORNER AT THE     C
+C CORRESPONDING TEXTPOSITION. SELECT CONSTANT SPACING. SET CHARACTER   C
+C WIDTH EQUAL TO CHARACTER HEIGHT.                                     C
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C      CALL GSCAMM
+C      CALL GCLEAR
+C      CALL GCHARJ(0)
+C      CALL GCHART(1)
+C      CALL GCHARD(1.0)
+C      CALL GSHMES('SUP','DIS')
+      IF (LUP.GT.30) THEN
+         IF (LUP.EQ.32) THEN
+            L = 1
+            LUP = 31
+         ELSE
+            L = 0
+         ENDIF
+         DO 1000 K=1,30
+            E30(K:K) = ' '
+1000     CONTINUE
+C WRITE TO HPGL/2 FILE
+C OPEN DATA FILE.
+C         WRITE(*,*)'Enter output file:'
+C         READ *, DATFIL
+         OPEN(UNIT=LUP,FILE='HPGL.EH',ACCESS='SEQUENTIAL',
+     +FORM='FORMATTED',STATUS ='UNKNOWN')
+C ESCAPE CHARACTER
+         CE = CHAR(27)
+C OPEN SEQUENCE
+         IF (L.EQ.1) THEN
+C SELECT ORIENTATION (PORTRAIT)
+            E30(1:5) = CE//'&l0O'
+         ELSE
+C SELECT ORIENTATION (LANDSCAPE)
+            E30(1:5) = CE//'&l1O'
+         ENDIF
+         WRITE(LUP,'(A30)') E30
+C SELECT HPGL/2 STATUS
+         E30(5:5) = ' '
+         E30(1:4) = CE//'%0B'
+         WRITE(LUP,'(A30)') E30
+C INITIALIZE HPGL/2
+C IN - initialize
+C SP1 - select pen nr. 1
+C DT - define label terminator
+C SS - select standard character set
+C SC - turn scaling off
+C PW - select penwidth in mm
+         CLT = CHAR(3)
+         E30(1:10) = 'IN;SP1;DT'//CLT
+         E30(11:23) = ';SS;SC;PW.25;'
+         WRITE(LUP,'(A30)') E30
+C OPEN SEQUENCE TERMINATED
+      ELSE
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C INITIALIZE XWINDOWS:                                                 C
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+         IF (LUP.EQ.30) THEN
+C Landscape.
+            X = 193
+            Y = 0
+            WIDTH = 1117
+            HEIGHT = 792
+            CALL GISTART(X,Y,WIDTH,HEIGHT)
+         ELSE
+C Portrait
+            X = 468
+            Y = 0
+            WIDTH = 792
+            HEIGHT = 1004
+            CALL GISTART(X,Y,WIDTH,HEIGHT)
+         ENDIF
+      ENDIF
+      RETURN
+      END
+C**C
+      SUBROUTINE PLCLOS(LUP)
+      INTEGER LUP,K
+      CHARACTER*30 E30
+C
+C CLOSE PLOTTER:
+      IF (LUP.GT.30) THEN
+C WRITE TO HPGL/2 FILE
+C CLOSE SEQUENCE
+C SELECT PCL STATUS
+         DO 1000 K=1,30
+            E30(K:K) = ' '
+1000     CONTINUE
+         E30(1:4) = CHAR(27)//'%0A'
+         WRITE(LUP,'(A30)') E30
+C FORMFEED
+C         WRITE(LUP,'(A)') CHAR(12)
+C CLOSE SEQUENCE TERMINATED
+         CLOSE(LUP)
+      ELSE
+C WAIT FOR TERMINAL <CR>:
+C      CALL GDIAGC('WAIT')
+C CLEAR SCREEN:
+C      CALL GCLEAR
+C UNIRAS CLOSE COMMAND:
+C      CALL RCLOSE
+C XWINDOW CLOSE COMMAND:
+         WRITE(*,*)'HIT <CR> FOR CONTINUE:'
+         READ *
+         CALL QUITX
+      ENDIF
+      RETURN
+      END
+C**C
+      SUBROUTINE SYMBOL(X,Y,CHT,C1,T1,I,LUP)
+C
+C TELL DEVICE DRIVER TO PLOT A CHARACTER CONTAINED IN C1
+C WITH CHARACTER BOX HEIGHT EQUAL TO CHT AND POSITIONED
+C WITH LOWER LEFT CORNER OF THE CHARACTER BOX AT (X,Y),
+C WHERE X AND Y ARE IN ABSOLUTE PLOTTER COORDINATES.
+C
+      REAL X,Y,CHT,T1,T2,T3
+      INTEGER I,J,K,L,M,IX,IY,ICHT,LUP
+      CHARACTER*1 C1
+      CHARACTER*12 C12,D12
+      CHARACTER*30 C30,D30,E30
+C      CHARACTER*60 ASTR
+C      CHARACTER*2 C2
+C
+      IF (LUP.GT.30) THEN
+C WRITE TO HPGL/2 FILE
+C SPECIFY CHARACTER BOX SIZE
+C PLOTTER UNIT IS 0.0025 CM
+         DO 1000 K=1,30
+            E30(K:K) = ' '
+            C30(K:K) = ' '
+            D30(K:K) = ' '
+1000     CONTINUE
+         T2 = 0.0025*CHT
+         CALL RTOCH(T2,J,C12)
+         T3 = T2*0.8
+         CALL RTOCH(T3,M,D12)
+         K = J+2
+         C30(1:K) = 'SI'//D12(1:M)
+         L = K+1
+         K = L+J
+         C30(L:K) = ','//C12(1:J)
+         L = K+1
+         C30(L:L) = ';'
+         WRITE(LUP,'(A30)') C30
+         T2 = X+0.1*CHT
+         IX = NINT(T2)
+         IY = NINT(Y)
+         CALL NTOCH(C30,J,IX)
+         CALL NTOCH(D30,M,IY)
+C WRITE ABSOLUT POSITION OF LOWER LEFT CORNER OF CHARACTER BOX
+         K = J+5
+         E30(1:K) = 'PU;PA'//C30(1:J)
+         L = K+1
+         K = L+M
+         E30(L:K) = ','//D30(1:M)
+         L = K+1
+         E30(L:L) = ';'
+         WRITE(LUP,'(A30)') E30
+C WRITE CHARACTER WITH THE LABEL COMMAND
+         C30(1:5) = 'LB'//C1//CHAR(3)//';'
+         WRITE(LUP,'(A5)') C30(1:5)
+      ELSE
+C XWINDOWS PLOT CHARACTER COMMAND:
+         IX = NINT(X)
+         IF (LUP.EQ.30) THEN
+C Landscape.
+C DISPLAY COORDINATE SYSTEM IS UPSIDE DOWN!
+            IY = 792-NINT(Y)
+         ELSE
+C Portrait
+C DISPLAY COORDINATE SYSTEM IS UPSIDE DOWN!
+            IY = 1004-NINT(Y)
+         ENDIF
+         ICHT = INT(CHT)
+         CALL WRCHAR(IX,IY,C1,ICHT)
+      ENDIF
+C      CALL SYMBOL(X,Y,CHT,C1,T,I)
+C UNIRAS PLOT CHARACTER COMMAND:
+C      C2 = C1//'$'
+C      CALL GCHAR(C2,X,Y,CHT)
+      RETURN
+      END
+C**C
+      SUBROUTINE PLOT(X,Y,I,LUP)
+C
+      REAL X,Y
+      INTEGER I,J,K,L,M,IX,IY,LUP
+      CHARACTER*30 C30,D30,E30
+C
+      IF (LUP.GT.30) THEN
+C WRITE TO HPGL/2 FILE
+         DO 1000 K=1,30
+            E30(K:K) = ' '
+1000     CONTINUE
+         IX = NINT(X)
+         IY = NINT(Y)
+         CALL NTOCH(C30,J,IX)
+         CALL NTOCH(D30,M,IY)
+         IF (I.EQ.3) THEN
+C WRITE MOVE COMMAND
+            K = J+5
+            E30(1:K) = 'PU;PA'//C30(1:J)
+            L = K+1
+            K = L+M
+            E30(L:K) = ','//D30(1:M)
+            L = K+1
+            K = L+3
+            E30(L:K) = ';PD;'
+            WRITE(LUP,'(A30)') E30
+         ELSE
+C DRAW LINE
+            K = J+2
+            E30(1:K) = 'PA'//C30(1:J)
+            L = K+1
+            K = L+M
+            E30(L:K) = ','//D30(1:M)
+            L = K+1
+            E30(L:L) = ';'
+            WRITE(LUP,'(A30)') E30
+         ENDIF
+      ELSE
+C XWINDOWS MOVE OR DRAW COMMAND:
+C I = 3: XWINDOW MOVE PEN COMMAND.
+C I = 2: XWINDOW DRAW COMMAND.
+         IX = NINT(X)
+         IF (LUP.EQ.30) THEN
+C Landscape.
+C DISPLAY COORDINATE SYSTEM IS UPSIDE DOWN!
+            IY = 792-NINT(Y)
+         ELSE
+C Portrait
+C DISPLAY COORDINATE SYSTEM IS UPSIDE DOWN!
+            IY = 1004-NINT(Y)
+         ENDIF
+         CALL DRAWLINE(IX,IY,I)
+      ENDIF
+C
+C IF I = 3, THEN TELL DEVICE DRIVER TO MOVE PEN TO (X,Y),
+C WHERE X AND Y ARE IN ABSOLUTE PLOTTER COORDINATES.
+C      IF (I.EQ.3) THEN
+C         CALL PLOT(X,Y,3)
+C UNIRAS MOVE PEN COMMAND:
+C         CALL GVECT(X,Y,0)
+C         RETURN
+C      ENDIF
+C IF I = 2, THEN TELL DEVICE DRIVER TO DRAW A STRAIGHT LINE FROM
+C CURRENT POSITION TO (X,Y), WHERE X AND Y ARE IN ABSOLUTE PLOTTER
+C COORDINATES.
+C      IF (I.EQ.2) THEN
+C         CALL PLOT(X,Y,2)
+C UNIRAS DRAW COMMAND:
+C         CALL GVECT(X,Y,1)
+C         RETURN
+C      ENDIF
+      RETURN
+      END
+C
+
+

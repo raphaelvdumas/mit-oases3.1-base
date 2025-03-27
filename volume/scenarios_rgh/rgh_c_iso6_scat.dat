@@ -1,0 +1,16 @@
+Volume scat. Line source. . Goff-J. auto.
+N s g O f
+500 0
+4
+128.    1500 0 0 0 1.024 0 0
+128.    1600   0.00  0.01  0.00  2.0  -2.0 10.0 2.5
+128.01    1600  -1700.00  0.01  0.00  2.0  0     0
+228.00  1700   0000.00   0.01  0.00 2.0  0.0000  0	
+
+128	Where the interface scatterers start
+78 128 51
+
+700 1E8
+4096 1 4096 0
+4096 400 600 0.0004 0 1.0 2 NR time samples, freq start,end,time step, ranges..
+

@@ -1,0 +1,78 @@
+     1024                                  MODULO
+ COUPLE TLRAN,COH COL,NWR
+                                      
+                                                                         
+        3                            NUMBER OF LABELS
+  F  = 25.0Hz$                 
+  SD = 100.0m$                 
+  RD = 50.0m$                 
+    0.150000E+02                                 XLEN
+    0.900000E+01                                 YLEN
+        0                      GRID TYPE. 0:  NO GRID
+    0.000000E+00                                XLEFT
+    0.200000E+01                               XRIGHT
+    0.500000E+00                                 XINC
+    0.100000E+01                                 XDIV
+ Range (km)$                                                             
+ LIN
+    0.700000E+02                                YDOWN
+    0.300000E+02                                  YUP
+    0.100000E+02                                 YINC
+    0.100000E+01                                 YDIV
+ Normal stress (dB)$                                                              
+ LIN
+        3                                          NC
+     1001       1       1              NPT,NSP,CURVE IDENTIFIER 
+    0.000000E+00                     OFFSET ON X AXIS
+    0.20E-02                   STEP INC ON X AXIS
+    0.000000E+00                     OFFSET ON Y AXIS
+    0.000000E+00                   STEP INC ON Y AXIS
+      803                                                 N
+    0.374065E-02                                       XOFF
+    0.373598E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+      191                                                 N
+    0.000000E+00                                       RMIN
+    0.811518E-02                                      RSTEP
+    0.000000E+00                                       YMIN
+    0.000000E+00                                         DY
+ COUPLE TLRAN,COH COL,NWR                                                  
+                                      
+                                                                         
+        3                            NUMBER OF LABELS
+  F  = 25.0Hz$                 
+  SD = 100.0m$                 
+  RD = 170.0m$                 
+    0.150000E+02                                 XLEN
+    0.900000E+01                                 YLEN
+        0                      GRID TYPE. 0:  NO GRID
+    0.000000E+00                                XLEFT
+    0.200000E+01                               XRIGHT
+    0.500000E+00                                 XINC
+    0.100000E+01                                 XDIV
+ Range (km)$                                                             
+ LIN
+    0.700000E+02                                YDOWN
+    0.300000E+02                                  YUP
+    0.100000E+02                                 YINC
+    0.100000E+01                                 YDIV
+ Normal stress (dB)$                                                              
+ LIN
+       3                                          NC
+     1001       1       1              NPT,NSP,CURVE IDENTIFIER 
+    0.000000E+00                     OFFSET ON X AXIS
+    0.20E-02                   STEP INC ON X AXIS
+    0.000000E+00                     OFFSET ON Y AXIS
+    0.000000E+00                   STEP INC ON Y AXIS
+      803                                                 N
+    0.374065E-02                                       XOFF
+    0.373598E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+      191                                                 N
+    0.000000E+00                                       RMIN
+    0.811518E-02                                      RSTEP
+    0.000000E+00                                       YMIN
+    0.000000E+00                                         DY
+ CORE  PLTEND

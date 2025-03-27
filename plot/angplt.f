@@ -1,0 +1,46 @@
+      SUBROUTINE ANGPLT(MINMOD,M2,THETA,TLM,
+     & XLEFT,XRIGHT,XLN,YUP,YDOWN,YLN,HGTC)
+
+      CHARACTER*20 MODE
+      DIMENSION THETA(1),TLM(1),XX(2),YY(2)
+
+  100 FORMAT(1X,'MODE NO. ',I4)
+
+      DX=XLN/(XRIGHT-XLEFT)
+      DY=YLN/(YDOWN-YUP)
+      X=(THETA(1)-XLEFT)*DX+(HGTC*0.7)/2.0
+      Y=(YDOWN-TLM(1))*DY
+      CALL ANGLE(90.)
+      CALL MARKER(8)
+      CALL SCLPIC(1.0)
+      CALL HEIGHT(0.7*HGTC)
+      XX(1)=THETA(1)
+      YY(1)=YDOWN
+      XX(2)=XX(1)
+      YY(2)=TLM(1)
+      CALL CURVE(XX,YY,1,-1)
+      CALL CURVE(XX,YY,2,1)
+      WRITE(MODE,100)MINMOD
+      CALL MESSAG(MODE//'$',20,X,Y)
+      IF(M2.EQ.1)   RETURN
+      DO 1000   IM=2,M2
+      XX(1)=THETA(IM)
+      XX(2)=XX(1)
+      YY(1)=YDOWN
+      YY(2)=TLM(IM)
+      IF(MOD(IM-1,10).GT.0) THEN
+         IMARK=0
+      CALL CURVE(XX,YY,1,-1)
+      CALL CURVE(XX,YY,2,IMARK)
+      ELSE
+         IMARK=1
+      CALL CURVE(XX,YY,1,-1)
+      CALL CURVE(XX,YY,2,IMARK)
+        WRITE(MODE,100)IM+MINMOD-1
+         X=(THETA(IM)-XLEFT)*DX+(HGTC*0.7)/2.0
+         Y=(YDOWN-TLM(IM))*DY
+        CALL MESSAG(MODE//'$',20,X,Y)
+      END IF
+1000  CONTINUE
+      RETURN
+      END

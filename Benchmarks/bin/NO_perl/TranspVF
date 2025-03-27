@@ -1,0 +1,28 @@
+#!/usr/local/bin/tcsh
+mv ./tloss/TranspVF.plt ./tloss/TranspVF.plt.old
+#mv ./tloss/TranspVF.plp ./tloss/TranspVF.plp.old
+#./bin/make_plug ./run/TranspVF ./tloss/stubs/TranspVF ./tloss/TranspVF
+cat ./refs/BEM/TranspVF.bem.par1.for.rx1.dat ./run/TranspVF.rdo.par1.for.rx1.dat > f1
+cat ./refs/BEM/TranspVF.bem.par2.for.rx1.dat ./run/TranspVF.rdo.par2.for.rx1.dat > f2
+cat ./refs/BEM/TranspVF.bem.par3.for.rx1.dat ./run/TranspVF.rdo.par3.for.rx1.dat > f3
+cat f1  ./refs/CORE/TranspVF.gem.par1.for.rx1.dat > g1
+cat f2  ./refs/CORE/TranspVF.gem.par2.for.rx1.dat > g2
+cat f3  ./refs/CORE/TranspVF.gem.par3.for.rx1.dat > g3
+cat g1 g2 g3 > ./tloss/TranspVF.plt
+rm -f f? g? 
+if ( $#argv == 1 ) then
+  if ($argv[1] == "S") then
+# Silent mode selected if argument is S
+  else
+# Plotting mode otherwise
+mplot ./tloss/TranspVF
+  endif 
+else
+# Plotting mode as default with no arguments
+mplot ./tloss/TranspVF
+endif
+
+
+## Par1 -> Normal stress
+## Par2 -> Displacement w
+## Par3 -> Displacement u

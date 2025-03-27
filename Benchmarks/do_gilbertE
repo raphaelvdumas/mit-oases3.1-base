@@ -1,0 +1,8 @@
+echo '-------------------------------------------'
+date
+echo 'Start Gilbert-Evans Elastic'
+rdoast ./input/gilbertE > ./logs/gilbertE.out
+mv ./input/gilbertE.pl? ./run
+pltsplit -f ./run/gilbertE -b 2 -p 2 -r 1 -d 3
+./bin/gilbertE S
+echo 'End Gilbert-Evans Elastic'

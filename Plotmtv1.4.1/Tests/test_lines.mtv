@@ -1,0 +1,133 @@
+#
+# Test various line-types  
+#
+$ DATA=CURVE2D
+
+# Set Global properties for the curves in the dataset
+% toplabel   = "Line Types"                            # Top label for plot
+% subtitle   = "Markertype=4 Linecolor=1"              # Subtitle
+% comment    = "MTV provides 10 different line-types"  # Comment 
+% dmarkertype = 4                                      # Markertype
+% yflip=true                                           # y-axis is flipped
+% xmin=0.0 xmax=1.0 ymin=-0.25 ymax=4.25               # Plot boundaries
+
+# Curve 0
+% linetype   = 0
+% linelabel  = "Line 0"
+@ text x1=0.07 y1=0.00 linelabel="0"
+  0.10   0.00
+  0.90   0.00
+
+# Curve 1
+% linetype   = 1
+% linelabel  = "Line 1"
+@ text x1=0.07 y1=0.25 linelabel="1"
+  0.10   0.25
+  0.90   0.25
+
+# Curve 2
+% linetype   = 2
+% linelabel  = "Line 2"
+@ text x1=0.07 y1=0.50 linelabel="2"
+  0.10   0.50
+  0.90   0.50
+
+# Curve 3
+% linetype   = 3
+% linelabel  = "Line 3"
+@ text x1=0.07 y1=0.75 linelabel="3"
+  0.10   0.75
+  0.90   0.75
+
+# Curve 4
+% linetype   = 4
+% linelabel  = "Line 4"
+@ text x1=0.07 y1=1.00 linelabel="4"
+  0.10   1.00
+  0.90   1.00
+
+# Curve 5
+% linetype   = 5
+% linelabel  = "Line 5"
+@ text x1=0.07 y1=1.25 linelabel="5"
+  0.10   1.25
+  0.90   1.25
+
+# Curve 6
+% linetype   = 6
+% linelabel  = "Line 6"
+@ text x1=0.07 y1=1.50 linelabel="6"
+  0.10   1.50
+  0.90   1.50
+
+# Curve 7
+% linetype   = 7
+% linelabel  = "Line 7"
+@ text x1=0.07 y1=1.75 linelabel="7"
+  0.10   1.75
+  0.90   1.75
+
+# Curve 8
+% linetype   = 8
+% linelabel  = "Line 8"
+@ text x1=0.07 y1=2.00 linelabel="8"
+  0.10   2.00
+  0.90   2.00
+
+# Curve 9
+% linetype   = 9
+% linelabel  = "Line 9"
+@ text x1=0.07 y1=2.25 linelabel="9"
+  0.10   2.25
+  0.90   2.25
+
+# Curve 10
+% linetype   = 10
+% linelabel  = "Line 10"
+@ text x1=0.07 y1=2.50 linelabel="10"
+  0.10   2.50
+  0.90   2.50
+
+# Curve 11
+% linetype   = 11
+% linelabel  = "Line 11"
+@ text x1=0.07 y1=2.75 linelabel="11"
+  0.10   2.75
+  0.90   2.75
+
+# Curve 12
+% linetype   = 12
+% linelabel  = "Line 12"
+@ text x1=0.07 y1=3.00 linelabel="12"
+  0.10   3.00
+  0.90   3.00
+
+# Curve 13
+% linetype   = 13
+% linelabel  = "Line 13"
+@ text x1=0.07 y1=3.25 linelabel="13
+  0.10   3.25
+  0.90   3.25
+
+# Curve 14
+% linetype   = 14
+% linelabel  = "Line 14"
+@ text x1=0.07 y1=3.50 linelabel="14"
+  0.10   3.50
+  0.90   3.50
+
+# Curve 15
+% linetype   = 15
+% linelabel  = "Line 15"
+@ text x1=0.07 y1=3.75 linelabel="15"
+  0.10   3.75
+  0.90   3.75
+
+# Curve 16
+% linetype   = 16
+% linelabel  = "Line 16"
+@ text x1=0.07 y1=4.00 linelabel="16"
+  0.10   4.00
+  0.90   4.00
+
+$ END

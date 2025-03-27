@@ -1,0 +1,5 @@
+       SUBROUTINE WRITEZ(Z,NX,NY,LU)
+       DIMENSION Z(NX,NY)
+       WRITE(LU)((Z(IX,IY),IX=1,NX),IY=1,NY)
+       RETURN
+       END

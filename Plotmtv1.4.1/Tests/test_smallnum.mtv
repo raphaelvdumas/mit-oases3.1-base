@@ -1,0 +1,47 @@
+$ DATA=CURVE2D
+
+#
+# This tests very small numbers
+#
+
+% xscale=1e-50
+% yscale=0.1
+1.0e-50 0.0
+1.1e-50 0.1
+1.2e-50 0.2
+1.4e-50 0.3
+1.6e-50 0.4
+9.3e-50 0.7
+
+$ DATA=CURVE2D
+
+#
+# This tests very small numbers
+#
+1.0e-50 0.0
+1.1e-50 0.1
+1.2e-50 0.2
+1.4e-50 0.3
+1.6e-50 0.4
+9.3e-50 0.7
+
+$ DATA=CURVE2D
+
+#
+# This tests very small numbers
+#
+% xmin=1.1999e-50 xmax=1.2001e-50
+1.0e-50 0.0
+1.1e-50 0.1
+1.2e-50 0.2
+1.4e-50 0.3
+1.6e-50 0.4
+9.3e-50 0.7
+
+
+$DATA=CURVE2D
+% ylog
+0.0 1.0e14
+1.0 1.0e14
+
+$ END

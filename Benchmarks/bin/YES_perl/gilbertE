@@ -1,0 +1,24 @@
+#!/usr/local/bin/tcsh
+mv ./tloss/gilbertE.plt ./tloss/gilbertE.plt.old
+mv ./tloss/gilbertE.plp ./tloss/gilbertE.plp.old
+./bin/make_plug ./run/gilbertE ./tloss/stubs/gilbertE ./tloss/gilbertE
+cat ./run/gilbertE.rdo.par1.for.rx1.dat ./refs/CORE/gilbertE.gem.par1.for.rx1.dat > fff1
+cat ./run/gilbertE.rdo.par2.for.rx1.dat ./refs/CORE/gilbertE.gem.par2.for.rx1.dat > fff2
+cat ./run/gilbertE.rdo.par1.bac.rx1.dat ./refs/CORE/gilbertE.gem.par1.bac.rx1.dat > fff3
+cat ./run/gilbertE.rdo.par2.bac.rx1.dat ./refs/CORE/gilbertE.gem.par2.bac.rx1.dat > fff4
+cat fff1 fff2 fff3 fff4 > ./tloss/gilbertE.plt
+rm -f fff1 fff2 fff3 fff4 
+if ( $#argv == 1 ) then
+  if ($argv[1] == "S") then
+# Silent mode selected if argument is S
+  else
+# Plotting mode otherwise
+mplot ./tloss/gilbertE
+  endif 
+else
+# Plotting mode as default with no arguments
+mplot ./tloss/gilbertE
+endif
+
+
+

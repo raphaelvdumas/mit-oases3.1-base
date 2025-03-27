@@ -1,0 +1,46 @@
+R-S Workshop Test Case 3a
+P N T J B C 
+30. 30. 1 0.0				# FREQ_FIRST,FREQ_LAST,NFREQ,OFFDB
+5 1					# NCUT = No. of sectors
+
+4 3.00					# NUML, KNUML
+0 0 0 0 0 0 0                           # LAYER 1 ; SECTOR 1
+0.0   1500 0 0.0 0 1.0 0		#       2  
+50.0  1500 0 0.0 0 1.0 0		#	4
+150.0 1800 0 0.5 0 1.5 0		#       7
+
+4 0.12					# NUML, KNUML
+0 0 0 0 0 0 0                           # LAYER 1 ; SECTOR 2
+0.0   1500 0 0.0 0 1.0 0		#       2  
+50.0  1800 0 0.5 0 1.5 0		#	4
+150.0 1800 0 0.5 0 1.5 0		#       7
+
+4 0.10					# NUML, KNUML
+0 0 0 0 0 0 0                           # LAYER 1 ; SECTOR 3
+0.0   1500 0 0.0 0 1.0 0		#       2  
+50.0  1500 0 0.0 0 1.0 0		#	4
+150.0 1800 0 0.5 0 1.5 0		#       7
+
+4 0.12					# NUML, KNUML
+0 0 0 0 0 0 0                           # LAYER 1 ; SECTOR 4
+0.0   1500 0 0.0 0 1.0 0		#       2  
+50.0  1800 0 0.5 0 1.5 0		#	4
+150.0 1800 0 0.5 0 1.5 0		#       7
+
+4 0.66					# NUML, KNUML
+0 0 0 0 0 0 0                           # LAYER 1 ; SECTOR 5
+0.0   1500 0 0.0 0 1.0 0		#       2  
+50.0  1500 0 0.0 0 1.0 0		#	3
+150.0 1800 0 0.5 0 1.5 0		#       4
+
+50.					# SOURCE DEPTH
+1 201. 101 1				# RECEIVER DEPTH
+45 45 1
+800  -800        			# CMIN CMAX
+-1 1 1	
+0 4. 20. 5.	    			# XLEFT XRIGHT XAXIS XINC
+20 80 12. 10. 				# LOSS LEVELS IN DB
+0 200 10 50
+20 80 5
+
+

@@ -1,0 +1,8 @@
+      parameter (npbes=2048)
+      LOGICAL BESINT
+      REAL RRMAX,rkmax
+      COMMON /BESPR1/ RRMAX,rkmax,besdrk,ONODRK,NRKMAX,BESINT
+      COMMON /BESPR2/ BF(NPBES,NBFMAX)
+      REAL BF0(NP),BF1(NP)
+      EQUIVALENCE (BF0(1),BF(1,1))
+      EQUIVALENCE (BF1(1),BF(1,2))

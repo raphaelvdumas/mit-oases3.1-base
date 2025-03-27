@@ -1,0 +1,66 @@
+**************************************
+* OASES Version 2.1 README file      *
+**************************************
+
+Last Updated: 2013-09-26.
+
+>>>>> OASES Installation <<<<<
+
+Run the following commands (or the included build.sh script):
+
+  > mkdir build_dir # the build directory can be in any location you desire
+  > cd build_dir
+  > cmake ../       # replace '../' with the path to the Oases repository
+                    # alternatively, for installation in a custom directory
+                    #  add the cmake flag : -DCMAKE_INSTALL_PREFIX:PATH=~/custom/
+  > make
+  > make install
+
+
+OASES follows the FORTRAN-77 standard strictly.
+
+gfortran is the supported compiler, although historically other compilers were too.
+
+
+>>>>> Post-Installation Setup <<<<<
+
+After compiling and linking succesfully, put the bin directory BIN you
+have chosen into your PATH, and move all the command files shipped in
+oases/bin to this directory as well. To add the OASES bin directory to
+the path, use the statement (e.g. in your .cshrc file)
+
+> setenv OASES_SH ${HOME}/Oases/bin
+> setenv OASES_BIN ${HOME}/Oases/bin/${HOSTTYPE}-${OSTYPE}
+> setenv OASES_LIB ${HOME}/Oases/lib/${HOSTTYPE}-${OSTYPE}
+> set path = (OASES_SH OASES_BIN/$path)
+
+If you are running under X-windows, answer x when MINDIS asks for
+the terminal type, or you may set the environmental variable in your .login 
+file:
+
+> setenv USRTERMTYPE x
+
+Also, you have the option of using  the default MINDIS plot
+package which is included in the OASES export package, or the public
+domain PLOTMTV graphics package. 
+
+To use PLOTMTV for color contour plots, issue the command: 
+
+> setenv CON_PACKGE MTV
+
+Similarly to replace MINDIS with PLOTMTV for line plots, use the
+command
+
+> setenv PLP_PACKGE MTV  
+
+Type rehash, and you are ready to go. You will find sample data files in 
+Oases/tloss, Oases/pulse, and Oases/rcoef. 
+
+The documentation for OASES is available as a supplement to the SAFARI
+manual in LaTeX format in the file: Oases/doc/oases.tex
+
+Good luck and have fun. 
+
+Henrik Schmidt
+
+

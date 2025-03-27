@@ -1,0 +1,133 @@
+#
+# Test various marker-types  
+#
+$ DATA=CURVE2D
+
+# Set Global properties for the curves in the dataset
+% toplabel   = "Marker Types"                          # Top label for plot
+% subtitle   = "Linetype=0"                            # Subtitle
+% comment    = "MTV provides 13 different marker-types"# Comment
+% dlinetype  = 0                                       # Markertype
+% yflip=true                                           # y-axis is flipped
+% xmin=0.0 xmax=1.0 ymin=-0.25 ymax=4.25               # Plot boundaries
+
+# Curve 0
+% markertype = 0
+% linelabel  = "Marker 0"
+@ text x1=0.07 y1=0.00 linelabel="0"
+  0.10   0.00
+  0.90   0.00
+
+# Curve 1
+% markertype = 1
+% linelabel  = "Marker 1"
+@ text x1=0.07 y1=0.25 linelabel="1"
+  0.10   0.25
+  0.90   0.25
+
+# Curve 2
+% markertype = 2
+% linelabel  = "Marker 2"
+@ text x1=0.07 y1=0.50 linelabel="2"
+  0.10   0.50
+  0.90   0.50
+
+# Curve 3
+% markertype = 3
+% linelabel  = "Marker 3"
+@ text x1=0.07 y1=0.75 linelabel="3"
+  0.10   0.75
+  0.90   0.75
+
+# Curve 4
+% markertype = 4
+% linelabel  = "Marker 4"
+@ text x1=0.07 y1=1.00 linelabel="4"
+  0.10   1.00
+  0.90   1.00
+
+# Curve 5
+% markertype = 5
+% linelabel  = "Marker 5"
+@ text x1=0.07 y1=1.25 linelabel="5"
+  0.10   1.25
+  0.90   1.25
+
+# Curve 6
+% markertype = 6
+% linelabel  = "Marker 6"
+@ text x1=0.07 y1=1.50 linelabel="6"
+  0.10   1.50
+  0.90   1.50
+
+# Curve 7
+% markertype = 7
+% linelabel  = "Marker 7"
+@ text x1=0.07 y1=1.75 linelabel="7"
+  0.10   1.75
+  0.90   1.75
+
+# Curve 8
+% markertype = 8
+% linelabel  = "Marker 8"
+@ text x1=0.07 y1=2.00 linelabel="8"
+  0.10   2.00
+  0.90   2.00
+
+# Curve 9
+% markertype = 9
+% linelabel  = "Marker 9"
+@ text x1=0.07 y1=2.25 linelabel="9"
+  0.10   2.25
+  0.90   2.25
+
+# Curve 10
+% markertype = 10
+% linelabel  = "Marker 10"
+@ text x1=0.07 y1=2.50 linelabel="10"
+  0.10   2.50
+  0.90   2.50
+
+# Curve 11
+% markertype = 11
+% linelabel  = "Marker 11"
+@ text x1=0.07 y1=2.75 linelabel="11"
+  0.10   2.75
+  0.90   2.75
+
+# Curve 12
+% markertype = 12
+% linelabel  = "Marker 12"
+@ text x1=0.07 y1=3.00 linelabel="12"
+  0.10   3.00
+  0.90   3.00
+
+# Curve 13
+% markertype = 13
+% linelabel  = "Marker 13"
+@ text x1=0.07 y1=3.25 linelabel="13
+  0.10   3.25
+  0.90   3.25
+
+# Curve 14
+% markertype = 14
+% linelabel  = "Marker 14"
+@ text x1=0.07 y1=3.50 linelabel="14"
+  0.10   3.50
+  0.90   3.50
+
+# Curve 15
+% markertype = 15
+% linelabel  = "Marker 15"
+@ text x1=0.07 y1=3.75 linelabel="15"
+  0.10   3.75
+  0.90   3.75
+
+# Curve 16
+% markertype = 16
+% linelabel  = "Marker 16"
+@ text x1=0.07 y1=4.00 linelabel="16"
+  0.10   4.00
+  0.90   4.00
+
+$ END

@@ -1,0 +1,34 @@
+#!/usr/local/bin/tcsh
+mv ./tloss/PntSrc.plt ./tloss/PntSrc.plt.old
+mv ./tloss/PntSrc.plp ./tloss/PntSrc.plp.old
+./bin/make_plug ./run/PntSrc ./tloss/stubs/PntSrc ./tloss/PntSrc
+cat ./refs/BEM/bm-sensEED.ns.for.dat  ./run/PntSrc.rdo.par1.for.rx1.dat > gg1
+cat ./refs/BEM/bm-sensEED.w.for.dat   ./run/PntSrc.rdo.par2.for.rx1.dat > gg2
+cat ./refs/BEM/bm-sensEED.u.for.dat   ./run/PntSrc.rdo.par3.for.rx1.dat > gg3
+cat ./refs/BEM/bm-sensEED.ns.bac.dat  ./run/PntSrc.rdo.par1.bac.rx1.dat > gg4
+cat ./refs/BEM/bm-sensEED.w.bac.dat   ./run/PntSrc.rdo.par2.bac.rx1.dat > gg5
+cat ./refs/BEM/bm-sensEED.u.bac.dat   ./run/PntSrc.rdo.par3.bac.rx1.dat > gg6
+cat gg1 ./refs/CORE/PntSrc.gem.par1.for.rx1.dat > ff1
+cat gg2 ./refs/CORE/PntSrc.gem.par2.for.rx1.dat > ff2
+cat gg3 ./refs/CORE/PntSrc.gem.par3.for.rx1.dat > ff3
+cat gg4 ./refs/CORE/PntSrc.gem.par1.bac.rx1.dat > ff4
+cat gg5 ./refs/CORE/PntSrc.gem.par2.bac.rx1.dat > ff5
+cat gg6 ./refs/CORE/PntSrc.gem.par3.bac.rx1.dat > ff6
+cat ff1 ff2 ff3 ff4 ff5 ff6 > ./tloss/PntSrc.plt
+rm -f ff? gg?
+if ( $#argv == 1 ) then
+  if ($argv[1] == "S") then
+# Silent mode selected if argument is S
+  else
+# Plotting mode otherwise
+mplot ./tloss/PntSrc
+  endif 
+else
+# Plotting mode as default with no arguments
+mplot ./tloss/PntSrc
+endif
+
+
+## Par1 -> Normal stress
+## Par2 -> Displacement w
+## Par3 -> Displacement u

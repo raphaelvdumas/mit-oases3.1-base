@@ -1,0 +1,565 @@
+\section{    OASS: OASES Scattering and Reverberation  Module}
+
+OASS is a modfied version of OAST which computes the spatial statistics of the
+reverberant field in 2-D waveguides with 1-D rough interfaces.   The
+input file and output features are very similar to the ones for OAST.
+OASS also includes several components of OASN, both interms of
+specification of 3-D array geometries and the option of generating
+covariance matrices. The covariance matrices may be added to the
+covariance matrices computed for the mean field using OASN. The
+addition is performed offline using the \tt addcov \rm utility
+included in the oases package. Two other utilities are provided for
+computing from the generated \tt .xsm \rm files the normalized spatial
+correlation ( \tt nrmcov \rm ) or the coherence ( \tt coher \rm).
+
+The theoretical background for OASS as well as several applications
+are described in Ref.\,\cite{sk:rvb94}.
+
+OASS is always used in conjunction with OAST or OASR. These are used
+first to compute the mean field and generate a file (\tt .rhs \rm)
+containing the mean field boundary operators at the rough interfaces 
+(option {\bf s}). OASS then
+uses these to comp[ute the scattered or reverberant field using the
+expressions in Ref.\,\cite{sk:rvb94}. 
+
+OASS has two rather indepemdent brances:
+\begin{itemize}
+\item {\bf Scattering kernels:} This branch is activated by options
+{\bf I, S, c}. Computes the expectation of the scattering kernal
+amplitude for a single incident plane wave component. In general used
+together with OASR.
+\item {\bf Reverberation:} This branch is activated by the options
+{\bf C,D,R,a,r}. Computes the expectation of the spatial correlation
+or coherence of the reverberant field in stratified waveguides. Always
+used together with OAST since wavenumber sampling is adopted from mean
+field calculation.
+\end{itemize}
+
+ \subsection{Input Files for OASS}
+
+\begin{table}
+\begin{center}
+\small
+\begin{tabular}{|l|l|c|c|}
+\hline \hline
+Input parameter & Description & Units & Limits \\
+\hline \hline
+\multicolumn{4}{|l|}{\bf Block I: TITLE}  \\ \hline
+TITLE & Title of run  & - & $\leq$ 80 ch. \\
+\hline
+\multicolumn{4}{|l|}{\bf Block II: OPTIONS}  \\ \hline
+A B C $\cdots$ & Output and computational options & - & $\leq$ 40 ch. \\
+\hline
+\multicolumn{4}{|l|}{\bf Block III: FREQUENCY}  \\ \hline
+FREQ1,  COFF & FREQ: Frequency & Hz & $>0$ \\
+ 	& COFF: Integration contour offset & dB/$\Lambda$ & $\geq 0$ \\
+\hline
+\multicolumn{4}{|l|}{\bf Block IV: ENVIRONMENT}  \\ \hline
+NL 	& Number of layers, incl. halfspaces	& - & $\geq 2$  \\
+D,CC,CS,AC,AS,RO,RG,CL & D: Depth of interface. & m &  \\
+.	& CC: Compressional speed & m/s & $\geq 0$ \\
+.	& CS: Shear speed & m/s &  \\
+.	& AC: Compressional attenuation & dB/$\Lambda$ & $\geq 0$ \\
+.	& AS: Shear attenuation & dB/$\Lambda$ & $\geq 0$ \\
+	& RO: Density 	& g/cm$^{3}$ & $\geq 0$ \\
+	& RG: RMS of interface roughness & m &  \\
+	& CL: Correlation length of roughness & m & $>0$ \\
+	& M:  Spectral exponent &   & > 1.5 \\
+\hline
+\multicolumn{4}{|l|}{\bf Block V: SCATTERING DATA}  \\ \hline
+CPH, INTFC & CPH: Phase vel. incident plane wave & m/s &  \\
+ 	& INTFC: Interface no. for which to compute reverb.
+&  & $\geq 2$ \\
+\hline
+\multicolumn{4}{|l|}{\bf Block VI: RECEIVER ARRAY}  \\ \hline
+NRCV & NRCV: Number of receivers in array & - & $>0$ \\
+Z,X,Y,ITYP,GAIN & Z: Receiver depth & m & \\
+.	& X: x-offset of receiver & m & \\ 
+.	& Y: y-offset of receiver & m & \\
+.	& ITYP: Receiver type  & - & $>0$ \\
+	& GAIN: Receiver signal gain & dB & \\ 
+\hline
+\multicolumn{4}{|l|}{\bf Block VII: WAVENUMBER SAMPLING}  \\ 
+\hline
+CMIN,CMAX & Phase velocity interval, {\em scattered field} & & \\ 
+	& CMIN: Minimum phase velocity & m/s & $>0$ \\
+	& CMAX: Maximum phase velocity & m/s &  \\
+NW,IC1,IC2 & NW: Wavenumber sampling & - &   \\
+	& IC1: First sampling point & - & $\geq 1$ \\
+	& IC2: Last sampling point & - & $\leq$NW \\
+\hline
+\multicolumn{4}{|l|}{\bf Block VIII: RANGE OFFSETS (Options C,D,R,a,r)}  \\
+\hline
+RMIN,RMAX,NR &  RMIN: Minimum range & km & \\
+	& RMAX: Maximum range & km & \\
+	& NR: Number of ranges & & $>0$ \\
+\hline
+\multicolumn{4}{|l|}{\bf Block IX: RANGE INCREMENT (Option C)}  \\
+\hline
+DR,NDR &  DR: Range increment for horizontal correlation & m & $>0$  \\
+	& NDR: Number of range increments & & $>0$ \\
+\hline
+\end{tabular}
+\end{center}
+\caption{OASS input file structure.
+ \label{tab:oassI} }
+\end{table} 
+
+
+The input file for OASS is structured in 9 blocks, the first 7 of
+which must always
+be given.
+The last 2 blocks
+should only be included for certain options and parameter settings, as
+indicated in Table~\ref{tab:oassI}. The various blocks and the
+significance of the data is described in the following.
+
+\subsubsection{Block I: Title of Run}
+
+Arbitrary title to appear on graphics output.
+
+\subsubsection{Block II: Computational options}
+
+Similarly to the other modules, the output is controlled by a number
+of one-letter options:
+\begin{itemize}
+\item[C] Produces a contour plot of the horizontal spatial correlation
+vs range. The horizontal axis, defined in Block VIII,  represents the
+range separating the
+source and the array origin, while the vertical axis represents the
+horizontal separation (in radial direction) between two receivers. The
+separation and the number of separations must be given in Block IX.
+\item[D] Produces a contour plot of the intensity expectation of the
+scattered field vs. range and depth. The depths are defined as the
+depths of the sensors specified for the array in block VI, while the
+ranges are the ones given in Block VIII.
+\item[G] Uses a Goff-Jordan roughness spectrum as opposed to the
+default gaussian spectrum.
+\item[I] Creates a plot of the wavenumber spectrum of the scattered
+field at all depths of the receivers in the array, for a single
+incident plane wave with phase velocity CPH (Block V). Note that this
+option cannot be applied together with the reverb options \tt C,D,R,a,r
+\rm !  
+\item[P] Computes scattered field assuming plane geometry. The default
+is an axisymmetric environment.
+\item[R] Computation of reverberant field in spatial domain.
+Automatically set by options {\bf C,D,a,r}. Cancels options \tt I, S,
+c.\rm
+\item[S] Creates a plot of the angular spectrum of the scattered field
+at all depths of the receivers in the array, for a single
+incident plane wave with phase velocity CPH (Block V). Note that this
+option cannot be applied together with the reverb options \tt C,D,R,a,r
+\rm !  
+\item[a] Outputs the covariance matrix for the scattered field 
+ to a direct access
+file with extension \tt .xsm \rm. The file format is described below.
+\item[c] Produces a contour plot of the scattering kernels (wavenumber
+spectrum of scattered field) vs. wavenumber and depth, for a single
+incident plane wave with phase velocity CPH (Block V). Similar to
+option {\bf c} in OAST for mean field.  Note that this
+option cannot be applied together with the reverb options \tt C,D,R,a,r
+\rm !  
+\item[g] Same as {\bf G}.
+\item[p] Uses the perturbed boundary operator for the reverberant
+field, i.e. the effect of loss through re-scattering is included.
+Yields lower bound for reverb levels. The default ignores
+re-scattering and therefore yields upper bound.
+\item[r] Produces plot vs. range of expectation value of reverberant
+field in dB for all depths of the receivers in the array.
+\end{itemize}
+
+\subsubsection{Block III: Frequency Selection}
+
+In contrast to OAST, OASS works only for single frequency, FREQ. The
+input \tt .rhs \rm file is checked for consistency. 
+\tt COFF \rm is a leftover from OAST and has no effect since OASS will
+use the same wavenumber sampling and offset  used for generating the
+\tt .rhs \rm file.
+ 
+\subsubsection{Block IV: Environmental Data }
+
+The environmental data are specified in the standard SAFARI format.
+Just note that the interface rms roughness, correlation and spectral exponent must be
+specified. These are not adopted from OASR or OAST, and may therefore
+be different than the ones used for computing the mean field. This
+allows you to use a Born approoximation where the mean field is
+computed without roughness. Note also that OASS will only compute
+reverb from one interface at a time, as specified in Block V. However,
+several rough interfaces may be specified in the environment block.
+The additional rough interfaces only have effect for secondary
+scattering, option {\bf p}.
+
+\subsubsection{Block V: Scattering parameters}
+
+These parameters control the reverberation computation. \tt CPH \rm is
+the phase velocity of the incident field component for which  the
+scattering kernel should be computed. Only has significance for
+options \tt I, S and c, \rm otherwize it is dummy.
+
+INTFC is the number of the rough interface for which the scattered
+field or reverberation has to be computed. The roughness for that
+interface must be specified in the corresponding line in block IV.
+Note that the uppermost interface (lower boundary of upper halfspace)
+is interface number 2! 
+
+
+\subsubsection{Block VI: Receiver Array}
+
+OASS will compute the reverberant field on arbitrary
+three dimensional arrays. The first line of this block specifies the
+number of sensors. Then follows the position, type and gain for each
+sensor in the array. The  sensor positions are specified in
+cartesian coordinates \underline{in meters}. The types currently
+implemented are as follows
+
+\begin{enumerate}
+\item Hydrophone. Normal stress $ \sigma_{zz}$ (negative of pressure in
+water) in Pa for source level 1 Pa (or $\mu$Pa for source level 1 $\mu$Pa). 
+\item Geophone. Particle velocity $\dot{u}$ in $x$-direction
+(horizontal).  Unit is
+m/s for source level 1 Pa (or $\mu$m/s for source level 1 $\mu$Pa).
+\item Geophone. Particle velocity $\dot{v}$ in $y$-direction
+(horizontal).  Unit is
+m/s for source level 1 Pa (or $\mu$m/s for source level 1 $\mu$Pa).
+\item Geophone. Particle velocity $\dot{w}$ in $z$-direction
+(vertical, positive downwards).  Unit is
+m/s for source level 1 Pa (or $\mu$m/s for source level 1 $\mu$Pa).
+\end{enumerate}
+
+The gain is a calibration factor in dB which is applied to
+ambient noise and signal on all sensors. {\em Note: OASS v 1.7 does
+not currently allow for mixed arrays.}
+
+\subsubsection{Block VII: Wavenumber Sampling}
+
+The wavenumber sampling block is of the standard SAFARI/OASES format.
+The phase velocities control the wavenumber interval included in the
+computation of both scattering kernels (options \tt I,S,c\rm), and the
+reverberant field (options \tt C,D,R,a,r\rm). The sampling data \tt
+NW,IC1,IC2 \rm are only used for kernel computations. For computation
+of reverberation (options \tt C,D,R,a,r\rm) the sampling, including the
+complex offset, is
+automatically chosen to be identical to the one used for the mean
+field in OAST.
+
+\subsubsection{Block VIII: Range Offsets}
+
+OASS will compute the reverberation for multible range offsets  between the
+source (at origin in OAST) and the receiver array origin in OASS. This
+allows for efficient computation of the range-dependence of the
+reverberant field. The range offsets are specified as a minimum and
+maximum value, \tt RMIN, RMAX \rm in km, and the number of offsets
+considered \tt NR. \rm 
+
+Note that the offset does not apply to option
+\tt a. \rm The covariance matrix is computed for zero offset. For
+bistatic scenarios the range must therefore be specified directly in
+the receiver coordinates. 
+
+On the other hand the other reverb options
+\tt C,D,r \rm do not use the horizontal coordinates of the array,
+i.e they basically compute the reverb for a VLA at
+different horizontal offsets. In other words, only the receiver depths
+are used for these options.
+
+\subsubsection{Block VIII: Range Increments}
+
+Used to define a local horizontal array with spacing \tt DR \rm in
+meter and
+\tt NDR \rm sensors, for which option \tt C \rm will compute the
+horizontal correlation vs offset.
+
+\subsubsection{Examples}
+\label{sec:oassex}
+
+The following OASR input file \tt dacol-rhs.dat \rm produces the 
+plot of the reflection coefficient shown in Fig.~3 of
+Ref.~\cite{ks:jasa89}, and generates the file \tt dacol-rhs.rhs \rm
+with the boundary operators used subsequently by  OASS to compute the
+scattering kernels.
+
+\noindent \tt dacol-rhs.dat: \rm
+
+\small
+\begin{verbatim}
+Dacol and Berman. l= 7.07. 
+N s
+3
+0 1500 0 0 0 1 0
+0 1500 0 0 0 1 0
+0 5000 2000 0.00 0.00 3.0 -1. 7.07 
+100 100 1 1
+0.01 89.99 91 0
+90 0 12 15                         # Grazing angle axes
+0. 10 12 1                         # Loss axes
+\end{verbatim}
+
+The input file used subsequently by OASS to generate the plots in 
+Figs.~4 and 5 of Ref.\,\cite{ks:jasa89}, is
+
+\noindent \tt dacol-sca.dat: \rm
+
+\small
+\begin{verbatim}
+Dacol and Berman. l= 7.07.
+P N I S                             # Plane geometry
+100
+3
+0 1500 0 0 0 1 0
+0 1500 0 0 0 1 0
+0 5000 2000 0.00 0.00 3.0 -1. 7.07
+2121.32 3                           # cph=2121 ~ 45 deg.
+2                                   # two depths
+-60 0 0 1 0
+-10 0 0 1 0
+
+1000 -1000                          # pos+neg spectrum
+1024 1 1024
+\end{verbatim}
+
+
+
+
+
+
+
+The following OAST input file \tt arsrp-mean.dat \rm produces the
+contour plot of the mean field for the ARSRP scenari, shown in Fig.\,1
+of Ref.~\cite{sk:rvb94}:
+
+
+\noindent \tt arsrp-mean.dat: \rm
+
+\small
+\begin{verbatim}
+ARSRP J218. 6 deg. Basalt.      # >>> Block I: Title
+N J C I T L P G s               # >>> Block II: Options
+250 250 1 0                     # >>> Block III: Frequency sampling
+16                              # >>> Block IV: Environment
+0 0 0 0 0 0 0
+0 1544 -1524 0 0 1 0
+175.0 1524. -1521 0 0 1 0
+350   1521. -1510 0 0 1 0
+650 1510 -1497 0 0 1 0
+950 1497 -1495 0 0 1 0
+1250 1495 -1497 0 0 1 0
+1500 1497 -1498 0 0 1 0
+1750 1498 -1500 0 0 1 0
+2125 1500 -1504 0 0 1 0
+2500 1504 -1510 0 0 1 0
+2875 1510 -1516 0 0 1 0
+3250 1516 -1523 0 0 1 0
+3625 1523 -1530 0 0 1 0
+3990 1530 0 0 0 1 0             # Note iso layer at rough bottom!
+4000 5200 2500 .2 .5 2.4 -2 6   # 2 m RMS, L=6 m
+
+
+175 10 3.66 6.0 1 4000          # Block V: Source array
+1 4000 41 40                    # Block VI:Receiver depths
+
+1520 1545                       # Block VII: Phase velocities
+-1 1 1                          #            Auto sampling
+
+0 40 20 10                      # Block VIII: Range axis
+0 80 12 10                      # Block IX: TL axes.
+0 4000 12 500                   # Block X: Depth axis
+40 70 3                         # Block XI: Contour intervals
+
+1450 1550 15 25                 # Block XII: Velocity axis
+0 4000 15 1000                  #            Depth axis
+\end{verbatim}
+
+To create the expectation of the scattered field intensity in Fig.\,2b
+of Ref.\cite{sk:rvb94}, use the following input file with OASS.
+
+\noindent \tt arsrp.dat: \rm
+\small
+\begin{verbatim}
+ARSRP J218. 6 deg. Basalt. L=6m # Block I: Title
+P D G                           # Block II: Options
+250 0                           # Block III: Frequency
+16                              # Block IV: Environment            
+0 0 0 0 0 0 0
+0 1544 -1524 0 0 1 0
+175.0 1524. -1521 0 0 1 0
+350   1521. -1510 0 0 1 0
+650 1510 -1497 0 0 1 0
+950 1497 -1495 0 0 1 0
+1250 1495 -1497 0 0 1 0
+1500 1497 -1498 0 0 1 0
+1750 1498 -1500 0 0 1 0
+2125 1500 -1504 0 0 1 0
+2500 1504 -1510 0 0 1 0
+2875 1510 -1516 0 0 1 0
+3250 1516 -1523 0 0 1 0
+3625 1523 -1530 0 0 1 0
+3990 1530 0 0 0 1 0             # Note iso layer at rough bottom!
+4000 5200 2500 .2 .5 2.4 -2 6   # 2 m RMS, L=6 m
+
+1500 16                         # Block V: dummy, Interface #.
+
+21                              # Block VI: 4 km long VLA
+1 0 0 1 0
+200 0 0 1 0
+400 0 0 1 0
+600 0 0 1 0
+800 0 0 1 0
+1000 0 0 1 0
+1200 0 0 1 0
+1400 0 0 1 0
+1600 0 0 1 0
+1800 0 0 1 0
+2000 0 0 1 0
+2200 0 0 1 0
+2400 0 0 1 0
+2600 0 0 1 0
+2800 0 0 1 0
+3000 0 0 1 0
+3200 0 0 1 0
+3400 0 0 1 0
+3600 0 0 1 0
+3800 0 0 1 0
+3999 0 0 1 0
+
+1450 -1450                      # Block VII: CMIN, CMAX
+2048 1 2048			#            dummy
+
+0 40 101                        # Block VIII: 101 ranges, 0<r<40 km
+\end{verbatim}
+\normalsize
+
+\subsection{Execution of OASS}
+
+    As  for the other OASES modules,  filenames  are  passed  to OASS   via 
+environmental parameters. In Unix systems a typical script  file 
+{\bf oass} (in  \$HOME/oases/bin) is:
+
+\small
+\begin{verbatim}
+    #                            the number sign invokes the C-shell 
+    setenv FOR001 $1.dat       # input file 
+    setenv FOR019 $1.plp       # plot parameter file
+    setenv FOR020 $1.plt       # plot data file  
+    setenv FOR028 $1.cdr       # contour plot parameter file 
+    setenv FOR029 $1.bdr       # contour plot data file 
+    setenv FOR045 $2.rhs       # rough boundary operator input file
+    setenv FOR016 $1.xsm       # covariance matrices
+    oass2                  # executable
+\end{verbatim}
+\normalsize
+To compute the coherent reflection coefficient and the scattering
+kernels for the rough granite halspace problem above, use the
+commands:
+
+ $>$ {\bf oasr dacol-rhs}
+
+ $>$ {\bf oass dacol-sca dacol-rhs}
+
+To run the ARSRP cases described above, use the following commands:
+    
+    $>$ {\bf oast arsrp-mean}
+
+    $>$ {\bf oass arsrp arsrp-mean}
+
+\subsection{Graphics}  
+
+    Command files are provided in a path directory for generating 
+the graphics produced by oass.
+
+\noindent    To generate curve plots, issue the command:
+
+    $>$ {\bf mplot input}
+
+\noindent    To generate contour plots, issue the command:
+
+    $>$ {\bf cplot input}
+
+
+\subsection{Output Files}
+
+In addition to the graphics output files, OASS optionally (option {\bf
+a}) produces
+a file containing the computed covariance matrix, e.g.
+for use by the array processing module OASES-MFP, or by other
+processing software. Note that OASS assumes a time factor $ \exp(i
+\omega t) $. 
+
+
+\subsubsection{Covariance Matrices}
+\label{sec:scova}
+
+The covariance matrix is written to a binary, direct access file with
+a fixed record length of 8 bytes, identical to the format generated by
+OASN. The covariance matrices for the total field may be obtained by
+adding the ones generated for OASN and OASS using the utility 
+\tt addcov. \rm The file will have the name \tt input.xsm \rm. The file is
+opened with the following statements:
+
+\small
+\begin{verbatim}
+C        *****  OPEN XSM FILE...Note that the logical unit 16 must 
+C        be assigned a filename external to the program, 
+C        in Unix: setenv FOR016 input.xsm
+         LUN=16
+         call getenv('FOR016',XSMFILE)
+         OPEN  ( UNIT       = LUN
+     -,          FILE       = XSMFILE
+     -,          STATUS     = 'UNKNOWN'
+     -,          FORM       = 'UNFORMATTED'
+     -,          ACCESS     = 'DIRECT'
+     -,          RECL       = 8         )
+\end{verbatim}
+\normalsize
+
+\noindent \underline{Note:} This \tt OPEN \rm statement is used for machines
+where the fixed record length for unformatted files is given in {\em
+bytes} (e.g. Alliant FX-40). 
+Some machines (e.g. DEC 5000 workstations) require the record lenth
+in words; in that case specify \tt RECL = 2 \rm.
+
+The first 10 records of the \tt xsm \rm file contains the header,
+identifying the file in terms of title, number of sensors and
+frequency sampling. The header has been written with the following
+statements, with the parameters defined in Table~\ref{tab:oasnI}:
+
+\small
+\begin{verbatim}
+C *** WRITE HEADER
+         WRITE (LUN,REC=1) TITLE(1:8)
+         WRITE (LUN,REC=2) TITLE(9:16)
+         WRITE (LUN,REC=3) TITLE(17:24)
+         WRITE (LUN,REC=4) TITLE(25:32)
+         WRITE (LUN,REC=5) NRCV, NFREQ
+c >>> Dummy integers IZERO
+         WRITE (LUN,REC=6) IZERO, IZERO
+         WRITE (LUN,REC=7) FREQ1, FREQ2
+c >>> DELFRQ is the frequency increment (FREQ2 - FREQ1)/(NFREQ-1)
+         WRITE (LUN,REC=8) DELFRQ, ZERO
+c >>> The surface and white noise levels for info
+         WRITE (LUN,REC=9) SSLEV,WNLEV
+c >>> BLANK FILL NEXT RECORD FOR FUTURE USE
+         WRITE (LUN,REC=10) ZERO,ZERO
+\end{verbatim}
+\normalsize
+
+OASS writes the covariance matrix columnwise using the following
+loop structure  
+
+\small
+\begin{verbatim}
+         :
+      COMPLEX COVMAT(NRCV,NRCV,NFREQ)
+         :
+         :
+C >>> WRITE XSM
+      DO 20 IFREQ=1,NFREQ
+       DO 20 JRCV=1,NRCV
+        DO 20 IRCV=1,NRCV
+         IREC = 10 + IRCV + (JRCV-1)*NRCV + (IFREQ-1)*NRCV*NRCV
+         WRITE (LUN,REC=IREC) COVMAT(IRCV,JRCV,IFREQ)
+20    CONTINUE
+\end{verbatim}
+\normalsize
+
+
+

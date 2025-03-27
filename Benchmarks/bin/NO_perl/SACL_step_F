@@ -1,0 +1,22 @@
+#!/usr/local/bin/tcsh
+mv ./tloss/SACL_step_F.plt ./tloss/SACL_step_F.plt.old
+#mv ./tloss/SACL_step_F.plp ./tloss/SACL_step_F.plp.old
+#./bin/make_plug ./run/SACL_step_F ./tloss/stubs/SACL_step_F ./tloss/SACL_step_F
+cat  ./refs/COUPLE/stairbck50.plt  ./run/SACL_step_F.rdo.par1.bac.rx1.dat > s1
+cat s1 ./refs/CORE/SACL_step_F.gem.par1.bac.rx1.dat > x1
+cat  ./refs/COUPLE/stairbck170.plt ./run/SACL_step_F.rdo.par1.bac.rx2.dat > s2
+cat s2 ./refs/CORE/SACL_step_F.gem.par1.bac.rx2.dat > x2
+cat x1 x2 > ./tloss/SACL_step_F.plt
+rm -f x? s?
+if ( $#argv == 1 ) then
+  if ($argv[1] == "S") then
+# Silent mode selected if argument is S
+  else
+# Plotting mode otherwise
+mplot ./tloss/SACL_step_F
+  endif 
+else
+# Plotting mode as default with no arguments
+mplot ./tloss/SACL_step_F
+endif
+

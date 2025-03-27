@@ -1,0 +1,320 @@
+\section{OASES - General Features}
+
+\subsection{Environmental Models}
+\label{oas_env}
+    OASES supports all environmental models available in  SAFARI,
+i.e.  any  number and combination of isovelocity  fluids,  fluids
+with  sound  speed  gradients and  isotropic  elastic  media.  In
+addition,  as a new feature any number of transversely  isotropic
+layers may be specified  (all with vertical symmetry axis). Further,
+media with general dispersion characteristics can be included.
+
+Version 2.0 of OASES in addition allows for stratifications including
+an arbitrary number of poro-elastic layers, with the propagation
+described by Biot's theory. This modification has been performed by
+Morrie Stern \cite{stern} at the University of Texas at Austin,
+in collaboration
+with Nick Chotiros and Jim tencate at ARL/UT. Nick and Morrie
+suggested I include their modifications in the general OASES export
+package, for the use and benefit of the general underwater acoustics
+community. This is a significant additional capability of OASES, and
+the contribution of the Austin group in that regard is highly
+appreciated.
+
+\subsubsection{Transversily Isotropic Media}
+
+    A  transversely  isotropic layer is flagged  by  stating  the
+usual parameter line for the layer:
+
+\begin{tabular}{cccccccc}
+    $D$ &    $c_c$ & $c_s$ & $\alpha_c$ & $\alpha_s$ &  $\rho$ &
+$\gamma$ & $ [L] $
+\end{tabular}
+
+\noindent with $c_c<0$  as  a  flag.  Here only  the  interface  depth $ D
+$ has
+significance. The other parameters for the transversely isotropic
+layer should then follow in one of two ways, depending on the value
+of $c_c$:
+\begin{description}
+\item[$c_c=-1$:]
+          The  medium is specified as a periodic series  of  thin
+          layers as per Schoenberg:
+
+	\begin{tabular}{lllllll}
+          NC & & & & & &  Number of constituents ($\le 3 $) \\
+          $c_c$ & $c_s$ & $\alpha_c$ & $\alpha_s$ &  $\rho$ & $h$ &
+                       Speeds, attns., density, fraction \\
+          $c_c$ & $c_s$ & $\alpha_c$ & $\alpha_s$ &  $\rho$ & $h$ &
+                       Speeds, attns., density, fraction
+        \end{tabular}
+
+\item[$c_c = -2$:]
+          The 5 complex elastic constants and the density of  the
+          transversely  isotropic medium are  specified  directly
+          after the flagged layer line:
+
+        \begin{tabular}{ccc}
+          Value & Value & Units \\
+          Re($C_{11}$) & Im($C_{11}$) &    Pa \\
+          Re($C_{13}$) & Im($C_{13}$) &    Pa \\
+          Re($C_{33}$) & Im($C_{33}$) &    Pa \\
+          Re($C_{44}$) & Im($C_{44}$) &    Pa \\
+          Re($C_{66}$) & Im($C_{66}$) &    Pa \\
+          $\rho$ & &                       g/cm3
+	\end{tabular}
+\end{description}
+    If option {\bf Z} was specified in the option line, then a slowness
+diagram is produced for each transversely isotropic layer.
+
+\subsubsection{Dispersive Media}
+
+For pulse problems where causality is critical, non-zero attenuation
+must be accompanied by frequency-dependent wave speeds. Since this is
+of main importance for seismic problems with relatively high
+attenuation, the specification of dispersive wave speeds has been
+limited to elastic media only. A dispersive layer is again flagged by
+a negative value of $c_c$:
+
+\begin{description}
+\item[$c_c=-3$:] A dispersive layer is specified as followsin the file
+{\bf input.dat}:
+
+\begin{tabular}{cccccccc}
+    $D$ &    $-3$ & $0$ & $0$ & $0$ &  $\rho$ &
+$\gamma$ & $ [L] $ \\	
+LTYP & & & & & & &
+\end{tabular}
+
+ The only significant parameters for the layer are
+the depth $D$, the density $\rho$ and the roughness parameters
+$\gamma$ and $L$. The parameter {\bf LTYP} is a type-identifier for
+the layer.
+The frequency dependence of the
+wave speeds and attenuations should be specified in the file {\bf
+input.dis}, which may contain several dispersion laws. The file should
+contain a block of data in the form of a frequency table, for each value
+of {\bf LTYP} specified in {\bf input.dat}, with the first block
+corresponding to {\bf LTYP} = 1, the second corresponding to {\bf
+LTYP} = 2 etc. The format for each
+block is asfollows:
+
+\small
+\begin{verbatim}
+NF                                         # Number of freqs.
+F(1)    CC(1)    CS(1)    AC(1)    AS(1)   # Freq, speeds, atten.
+F(2)    CC(2)    CS(2)    AC(2)    AS(2)   # Freq, speeds, atten.
+ :        :        :        :        :
+F(N)    CC(N)    CS(N)    AC(N)    AS(N)   # Freq, speeds, atten.
+\end{verbatim}
+\normalsize
+
+The table does not have to be equidistant. OASES will interpolate to
+create a table consistent with the frequency sampling specified in
+{\bf input.dat}.
+\end{description}
+
+\subsubsection{Porous Media}
+
+As an additional feature of the OASES 2.0 environmental model
+layers modelled as fluid saturated porous media (Biot model) may be
+included with other layer types. The Biot model and its implementation is
+described in Appendix~\ref{app_biot}.
+
+A porous sediment layer is flagged by
+stating the usual parameter line for the layer in the environmental
+data block:
+
+\begin{tabular}{cccccccc}
+    $D$ & $c_c$ & $c_s$ & $\alpha_c$ & $\alpha_s$ & $\rho$ &
+$\gamma$ & $ [L] $
+\end{tabular}
+
+\noindent with negative values for both $c_c$ and  $c_s$.  Only the
+interface depth $D$ has significance and must be stated correctly; the
+other parameters listed on this data line are dummy.  This line is
+immediately followed by a line containing the 13 parameters specifying
+the properties of the porous sediment layer in the order:
+
+\begin{tabular}{lllllllllllll}
+    $\rho_f$ & $K_f$ & $\eta$ & $\rho_g$ & $K_r$ & $\phi$ & $\kappa$ &
+$a$ & $\mu$ & $K$ & $\alpha_s$ & $\alpha_c$ & $c_m$
+\end{tabular}
+
+\noindent where
+
+\begin{tabular}{ll}
+    $\rho_f$ & is the density of the pore fluid in ${\rm g/cm}^3$ \\
+    $K_f$ &	is the bulk modulus of the pore fluid in Pa \\
+    $\eta$ &	is the viscosity of the pore fluid in kg/m-s \\
+    $\rho_g$ &	is the grain (solid constituent) density in
+${\rm g/cm}^3$ \\
+    $K_r$ &	is the grain bulk modulus in Pa \\
+    $\phi$ &	is the sediment porosity \\
+    $\kappa$ &	is the sediment permeability in ${\rm m}^2$ \\
+    $a$ &	is the pore size factor in m \\
+    $\mu$ &	is the sediment frame shear modulus in Pa \\
+    $K$ &	is the sediment frame bulk modulus in Pa \\
+    $\alpha_s$	& is the sediment frame shear attenuation \\
+    $\alpha_c$	& is the sediment frame bulk attenuation \\
+    $c_m$	& is a dimensionless virtual mass parameter
+\end{tabular}
+
+   	The sediment frame properties pertain to the drained structure and
+are assumed to be dissipative. In particular, for harmonic motion the
+frame shear and bulk moduli are taken to be complex in the form
+$\tilde{\mu} = \mu (1 + i\mu'),\ \tilde{K} = K(1 + iK')$.
+The imaginary parts of the moduli are specified through   $\alpha_s =
+20 \pi \mu' \log{e}$  and $\alpha_c = 20 \pi K' \log{e}$  where
+$\alpha_s$  corresponds to the attenuation measured in dB/$\Lambda$ of
+shear  waves in the sediment frame (as in the data specification for
+elastic layers) when the attenuation is low;  $\alpha_c$  is related to
+the attenuation of both compression and shear waves.  However, it
+should be noted that in contrast to the elastic layer case, the Biot
+porous sediment model will yield complex wavespeeds even if the frame
+is elastic since dissipation is inherent in the relative motion of the
+pore fluid with respect to the frame.
+
+The pore size parameter  $a$  is treated as an empirical constant
+which depends on the average grain size and shape; for spherical
+grains of diameter  $d$  the value  $a = {\phi d}/{3(1 - \phi)}$ has
+been suggested\cite{hovem}.  The virtual mass parameter  $c_m$  (called
+the `structure factor' or `tortuosity' by some authors and often
+denoted  $\alpha$) is also treated as an empirical constant which
+depends on the pore structure of the frame. For moderate frequencies
+(long wave length compared to `average pore size') and porosities from
+25\% to 50\%, Yavari and Bedford\cite{yavari} have made finite element
+calculations which suggest that Berryman's relation  $c_m = 1 +
+0.227(1 - \phi)/ \phi$ may be used in the absence of more reliable
+data.  More thorough discussions of the material parameters defining
+the Biotmodel may be found in other references\cite{biot}.
+
+If the  {\bf K}  option is invoked, then recievers in a porous sediment
+layer will output (negative) pore fluid pressure rather than bulk
+stress as called for in other fluid or solid layers.  The {\bf Z}
+option, which creates a velocity profile plot, shows the zero frequency
+limit wavespeeds in porous sediment layers.  Note that at present the
+modifications do NOT permit sources in Biot layers.
+
+The following presents a modification of SAFARI-FIP case 3 to
+replace the elastic sediment layer by a  poro-elastic layer,
+
+\begin{verbatim}
+SAFARI-FIP case 3. Poroelastic.
+N C A D J
+30 30 1 0
+5
+  0    0     0     0   0   0   0
+  0 1500  -999.999 0   0   1   0 # SVP continuous at z = 30 m
+ 30 1480 -1490     0   0   1   0
+100 -1 -1 0 0 0 0 0              # Cp<0 Cs<0 flag poro-elastic layer
+1 2.E9 .001 2.65 9.E9 .4 2.E-9 1.E-5 3.13E8 5.14E9 .8 1.55 1.25
+120 1800   600     0.1 0.2 2.0 0
+
+50
+0.1 120 41 40
+1350 1E8
+-1 1 950
+0 5 20 1
+20 80 12 10
+0 120 12 20
+40 70 6
+\end{verbatim}
+
+
+
+\subsubsection{Continuous Sound Speed Profiles}
+
+OASES version 1.7 allows for specifying a continuous sound speed profile
+through a flag rather than specifying the negative of the actual value
+at the bottom of the layer in the shear speed field as in SAFARI
+(OASES still supports this form also). The flag specification is
+particularly useful when running through many values of sound speed at
+a certain depth, such as for matched field inversion for SVP.
+
+The continuity of the SVP at the {\em bottom of a layer} is activated by the
+usual parameter line for the layer:
+
+\begin{tabular}{cccccccc}
+    $D$ &    $c_c$ & $c_s$ & $\alpha_c$ & $\alpha_s$ &  $\rho$ &
+$\gamma$ & $ [L] $
+\end{tabular}
+
+\noindent with $c_s =-999.999 $  as  a  flag, i.e. by setting the shear
+speed for the layer to $ -999.999 $. All OASES modules will then set
+the sound speed at the bottom of the layer equal to the speed
+specified for the top of the next layer below.
+
+As an example, the following is the OAST file \tt saffip3.dat \rm
+corresponding to the SAFARI test case 3 with the SVP being continuous
+at 30 m depth:
+
+\begin{verbatim}
+SAFARI-FIP case 3
+N C A D J
+30 30 1 0
+5
+  0    0     0     0   0   0   0
+  0 1500  -999.999 0   0   1   0 # SVP continuous at z = 30 m
+ 30 1480 -1490     0   0   1   0
+100 1600   400     0.2 0.5 1.8 0
+120 1800   600     0.1 0.2 2.0 0
+
+50
+0.1 120 41 40
+1350 1E8
+-1 1 950
+0 5 20 1
+20 80 12 10
+0 120 12 20
+40 70 6
+\end{verbatim}
+
+\subsubsection{Stratified Fluid Flow}
+
+OASES version 1.8 allows for computing the field in stratified flow. This
+option is only valid in the 2-D versions, handling flow parallel to
+the direction of propagation only (downstream or upstream). Flow is
+only allowed in {\em isovelocity fluid layers}!
+
+The flow is activated by  specifying  the
+usual parameter line for the layer:
+
+\begin{tabular}{cccccccc}
+    $D$ &    $c_c$ & $c_s$ & $\alpha_c$ & $\alpha_s$ &  $\rho$ &
+$\gamma$ & $ [L] $
+\end{tabular}
+
+\noindent with $\alpha_s =-888.888 $  as  a  flag, i.e. by setting the shear
+attenuation for the layer to $ -888.888 $. The
+flow speed in m/s is in a separate line immidiately following the layer
+data line.
+
+The sign convention is {\em positive} for {\em flow from
+source to receiver (downstream propagation)} and {\em negative} for
+{\em flow from receiver towards source (upstream propagation)}.
+
+As an example, the following is the OAST file \tt saffip1.dat \rm
+corresponding to the SAFARI test case 1 with
+a flow in the water column of 5 m/s towards the source (upstream propagation):
+
+\begin{verbatim}
+SAFARI FIP case 1. Flow -5 m/s.
+J N I T
+5 5 1 0
+4
+  0    0    0     0    0     0   0
+  0 1500    0     0 -888.888 1.0 0
+-5.0                              # flow speed 5 m/s towards source
+100 1600  400     0.2  0.5   1.8 0
+120 1800  600     0.1  0.2   2.0 0
+95
+100 100 1 1
+200 1E8
+-1 1 1000
+0 5.0 20 1.0
+20 80 12 10
+\end{verbatim}
+
+
+

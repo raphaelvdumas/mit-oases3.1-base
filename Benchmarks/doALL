@@ -1,0 +1,50 @@
+#
+# These runs are typically the shorter ones - Max. of 3 sectors 
+#
+do_RSWT2a
+do_RSWT3a
+do_30degLBeam 
+do_45degLBeam 
+do_HorizForce 
+do_PntSrc 
+do_SACL_step_F 
+do_SLeeHC 
+do_SLeed 
+do_SLeet 
+do_SLef 
+do_SLfe 
+do_TranspVF 
+do_TranspHF 
+do_VertForce 
+do_fnuw 
+do_gilbert 
+do_gilbertE 
+do_mikeExD 
+do_mikeExE 
+do_norda3a 
+do_norda3ac2 
+
+#
+# These runs are the longer ones - > 3 sectors.
+# You can skip these runs by specifying 
+#  > doALL Q or doALL q
+#
+
+if ($#argv == 1 ) then
+  if ($argv[1] == "Q" || $argv[1] == "q") then
+  else
+	do_RSWT2b
+	do_RSWT3b
+	do_ASAwedgeE 
+	do_SACL_circle_F 
+  endif 
+else
+	do_RSWT2b
+	do_RSWT3b
+	do_ASAwedgeE 
+	do_SACL_circle_F 
+endif
+date
+echo '-------------------------------------------'
+echo 'All done'
+echo '-------------------------------------------'

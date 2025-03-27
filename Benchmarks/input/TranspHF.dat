@@ -1,0 +1,33 @@
+E/E Test - 17/7-17/7. Horiz. Force
+N V H T J P 3
+25 25 1 0				# FREQ
+
+2 1
+
+4 2                                   # NUML, RANGE(1)
+0 0 0 0 0 0 0				# LAYER 1 ; LEFT SIDE OF CUT  
+0   1700 700 0.2 0.5  1.2 0			#       2                     
+50  1700 700 0.2 0.5  1.2 0			#       3                     
+100 0 0 0 0. 0 0			#       8                     
+
+4  2                                  # NUML, RANGE(1)
+0 0 0 0 0 0 0				# LAYER 1 ; LEFT SIDE OF CUT  
+0   1700 700 0.2 0.5  1.2 0			#       2                     
+50  1700 700 0.2 0.5  1.2 0			#       2                     
+100 0 0 0 0. 0 0			#       8                     
+
+50					# source depth
+1 99 99 1
+70 70 1
+400 -400         			# Cmin Cmax0
+-1 1 1				        # NWVNO ICUT1 ICUT2
+.0 4.0 15. .5    			# Xleft Xright Xaxis Xinc
+30. 90.0 9 10. 				# LOSS LEVELS IN DB
+30. 90.0 9 10. 				# LOSS LEVELS IN DB
+30. 90.0 9 10. 				# LOSS LEVELS IN DB
+0 100 10 25
+18 84 2
+18 84 2
+
+
+

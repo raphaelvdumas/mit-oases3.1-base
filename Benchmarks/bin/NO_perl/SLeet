@@ -1,0 +1,33 @@
+#!/usr/local/bin/tcsh
+mv ./tloss/SLeet.plt ./tloss/SLeet.plt.old
+#mv ./tloss/SLeet.plp ./tloss/SLeet.plp.old
+#./bin/make_plug ./run/SLeet ./tloss/stubs/SLeet ./tloss/SLeet
+#
+# We will not show the BEM solution to reduce clutter
+#
+cat ./refs/OASES/safariee.saf.n.rx1.dat > p1
+cat p1 ./run/SLeet.rdo.par1.for.rx1.dat > r1
+cat r1 ./refs/CORE/SLeet.gem.par1.for.rx1.dat > s1
+#
+cat ./refs/OASES/safariee.saf.w.rx1.dat > p2
+cat p2 ./run/SLeet.rdo.par2.for.rx1.dat > r2
+cat r2 ./refs/CORE/SLeet.gem.par2.for.rx1.dat > s2
+#
+cat ./refs/OASES/safariee.saf.u.rx1.dat > p3
+cat p3 ./run/SLeet.rdo.par3.for.rx1.dat > r3
+cat r3 ./refs/CORE/SLeet.gem.par3.for.rx1.dat > s3
+cat s1 s2 s3 > ./tloss/SLeet.plt
+rm -f p? q? r? s?
+if ( $#argv == 1 ) then
+  if ($argv[1] == "S") then
+# Silent mode selected if argument is S
+  else
+# Plotting mode otherwise
+mplot ./tloss/SLeet
+  endif 
+else
+# Plotting mode as default with no arguments
+mplot ./tloss/SLeet
+endif
+
+

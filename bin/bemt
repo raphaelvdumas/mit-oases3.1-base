@@ -1,0 +1,15 @@
+#
+#
+setenv FOR001 $1.dat
+setenv FOR002 $1b.dat
+setenv FOR011 $1.nod
+setenv FOR019 $1.plp
+setenv FOR020 $1.plt
+setenv FOR021 $1.deb
+setenv FOR028 $1.cdr
+setenv FOR029 $1.bdr
+setenv FOR048 $1.ext
+setenv FOR049 $1.rhs
+setenv FOR050 $1.int
+setenv FOR071 $1.ntm
+bemt1

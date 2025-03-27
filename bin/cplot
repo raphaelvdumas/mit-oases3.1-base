@@ -1,0 +1,4 @@
+#!/bin/csh
+setenv FOR055 $1.cdr
+setenv FOR017 $1.bdr
+saccon

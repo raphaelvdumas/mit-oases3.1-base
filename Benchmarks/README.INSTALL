@@ -1,0 +1,28 @@
+To install this set of scripts, follow the few simple steps :
+
+(1) For a first-time install, type
+
+    > make cleanall 
+
+(2) In the benchmarks directory, type
+
+    > make yesperl 
+
+     or
+
+    > make noperl
+
+    depending on whether your particular system has PERL installed.
+
+(3) Next you will need to compile the PLTSPLIT program. Change to the
+    ./src directory and type
+
+    > make
+
+    Then move the executable pltsplit to somewhere in your $PATH.
+
+(4) If you are using the perl-based scripts, you will also need to 
+    move ./bin/plpsub.pl to a location in your $PATH.
+
+(5) Read the accompanying LaTeX file ./docs for more complete information.
+

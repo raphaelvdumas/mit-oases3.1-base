@@ -1,0 +1,227 @@
+#
+# Test various fill colors 
+#
+$ DATA=CURVE2D
+
+# Set Global properties for the curves in the dataset
+% toplabel   = "Line/Fill Colors"      # Top label for plot
+% xmin=-0.2 xmax=1.4 ymin=0.0 ymax=1.0  # Plot boundaries
+
+# Curve -1
+% fillcolor  = -1
+% filltype   = 1
+% linelabel  = "Color -1"
+ -0.1    0.1
+ -0.1    0.9
+ -0.05   0.9
+ -0.05   0.1
+
+% linecolor  = -1
+% linewidth  = 3
+% markertype = 3
+ -0.03   0.1
+ -0.03   0.9
+
+# Curve 0
+% fillcolor  = 0
+% filltype   = 1
+% linelabel  = "Color 0"
+@ text x1=0.025 y1=0.92 linelabel="0"
+  0.0    0.1
+  0.0    0.9
+  0.05   0.9
+  0.05   0.1
+
+% linecolor  = 0
+% linewidth  = 3
+% markertype = 3
+  0.07   0.1
+  0.07   0.9
+
+# Curve 1
+% fillcolor  = 1
+% filltype   = 1
+% linelabel  = "Color 1"
+  0.1    0.1
+  0.1    0.9
+  0.15   0.9
+  0.15   0.1
+
+% linecolor  = 1
+% linewidth  = 3
+% markertype = 3
+  0.17   0.1
+  0.17   0.9
+
+# Curve 2
+% fillcolor  = 2
+% filltype   = 1
+% linelabel  = "Color 2"
+@ text x1=0.225 y1=0.92 linelabel="2"
+  0.2    0.1
+  0.2    0.9
+  0.25   0.9
+  0.25   0.1
+
+% linecolor  = 2
+% linewidth  = 3
+% markertype = 3
+  0.27   0.1
+  0.27   0.9
+
+# Curve 3
+% fillcolor  = 3
+% filltype   = 1
+% linelabel  = "Color 3"
+  0.3    0.1
+  0.3    0.9
+  0.35   0.9
+  0.35   0.1
+
+% linecolor  = 3
+% linewidth  = 3
+% markertype = 3
+  0.37   0.1
+  0.37   0.9
+
+# Curve 4
+% fillcolor  = 4
+% filltype   = 1
+% linelabel  = "Color 4"
+@ text x1=0.425 y1=0.92 linelabel="4"
+  0.4    0.1
+  0.4    0.9
+  0.45   0.9
+  0.45   0.1
+
+% linecolor  = 4
+% linewidth  = 3
+% markertype = 3
+  0.47   0.1
+  0.47   0.9
+
+# Curve 5
+% fillcolor  = 5
+% filltype   = 1
+% linelabel  = "Color 5"
+  0.5    0.1
+  0.5    0.9
+  0.55   0.9
+  0.55   0.1
+
+% linecolor  = 5
+% linewidth  = 3
+% markertype = 3
+  0.57   0.1
+  0.57   0.9
+
+# Curve 6
+% fillcolor  = 6
+% filltype   = 1
+% linelabel  = "Color 6"
+@ text x1=0.625 y1=0.92 linelabel="6"
+  0.6    0.1
+  0.6    0.9
+  0.65   0.9
+  0.65   0.1
+
+% linecolor  = 6
+% linewidth  = 3
+% markertype = 3
+  0.67   0.1
+  0.67   0.9
+
+# Curve 7
+% fillcolor  = 7
+% filltype   = 1
+% linelabel  = "Color 7"
+  0.7    0.1
+  0.7    0.9
+  0.75   0.9
+  0.75   0.1
+
+% linecolor  = 7
+% linewidth  = 3
+% markertype = 3
+  0.77   0.1
+  0.77   0.9
+
+# Curve 8
+% fillcolor  = 8
+% filltype   = 1
+% linelabel  = "Color 8"
+@ text x1=0.825 y1=0.92 linelabel="8"
+  0.8    0.1
+  0.8    0.9
+  0.85   0.9
+  0.85   0.1
+
+% linecolor  = 8
+% linewidth  = 3
+% markertype = 3
+  0.87   0.1
+  0.87   0.9
+
+# Curve 9
+% fillcolor  = 9
+% filltype   = 1
+% linelabel  = "Color 9"
+  0.9    0.1
+  0.9    0.9
+  0.95   0.9
+  0.95   0.1
+
+% linecolor  = 9
+% linewidth  = 3
+% markertype = 3
+  0.97   0.1
+  0.97   0.9
+
+# Curve 10
+% fillcolor  = 10
+% filltype   = 1
+% linelabel  = "Color 10"
+@ text x1=1.025 y1=0.92 linelabel="10"
+  1.0    0.1
+  1.0    0.9
+  1.05   0.9
+  1.05   0.1
+
+% linecolor  = 10
+% linewidth  = 3
+% markertype = 3
+  1.07   0.1
+  1.07   0.9
+
+# Curve 11
+% fillcolor  = 11
+% filltype   = 1
+% linelabel  = "Color 11"
+  1.1    0.1
+  1.1    0.9
+  1.15   0.9
+  1.15   0.1
+
+% linecolor  = 11
+% linewidth  = 3
+% markertype = 3
+  1.17   0.1
+  1.17   0.9
+
+# Curve 12
+% fillcolor  = 12
+% filltype   = 1
+% linelabel  = "Color 12"
+@ text x1=1.225 y1=0.92 linelabel="12"
+  1.2    0.1
+  1.2    0.9
+  1.25   0.9
+  1.25   0.1
+
+% linecolor  = 12
+% linewidth  = 3
+% markertype = 3
+  1.27   0.1
+  1.27   0.9
+
+$ END

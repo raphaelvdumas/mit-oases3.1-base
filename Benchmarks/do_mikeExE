@@ -1,0 +1,9 @@
+echo '-------------------------------------------'
+date
+echo 'Start Mike Collins Case E'
+rdoast ./input/mikeExE> ./logs/mikeExE.out
+mv ./input/mikeExE.pl? ./run
+mv ./input/mikeExE.?dr ./run
+pltsplit -f ./run/mikeExE -b 2 -p 1 -r 2 -d 3
+./bin/mikeExE S
+echo 'End Mike Collins Case E'

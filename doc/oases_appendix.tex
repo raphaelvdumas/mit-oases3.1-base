@@ -1,0 +1,223 @@
+\appendix
+
+\section{Porous Media Model}
+\label{app_biot}
+
+\subsection*{The Model}
+
+The equations of motion for a porous sediment layer may be written in
+the form\cite{stern}
+\begin{eqnarray*}
+\mu \nabla^2 {\bf u} + (H - \mu) \nabla e - C
+\nabla \zeta & = & \rho \ddot{\bf u} - \rho_f \ddot{\bf w}
+\\
+ C \nabla e - M \nabla \zeta & = & \rho_f
+\ddot{\bf u} - \frac{c_m \rho_f}{\phi} \ddot{\bf w} - \frac{F
+\eta}{\kappa} \dot{\bf w}
+\end{eqnarray*}
+where  {\bf u}  is the displacement vector associated with the frame
+and  ${\bf w} = \phi ( {\bf u} - {\bf u_f} )$ is the weighted (by
+porosity) relative displacement of the frame with respect to the pore
+fluid.  Also  $e = {\rm div\,} {\bf u}$ and $\zeta = {\rm div\,}{\bf
+w}$;
+$\rho = \phi \rho_f + (1 - \phi )\rho_s$ is the average density of the
+saturated sediment  and  $H$, $C$, and $M$ are (complex) elastic moduli
+calculated from the prescribed moduli as
+\begin{eqnarray*}
+M & = & \frac{K_r}{1 - \frac{K}{K_r} + \phi ( \frac{K_r}{K_f} - 1 )} \\
+C & = & \frac{1 - \frac{K}{K_r}}{M} \\
+H & = & (1 - \frac{K}{K_r} ) C + K + \frac{4}{3}\mu
+\end{eqnarray*}
+Finally, $F$ is a frequency dependent drag coefficient which is taken
+as\cite{biot}
+\[
+F = \frac{\xi T ( \xi )}{4 [ 1 + 2 i \frac{T ( \xi )}{\xi} ]}\]
+where
+\[\xi = a \sqrt{\frac{\omega \rho_f}{\eta}}{~~~\rm and ~~~}
+T ( \xi ) = \frac{{\rm ber}'\,(\xi) + i \/ {\rm bei}'\,(\xi)}
+{{\rm ber}\,(\xi) + i \/ {\rm bei}\,(\xi)}
+\]
+The constitutive equations describing the Biot porous sediment model
+on which the above equations of motion are based may be written as
+\begin{eqnarray*}
+{\mbox{\boldmath $\sigma$}} & = & \mu [ \nabla {\bf u} + ( \nabla {\bf
+u} )^{\rm T} ] + [(H - 2\mu ) e - c \zeta ] {\rm {\bf I}} \\
+p & = & M \zeta - C e
+\end{eqnarray*}
+where {\mbox{\boldmath $\sigma$}} is the total stress in the saturated
+sediment and
+$p$  is the pore fluid pressure.
+
+\subsection*{Implementation}
+
+>From this point the development follows the lines given in the SAFARI
+Users Guide\cite{hs:saf} and subsequent updates.  Scalar and
+vector potentials are introduced so that
+\[
+{\bf u} = \nabla \Phi + {\rm curl}\,{\bf\Psi}~~~~~~~~
+{\bf w} = \nabla \Phi^f + {\rm curl}\,{\bf\Psi}^f
+\]
+In terms of these potentials, and in the absence of sources, the
+equations of motion become
+\begin{eqnarray*}
+H \nabla^2 \Phi - C \nabla^2 \Phi^f - \rho \frac{\partial^2
+\Phi}{\partial t^2} - \rho_f \frac{\partial^2
+\Phi^f}{\partial t^2} & = & 0 \\
+C \nabla^2 \Phi - M \nabla^2 \Phi^f - \rho_f \frac{\partial^2
+\Phi}{\partial t^2} + \frac{c_m \rho_f}{\phi} \frac{\partial^2
+\Phi^f}{\partial t^2} - \frac{F \eta}{\kappa} \frac{\partial
+\Phi^f}{\partial t} & = & 0 \\
+\mu \nabla^2 {\bf\Psi} - \rho \frac{\partial^2 {\bf\Psi}}{\partial
+t^2} + \rho_f \frac{\partial^2 {\bf\Psi}^f}{\partial t^2} & = & {\bf
+0} \\
+\rho_f \frac{\partial^2
+{\bf\Psi}}{\partial t^2} + \frac{c_m \rho_f}{\phi} \frac{\partial^2
+{\bf\Psi}^f}{\partial t^2} - \frac{F \eta}{\kappa} \frac{\partial
+{\bf\Psi}^f}{\partial t} & = & {\bf 0}
+\end{eqnarray*}
+These equations are first subjected to Fourier transform in time and
+either Fourier transform (for plane strain) or Hankel transform (for
+axial symmetry) in the plane perpendicular to the depth coordinate
+$z$.  We show details assuming plane strain with motion restricted to
+the  $xz$-plane  (the axial symmetry case is similar and follows the
+outline in the SAFARI Users Guide).  In this event the vector
+potentials have only a single nontrivial component, ${\bf \Psi} =
+\Psi {\bf j}$, so the displacement components take the form
+\begin{eqnarray*}
+u = {\Phi,}_x - {\Psi,}_z~~~ & ~~~~~~~~ & ~\, w = {\Phi,}_z +
+{\Psi,}_x
+\\
+u^f = {\Phi^f,}_x - {\Psi^f,}_z & & w^f = {\Phi^f,}_z +
+{\Psi^f,}_x
+\end{eqnarray*}
+Furthermore, the constitutive equations, in terms of the potentials,
+become
+\begin{eqnarray*}
+\sigma_{xx} & = & H {\Phi,}_{xx} + ( H - 2\mu ) {\Phi,}_{zz} - 2\mu
+{\Psi,}_{xz} - C ( {{\Phi^f},}_{xx} + {{\Phi^f},}_{zz} ) \\
+\sigma_{zz} & = & H {\Phi,}_{zz} + ( H - 2\mu ) {\Phi,}_{xx} - 2\mu
+{\Psi,}_{xz} - C ( {{\Phi^f},}_{xx} + {{\Phi^f},}_{zz} ) \\
+\sigma_{xz} & = & \mu [ 2 {\Phi,}_{xz} + {\Psi,}_{xx} - {\Psi,}_{zz}
+] \\
+p & = & M [{{\Phi^f},}_{xx} + {{\Phi^f},}_{zz} ] - C [ {\Phi,}_{xx} +
+{\Phi,}_{zz} ]
+\end{eqnarray*}
+The solution of the transformed equations take the form
+\begin{eqnarray*}
+\varphi & = & A^- e^{-\alpha z} + A^+ e^{\alpha z} + B^- e^{-\beta z} +
+B^+ e^{\beta z} \\
+\varphi^f & = & \delta_1 [ A^- e^{-\alpha z} + A^+ e^{\alpha z}] +
+\delta_2 [ B^- e^{-\beta z} +
+B^+ e^{\beta z} ] \\
+\psi & = & i [ C^- e^{-\gamma z} + C^+ e^{\gamma z}] \\
+\psi^f & = & \Gamma \psi
+\end{eqnarray*}
+where $\varphi$ and $\psi$ are the transformed potentials and
+$A^{\pm}$, $B^{\pm}$,
+and $C^{\pm}$ are functions of angular frequency $\omega$ and wave
+number $s$.
+Also
+$$
+\Gamma = \frac{\rho_f}{\frac{c \rho_f}{\phi} - i \frac{F
+\eta}{\kappa \omega} }
+$$
+$$
+\delta_1 = \frac{ H ( \alpha^2 - s^2 ) + \rho \omega^2}{C ( \alpha^2 -
+s^2 ) + \rho_f \omega^2 } ~~~~~~~~~~
+\delta_2 = \frac{ H ( \beta^2 - s^2 ) + \rho \omega^2}{C ( \beta^2 -
+s^2 ) + \rho_f \omega^2 }
+$$
+and
+$$
+\alpha^2 = s^2 - {h_f}^2 ~~~~~~~~~~
+\beta^2 = s^2 - {h_s}^2 ~~~~~~~~~~
+\gamma^2 = s^2 - k^2
+$$
+where  $h_f$, $h_s$, and $k$  are respectively the complex wavenumbers
+associated with fast, slow and shear waves in the Biot medium at
+angular frequency  $\omega$.  For the shear wave we have
+$$
+k^2 = \frac{\rho - \Gamma \rho_f}{\mu} \/ \omega^2
+$$
+while the wave numbers associated with the fast and slow waves are
+given by
+$$
+h^2 = b \pm \sqrt{ b^2 - g }
+$$
+where
+\begin{eqnarray*}
+b & = & \frac{M \rho + H [
+\frac{c_m \rho_f}{\phi} - i \frac{ F \eta}{\kappa \omega} ]
+- 2 C \rho_f}
+{2(H M - C^2)}\/ \omega^2 \\
+g & = & \frac{\rho [ \frac{c_m \rho_f}{\phi} - i \frac{F \eta
+}{\kappa \omega }] - {\rho_f}^2}{H M - C^2} \/ \omega^4
+\end{eqnarray*}
+and the two compression wave numbers are ordered so that
+$\Re (1/h_f) > \Re (1/h_s)$.
+
+In terms of the six degrees of freedom $A^{\pm}$, $B^{\pm}$, and
+$C^{\pm}$  for a porous sediment layer, the transformed displacement
+and stress components are
+\begin{eqnarray*}
+\hat{u} & = & i s [ A^- e^{- \alpha z} + A^+ e^{\alpha z} + B^-
+e^{-\beta z} + B^+ e^{\beta z}] + i \gamma [ C^- e^{- \gamma z} - C^+
+e^{\gamma z}] \\
+\hat{w} & = & \alpha [- A^- e^{- \alpha z} + A^+ e^{\alpha z}] +
+\beta [ - B^- e^{-\beta z} + B^+ e^{\beta z}] + s [ C^- e^{-
+\gamma z} + C^+ e^{\gamma z}] \\
+\hat{w}^f & = & \alpha \delta_1 [- A^- e^{- \alpha z} + A^+ e^{\alpha
+z}] +
+\beta \delta_2 [ - B^- e^{-\beta z} + B^+ e^{\beta z}] + s \Gamma [ C^-
+e^{-
+\gamma z} + C^+ e^{\gamma z}] \\
+\hat{\sigma}_{xx} & = & [( C \delta_1 - H)(s^2 - \alpha^2) - 2 \mu
+\alpha^2] [ A^- e^{- \alpha z} + A^+ e^{\alpha z} ] \\
+ & & + [( C \delta_2 - H)(s^2 - \beta^2) - 2 \mu
+\beta^2] [ B^- e^{- \beta z} + B^+ e^{\beta z} ] + 2 \mu \gamma s [ C^-
+e^{-
+\gamma z} - C^+ e^{\gamma z}] \\
+\hat{\sigma}_{zz} & = & [( C \delta_1 - H)(s^2 - \alpha^2) + 2 \mu
+s^2] [ A^- e^{- \alpha z} + A^+ e^{\alpha z} ] \\
+ & & + [( C \delta_2 - H)(s^2 - \beta^2) + 2 \mu
+s^2] [ B^- e^{- \beta z} + B^+ e^{\beta z} ] - 2 \mu \gamma s [ C^-
+e^{-\gamma z} - C^+ e^{\gamma z}] \\
+\hat{\sigma}_{xz} & = & i \mu
+\left[
+2 \alpha s [- A^- e^{- \alpha z} - A^+ e^{\alpha z}] + 2 \beta s
+[ B^- e^{- \beta z} + B^+ e^{\beta z} ] \right. \\
+ & &  \left. - (s^2 + \gamma^2 ) [ C^- e^{- \gamma z} + C^+
+e^{\gamma z}] \right] \\
+\hat{p} & = & [ ( C - M \delta_1 )( s^2 - \alpha^2 )] [ A^- e^{-
+\alpha z} + A^+ e^{\alpha z} ] \\
+ & &  + [ ( C - M \delta_2 )( s^2 - \beta^2
+)] [ B^- e^{- \beta z} + B^+ e^{\beta z} ]
+\end{eqnarray*}
+
+Boundary conditions to be satisfied at each interface involve
+continuity of pore fluid normal  displacement and pressure, and
+continuity of displacement and traction components for the frame.  To
+complete table 1 of the SAFARI Users guide we add the following table
+entries where the symbol $\sim$ means the parameter is not involved,
+0 means it should be set to zero, and = means continuity is
+enforced at the interface.
+In the following table the first four columns correspond to the same
+entries in the Users Guide table, while the last column corresponds to
+the negative of the traction component $\sigma_{zz}$ in adjacent fluid
+layers.
+
+\begin{center}
+\begin{tabular}{|l|cccccc|} \hline
+\multicolumn{1}{|c|}{Type} & \multicolumn{6}{c|}{Field parameter} \\
+\cline{2-7}
+ & $w - w^f$ & $u$ & $\sigma_{zz}$ & $\sigma_{xz}$ & $w^f$ & $p$ \\
+\hline
+Biot/vacuum & $\sim$ & $\sim$ & 0 & 0 & $\sim$ & 0\\
+Biot/fluid & = & $\sim$ & = & 0 & $\sim$ & = \\
+Biot/solid & = & = & = & = & 0 & $\sim$ \\
+Biot/Biot & ~~~=~~~ & ~~~=~~~ & ~~~=~~~ & ~~~=~~~ & ~~~=~~~
+& ~~~=~~~ \\ \hline
+\end{tabular}
+\end{center}
+
+

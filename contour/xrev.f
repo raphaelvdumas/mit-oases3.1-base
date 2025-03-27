@@ -1,0 +1,13 @@
+      SUBROUTINE XREV(Z,NX,NY)
+      DIMENSION Z(NX,NY)
+C
+      DO 2000   IY=1,NY
+      DO 1000   IX=1,NX/2
+      T=Z(IX,IY)
+      Z(IX,IY)=Z(NX-IX+1,IY)
+      Z(NX-IX+1,IY)=T
+ 1000 CONTINUE
+ 2000 CONTINUE
+C
+      RETURN
+      END

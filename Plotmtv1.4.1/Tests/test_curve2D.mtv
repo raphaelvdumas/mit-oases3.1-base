@@ -1,0 +1,205 @@
+$ DATA=CURVE2D
+
+# Set Global properties for the curves in the dataset
+% toplabel   = "Hello World"    # Top label for plot
+% boundary = On
+% xmin = -0.3
+#% xabs
+#% spline=3
+% pointID
+
+# Curve 1
+% linetype   = 1                # Solid Linetype (default=1)
+% linewidth  = 1                # Linewidth      (default=1)
+% linecolor  = 1                # Line Color     (default=1)
+% markertype = 5                # Square Markers (default=0)
+% markercolor= 1                # Marker Color   (default=1)
+% linelabel  = "Line A"         # Line Label     (default="")
+% filltype   = 1                # Fill Type      (default=0)
+% fillcolor  = 4                # Fill Color     (default=1)
+ -0.2   -0.2
+ -0.1   -0.1
+  0.1    0.1
+  0.2    0.2
+  0.3    0.3
+  0.4    0.4
+  0.5    0.5
+  0.6    0.6
+  0.7    0.7
+  0.8    0.8
+  0.9    0.9
+  1.0    1.0
+  1.1    1.2
+  1.2    1.4
+  1.3    1.6
+  1.4    1.8
+  1.5    2.0
+
+# Curve 2 - use default settings
+  0.8   -0.2
+  0.9   -0.1
+  1.1    0.1
+  1.2    0.2
+  1.3    0.3
+  1.4    0.4
+  1.5    0.5
+  1.6    0.6
+  1.7    0.7
+  1.8    0.8
+  1.9    0.9
+  2.0    1.0
+  2.1    1.2
+  2.2    1.4
+  2.3    1.6
+  2.4    1.8
+  2.5    2.0
+
+# Curve 3
+% linewidth=4
+% linecolor=2
+% markertype=7
+% filltype=4
+  1.0    0.3   23
+  1.2    0.4   24
+  1.3    0.3   25
+  1.4    0.3   26
+% linelabel = "Curve 2"
+
+% linelabel = "Curve 3"
+
+$ DATA=CURVE2D
+
+# Set Global properties for the curves in the dataset
+% toplabel   = "Hello World"    # Top label for plot
+% xmin = -0.3
+% xabs
+#% spline=3
+% pointID
+
+# Curve 1
+% linetype   = 1                # Solid Linetype (default=1)
+% linewidth  = 1                # Linewidth      (default=1)
+% linecolor  = 1                # Line Color     (default=1)
+% markertype = 5                # Square Markers (default=0)
+% markercolor= 1                # Marker Color   (default=1)
+% linelabel  = "Line A"         # Line Label     (default="")
+% filltype   = 1                # Fill Type      (default=0)
+% fillcolor  = 4                # Fill Color     (default=1)
+ -0.2   -0.2
+ -0.1   -0.1
+  0.1    0.1
+  0.2    0.2
+  0.3    0.3
+  0.4    0.4
+  0.5    0.5
+  0.6    0.6
+  0.7    0.7
+  0.8    0.8
+  0.9    0.9
+  1.0    1.0
+  1.1    1.2
+  1.2    1.4
+  1.3    1.6
+  1.4    1.8
+  1.5    2.0
+
+# Curve 2 - use default settings
+  0.8   -0.2
+  0.9   -0.1
+  1.1    0.1
+  1.2    0.2
+  1.3    0.3
+  1.4    0.4
+  1.5    0.5
+  1.6    0.6
+  1.7    0.7
+  1.8    0.8
+  1.9    0.9
+  2.0    1.0
+  2.1    1.2
+  2.2    1.4
+  2.3    1.6
+  2.4    1.8
+  2.5    2.0
+
+# Curve 3
+% linewidth=4
+% linecolor=2
+% markertype=7
+% filltype=4
+  1.0    0.3   23
+  1.2    0.4   24
+  1.3    0.3   25
+  1.4    0.3   26
+% linelabel = "Curve 2"
+
+% linelabel = "Curve 3"
+
+$ DATA=CURVE2D
+
+# Set Global properties for the curves in the dataset
+% toplabel   = "Hello World"    # Top label for plot
+% xmin = -0.3
+#% xabs
+% spline=3
+% pointID
+
+# Curve 1
+% linetype   = 1                # Solid Linetype (default=1)
+% linewidth  = 1                # Linewidth      (default=1)
+% linecolor  = 1                # Line Color     (default=1)
+% markertype = 5                # Square Markers (default=0)
+% markercolor= 1                # Marker Color   (default=1)
+% linelabel  = "Line A"         # Line Label     (default="")
+% filltype   = 1                # Fill Type      (default=0)
+% fillcolor  = 4                # Fill Color     (default=1)
+ -0.2   -0.2
+ -0.1   -0.1
+  0.1    0.1
+  0.2    0.2
+  0.3    0.3
+  0.4    0.4
+  0.5    0.5
+  0.6    0.6
+  0.7    0.7
+  0.8    0.8
+  0.9    0.9
+  1.0    1.0
+  1.1    1.2
+  1.2    1.4
+  1.3    1.6
+  1.4    1.8
+  1.5    2.0
+
+# Curve 2 - use default settings
+  0.8   -0.2
+  0.9   -0.1
+  1.1    0.1
+  1.2    0.2
+  1.3    0.3
+  1.4    0.4
+  1.5    0.5
+  1.6    0.6
+  1.7    0.7
+  1.8    0.8
+  1.9    0.9
+  2.0    1.0
+  2.1    1.2
+  2.2    1.4
+  2.3    1.6
+  2.4    1.8
+  2.5    2.0
+
+# Curve 3
+% linewidth=4
+% linecolor=2
+% markertype=7
+% filltype=4
+  1.0    0.3   23
+  1.2    0.4   24
+  1.3    0.3   25
+  1.4    0.3   26
+% linelabel = "Curve 2"
+
+% linelabel = "Curve 3"
+

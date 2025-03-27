@@ -1,0 +1,82 @@
+      SUBROUTINE LEGEND(SYMB,LMARK,ICURV,LAB1,HGTC)
+
+      INTEGER LMARK(20)
+      REAL CX(2),CY(2)
+      CHARACTER*3 SYMB(20)
+      CHARACTER*6 SD
+      CHARACTER*20 LAB1(20)
+      CHARACTER*30 BUFF
+      COMMON /XAX/X1,XL,XLEFT,XRIGHT,XSCALE,XINC,DX,
+     % X1PL,XDUM4,IXDUM1,XDUM5,XDUM6,XDIV,XVAL(100),NXVAL
+      COMMON /YAX/Y1,YL,YUP,YDOWN,YSCALE,YINC,DY,
+     % Y1PL,YDUM4,IYDUM1,YDUM5,YDUM6,YDIV,YVAL(100),NYVAL,
+     % YBOX
+      COMMON /XYLAST/ XLAST, YLAST, XLN, YLN, ISGN
+      DATA SD/'SD (m)'/
+
+
+      IF(ICURV .EQ. 0)   RETURN
+
+      XOFFMIN= HGTC
+      XOFFMAX=XOFFMIN + 1.325/2.54
+      CX(1)=XLN+XOFFMIN
+      CX(2)=XLN+XOFFMAX
+      XDIST= XLN + 0.2
+      YDIST= YLN - 0.5/2.54
+      YSTEP= (YDOWN-YUP)/11.
+      CALL TITLE(' ',-1,' ',0,' ',0,CX(2) + 5*HGTC,YLN)
+      CALL GRAF(0.,5.,CX(2) + 5*HGTC,0.,1.,YLN)
+      CALL HEIGHT(HGTC*1.0)
+      CALL MESSAG(SD//'$',100,XDIST, YDIST )
+      CALL HEIGHT(HGTC)
+      CY(1)=YLN -  1.0/2.54
+
+      DO 3000 I=1,ICURV
+
+      CY(1)=CY(1) - 3.*HGTC
+      CY(2)=CY(1)
+
+      IF(LMARK(I) .GE. 15)   THEN
+
+        IF     (SYMB(I) .EQ. 'DSH')   THEN
+          CALL DASH
+          CALL CURVE(CX,CY,2,0)
+          CALL RESET('DASH')
+
+        ELSE IF(SYMB(I) .EQ. 'DOT')   THEN
+          CALL DOT
+          CALL CURVE(CX,CY,2,0)
+          CALL RESET('DOT')
+
+        ELSE IF(SYMB(I) .EQ. 'CDS')   THEN
+C         SIMULATION OF CHNDSH
+          CALL STRTPT(CX(1)            ,CY(1))
+          CALL CONNPT(CX(1)+1.6/25.4   ,CY(1))
+          CALL STRTPT(CX(1)+3.0/25.4   ,CY(1))
+          CALL CONNPT(CX(1)+13.25/25.4 ,CY(1))
+
+        ELSE IF(SYMB(I) .EQ. 'CNT')   THEN
+          CALL CURVE(CX,CY,2,0)
+
+        ELSE IF(SYMB(I) .EQ. 'CDO')   THEN
+C         SIMULATION OF CHNDOT
+          CALL STRTPT(CX(1)            ,CY(1))
+          CALL CONNPT(CX(1)+0.5/25.4   ,CY(1))
+          CALL STRTPT(CX(1)+1.5/25.4   ,CY(1))
+          CALL CONNPT(CX(1)+11.75/25.4 ,CY(1))          
+          CALL STRTPT(CX(1)+12.75/25.4 ,CY(1))
+          CALL CONNPT(CX(1)+13.25/25.4 ,CY(1))
+        END IF
+
+      ELSE
+        CALL MARKER(ABS(LMARK(I)))
+        CALL CURVE(CX(1)+HGTC,CY,1,-1)
+      END IF
+
+      CALL EXTN(LAB1(I),BUFF,LBUFF)
+      BUFF(LBUFF+1:LBUFF+1)='$'
+      CALL MESSAG(BUFF,LBUFF+1,CX(2)+HGTC,CY(1))
+ 3000 CONTINUE
+
+      RETURN
+      END

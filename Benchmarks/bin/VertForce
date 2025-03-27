@@ -1,0 +1,34 @@
+#!/usr/local/bin/tcsh
+mv ./tloss/VertForce.plt ./tloss/VertForce.plt.old
+mv ./tloss/VertForce.plp ./tloss/VertForce.plp.old
+./bin/make_plug ./run/VertForce ./tloss/stubs/VertForce ./tloss/VertForce
+cat ./refs/BEM/bm-ideal3000V.saf.par1f.rx1.dat ./run/VertForce.rdo.par1.for.rx1.dat>g1
+cat ./refs/BEM/bm-ideal3000V.saf.par2f.rx1.dat ./run/VertForce.rdo.par2.for.rx1.dat>g2
+cat ./refs/BEM/bm-ideal3000V.saf.par3f.rx1.dat ./run/VertForce.rdo.par3.for.rx1.dat>g3
+cat ./refs/BEM/bm-ideal3000V.saf.par1b.rx1.dat ./run/VertForce.rdo.par1.bac.rx1.dat>g4
+cat ./refs/BEM/bm-ideal3000V.saf.par2b.rx1.dat ./run/VertForce.rdo.par2.bac.rx1.dat>g5
+cat ./refs/BEM/bm-ideal3000V.saf.par3b.rx1.dat ./run/VertForce.rdo.par3.bac.rx1.dat>g6
+cat g1 ./refs/CORE/VertForce.gem.par1.for.rx1.dat > ff1
+cat g2 ./refs/CORE/VertForce.gem.par2.for.rx1.dat > ff2
+cat g3 ./refs/CORE/VertForce.gem.par3.for.rx1.dat > ff3
+cat g4 ./refs/CORE/VertForce.gem.par1.bac.rx1.dat > ff4
+cat g5 ./refs/CORE/VertForce.gem.par2.bac.rx1.dat > ff5
+cat g6 ./refs/CORE/VertForce.gem.par3.bac.rx1.dat > ff6
+cat ff1 ff2 ff3 ff4 ff5 ff6 > ./tloss/VertForce.plt
+rm -f ff? g?
+if ( $#argv == 1 ) then
+  if ($argv[1] == "S") then
+# Silent mode selected if argument is S
+  else
+# Plotting mode otherwise
+mplot ./tloss/VertForce
+  endif 
+else
+# Plotting mode as default with no arguments
+mplot ./tloss/VertForce
+endif
+
+
+## Par1 -> Normal stress
+## Par2 -> Displacement w
+## Par3 -> Displacement u

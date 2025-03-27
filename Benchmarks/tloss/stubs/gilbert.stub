@@ -1,0 +1,62 @@
+     1024                                              MODU
+ OASTL NTLRAN COL  
+ TRANSMISSION LOSS                                                               
+ GILBERT and EVANS Fluid case - Forward Szz                                                    
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:    100.0 m$ 
+ RD:     50.0 m$ 
+     15.0000                                           XLEN
+      9.0000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+     0.00000                                          XLEFT
+    15.00000                                        XRIGHT
+     5.00000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     90.0000                                          YDOWN
+     40.0000                                            YUP
+     10.0000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB//1Pa)$                                                        
+ LIN
+        2                                                NC
+>>>
+      750                                                 N
+    0.00000                                           RMIN
+    0.199988E-01                                      RSTEP
+    0.000000E+00                                       YMIN
+    0.000000E+00                                         DY
+ OASTL NTLRAN COL
+ TRANSMISSION LOSS                                                               
+ GILBERT and EVANS Fluid case - Backward Szz                                                    
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:    100.0 m$ 
+ RD:     50.0 m$ 
+     15.0000                                           XLEN
+      9.0000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+     0.00000                                          XLEFT
+    15.00000                                        XRIGHT
+     5.00000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+    120.0000                                          YDOWN
+     60.0000                                            YUP
+     10.0000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB//1Pa)$                                                        
+ LIN
+        2                                                NC
+>>>
+      750                                                 N
+    0.00000                                           RMIN
+    0.199988E-01                                      RSTEP
+    0.000000E+00                                       YMIN
+    0.000000E+00                                         DY
+ SAFTL PLTEND
+
+

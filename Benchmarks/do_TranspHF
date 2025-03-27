@@ -1,0 +1,8 @@
+echo '-------------------------------------------'
+date
+echo 'Start Transparent Horizontal Point Force test'
+rdoast ./input/TranspHF > ./logs/TranspHF.out
+mv ./input/TranspHF.pl? ./run
+pltsplit -f ./run/TranspHF -b 2 -p 3 -r 1 -d 1
+./bin/TranspHF S
+echo 'End Transparent Horizontal Point Force test'

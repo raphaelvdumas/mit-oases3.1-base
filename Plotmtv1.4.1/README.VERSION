@@ -1,0 +1,98 @@
+
+This is PLOTMTV V1.4.1, which adds probability plots, bar-charts and
+histograms to version 1.3.2.  PLOTMTV V1.4.1 also includes
+several minor bug-fixes to the 1.4.0 version.  
+
+This version has been compiled on SPARC (SunOS 4.1.3) and IBM RS6K platforms.
+
+CHANGES FROM VERSION 1.4.0
+--------------------------
+   * Added ability to scale annotations
+
+   * Added command-line argument to delete datafiles just before quitting
+     the program.
+
+   * Fixed ./Plot/Imakefile.  The original version had spaces in one
+     of the rules instead of a tab, which caused problems on SGI machines.
+
+   * Fixed postscript scaling bug (a font specified using MTV_PSFONTX would
+     change back to the default after zooming in/out.
+
+
+CHANGES FROM VERSION 1.3.X
+--------------------------
+
+The major changes/additions are:
+
+   * Support for probability plots, bar-charts and histograms.
+
+   * Plot behavior has been changed from "create a new window for each plot" 
+     to a single window with multiple pages (1 page per plot).  In this mode, 
+     buttons are used to scroll between different pages.
+
+   * Capability to see multiple plots in a single plot window has been
+     added.  When invoked with "plotmtv -comb <files>", a single plot window
+     with multiple frames are drawn.  This allows easier comparison of plots.
+
+Minor changes are:
+
+   * A new button to toggle between current and previous zoom states has 
+     been added to PLOTMTV's 2D plot window.
+
+   * The PostScript text font sizes can now be controlled via environment
+     variables.
+
+   * Added environment variable to disable ISOLatin font in PostScript.
+     This font is not available on certain PS-Level 1 machines.
+
+   * Axis labels have been improved, and the ability to define the
+     axis-labels has been added.
+
+   * Added "% axisguides" option to prevent drawing the small axis-guide gizmo
+     in 3D plots.
+
+   * Added "% boundary" flag for CURVE2D/CURVE3D datasets to enlarge the 
+     default plot boundary 
+ 
+   * Added "% sidelabel" and "% sidelabellength" flags to turn off the
+     side-label annotations, and to control the size of the area for the
+     side-label annotations.
+
+   * Added "% innerticks", which provides the capability to do innerticks, 
+     i.e. ticks are drawn on the inside of the plot, instead of the default 
+     where half the ticks are drawn inside, and the other half are drawn 
+     outside.
+
+   * The default 3D view has been changed to left-handed world coordinates
+
+   * -geom flag now works!  
+     Also geometry can be read in from the Xdefaults file using
+     "plotmtv.Geometry: +40+40"
+
+   * -noframe flag added to disable the frame on a scaled-down Postscript plot.
+
+   * Changes to make the SGI C compiler happy
+
+   * Fixes to rubberbands for X86 platforms, PC-based UNIX
+
+   * Fix to parser.c that fixes a "modify-constant-character-string" bug.
+
+PLOTMTV V1.4.1 also comes with improved documentation (via FrameMaker)
+
+Kenny Toh
+7/16/95
+
+-------------------------------------------------------------------------
+HISTORY
+
+PLOTMTV is based on the DRAWPLOT, CONTOUR and PDRAW programs from 
+U.C. Berkeley (yes, I'm responsible for those too!). PLOTMTV essentially
+combines all the capabilities of the three packages into one single package.
+
+PLOTMTV was first released in March 1993 (Version 1.3.1).  Version 1.4.0 was
+released in July 1994, while Version 1.4.1, the latest revision (this
+release) was released in July 1995.
+
+Footnote:
+The MTV in PLOTMTV does not stand for Music TV.  It could stand for
+Many Things Visualized, but does not.

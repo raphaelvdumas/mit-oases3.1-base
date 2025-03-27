@@ -1,0 +1,18 @@
+This is TeX, Version 3.1415 (C version 6.1) (format=latex 95.12.6)  10 DEC 1996 20:54
+**tests
+(tests.tex
+LaTeX2e <1995/06/01> patch level 3
+! Undefined control sequence.
+l.1 \section
+            {Testing the Installation}
+? x
+ 
+Here is how much of TeX's memory you used:
+ 3 strings out of 10957
+ 23 string characters out of 73494
+ 44047 words of memory out of 262141
+ 2929 multiletter control sequences out of 9500
+ 3640 words of font info for 14 fonts, out of 100000 for 255
+ 14 hyphenation exceptions out of 607
+ 4i,0n,1p,44b,7s stack positions out of 300i,40n,60p,3000b,4000s
+No pages of output.

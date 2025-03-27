@@ -1,0 +1,11 @@
+#!/bin/csh -f
+#
+# Make sure plpsub.pl is in your $PATH
+#
+perl -e  'print reverse <>' $1.plp > t1
+perl -ne 'print if (/PLTEND/ ? ($c = 6) : (--$c > 0))' t1 > t2
+perl -ne 'print if (/DY/ ? ($c = 5) : (--$c > 0))' t2 > t3
+perl -e  'print reverse <>' t3 > insrt.txt
+rm -f t1 t2 t3
+plpsub.pl $2.stub $3.plp
+rm -f insrt.txt

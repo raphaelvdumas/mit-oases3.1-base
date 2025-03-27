@@ -1,0 +1,579 @@
+1,2c1,4
+<       SUBROUTINE CLASUN(KOLORS,OPTION,ZCLASS,NLEV,
+<      &                  DEVICE,VUG,IBASE,REVERS,ROT,WDW)
+---
+>       SUBROUTINE CLASUN(KOLORS,OPTION,BWCOL,ZCLASS,NLEV,
+>      $ DEVICE,VUG,IBASE,REVERS,ROT)
+> c      PARAMETER (NCLZ=30, NCLZP1=NCLZ+1  )
+>       PARAMETER (NCLZ=19, NCLZP1=NCLZ+1  )
+4,16c6,9
+<       PARAMETER NCLZ=19, NCLZP1=NCLZ+1
+< 
+<       COMMON /GEO6XX/ KWRKSZ,KWORK(48000)
+< 
+<       LOGICAL BATCH
+< 
+<       EXTERNAL BATCH
+< 
+<       INTEGER BW, BWVTT,  CYAN, MAGENT, YELLOW, BWSTEP
+<       INTEGER BWB(NCLZP1),TBW1(NCLZP1),TBW2(NCLZP1),TBW3(NCLZP1)
+<       INTEGER TBW1S(NCLZP1),TBW2S(NCLZP1),TBW3S(NCLZP1)
+< 
+<       CHARACTER*3 BWCOL,LINEP,DEVICE,VUG,ROT,WDW
+---
+> c      LOGICAL BATCH
+> c      EXTERNAL BATCH
+>       INTEGER BW, BWVTT,BWSTEP
+>       CHARACTER*3 BWCOL,DEVICE,VUG,ROT
+18,21c11,12
+< 
+<       REAL COLOR(3), HATCH(3)
+< 
+<       DIMENSION KOLORS(1), BW(NCLZP1), BWVTT(NCLZP1)
+---
+>       DIMENSION KOLORS(1), KOLBAS(NCLZP1), BW(NCLZP1),
+>      $ BWVTT(NCLZP1),KOLT41(NCLZP1)
+23,32c14,20
+<       DIMENSION CYAN(NCLZP1),MAGENT(NCLZP1),YELLOW(NCLZP1)
+< 
+<       COMMON /CHFLAG/ BWCOL, LINEP
+<       COMMON /HSFLAG/ IFIRST,ILAST,CYL,FOM,PRB,SEG,ISEG,
+<      &                IFR,SDFLAG,NCL
+< 
+<       DATA BWB  /16,7,5,4,3,2,0,2,3,4,5,7,16,2*0,5*04/
+<       DATA TBW1 /96,82,67,54,46,37,30,19,00,6*0,5*00/
+<       DATA TBW2 /00,00,00,00,00,00,00,00,00,6*0,5*00/
+<       DATA TBW3 /00,00,00,00,00,00,00,00,00,6*0,5*00/
+---
+>       INTEGER CYAN(NCLZP1),MAGENT(NCLZP1),YELLOW(NCLZP1)
+>       INTEGER TBW(NCLZP1),TBW1(NCLZP1),TBW2(NCLZP1),TBW3(NCLZP1)
+>       INTEGER TBW1S(NCLZP1),TBW2S(NCLZP1),TBW3S(NCLZP1)
+>       real color(3),hatch(5)
+>       DATA TBW1 /16,8,7,6,5,4,3,2,1,6*0,5*04/
+>       DATA TBW2 /16,8,7,6,5,4,3,2,1,6*0,5*04/
+>       DATA TBW3 /16,8,7,6,5,4,3,2,1,6*0,5*04/
+36,42c24,46
+< 
+<       DATA MAGENT/16,16,10,06,04,03,02,00,00,00,00,02,06,
+<      >                                          02,04,06,02,16,08,08/
+<       DATA YELLOW/00,08,08,08,08,06,04,00,00,00,00,00,00,
+<      >                                          02,04,06,02,08,16,08/
+<       DATA CYAN/  00,00,00,00,00,00,00,02,06,10,14,16,16,
+<      >                                          02,04,06,02,08,08,16/
+---
+> C   KOLBAS CODE IS: MAGENTA, YELLOW, CYAN
+> c      DATA KOLBAS/160000,160800,100800,060800,040800,030600,
+> c     %020600,000002,000004,000006,000008,000016,040016,
+> c     %5*080016,020202,040404/
+> c      DATA MAGENT/16,16,10,06,04,03,02,5*00,04,02,04,06,02,04,2*06/
+> c      DATA YELLOW/00,08,08,08,08,06,06,5*00,00,02,04,06,02,04,2*06/
+> c      DATA CYAN/  00,00,00,00,00,00,00,02,04,06,08,16,16,02,04,
+> c     $06,02,04,2*06/
+> c >>> shortened red colour scale. hs 900809
+> c >>> lengthened blue colour scale
+>        DATA MAGENT/16,16,10,06,04,02,5*00,04,08,02,04,06,02,04,06,16/
+>        DATA YELLOW/00,08,08,08,08,06,5*00,00,00,02,04,06,02,04,06,16/
+>        DATA CYAN/  00,00,00,00,00,00,02,04,06,08,16,16,16,02,04,
+>      $ 06,02,04,06,16/
+> c >>> Peters longer colour scale to be used for nclz=30
+> c                  1  2  3  4  5  6  7  8  9 10  1  2  3  4  5  6  7  8   
+> c      DATA MAGent/16,16,16,13,10,08,06,05,04,03,02,01,00,00,00,00,00,00,
+> c     $            00,00,00,02,04,08,02,04,06,02,04,06,16/
+> c      DATA YELlow/00,04,08,08,08,08,08,08,08,07,06,03,00,00,00,00,00,00,
+> c     $            00,00,00,00,00,00,02,04,06,02,04,06,16/
+> c      DATA CYan  /00,00,00,00,00,00,00,00,00,00,00,01,02,03,04,05,06,07,
+> c     $            08,12,16,16,16,16,02,04,06,02,04,06,16/
+>       DATA KOLT41/6,2,13,8,25,7,9,3,19,11,5,4,3*4,5*30/
+46,47d49
+<       KWRKSZ=48000
+<       IFR=NCLZP1+2
+49,65c51,72
+<   200 FORMAT(1X,/,' ***  INITIALISING TEKTRONIX 4100 SERIES',
+<      & ' (MT41XX)  ***',/)
+<   220 FORMAT(1X,/,' ***  INITIALISING DEC 240 (MREGIS)  ***',/)
+< C
+< C   **********
+< C   OPENING OUTPUT DEVICE
+< C   **********
+< C
+<       IF(SEG .GT. 10.0)   THEN
+<         CALL GROUTE('SEL LDUMMY;EXIT')
+< C       CALL LDUMMY
+<       ELSE IF (DEVICE.EQ.'PRX')    THEN
+<         CALL GROUTE('SEL GPRINTO;EXIT')
+<       ELSE IF (DEVICE.EQ.'T93')    THEN
+<         CALL GROUTE('SEL GT4693A4;EXIT')
+<       ELSE IF (DEVICE.EQ.'PHA')    THEN
+<         CALL GROUTE('SEL HTPPXA4;EXIT')
+---
+>       IF(DEVICE.EQ.'PRX')    THEN
+> C       CALL GROUTE('SEL GPRINTO;EXIT')
+> C       CALL GPRINTO
+>        STOP '>>>> ERROR: DEVICE PRX NOT IMPLEMENTED <<<<'
+> C       CALL GOPEN
+> C       CALL GPRINT(1)
+>       ELSE IF(DEVICE.EQ.'LAS')    THEN
+> c        CALL GROUTE(' ')
+>         CALL GROUTE('SEL HPOSTA; EXIT')
+>         CALL GOPEN
+>         CALL GPRINT(1)
+>         CALL GCHARF('HARD')
+>         CALL GCHARF('COMP')
+>       ELSE IF(DEVICE.EQ.'GKS')    THEN
+> C       CALL LGKSMD
+>        CALL GROUTE('SEL MGKSMX; EXIT')
+>        CALL GOPEN
+>        CALL GPRINT(1)
+>       else if (device .eq. 'HPJ') THEN
+>         call groute('SEL GHP3630; EXIT')
+>        CALL GPRINT(1)
+>        CALL GOPEN
+67,105c74,101
+<         IF(VUG.EQ.'VUG')   THEN
+<           CALL GROUTE('SEL GT4692;EXIT')
+<         ELSE
+<           CALL GROUTE('SEL HCPOSTA3;EXIT')
+<         END IF
+<       ELSE IF (DEVICE.EQ.'VTT')   THEN
+<         IF(WDW .EQ. 'DCW')   THEN
+<           CALL GROUTE('SEL MX11;EXIT')
+<         ELSE IF(WDW .EQ. 'VWS')   THEN
+<           CALL GROUTE('SEL MGPX;EXIT')
+<         ELSE
+<           CALL GROUTE('SEL MREGIS;EXIT')
+< C         CALL MREGIS
+<         END IF
+<       ELSE IF (DEVICE.EQ.'T41')   THEN
+<         IF(WDW .EQ. 'DCW')   THEN
+<           CALL GROUTE('SEL MX11;EXIT')
+<         ELSE IF(WDW .EQ. 'VWS')   THEN
+<           CALL GROUTE('SEL MGPX;EXIT')
+<         ELSE
+<           CALL GROUTE('SEL MT41XX;EXIT')
+< C         CALL MT41XX
+<         END IF
+< 
+<       ELSE IF (DEVICE .EQ. 'EPS')   THEN
+<         IF( BWCOL .EQ. 'B/W')   THEN
+<           CALL GROUTE('SEL HPOSTEPS;EXIT')
+<         ELSE
+<           CALL GROUTE('SEL HCPOSTEPS;EXIT')
+<         END IF
+< 
+<       ELSE IF (DEVICE .EQ. 'PS4')   THEN
+<         CALL GROUTE('SEL HPOSTA4;EXIT')
+< 
+<       ELSE IF (DEVICE .EQ. 'PS3')   THEN
+<         CALL GROUTE('SEL HPOSTA3;EXIT')
+< 
+<       ELSE IF (DEVICE.EQ.'G41')   THEN
+<         CALL GROUTE('SEL G4105D;EXIT')
+---
+> C       IF(VUG.EQ.'VUG')   THEN
+> c       CALL GROUTE(' ')
+>         CALL GROUTE('SEL GT4695;EXIT')
+> C       CALL G4691A
+>        CALL GPRINT(1)
+>        CALL GOPEN
+> C       CALL GROTA
+> C       ELSE
+> C       CALL GROUTE('SEL G4691B;EXIT')
+> C       CALL G4691B
+> C       CALL GPRINT(1)
+> C       CALL GOPEN
+> C       END IF
+> C      ELSE IF (DEVICE.EQ.'VTT'.AND.(.NOT.BATCH()))   THEN
+> C      CALL LIB$SPAWN('$SET TERM/NOBROAD')
+> C      CALL GROUTE('SEL MREGIS;EXIT')
+> C       CALL LREGIS
+> C       CALL GPRINT(0)
+> C       CALL GOPEN
+>       ELSE IF (DEVICE.EQ.'T41') THEN
+> C      CALL LIB$SPAWN('$SET TERM/NOBROAD')
+>       CALL GROUTE('SEL LT4105;EXIT')
+> C       CALL LT41XX
+>       CALL GPRINT(0)
+>       CALL GOPEN
+>       ELSE IF (DEVICE.EQ.'G41') THEN
+> C      CALL LIB$SPAWN('$SET TERM/NOBROAD')
+>        CALL GROUTE('SEL MT41XX;EXIT')
+107,118c103,110
+<       ELSE IF (DEVICE.EQ.'LAS')   THEN
+< C        CALL GROUTE('SEL PLN03P;EXIT')
+< 
+< C  N.B. ****** IL PARAMETRO (75,150,300) VA COERENTEMENTE RIPORTATO 
+< C NELLA  SPAWN 
+< 
+< C   150 DPI, MEDIUM DENSITY
+<         CALL GROUTE('SEL GLN03MA4;EXIT')
+< C    75 DPI, LOW DENSITY
+< C        CALL GROUTE('SEL GLN03LA4;EXIT')
+< C   300 DPI, HIGH DENSITY
+< C        CALL GROUTE('SEL GLN03HA4;EXIT')
+---
+> C       CALL GPRINT(1)
+> C       CALL GOPEN
+>       else if (device.eq.'X11') then
+>        call groute('SEL LX11;EXIT')
+>        call gopen
+>       ELSE
+>         CALL GROUTE(' ')
+>         CALL GOPEN
+120,127c112,115
+<       IF(.NOT.BATCH().AND.DEVICE.NE.'PRX')
+<      & CALL LIB$SPAWN('$SET TERM/NOBROAD')
+<       CALL GOPENS(SEG,ISEG)
+< 
+< C   **********
+< C   SETTING COLOUR TABLE
+< C   **********
+< 
+---
+>       IF (ROT.EQ.'ROT') THEN
+>         CALL GROTA
+>       END IF
+> C
+128a117,137
+>        IBASE=NCLZ-1
+>        NCMAX=16
+>        IF((OPTION(1:5).EQ.'DIFFER').OR.(OPTION(1:5).EQ.'ERROR')) THEN
+>       NLEV=4
+>       MAGENT(1)=00
+>       YELLOW(1)=00
+>       CYAN(1)  =06
+>       MAGENT(2)=02
+>       YELLOW(2)=02
+>       CYAN(2)  =00
+>       MAGENT(3)=06
+>       YELLOW(3)=06
+>       CYAN(3)  =00
+>       MAGENT(4)=10
+>       YELLOW(4)=10
+>       CYAN(4)  =00
+>       MAGENT(5)=16
+>       YELLOW(5)=16
+>       CYAN(5)  =00
+>        IF(REVERS.GT.0.0) CALL REVRSE(CYAN,MAGENT,YELLOW,NLEV)
+>        END IF
+130,135c139,183
+<         IF(OPTION(1:5) .EQ. 'TDPEN')   THEN
+<           WRITE(6,*) ' COLOR SCALE FOR OPTION "TDPEN" IS REDEFINED '
+<           MAGENT(7)=0
+<           YELLOW(7)=0
+<           CYAN(7)  =0
+<         END IF
+---
+>       IF (DEVICE.EQ.'T41'.or.DEVICE.EQ.'LAS') THEN
+>        IF (REVERS.GT.0.0) THEN
+>          DO 1000 JK=1,(NLEV+1)/2
+>           TEMP=KOLT41(JK)
+>           KOLT41(JK)=KOLT41(NLEV-JK+2)
+>           KOLT41(NLEV-JK+2)=TEMP
+>  1000    CONTINUE
+>        END IF
+>        cALL GSHADE(KOLT41,NLEV+1)
+>        IF (REVERS.GT.0.0) THEN
+>          DO 1001 JK=1,(NLEV+1)/2
+>           TEMP=KOLT41(JK)
+>           KOLT41(JK)=KOLT41(NLEV-JK+2)
+>           KOLT41(NLEV-JK+2)=TEMP
+>  1001    CONTINUE
+>        END IF
+>       ELSE 
+> c       CALL GCMODE(-2,IAMODE)
+> c>>> added for version 6 /pg
+>         id=9999
+>         call rqvmod(id,nent,icolmod,ischeme,imxlev)
+> c        write(*,*) 'icolmod, nent', icolmod, nent
+>         id = 1
+>        NCMAX=22
+>        NLEV=MIN(NLEV,NCMAX-1)
+>        IF(REVERS.GT.0.0) CALL REVRSE(CYAN,MAGENT,YELLOW,NLEV)
+>        write(6,100)
+>  100   FORMAT(1H ,'Colour codes:',
+>      &       /1H ,'    CYAN MAGENTA  YELLOW')
+>  200   FORMAT(1H ,3I8)
+> c        call rvmode(id,0,icolmod,3,NCLZP1)
+>          call rvmode(id,0,icolmod,3,16.)
+>        DO 10 ILV=1,NCLZP1
+>           color(1)=cyan(ilv)
+>           color(2)=magent(ilv)
+>           color(3)=yellow(ilv)
+>           call rcolor(0,3-1+ilv,color,hatch) 
+> c          WRITE(6,200) CYAN(ILV),MAGENT(ILV),YELLOW(ILV)
+>  10    CONTINUE
+> c       CALL GCOLOR(3,CYAN,MAGENT,YELLOW,NCLZP1)
+> c       CALL GSHADE(3,-(NLEV+1))
+>        CALL RSHADE(3,-(NLEV+1))
+>        IF(REVERS.GT.0.0) CALL REVRSE(CYAN,MAGENT,YELLOW,NLEV)
+> 
+>        CALL rclass(ZCLASS,NLEV,0)
+137,169c185,186
+<         CALL RCMODEN('CMY',16)
+<         IBASE=NCLZ
+<         NCMAX=16
+<         IF((OPTION(1:5).EQ.'DIFFER').OR.(OPTION(1:5).EQ.'ERROR')) THEN
+<           NLEV=4
+<           MAGENT(1)=00
+<           YELLOW(1)=00
+<           CYAN(1)  =06
+<           MAGENT(2)=02
+<           YELLOW(2)=02
+<           CYAN(2)  =00
+<           MAGENT(3)=06
+<           YELLOW(3)=06
+<           CYAN(3)  =00
+<           MAGENT(4)=10
+<           YELLOW(4)=10
+<           CYAN(4)  =00
+<           MAGENT(5)=16
+<           YELLOW(5)=16
+<           CYAN(5)  =00
+<         END IF
+< C
+<         NLEV=MIN(NLEV,NCMAX-1)
+< C
+<         IF(REVERS.GT.0.0)   THEN
+<           CALL REVRSE(CYAN,NLEV,MAGENT,NLEV,YELLOW,NLEV)
+<           CALL NEWGCOL(3,CYAN,MAGENT,YELLOW,NCLZP1)
+<           CALL REVRSE(CYAN,NLEV,MAGENT,NLEV,YELLOW,NLEV)
+<         ELSE 
+<           CALL NEWGCOL(3,CYAN,MAGENT,YELLOW,NCLZP1)
+<         END IF
+<         CALL RSHADE(3,-(NLEV+1))
+<         CALL RCLASS(ZCLASS,NLEV,0)
+---
+>       END IF
+>       ELSE IF (BWCOL.EQ.'SHD') THEN
+170a188,206
+>       BWSTEP=1
+>       IF(NLEV.LE.4)   BWSTEP=2
+>       IF (DEVICE.eq.'HPJ'
+>      &    .or.DEVICE.EQ.'TEK'.OR.DEVICE.EQ.'G41'
+>      &    .OR.DEVICE.EQ.'VTT'.OR.DEVICE.EQ.'T41'
+>      &    .OR.DEVICE.EQ.'C50'.OR.DEVICE.EQ.'PRX') THEN
+>        IF (REVERS.GT.0) CALL REVRSE(TBW1,TBW1S,TBW2S,NLEV)
+>        CALL GCMODE(-2,IAMODE)
+>        IF (NLEV.LE.4) THEN
+>        CALL GCOLOR(3,TBW1S,TBW1S,TBW1S,NCLZP1)
+>        ELSE IF (NLEV.LE.6) THEN
+>        CALL GCOLOR(3,TBW2S,TBW2S,TBW2S,NCLZP1)
+>        ELSE
+>        CALL GCOLOR(3,TBW1,TBW1,TBW1,NCLZP1)
+>        END IF
+>        CALL GSHADE(3,-(NLEV+1))
+>        IF (REVERS.GT.0) CALL REVRSE(TBW1,TBW1S,TBW2S,NLEV)
+>       ELSE IF (DEVICE.EQ.'LAS') THEN
+>        CALL GHALF
+172,200c208,241
+< 
+< C   BLACK AND WHITE PLOT
+<         IF(OPTION(1:5) .EQ. 'TDPEN')   THEN
+<           WRITE(6,*) ' COLOR SCALE FOR OPTION "TDPEN" IS REDEFINED '
+<           CALL RCMODEN('CMY',16)
+<           CALL NEWGCOL(3,BWB,BWB,BWB,NCLZP1)
+<           CALL RSHADE(3,-(NLEV+1))
+<           CALL RCLASS(ZCLASS,NLEV,0)
+<         ELSE
+<           BWSTEP=1
+<           NLP1=NLEV + 1
+<           IF (DEVICE.EQ.'TEK' .OR. 
+<      &        DEVICE.EQ.'DCW' .OR.
+<      &        DEVICE.EQ.'VTT' .OR.
+<      &        DEVICE.EQ.'T41' .OR.
+<      &        DEVICE.EQ.'C50' .OR.
+<      &        DEVICE.EQ.'LAS' .OR.
+<      &        DEVICE.EQ.'EPS' .OR.
+<      &        DEVICE.EQ.'PS4' .OR.
+<      &        DEVICE.EQ.'PS3' .OR.
+<      &        DEVICE.EQ.'PRX')      THEN
+< C              IF (REVERS.GT.0)   THEN
+< C                CALL REVRSE(TBW1,NLP1,TBW2,NLP1,TBW3,NLP1)
+< C              END IF
+< 
+< 
+<             CALL GHALF
+<             CALL RCMODEN('BWS',100)
+<             NCOL= NLP1
+---
+>        CALL GCMODE(3,IAMODE)
+>        DO 4000   I=1,NCLZP1,BWSTEP
+>        INDEX= (I-1)/BWSTEP + 1
+>        IF(DEVICE.EQ.'VTT')   THEN
+>         KOLORS(INDEX)=BWVTT(I)
+>        ELSE
+>         KOLORS(INDEX)=BW(I)
+>        END IF
+>  4000  CONTINUE
+>        CALL GSHADE(KOLORS,NLEV+1)
+>       END IF
+>       CALL GZCL(ZCLASS,NLEV,0)
+>       ELSE 
+>        CALL GZCL(ZCLASS,NLEV,0)
+>       END IF
+>       RETURN
+>       END
+>       SUBROUTINE REVRSE(CYAN,MAGENT,YELLOW,NLEV)
+>       INTEGER CYAN(1), MAGENT(1), YELLOW(1)
+>         DO 5000    JK=1,(NLEV+1)/2
+>         TEMP=CYAN(JK)
+>         CYAN(JK)=CYAN(NLEV-JK+2)
+>         CYAN(NLEV-JK+2)=TEMP
+>         TEMP=MAGENT(JK)
+>         MAGENT(JK)=MAGENT(NLEV-JK+2)
+>         MAGENT(NLEV-JK+2)=TEMP
+>         TEMP=YELLOW(JK)
+>         YELLOW(JK)=YELLOW(NLEV-JK+2)
+>         YELLOW(NLEV-JK+2)=TEMP
+>  5000   CONTINUE
+>       RETURN
+>       END
+>       SUBROUTINE FROTA(Z,NX,NY)
+>       DIMENSION Z(NX,NY)
+202c243,245
+< C Load colors (NCOL > 0)
+---
+>       LU=83
+>       OPEN(UNIT=LU,STATUS='SCRATCH',
+>      & FORM='UNFORMATTED')
+204,215c247,250
+<             INDEX= 3
+<             STEP= 100./NLEV
+<             DO 1000 I = 1, NCOL 
+<               IF (REVERS .EQ. 0)   THEN
+<                 COLOR(1) = 100.0 - ( I - 1 ) * STEP
+<               ELSE
+<                 COLOR(1) = ( I - 1 ) * STEP
+<               END IF
+<               COLOR(2) = 0.0
+<               COLOR(3) = 0.0
+<               CALL RCOLOR(0,INDEX+I-1,COLOR,HATCH)
+<  1000       CONTINUE
+---
+>       DO 1000   IY=1,NY
+>       DO 1000   IX=NX,1,-1
+>       WRITE(LU) Z(IX,IY)
+>  1000 CONTINUE
+217,225c252
+<  
+<             CALL RSHADE(3,-NCOL)
+< C            CALL GSHADE(KOLOR,NCOL)
+<           END IF
+<           CALL RCLASS(ZCLASS,NLEV,0)
+< C   RESTORING ORIGINAL VALUES
+<           IF (REVERS.GT.0) CALL REVRSE(TBW1,NLEV,TBW1S,NLEV,TBW2S,NLEV)
+<         END IF
+<       END IF
+---
+>       CALL F90(Z,NX,NY,LU)
+226a254
+>       CLOSE(UNIT=LU)
+229,249c257,266
+< 
+<       SUBROUTINE REVRSE(AAA,IA,BBB,IB,CCC,IC)
+<       DIMENSION AAA(1), BBB(1), CCC(1)
+<         DO 5000    J=1,(IA+1)/2
+<         TEMP=AAA(J)
+<         IND=IA-J+2
+<         AAA(J)=AAA(IND)
+<         AAA(IND)=TEMP
+<  5000   CONTINUE
+<         DO 5200    J=1,(IB+1)/2
+<         TEMP=BBB(J)
+<         IND=IB-J+2
+<         BBB(J)=BBB(IND)
+<         BBB(IND)=TEMP
+<  5200   CONTINUE
+<         DO 5400    J=1,(IC+1)/2
+<         TEMP=CCC(J)
+<         IND=IC-J+2
+<         CCC(J)=CCC(IND)
+<         CCC(IND)=TEMP
+<  5400   CONTINUE
+---
+> C
+>       SUBROUTINE F90(Z,NX,NY,LU)
+>       DIMENSION Z(NY,NX)
+> C
+>       REWIND LU
+> C
+>       DO 2000   IX=1,NY
+>       DO 2000   IY=1,NX
+>       READ(LU) Z(IX,IY)
+>  2000 CONTINUE
+252,265c269,312
+< 
+<       SUBROUTINE GOPENS(SEG,ISEG)
+<       CALL GOPEN
+<       IF(SEG .LT. 1.0)   RETURN
+<       CALL GSEGWK(0)
+<       DO 2000   JSEG=10,1,-1
+<       CALL GSEGEX(JSEG,IFANSWER)
+<       IF(IFANSWER .GT. 0)    THEN
+<       WRITE(6,*) ' UNIPICT.DAT ALREADY CONTAINS SEGMENT ', JSEG
+<       ISEG=JSEG+1
+<       WRITE(6,*) ' WARNING : CREATING SEGMENT NO. ',ISEG
+<       CALL GSEGCR(ISEG)
+<       GO TO 3000
+<       END IF
+---
+>       SUBROUTINE YLOGUN(SCALE)
+>       CHARACTER*3 YBTYPE
+>       CHARACTER*4 TITLEY
+>       CHARACTER*80 TIY
+>       COMMON /XAX/X1,XL,XLEFT,XRIGHT,XSCALE,XINC,DX,
+>      % X1PL,XLPL,NX,X1GRID,XLGRID,DIVX,XVAL(100),NXVAL
+>       COMMON /YAX/Y1,YL,YUP,YDOWN,YSCALE,YINC,DY,
+>      % Y1PL,YLPL,NY,Y1GRID,YLGRID,DIVY,YVAL(100),NYVAL,YBOX
+>       COMMON /YAXC/TITLEY(20),YBTYPE
+>       COMMON /PARA/LABPT,NSM,NDIV,CAY,NARC,NRNG,HGTPT,HGT,
+>      $LABC(51),LWGT(51)
+>       EQUIVALENCE (TIY,TITLEY(1))
+> C
+>       HGTU=HGT*25.4
+>       XORIG= X1PL
+>       YORIG= Y1PL
+>       YMIN=AMIN1(YUP,YDOWN)
+>       YMAX=AMAX1(YUP,YDOWN)
+>       NYVAL=YINC*ALOG(YMAX/YMIN)/ALOG(2.0) + 1.01
+> C
+>       DO 1000   I=1,NYVAL
+>       YVAL(I)=YMIN*2.0**((I-1)/YINC)
+>  1000 CONTINUE
+>       CALL NUMDEC(YVAL,NYVAL,NDEC)
+> C
+>       YAXIS=SCALE*((NYVAL-1)*YSCALE)/YINC * 10.0
+>       CALL GVECT(XORIG, YORIG + YAXIS, 0)
+>       CALL GVECT(XORIG, YORIG, 1)
+> C
+>       DY=ABS(YAXIS/ALOG10(YVAL(NYVAL)/YVAL(1)))
+>       XMIN=XORIG
+>       YSTEP= YAXIS/(NYVAL-1)
+>       DO   2000   I=1,NYVAL
+>       Y= YORIG + YSTEP * (I-1)
+>       CALL GVECT(XORIG,Y,0)
+>       CALL GVECT(XORIG-2.0,Y,1)
+> C     IF(MOD(I-1,ISKIP).NE.0)   GO TO 2000
+>       YNUMB=YVAL(I)
+>       YN=ABS(YNUMB)
+>       IF(YN.LT.10.0)   YN=1.
+>       N=ABS(ALOG10(YN))+3+NDEC
+>       X= XORIG - N*HGTU
+>       IF(XMIN.GT.X)   XMIN=X
+>       CALL GNUMB(YNUMB,X,Y,HGTU,NDEC)
+267,270c314,321
+<       WRITE(6,*) ' UNIPICT DOES NOT EXIST.  CREATING SEGMENT NO. 1 '
+<       ISEG=1
+<       CALL GSEGCR(1)
+<  3000 CONTINUE
+---
+> C
+>       CALL CHARA(TITLEY,N)
+>       HGTCH=1.5*HGTU
+>       Y= YORIG + (YAXIS-N*HGTCH)/2.
+>       X=AMIN1(XORIG-HGTCH,XMIN)
+>       X=AMAX1(HGTU + HGTCH,X)
+>       CALL GCHARA(90)
+>       CALL GCHAR(TIY,X-HGTU,Y,HGTCH)
+272a324
+> 

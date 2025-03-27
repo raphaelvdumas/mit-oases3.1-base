@@ -1,0 +1,59 @@
+# @(#)Imakefile 2/3/93 
+#
+# Imakefile - Plotmtv V1.4.0 Utilities
+#
+# Permission to use, copy, modify, and distribute this software and its
+# documentation for any purpose and without fee is hereby granted,
+# provided that the above copyright notice appear in all copies and that
+# both that copyright notice and this permission notice appear in
+# supporting documentation.
+#
+# This file is provided AS IS with no warranties of any kind.  The author
+# shall have no liability with respect to the infringement of copyrights,
+# trade secrets or any patents by this file or any part thereof.  In no
+# event will the author be liable for any lost revenue or profits or
+# other special, indirect and consequential damages.
+#
+#
+    LOCALBINDIR = ../Bin
+       INCLUDES = -I../Lib
+        PLOTLIB = ../Lib/libctr.a 
+  SYS_LIBRARIES = -lm
+
+
+#
+# Conversion utilities
+#
+CONV1_SOURCES = ctr2mtv.c
+CONV1_OBJECTS = ctr2mtv.o
+CONV1_PROGRAM = ctr2mtv
+
+CONV2_SOURCES = drawplot2mtv.c
+CONV2_OBJECTS = drawplot2mtv.o
+CONV2_PROGRAM = drawplot2mtv
+
+CONV3_SOURCES = pdraw2mtv.c
+CONV3_OBJECTS = pdraw2mtv.o
+CONV3_PROGRAM = pdraw2mtv
+
+CONV4_SOURCES = mtv2mtv.c
+CONV4_OBJECTS = mtv2mtv.o
+CONV4_PROGRAM = mtv2mtv
+
+PROGRAMS      = $(CONV1_PROGRAM) $(CONV2_PROGRAM) \
+                $(CONV3_PROGRAM) $(CONV4_PROGRAM) 
+
+all:: $(PROGRAMS)
+
+install.local:: $(PROGRAMS)
+	$(INSTALL) -c $(INSTPGMFLAGS)  $(PROGRAMS) $(LOCALBINDIR)
+
+SingleProgramTarget($(CONV1_PROGRAM),$(CONV1_OBJECTS), $(PLOTLIB), /**/)
+SingleProgramTarget($(CONV2_PROGRAM),$(CONV2_OBJECTS), $(PLOTLIB), /**/)
+SingleProgramTarget($(CONV3_PROGRAM),$(CONV3_OBJECTS), $(PLOTLIB), /**/)
+SingleProgramTarget($(CONV4_PROGRAM),$(CONV4_OBJECTS), $(PLOTLIB), /**/)
+
+InstallProgramWithFlags($(CONV1_PROGRAM),$(BINDIR), /**/)
+InstallProgramWithFlags($(CONV2_PROGRAM),$(BINDIR), /**/)
+InstallProgramWithFlags($(CONV3_PROGRAM),$(BINDIR), /**/)
+InstallProgramWithFlags($(CONV4_PROGRAM),$(BINDIR), /**/)

@@ -1,0 +1,81 @@
+      128                                              MODU
+              COL 
+                                                                                 
+ Forward normal stress                                                           
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     25.0 m$ 
+ RD:     35.0 m$ 
+     15.0000                                           XLEN
+      9.0000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    0.000000E+00                                      XLEFT
+     4.00000                                         XRIGHT
+    0.500000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     60.0000                                          YDOWN
+    15.000000E+00                                        YUP
+     10.00000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB)$                                                        
+ LIN
+        3                                                NC
+     999                                                 N
+    2.002                                       XOFF
+    0.2E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+     2009                                                 N
+    0.212314E-02                                       XOFF
+    0.199097E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+     200                                                 N
+    0.2E-01                                       XOFF
+    0.2E-01                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+              COL 
+                                                                                 
+ Backward normal stress                                        
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:     25.0 m$ 
+ RD:     35.0 m$ 
+     15.0000                                           XLEN
+      9.0000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    0.000000E+00                                      XLEFT
+     2.50000                                         XRIGHT
+    0.500000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+    60.0000                                          YDOWN
+    35.000000E+00                                        YUP
+     5.00000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB)$                                                        
+ LIN
+        3                                                NC
+      1000                                                 N
+    0.2E-02                                           RMIN
+    0.2E-02                                      RSTEP
+    0.000000E+00                                       YMIN
+    0.000000E+00                                         DY
+     2009                                                 N
+    0.212314E-02                                       XOFF
+    0.199097E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+     200                                                 N
+    0.2E-01                                       XOFF
+    0.2E-01                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+ RDOAS PLTEND
+
+
+

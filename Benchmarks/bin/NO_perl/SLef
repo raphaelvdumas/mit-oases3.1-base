@@ -1,0 +1,22 @@
+#!/usr/local/bin/tcsh
+mv ./tloss/SLef.plt ./tloss/SLef.plt.old
+#mv ./tloss/SLef.plp ./tloss/SLef.plp.old
+#./bin/make_plug ./run/SLef ./tloss/stubs/SLef ./tloss/SLef
+cat ./refs/BEM/bem_EF_NS.dat       ./run/SLef.rdo.par1.tot.rx1.dat > g1
+cat ./refs/BEM/bmef.ns.bac.rx1.dat ./run/SLef.rdo.par1.bac.rx1.dat > g2
+cat g1  ./refs/CORE/SLef.gem.par1.tot.rx1.dat > f1
+cat g2  ./refs/CORE/SLef.gem.par1.bac.rx1.dat > f2
+cat f1 f2 > ./tloss/SLef.plt
+rm -f f? g?
+if ( $#argv == 1 ) then
+  if ($argv[1] == "S") then
+# Silent mode selected if argument is S
+  else
+# Plotting mode otherwise
+mplot ./tloss/SLef
+  endif 
+else
+# Plotting mode as default with no arguments
+mplot ./tloss/SLef
+endif
+

@@ -1,0 +1,104 @@
+#
+# Test splines
+#
+
+$ DATA=CURVE2D
+% toplabel="Cubic B-Spline"
+% subtitle="Curve passes through midpoints of data points"
+% xmin=0.0  xmax=1.1
+% ymin=0.0  ymax=1.1
+% spline=1
+% markertype=2
+% pointID=T
+     0.275          1
+     0.275        0.5
+       0.5      0.275
+     0.725        0.5
+     0.725          1
+     0.275          1
+$ DATA=CURVE2D
+% toplabel="Catmull-Rom Spline"
+% subtitle="Curve passes through data points"
+% xmin=0.0  xmax=1.1
+% ymin=0.0  ymax=1.1
+% spline=4
+% markertype=2
+% pointID=T
+      0.05          1
+      0.05        0.5
+       0.5       0.05
+      0.95        0.5
+      0.95          1
+
+$ DATA=CONTOUR
+ 
+% toplabel="Splined contours"
+% subtitle="This works"
+% spline=1
+# Define the headers
+% xmin = 100  xmax = 300
+% ymin = 0.0  ymax = 100
+% nx   = 5
+% ny   = 4
+% contlabel=T 
+0.0 0.0 0.0 0.0 0.0
+0.0 1.0 0.0 1.0 0.0
+0.0 0.0 1.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0
+
+$ DATA=CONTOUR
+ 
+% toplabel="Splined contours"
+% subtitle="But this doesn't"
+% spline=1
+# Define the headers
+% xmin = 0.0  xmax = 0.2
+% ymin = 0.0  ymax = 0.1
+% nx   = 5
+% ny   = 4
+% contlabel=T 
+0.0 0.0 0.0 0.0 0.0
+0.0 1.0 0.0 1.0 0.0
+0.0 0.0 1.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0
+
+$END
+#
+# Test splines
+#
+
+$ DATA=CONTOUR
+ 
+% toplabel="Splined contours"
+% subtitle="This works"
+% spline=1
+# Define the headers
+% xmin = 0.1  xmax = 0.3
+% ymin = 0.0  ymax = 0.1
+% contours=(0.1)
+% nx   = 5
+% ny   = 4
+% contlabel=T 
+0.0 0.0 0.0 0.0 0.0
+0.0 1.0 0.0 0.0 0.0
+0.0 0.0 1.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0
+
+$ DATA=CONTOUR
+ 
+% toplabel="Splined contours"
+% subtitle="But this doesn't"
+% spline=1
+# Define the headers
+% xmin = 0.0  xmax = 0.2
+% ymin = 0.0  ymax = 0.1
+% contours=(0.1)
+% nx   = 5
+% ny   = 4
+% contlabel=T 
+0.0 0.0 0.0 0.0 0.0
+0.0 1.0 0.0 0.0 0.0
+0.0 0.0 1.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0
+
+$END

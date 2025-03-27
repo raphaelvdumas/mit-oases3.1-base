@@ -1,0 +1,5 @@
+\contentsline {section}{\numberline {1}Testing the Installation}{3}
+\contentsline {subsection}{\numberline {1.1}Installing the Benchmarks}{3}
+\contentsline {subsection}{\numberline {1.2}Directory Tree}{3}
+\contentsline {subsection}{\numberline {1.3}Running the scripts automatically}{4}
+\contentsline {subsection}{\numberline {1.4}Running the scripts manually}{5}

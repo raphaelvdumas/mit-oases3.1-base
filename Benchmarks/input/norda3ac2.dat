@@ -1,0 +1,29 @@
+MODIFIED NORDA 3a - SVP GRADIENT
+P N T J F
+25 25 1 0				# FREQ
+
+2 1
+
+4 5.                                    # NUML, RANGE(1)
+0   0    0   0   0.  0   0              # LAYER 1 ; SECTOR 1
+0   1500 -1490   0   0.  1.0 0          #       2 
+100 1590 500 0.2 0.5 1.2 0              #       4 
+200 0 0 0 0 0 0                         #       6
+
+4 5.                                    # NUML, RANGE(1)
+0   0    0   0   0.  0   0              # LAYER 1 ; SECTOR 2
+0   1500 -1490   0   0.  1.0 0          #       2 
+100 1590 500 0.2 0.5 1.2 0              #       4 
+200 0 0 0 0 0 0                         #       6
+
+50					# source depth
+1 199 199 1
+50 110 2
+200 -200         			# Cmin Cmax
+-1 1 1					# NWVNO ICUT1 ICUT2
+.0 10.0 20. .5    			# Xleft Xright Xaxis Xinc
+0. 60.0 12 5 				# LOSS LEVELS IN DB
+0 100 10 25
+20 40 2
+20 40 2
+

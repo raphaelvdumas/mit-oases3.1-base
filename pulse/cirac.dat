@@ -1,0 +1,13 @@
+Elastic Inclusion
+h t 2 P N d
+20	0				 Source Freq
+2					 Number Of External Layers
+0   5000  1000   0.1  0.2 2.4 0 	 First Layer Z Cp Cs Ap As Rho Rough
+0   5000  1000   0.1  0.2 2.4 0 	 first layer z cp cs ap as rho rough
+10   					 Source: Depth
+1 200  40 
+20 -20  
+64 1 64 0 1 128 0  1 1024 0 	 			Nwno For Bem
+1024 0 45 0.0010 0.2 0.0087  40				Nt F1 F2 Dt R0 Dr Nran
+
+

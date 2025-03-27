@@ -1,0 +1,11 @@
+*.trf
+out
+*.mat
+*.npz
+prop
+parallel
+sequential
+*.plt
+*.plp
+*.ascii
+

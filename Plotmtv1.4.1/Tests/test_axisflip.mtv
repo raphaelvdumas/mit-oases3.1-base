@@ -1,0 +1,33 @@
+# To test flipping (real-world max is mapped to graphics min)
+#
+$ DATA=CONTOUR 
+
+# This one is perfect 
+
+# Dataset/plotset options
+% toplabel   = "Hello World"    # Top label for plot
+% interp     = 0                # Triangular interpolation
+% contfill   = on               # Contour filling
+% meshplot   = on               # Draw the mesh  
+% hiddenline = off              # Use hiddenlines
+#% xticks = 6
+#% yticks = 4
+% yflip = on
+% xflip = on
+% ylog = on
+% xlog = on
+
+# Define the headers
+% xmin = 0.1
+% xmax = 2.7
+% ymin = 0.0
+% ymax = 1.0
+% zmin = 0
+% zmax = 0.7
+% nx   = 5
+% ny   = 3
+0.0 0.0 0.0 0.0 1.0
+0.0 1.0 0.0 1.0 0.0
+0.0 0.0 1.0 0.0 0.0
+
+$ QUIT 

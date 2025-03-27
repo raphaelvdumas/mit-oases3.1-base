@@ -1,0 +1,60 @@
+      128                                              MODU
+ OASTL STLRAN COL NWR
+                                                                
+ Embedded Torus - ELASTIC                                                               
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:    100.0 m$ 
+ RD:     50.0 m$ 
+     15.0000                                           XLEN
+     9.00000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    0.000000E+00                                      XLEFT
+     2.500000                                         XRIGHT
+    0.250000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     70.0000                                          YDOWN
+     20.0000                                            YUP
+     5.00000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB)$                                                        
+ LIN
+        2                                                NC
+     1001                                                 N
+    0.000000E+00                                       XOFF
+    0.199994E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+>>>
+ OASTL STLRAN NWR COL
+                                                                
+ Embedded Torus - ELASTIC                                                               
+        3                                  NUMBER OF LABELS
+ Freq:   25.0 Hz$
+ SD:    100.0 m$ 
+ RD:    170.0 m$ 
+     15.0000                                           XLEN
+     9.00000                                           YLEN
+        0                             GRID TYPE. 0: NO GRID
+    0.000000E+00                                      XLEFT
+     2.500000                                         XRIGHT
+    0.250000                                           XINC
+     1.00000                                           XDIV
+ Range (km)$                                                                     
+ LIN
+     70.0000                                          YDOWN
+     20.0000                                            YUP
+     5.00000                                           YINC
+     1.00000                                           YDIV
+ Normal stress (dB)$                                                        
+ LIN
+        2                                               NC
+     1001                                                 N
+    0.000000E+00                                       XOFF
+    0.199994E-02                                         DX
+    0.000000E+00                                       YOFF
+    0.000000E+00                                         DY
+>>>
+ SAFTL PLTEND
