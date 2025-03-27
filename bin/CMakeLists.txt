@@ -5,7 +5,6 @@ set(OASES_SCRIPTS
     mfp mplot mtvplot multmtv
     oasi oasn oasp oasp3 oasr oass oassp oassp_g oassp_old oast
     plp2mtv
-    rdoasp rdoast
     snap)
 
 install(PROGRAMS ${OASES_SCRIPTS}

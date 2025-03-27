@@ -1,4 +1,5 @@
-include_directories(./ ../src)
+include_directories(./ ../core)
+
 
 add_executable(oasi2_bin unoasi23.f oasoun21.f)
 add_executable(mfp2_bin unoasm21.f oasoun21.f)
