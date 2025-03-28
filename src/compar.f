@@ -130,6 +130,3 @@ c
       common /rpatch1/ pcenter,splen_x,splen_y,patchx1,patchx2,
      &                 patchy1,patchy2
       common /rpatch2/ nfft_x,nfft_y,npatch,inpatch,inpatch1
-      
-
-

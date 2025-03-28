@@ -1,4 +1,4 @@
-      PROGRAM OASNR
+      SUBROUTINE OASNR
 CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
 C                                                       C
 C                      OASES V 2.0                      C

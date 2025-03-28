@@ -1,4 +1,4 @@
-      PROGRAM OASRC
+      SUBROUTINE OASRC
 c ********************************************************
 c *                       OASES                          *
 c *  Ocean Acoustic and Seismic Exploration Synthetics   *

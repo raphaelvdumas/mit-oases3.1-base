@@ -1,4 +1,4 @@
-      PROGRAM OASPS30
+      SUBROUTINE OASPS30
 c ********************************************************
 c *                       OASES                          *
 c *  Ocean Acoustic and Seismic Exploration Synthetics   *

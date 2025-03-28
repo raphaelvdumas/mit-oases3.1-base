@@ -1,4 +1,4 @@
-      PROGRAM OASPEN
+      SUBROUTINE OASPEN
 CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
 C                 					C
 C                     OASES V-1.6                       C

@@ -1,3 +1,0 @@
-All files in this directory are scripts.
-
-Compiled files are in ./posix/ (previously ./$HOSTTYPE-$OSTYPE/).

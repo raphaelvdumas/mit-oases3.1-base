@@ -1,4 +1,4 @@
-      PROGRAM SCATFLD
+      SUBROUTINE SCATFLD
 c ********************************************************
 c *                       OASES                          *
 c *  Ocean Acoustic and Seismic Exploration Synthetics   *

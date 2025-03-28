@@ -1,4 +1,4 @@
-      PROGRAM OASINV
+      SUBROUTINE OASINV
 c ********************************************************
 c *                       OASES                          *
 c *  Ocean Acoustic and Seismic Exploration Synthetics   *
