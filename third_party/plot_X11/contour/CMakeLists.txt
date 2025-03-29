@@ -23,7 +23,7 @@ add_library(con STATIC
 
 add_executable(saccon main.f)
 
-target_link_libraries(saccon con mindis apmath X11)
+target_link_libraries(saccon con mindis apmath2d X11)
 
 install(TARGETS con saccon
         RUNTIME DESTINATION bin
