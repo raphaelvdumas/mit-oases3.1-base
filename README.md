@@ -2,6 +2,8 @@
 
 [OASES](https://tlo.mit.edu/technologies/oases-software-modeling-seismo-acoustic-propagation-horizontally-stratified-waveguides) is a general-purpose computer code developed by the [Massachusetts Institute of Technology](http://www.mit.edu/) for modeling seismo-acoustic propagation in horizontally stratified waveguides. It uses wavenumber integration combined with the Direct Global Matrix solution technique.
 
+**I had a lot of trouble installing this base package on Windows, so I decided to create a friendly installation guide to help others.**
+
 ## Recommended: Using OASES 3.1 on Windows (Portable Edition)
 
 For ease of use, you can run OASES 3.1 directly on Windows by using the portable edition. Follow these steps:
