@@ -1,4 +1,4 @@
-      PROGRAM OASP35
+      SUBROUTINE OASP35
 CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
 C                 					C
 C                     OASES V-3.5                       C

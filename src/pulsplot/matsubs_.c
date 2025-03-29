@@ -4,13 +4,13 @@
 */
 
 /*    MATSUBS_.c are a set of Fortran callable C functions that
-      can be used to generate Matlab Version 5 *.mat files. 
+      can be used to generate Matlab Version 5 *.mat files.
       Floating point data is stored as SINGLE PRECISION!!, so that,
       once in Matlab. it will be necessary to use the double()
       function on variables to do anything useful. Note that
       scalars (1 by 1 variables) are
       written in Matlab V5 "compressed form". Although the Matlab
-      documentation states that Matlab should be able to read 
+      documentation states that Matlab should be able to read
       single precision float scalares in non-compressed form, this
       did not seem to be the case, so the compressflag logic was
       reluctantly added to these functions.
@@ -22,7 +22,7 @@ matopen_: requests filename and opens a Mat file; writes 128 byte header
 matsetup_(ndim,dim,padflag,namelen,name):
        sets up for a Matlab matrix of dimension "ndim", with corresponding
        sizes in the *dim array. Variable name is "name", with length of
-       that name = "namelen". "padflag" is an OUTPUT of this function, 
+       that name = "namelen". "padflag" is an OUTPUT of this function,
        which is set of data needs to by padded to an even 16 byte boundary.
 
 matwrite_(data,nvals,padflag):
@@ -55,54 +55,50 @@ Eddie Scheer, WHOI August,1999 */
 char matname[128];
 
 /* matopen: request file name and open the file; write 128 byte header*/
-            
-matopen_(fname,lname)
-     char *fname;
-     int *lname;
+
+void matopen_(char *fname,
+              int *lname)
 {
-  char *header,*thestart;
+  char *header, *thestart;
   int hsize;
-  short version[1],*sheader,theend[1];
+  short version[1], *sheader, theend[1];
   FILE *optr;
-  
+
   /*  fprintf(stderr,"enter Matlab v5 matfile name: (should end in .mat)");
       scanf("%s",matname); */
-  matname[0]='\0';
-  strncat(matname,fname,*lname);
-  if ((optr=fopen(matname,"w")) == NULL)
-    {
-      fprintf(stderr,"can't open %s\n",matname);
-      exit(1);
-    }
-  fprintf(stderr,"Opened matlab file %s\n",matname);
+  matname[0] = '\0';
+  strncat(matname, fname, *lname);
+  if ((optr = fopen(matname, "w")) == NULL)
+  {
+    fprintf(stderr, "can't open %s\n", matname);
+    exit(1);
+  }
+  fprintf(stderr, "Opened matlab file %s\n", matname);
   hsize = 124;
-  header = (char *)calloc(hsize,sizeof(char));  
+  header = (char *)calloc(hsize, sizeof(char));
   thestart = "MATLAB 5.0";
-  *version = 0x0100;    
+  *version = 0x0100;
   /* *theend is "MI" */
-  *theend=0x4d49;
+  *theend = 0x4d49;
   sheader = (short *)header;
-  strcpy(header,thestart);
+  strcpy(header, thestart);
 
-  fwrite(header,sizeof(char),hsize,optr);
-  fwrite(version,sizeof(short),1,optr);
-  fwrite(theend,sizeof(short),1,optr);
+  fwrite(header, sizeof(char), hsize, optr);
+  fwrite(version, sizeof(short), 1, optr);
+  fwrite(theend, sizeof(short), 1, optr);
   fclose(optr);
-  return;
 }
 
-typedef struct {
-     int type;   /* type */
-     int nbytes; /* nbytes */
+typedef struct
+{
+  int type;   /* type */
+  int nbytes; /* nbytes */
 } TAGSTRUCT;
 
-
-matsetup_(ndim,dim,padflag,namelen,name)
-     int *ndim,*dim,*padflag,*namelen;
-     char *name;
+void matsetup_(int *ndim, int *dim, int *padflag, int *namelen, char *name)
 {
-  int  miMatrix=14,miUINT32=6,miINT32=5,miINT8=1;
-  int flag,iii,sz,compressflag,idum;
+  int miMatrix = 14, miUINT32 = 6, miINT32 = 5, miINT8 = 1;
+  int flag, iii, sz, compressflag, idum;
 
   char *varname;
   FILE *optr;
@@ -114,11 +110,11 @@ matsetup_(ndim,dim,padflag,namelen,name)
   TAGSTRUCT datatag;
 
   /* OPEN FOR APPENDING */
-  if ((optr=fopen(matname,"a")) == NULL)
-    {
-      fprintf(stderr,"can't open %s\n",matname);
-      exit(1);
-    }
+  if ((optr = fopen(matname, "a")) == NULL)
+  {
+    fprintf(stderr, "can't open %s\n", matname);
+    exit(1);
+  }
 
   /*SET UP FLAGTAG */
   flagtag.type = miUINT32;
@@ -129,19 +125,19 @@ matsetup_(ndim,dim,padflag,namelen,name)
 
   /*SET UP DIMTAG */
   dimtag.type = miINT32;
-  dimtag.nbytes = 4*(*ndim);
-  
+  dimtag.nbytes = 4 * (*ndim);
+
   /*SET UP NAMETAG */
   /* Varnames up to 8 characters long!! */
-  varname = (char *)calloc(8,sizeof(char));  
-  strncat(varname,name,*namelen);
+  varname = (char *)calloc(8, sizeof(char));
+  strncat(varname, name, *namelen);
   nametag.type = miINT8;
   nametag.nbytes = 8;
 
   /*SET UP DATATAG */
   datatag.type = 7;
   datatag.nbytes = sizeof(float);
-  for(iii=0;iii<*ndim;iii++)
+  for (iii = 0; iii < *ndim; iii++)
     datatag.nbytes *= dim[iii];
 
   /* compress if only one scalar single prec float (4 bytes) */
@@ -151,7 +147,7 @@ matsetup_(ndim,dim,padflag,namelen,name)
 
   /* setup and write MAINTAG */
   maintag.type = miMatrix;
-  fwrite(&(maintag.type),sizeof(int),1,optr);
+  fwrite(&(maintag.type), sizeof(int), 1, optr);
 
   /* maintag.nbytes =
      normally 4*8 (for flag,dim,name,data tags)+the 4 nbytes fields
@@ -159,10 +155,10 @@ matsetup_(ndim,dim,padflag,namelen,name)
        normally 4*8 (for flag,dim,name,data tags)+3 nbytes fields
        (data held in the data tag field*/
   if (compressflag == 0)
-    maintag.nbytes = 
-      4*8+flagtag.nbytes+dimtag.nbytes+nametag.nbytes+datatag.nbytes;
+    maintag.nbytes =
+        4 * 8 + flagtag.nbytes + dimtag.nbytes + nametag.nbytes + datatag.nbytes;
   else
-    maintag.nbytes = 4*8+flagtag.nbytes+dimtag.nbytes+nametag.nbytes;
+    maintag.nbytes = 4 * 8 + flagtag.nbytes + dimtag.nbytes + nametag.nbytes;
 
   /*if matrix size is odd, augment maintag.nbytes by 4, (but not
     datatag.nbytes) to signal that an extra 4 bytes should pad the data...
@@ -172,37 +168,39 @@ matsetup_(ndim,dim,padflag,namelen,name)
 
   /* Should never have to pad if one scalar sing prec float*/
   if (compressflag == 0)
-    if ((datatag.nbytes/sizeof(float))%2 != 0)
-      {
-	maintag.nbytes += 4;
-	*padflag = 1;
-      }
+    if ((datatag.nbytes / sizeof(float)) % 2 != 0)
+    {
+      maintag.nbytes += 4;
+      *padflag = 1;
+    }
 
-  fwrite(&(maintag.nbytes),sizeof(int),1,optr);
-  fwrite(&(flagtag.type),sizeof(int),1,optr);
-  fwrite(&(flagtag.nbytes),sizeof(int),1,optr);
-  fwrite(&flag,sizeof(int),1,optr);
+  fwrite(&(maintag.nbytes), sizeof(int), 1, optr);
+  fwrite(&(flagtag.type), sizeof(int), 1, optr);
+  fwrite(&(flagtag.nbytes), sizeof(int), 1, optr);
+  fwrite(&flag, sizeof(int), 1, optr);
   /* next is just a dummy */
-  fwrite(&flag,sizeof(int),1,optr);
-  fwrite(&(dimtag.type),sizeof(int),1,optr);
-  fwrite(&(dimtag.nbytes),sizeof(int),1,optr);
-  for (iii=0;iii<*ndim;iii++)
-    fwrite(dim+iii,sizeof(int),1,optr);
-  fwrite(&(nametag.type),sizeof(int),1,optr);
-  fwrite(&(nametag.nbytes),sizeof(int),1,optr);
-  fwrite(varname,sizeof(char),nametag.nbytes,optr);
-  if (compressflag == 0){
-    fwrite(&(datatag.type),sizeof(int),1,optr);
-    fwrite(&(datatag.nbytes),sizeof(int),1,optr);}
-  else{
-    idum = ((datatag.nbytes<<16)& 0xffff0000) | (datatag.type & 0x0000ffff);
-    fwrite(&idum,sizeof(int),1,optr);}
+  fwrite(&flag, sizeof(int), 1, optr);
+  fwrite(&(dimtag.type), sizeof(int), 1, optr);
+  fwrite(&(dimtag.nbytes), sizeof(int), 1, optr);
+  for (iii = 0; iii < *ndim; iii++)
+    fwrite(dim + iii, sizeof(int), 1, optr);
+  fwrite(&(nametag.type), sizeof(int), 1, optr);
+  fwrite(&(nametag.nbytes), sizeof(int), 1, optr);
+  fwrite(varname, sizeof(char), nametag.nbytes, optr);
+  if (compressflag == 0)
+  {
+    fwrite(&(datatag.type), sizeof(int), 1, optr);
+    fwrite(&(datatag.nbytes), sizeof(int), 1, optr);
+  }
+  else
+  {
+    idum = ((datatag.nbytes << 16) & 0xffff0000) | (datatag.type & 0x0000ffff);
+    fwrite(&idum, sizeof(int), 1, optr);
+  }
   fclose(optr);
 }
 
-matwrite_(data,nvals,padflag)
-     float *data;
-     int *nvals,*padflag;
+void matwrite_(float *data, int *nvals, int *padflag)
 {
   /* force varname to 16 */
   float dum = 0;
@@ -210,25 +208,23 @@ matwrite_(data,nvals,padflag)
   FILE *optr;
 
   /* OPEN FOR APPENDING */
-  if ((optr=fopen(matname,"a")) == NULL)
-    {
-      fprintf(stderr,"can't open %s\n",matname);
-      exit(1);
-    }
-  fwrite(data,sizeof(float),*nvals,optr);
-  if (*padflag==1)
-    {
-      fwrite(&dum,sizeof(float),1,optr);
-    }
+  if ((optr = fopen(matname, "a")) == NULL)
+  {
+    fprintf(stderr, "can't open %s\n", matname);
+    exit(1);
+  }
+  fwrite(data, sizeof(float), *nvals, optr);
+  if (*padflag == 1)
+  {
+    fwrite(&dum, sizeof(float), 1, optr);
+  }
   fclose(optr);
 }
 
-matcsetup_(len,padflag,rem,namelen,name)
-     int *len,*padflag,*rem,*namelen;
-     char *name;
+void matcsetup_(int *len, int *padflag, int *rem, int *namelen, char *name)
 {
-  int  miMatrix=14,miUINT32=6,miINT32=5,miINT8=1;
-  int flag,iii,compressflag,dum,idum;
+  int miMatrix = 14, miUINT32 = 6, miINT32 = 5, miINT8 = 1;
+  int flag, iii, compressflag, dum, idum;
 
   char *varname;
   FILE *optr;
@@ -240,11 +236,11 @@ matcsetup_(len,padflag,rem,namelen,name)
   TAGSTRUCT datatag;
 
   /* OPEN FOR APPENDING */
-  if ((optr=fopen(matname,"a")) == NULL)
-    {
-      fprintf(stderr,"can't open %s\n",matname);
-      exit(1);
-    }
+  if ((optr = fopen(matname, "a")) == NULL)
+  {
+    fprintf(stderr, "can't open %s\n", matname);
+    exit(1);
+  }
 
   /*SET UP FLAGTAG */
   flagtag.type = miUINT32;
@@ -258,16 +254,16 @@ matcsetup_(len,padflag,rem,namelen,name)
   dimtag.nbytes = 8;
 
   /*SET UP NAMETAG */
-  varname = (char *)calloc(8,sizeof(char));  
-  strncat(varname,name,*namelen);
+  varname = (char *)calloc(8, sizeof(char));
+  strncat(varname, name, *namelen);
   nametag.type = miINT8;
   nametag.nbytes = 8;
 
   /*SET UP DATATAG */
   /* 4 for 16 bit unsigned: chars writen out with nulls */
   datatag.type = 4;
-  datatag.nbytes = (*len)*2*sizeof(char);
-  
+  datatag.nbytes = (*len) * 2 * sizeof(char);
+
   compressflag = 0;
   if (datatag.nbytes <= 4)
     compressflag = 1;
@@ -275,15 +271,15 @@ matcsetup_(len,padflag,rem,namelen,name)
   /*  fprintf(stderr,"C compressflag %d\n",compressflag);*/
   /* setup and write MAINTAG */
   maintag.type = miMatrix;
-  fwrite(&(maintag.type),sizeof(int),1,optr);
+  fwrite(&(maintag.type), sizeof(int), 1, optr);
 
   /* maintag.nbytes = 4*8 (for flag,dim,name,data tags)+the 4 nbytes fields*/
 
   if (compressflag == 0)
-    maintag.nbytes = 
-      4*8+flagtag.nbytes+dimtag.nbytes+nametag.nbytes+datatag.nbytes;
+    maintag.nbytes =
+        4 * 8 + flagtag.nbytes + dimtag.nbytes + nametag.nbytes + datatag.nbytes;
   else
-    maintag.nbytes = 4*8+flagtag.nbytes+dimtag.nbytes+nametag.nbytes;
+    maintag.nbytes = 4 * 8 + flagtag.nbytes + dimtag.nbytes + nametag.nbytes;
 
   /*Character array seems to be char, \0 char \0: each char is 2 bytes.
     if total length: 2* (length of string) isn't multiple of 8,
@@ -294,84 +290,89 @@ matcsetup_(len,padflag,rem,namelen,name)
   *padflag = 0;
 
   if (compressflag == 0)
-    *rem = ((*len)%4);
+    *rem = ((*len) % 4);
   else
-    *rem = ((*len)%2);
-  
-  if (*rem != 0)
-    {
-      if (compressflag == 0){
-	*rem = 4-*rem;
-	maintag.nbytes += *rem*2*sizeof(char);}
-      else{
-	*rem = 2-*rem;
-	/*	maintag.nbytes += *rem*sizeof(char);*/}
-      *padflag = 1;
-    }
+    *rem = ((*len) % 2);
 
-  fwrite(&(maintag.nbytes),sizeof(int),1,optr);
-  fwrite(&(flagtag.type),sizeof(int),1,optr);
-  fwrite(&(flagtag.nbytes),sizeof(int),1,optr);
-  fwrite(&flag,sizeof(int),1,optr);
+  if (*rem != 0)
+  {
+    if (compressflag == 0)
+    {
+      *rem = 4 - *rem;
+      maintag.nbytes += *rem * 2 * sizeof(char);
+    }
+    else
+    {
+      *rem = 2 - *rem;
+  /*	maintag.nbytes += *rem*sizeof(char);*/}
+  *padflag = 1;
+  }
+
+  fwrite(&(maintag.nbytes), sizeof(int), 1, optr);
+  fwrite(&(flagtag.type), sizeof(int), 1, optr);
+  fwrite(&(flagtag.nbytes), sizeof(int), 1, optr);
+  fwrite(&flag, sizeof(int), 1, optr);
   /* next is just a dummy */
-  fwrite(&flag,sizeof(int),1,optr);
-  fwrite(&(dimtag.type),sizeof(int),1,optr);
-  fwrite(&(dimtag.nbytes),sizeof(int),1,optr);
+  fwrite(&flag, sizeof(int), 1, optr);
+  fwrite(&(dimtag.type), sizeof(int), 1, optr);
+  fwrite(&(dimtag.nbytes), sizeof(int), 1, optr);
   dum = 1;
-  fwrite(&dum,sizeof(int),1,optr);
-  fwrite(len,sizeof(int),1,optr);
-  fwrite(&(nametag.type),sizeof(int),1,optr);
-  fwrite(&(nametag.nbytes),sizeof(int),1,optr);
-  fwrite(varname,sizeof(char),nametag.nbytes,optr);
-  if (compressflag == 0){
-    fwrite(&(datatag.type),sizeof(int),1,optr);
-    fwrite(&(datatag.nbytes),sizeof(int),1,optr);}
-  else{
-    idum = ((datatag.nbytes<<16)& 0xffff0000) | (datatag.type & 0x0000ffff);
-    fwrite(&idum,sizeof(int),1,optr);}
+  fwrite(&dum, sizeof(int), 1, optr);
+  fwrite(len, sizeof(int), 1, optr);
+  fwrite(&(nametag.type), sizeof(int), 1, optr);
+  fwrite(&(nametag.nbytes), sizeof(int), 1, optr);
+  fwrite(varname, sizeof(char), nametag.nbytes, optr);
+  if (compressflag == 0)
+  {
+    fwrite(&(datatag.type), sizeof(int), 1, optr);
+    fwrite(&(datatag.nbytes), sizeof(int), 1, optr);
+  }
+  else
+  {
+    idum = ((datatag.nbytes << 16) & 0xffff0000) | (datatag.type & 0x0000ffff);
+    fwrite(&idum, sizeof(int), 1, optr);
+  }
   fclose(optr);
 }
 
-matcwrite_(data,nvals,padflag,rem)
-     char *data;
-     int *nvals,*padflag,*rem;
+void matcwrite_(char *data,
+                int *nvals, int *padflag, int *rem)
 {
 
   int iii;
   short idum;
   char dum[2];
-  char *varname,*carray;
+  char *varname, *carray;
   FILE *optr;
 
-  carray = (char *)calloc(124,sizeof(char));  
+  carray = (char *)calloc(124, sizeof(char));
 
   dum[0] = '\0';
 
-  strncat(carray,data,*nvals);
+  strncat(carray, data, *nvals);
 
   /* OPEN FOR APPENDING */
-  if ((optr=fopen(matname,"a")) == NULL)
-    {
-      fprintf(stderr,"can't open %s\n",matname);
-      exit(1);
-    }
+  if ((optr = fopen(matname, "a")) == NULL)
+  {
+    fprintf(stderr, "can't open %s\n", matname);
+    exit(1);
+  }
 
-  for (iii=0;iii< *nvals;iii++){
-    idum = ((carray[iii])& 0x00ff);
-    fwrite(&idum,sizeof(short),1,optr);}
-/*
-    fwrite(&carray[iii],sizeof(char),1,optr);
-    fwrite(&dum,sizeof(char),1,optr);}
-*/
-  if (*padflag==1)
-    for (iii=1;iii<= *rem;iii++){
+  for (iii = 0; iii < *nvals; iii++)
+  {
+    idum = ((carray[iii]) & 0x00ff);
+    fwrite(&idum, sizeof(short), 1, optr);
+  }
+  /*
+      fwrite(&carray[iii],sizeof(char),1,optr);
+      fwrite(&dum,sizeof(char),1,optr);}
+  */
+  if (*padflag == 1)
+    for (iii = 1; iii <= *rem; iii++)
+    {
       /*      fprintf(stderr,"padding......\n");*/
-      fwrite(dum,sizeof(char),1,optr);
-      fwrite(dum,sizeof(char),1,optr);}
+      fwrite(dum, sizeof(char), 1, optr);
+      fwrite(dum, sizeof(char), 1, optr);
+    }
   fclose(optr);
 }
-
-
-
-
-

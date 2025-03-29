@@ -7,9 +7,9 @@ add_executable(pp pp.f)
 add_executable(trftoascii trftoascii.f)
 add_executable(trfsplit trfsplit.f)
 
-target_link_libraries(pp puls apmath oas)
+target_link_libraries(pp PRIVATE puls apmath2d oas2d)
 
-install(TARGETS puls pp trftoascii trfsplit
-        RUNTIME DESTINATION bin
-        ARCHIVE DESTINATION lib)
+install(TARGETS pp trftoascii trfsplit DESTINATION)
+
+
 

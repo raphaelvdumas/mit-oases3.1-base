@@ -1,4 +1,4 @@
-      PROGRAM OAST35
+      SUBROUTINE OAST35
 CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
 C                 					C
 C                     OASES V-3.5                       C

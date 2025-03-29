@@ -2,6 +2,11 @@ cmake_minimum_required (VERSION 3.21)
 
 project(Oases LANGUAGES C Fortran)
 
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+else()
+message(FATAL_ERROR "Unsupported system name '${CMAKE_SYSTEM_NAME}'. CMake for GCC with 'Windows' or 'Linux' only.")
+endif()
 
 # Check if the string contains "86". Supposing we're in a 64 bit system to build
 string(FIND "${CMAKE_C_COMPILER}" "86" RESULT)
@@ -9,7 +14,7 @@ string(FIND "${CMAKE_C_COMPILER}" "86" RESULT)
 if(RESULT GREATER -1)
     set(NBITS "32")  # Set NBITS to "32" if "86" is found
     set(REQUIRED_DLLS "libgfortran-5.dll" "libgcc_s_dw2-1.dll")
-else()
+else()    
     set(NBITS "64")  # Set NBITS to "64" if "86" is not found
     set(REQUIRED_DLLS "libgfortran-5.dll" "libgcc_s_seh-1.dll")
 endif()
@@ -18,20 +23,46 @@ set(CMAKE_INSTALL_PREFIX "release/Oases-3.1-${CMAKE_SYSTEM_NAME}${NBITS}")
 set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -w -O3 -std=legacy -fstrength-reduce -fexpensive-optimizations -fall-intrinsics -m${NBITS}")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -w -O3 -std=c11 -m${NBITS}")
 
+#
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    find_library(GCC_S_LIB gcc_s PATHS /lib /usr/lib /lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu)
+    find_library(GFORTRAN_LIB gfortran PATHS /lib /usr/lib /lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu)
+
+    if(NOT GCC_S_LIB)
+        message(FATAL_ERROR 
+            "ERROR: libgcc_s.so.1 not found.\n"
+            "Please install it using the following command:\n"
+            "    sudo apt update && sudo apt install libgcc-s1"
+        )
+    else()
+        message(STATUS "Found libgcc_s: ${GCC_S_LIB}")
+    endif()
+
+    if(NOT GFORTRAN_LIB)
+        message(FATAL_ERROR 
+            "ERROR: libgfortran.so.5 not found.\n"
+            "Please install it using the following command:\n"
+            "    sudo apt update && sudo apt install gfortran-12"
+            "\n(Replace 'gfortran-12' with the correct version if needed.)"
+        )
+    else()
+        message(STATUS "Found libgfortran: ${GFORTRAN_LIB}")
+    endif()
+endif()
+
 #---------------------------------------------------
 # Utility static libraries
 #---------------------------------------------------
-add_subdirectory(${CMAKE_SOURCE_DIR}/src/)
-
-# add_subdirectory(${CMAKE_SOURCE_DIR}/src/3d) // TO DO
-# add_subdirectory(${CMAKE_SOURCE_DIR}/src/pulsplot) // TO DO
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/2d)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/3d)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/pulsplot)
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
   add_subdirectory(${CMAKE_SOURCE_DIR}/third_party/plot_X11/mindis)
   add_subdirectory(${CMAKE_SOURCE_DIR}/third_party/plot_X11/contour)
   add_subdirectory(${CMAKE_SOURCE_DIR}/third_party/plot_X11/plot)
 else()
-  message(WARNING "'contour', 'plot', 'plotmtv' and 'mindis' depends on X11 (CMAKE_SOURCE_DIR=Linux only). They are not available for ${CMAKE_SYSTEM_NAME}.")
+  message(WARNING "'contour', 'plot' and 'mindis' depends on X11 ('Linux' only). They are not available on 'Windows'.")
 endif()
 
 
@@ -48,16 +79,3 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
         ")
     endforeach()
 endif()
-
-
-### To be better made later :
-# Windows64 :
-# cmake -G "Ninja" -B build  -DCMAKE_C_COMPILER="gcc.exe" -DCMAKE_Fortran_COMPILER="gfortran.exe"
-
-# Windows32 :
-# cmake -G "Ninja" -B build -DCMAKE_C_COMPILER="i686-w64-mingw32-gcc.exe" -DCMAKE_Fortran_COMPILER="i686-w64-mingw32-gfortran.exe"
-
-# cmake --build build
-# cmake --install build
-
-
