@@ -4,7 +4,7 @@
 
 **I had a lot of trouble installing this base package on Windows, so I decided to create a friendly installation guide to help others.**
 
-## Recommended: Using OASES 3.1 on Windows (Portable Edition)
+## Recommended: Using OASES on Windows (Portable Edition)
 
 For ease of use, you can run OASES 3.1 directly on Windows by using the portable edition. Follow these steps:
 
@@ -20,7 +20,7 @@ For ease of use, you can run OASES 3.1 directly on Windows by using the portable
 
 _Last successful run: March 19, 2025_
 
-## Alternative: Building OASES 3.1 on WSL (Not Recommended)
+## Alternative: Building OASES on WSL (Not Recommended)
 
 While installing OASES 3.1 on Windows using WSL is possible, it is more complex and may encounter various issues. If you choose this method, follow these instructions:
 
