@@ -19,7 +19,7 @@ else()
     set(NBITS "64")  # Set NBITS to "64" if "86" is not found
     set(REQUIRED_DLLS "libgfortran-5.dll" "libgcc_s_seh-1.dll")
 endif()
-set(NBITS "32")  # Set NBITS to "32" ito force Linux for now ...
+# set(NBITS "32")  # Set NBITS to "32" ito force Linux for now ...
 set(CMAKE_INSTALL_PREFIX "release/Oases-3.1-${CMAKE_SYSTEM_NAME}${NBITS}")
 set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -w -O3 -std=legacy -fstrength-reduce -fexpensive-optimizations -fall-intrinsics -m${NBITS}")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -w -O3 -std=c11 -m${NBITS}")

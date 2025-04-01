@@ -10,5 +10,6 @@
 *.synctex.gz
 *.fls
 *.fdb_latexmk
+/python/
 /build/
 # /release/
